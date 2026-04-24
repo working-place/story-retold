@@ -1,0 +1,40 @@
+:root {
+
+
+  @media (max-width: 1024px) {}
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {}
+}
+
+#root {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  border: 2px solid red;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2 {}
+
+h1 {
+  @media (max-width: 1024px) {}
+}
+
+h2 {
+  @media (max-width: 1024px) {}
+}
+
+p {
+  margin: 0;
+}
