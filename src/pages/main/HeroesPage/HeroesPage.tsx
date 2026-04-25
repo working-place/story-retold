@@ -1,3 +1,4 @@
+import MainLayout from "../../../components/layout/MainLayout/MainLayout";
 import styles from "./HeroesPage.module.scss"
 
 interface HeroesPageProps {
@@ -7,8 +8,10 @@ interface HeroesPageProps {
 export default function HeroesPage({ text }: HeroesPageProps) {
 
     return (
-        <div className={styles.heroesPage}>
-            <h1>HeroesPage {text}</h1>
-        </div>
+        <MainLayout>
+            <div className={styles.heroesPage}>
+                <h1>HeroesPage {text}</h1>
+            </div>
+        </MainLayout>
     )
 }

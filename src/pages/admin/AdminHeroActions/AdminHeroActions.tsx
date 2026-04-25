@@ -1,14 +1,20 @@
+import type { JSX } from "react";
+import AdminLayout from "../../../components/layout/AdminLayout/AdminLayout";
 import styles from "./AdminHeroActions.module.scss"
+import { NavLink } from "react-router-dom";
 
-interface AdminHeroActionsProps {
-    text?: string | undefined;
-}
+// interface AdminHeroActionsProps {
+//     text?: string | undefined;
+// }
 
-export default function AdminHeroActions({ text }: AdminHeroActionsProps) {
+export default function AdminHeroActions( ): JSX.Element {
 
     return (
-        <div className={styles.adminHeroActions}>
-            <h1>AdminHeroActions {text}</h1>
-        </div>
+        <AdminLayout>
+            <div className={styles.adminHeroActions}>
+                <h1>AdminHeroActions</h1>
+                <NavLink to="/">Главная</NavLink>
+            </div>
+        </AdminLayout>
     )
 }

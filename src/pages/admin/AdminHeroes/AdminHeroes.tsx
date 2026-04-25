@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styles from "./AdminHeroes.module.scss"
 
 interface AdminHeroesProps {
@@ -9,6 +10,7 @@ export default function AdminHeroes({ text }: AdminHeroesProps) {
     return (
         <div className={styles.adminHeroes}>
             <h1>AdminHeroes {text}</h1>
+            <NavLink to="/">Главная</NavLink>
         </div>
     )
 }

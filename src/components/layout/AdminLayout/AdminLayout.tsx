@@ -1,8 +1,12 @@
+import { type ReactNode } from "react";
 import AdminSidebar from "../../admin/AdminSidebar/AdminSidebar";
 import styles from "./AdminLayout.module.scss"
-import { Outlet } from 'react-router-dom'
 
-export default function AdminLayout() {
+interface AdminLayoutProps {
+    children?: ReactNode;
+}
+
+export default function AdminLayout({ children }: AdminLayoutProps) {
 
     return (
         <div className={styles.adminLayout}>
@@ -10,7 +14,7 @@ export default function AdminLayout() {
             // isAdmin={true}
             />
             <main>
-                <Outlet />
+                {children}
             </main>
         </div>
     )

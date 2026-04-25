@@ -1,3 +1,4 @@
+import MainLayout from "../../../components/layout/MainLayout/MainLayout";
 import styles from "./HeroDetailPage.module.scss"
 
 interface HeroDetailPageProps {
@@ -7,8 +8,10 @@ interface HeroDetailPageProps {
 export default function HeroDetailPage({ text }: HeroDetailPageProps) {
 
     return (
-        <div className={styles.heroDetailPage}>
-            <h1>HeroDetailPage {text}</h1>
-        </div>
+        <MainLayout>
+            <div className={styles.heroDetailPage}>
+                <h1>HeroDetailPage {text}</h1>
+            </div>
+        </MainLayout>
     )
 }
