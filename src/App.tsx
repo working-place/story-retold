@@ -1,10 +1,11 @@
 import './App.scss'
+import HomePage from './pages/main/HomePage/HomePage'
 
 function App() {
 
   return (
     <>
-      <h1>История расказанная заново</h1>
+      <HomePage />
     </>
   )
 }

@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    // настроить шрифты
+    font-family: serif;
+    background-color: aqua;
+    // прописать цвет шрифта по умолчанию
+    color: black;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    // изменить в соответствии с макетом
+    min-width: 1440px;
+    margin: 0 auto;
+    background-color: rgb(235, 84, 235);
+}

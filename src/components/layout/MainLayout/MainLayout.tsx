@@ -1,14 +1,21 @@
+import { type ReactNode } from "react";
 import styles from "./MainLayout.module.scss"
+import Header from "../../header/Header";
+import Footer from "../../footer/Footer";
 
 interface MainLayoutProps {
-    text?: string | undefined;
+    children?: ReactNode;
 }
 
-export default function MainLayout({ text }: MainLayoutProps) {
+export default function MainLayout({ children }: MainLayoutProps) {
 
     return (
         <div className={styles.mainLayout}>
-            <h1>MainLayout {text}</h1>
+            <Header />
+            <main>
+                {children}
+            </main>
+            <Footer />
         </div>
     )
 }

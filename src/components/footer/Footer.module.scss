@@ -1,1 +1,8 @@
-@use "../../../assets/scss/import.scss" as *;
+@use "../../assets/scss/import.scss" as *;
+
+.footer {
+    background-color: antiquewhite;
+    padding: 20px;
+    text-align: center;
+    margin-top: auto;
+}

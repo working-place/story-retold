@@ -1,1 +1,7 @@
-@use "../../../assets/scss/import.scss" as *;
+@use "../../assets/scss/import.scss" as *;
+
+.header {
+    background-color: pink;
+    padding: 20px;
+    text-align: center;
+}

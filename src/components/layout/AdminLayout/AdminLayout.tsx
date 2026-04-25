@@ -1,14 +1,17 @@
+import AdminSidebar from "../../admin/AdminSidebar/AdminSidebar";
 import styles from "./AdminLayout.module.scss"
+import { Outlet } from 'react-router-dom'
 
-interface AdminLayoutProps {
-    text?: string | undefined;
-}
-
-export default function AdminLayout({ text }: AdminLayoutProps) {
+export default function AdminLayout() {
 
     return (
         <div className={styles.adminLayout}>
-            <h1>AdminLayout {text}</h1>
+            <AdminSidebar
+            // isAdmin={true}
+            />
+            <main>
+                <Outlet />
+            </main>
         </div>
     )
 }

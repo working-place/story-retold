@@ -1,3 +1,4 @@
+import MainLayout from "../../../components/layout/MainLayout/MainLayout";
 import styles from "./HomePage.module.scss"
 
 interface HomePageProps {
@@ -7,8 +8,9 @@ interface HomePageProps {
 export default function HomePage({ text }: HomePageProps) {
 
     return (
-        <div className={styles.homePage}>
-            <h1>HomePage {text}</h1>
-        </div>
+        <MainLayout>
+            <h1 className={styles.title}>Главная страница</h1>
+            <p>тег main не требуется, так как он уже есть в Layuot {text}</p>
+        </MainLayout>
     )
 }
