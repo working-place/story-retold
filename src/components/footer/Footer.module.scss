@@ -1,4 +1,6 @@
-@use "../../assets/scss/import.scss" as *;
+@use "../../assets/scss/_mixins.scss" as *;
+@use "../../assets/scss/_typography.scss" as *;
+@use "../../assets/scss/_variables-color.scss" as *;
 
 .footer {
     background-color: antiquewhite;

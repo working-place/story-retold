@@ -1,10 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.scss'
+import "../src/globals.scss"
 import HomePage from './pages/main/HomePage/HomePage'
-import HeroesPage from "./pages/main/HeroesPage/HeroesPage";
 import LoginPage from "./pages/auth/LoginPage/LoginPage";
 import AdminHeroes from "./pages/admin/AdminHeroes/AdminHeroes";
 import AdminHeroActions from "./pages/admin/AdminHeroActions/AdminHeroActions";
+import USSRHeroesPage from "./pages/main/USSRHeroesPage/USSRHeroesPage";
+import SVOHeroesPage from "./pages/main/USSRHeroesPage/SVOHeroesPage";
 
 function App() {
 
@@ -16,8 +18,12 @@ function App() {
           element={<HomePage />}
         />
         <Route
-          path='/heroes'
-          element={<HeroesPage />}
+          path='/ussr-heroes'
+          element={<USSRHeroesPage/>}
+        />
+                <Route
+          path='/svo-heroes'
+          element={<SVOHeroesPage/>}
         />
         {/* Сделать Protected Routes для админки */}
         {/* <ProtectedRoute
