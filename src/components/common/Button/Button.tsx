@@ -1,41 +1,26 @@
-// import styles from "./Button.module.scss"
-
-// interface ButtonProps {
-//     text?: string | undefined;
-// }
-
-// export default function Button({ text }: ButtonProps) {
-
-//     return (
-//         <button className={styles.button}>
-//             {/* <h1>Button {text}</h1> */}
-//         </button>
-//     )
-// }
-
 import { type ReactNode } from "react";
 import styles from "./Button.module.scss";
 
 interface ButtonProps {
-    children?: ReactNode;           // Содержимое кнопки (текст, иконка, картинка)
-    text?: string;                  // Текст кнопки (альтернатива children)
-    onClick?: () => void;           // Обработчик клика
-    type?: "button" | "submit" | "reset";  // Тип кнопки
-    disabled?: boolean;             // Блокировка кнопки
-    variant?: "primary" | "secondary" | "outline" | "ghost";  // Предопределённые варианты
-    size?: "small" | "medium" | "large";  // Размеры
-    backgroundColor?: string;       // Свой цвет фона
-    color?: string;                 // Цвет текста
-    width?: string | number;        // Ширина (100%, 200px, auto)
-    height?: string | number;       // Высота
-    padding?: string;               // Отступы (10px 20px)
-    fontSize?: string | number;     // Размер шрифта
-    borderRadius?: string | number; // Скругление углов
-    className?: string;             // Дополнительный CSS класс
-    icon?: ReactNode;               // Иконка слева
-    iconRight?: ReactNode;          // Иконка справа
-    fullWidth?: boolean;            // На всю ширину родителя
-    loading?: boolean;              // Состояние загрузки
+    children?: ReactNode;
+    text?: string;
+    onClick?: () => void;
+    type?: "button" | "submit" | "reset";
+    disabled?: boolean;
+    variant?: "primary" | "secondary" | "outline" | "ghost";
+    size?: "small" | "medium" | "large";
+    backgroundColor?: string;
+    color?: string;
+    width?: string | number;
+    height?: string | number;
+    padding?: string;
+    fontSize?: string | number;
+    borderRadius?: string | number;
+    className?: string;
+    icon?: ReactNode;
+    iconRight?: ReactNode;
+    fullWidth?: boolean;
+    loading?: boolean;
 }
 
 export default function Button({
@@ -60,7 +45,6 @@ export default function Button({
     loading = false
 }: ButtonProps) {
 
-    // Сборка классов
     const buttonClasses = [
         styles.button,
         styles[variant],
@@ -69,7 +53,6 @@ export default function Button({
         className
     ].filter(Boolean).join(' ');
 
-    // Инлайн-стили для кастомизации
     const customStyles: React.CSSProperties = {
         ...(backgroundColor && { backgroundColor }),
         ...(color && { color }),
