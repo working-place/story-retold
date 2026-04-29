@@ -1,7 +1,13 @@
 :root {
-
-
   @media (max-width: 1024px) {}
+}
+
+@font-face {
+  font-family: 'Glanz';
+  src: url('/fonts/Glanz.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,8 +22,6 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-
-  border: 2px solid red;
 }
 
 body {

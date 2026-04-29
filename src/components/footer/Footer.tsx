@@ -8,17 +8,17 @@ export default function Footer() {
 
             <div className={styles.item11}>
                 <NavLink to='/'>
-                    <img className={styles.logo} src="public/logo-footer.png" alt="Логотип" />
+                    <img className={styles.logo} src="/logo-footer.png" alt="Логотип" />
                 </NavLink>
             </div>
 
             <div className={styles.item15}>
-                <img className={styles.logoSocial} src="public/logo-social.png" alt="ВК" />
+                <img className={styles.logoSocial} src="/logo-social.png" alt="ВК" />
             </div>
 
             <div className={styles.item21}>
                 <a href="https://grant.obr.so/">
-                    <img className={styles.logoSot} src="public/logo-sot.png" alt="Логотип СОТ" />
+                    <img className={styles.logoSot} src="/logo-sot.png" alt="Логотип СОТ" />
                 </a>
             </div>
 
@@ -46,7 +46,7 @@ export default function Footer() {
                 <div className={styles.item25_wrapper}>
                     <span className={styles.xlSize}>Сделано в:</span>
                     <a href="https://союз.рф/">
-                        <img className={styles.logoSoyuz} src="public/logo-soyuz.png" alt="Логотип Союз.рф" />
+                        <img className={styles.logoSoyuz} src="/logo-soyuz.png" alt="Логотип Союз.рф" />
                     </a>
                     <span className={styles.xlSize}>Экипаж</span> <br />
                 </div>

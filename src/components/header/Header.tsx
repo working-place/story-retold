@@ -7,7 +7,7 @@ export default function Header() {
     return (
         <div className={styles.header}>
             <img
-                src="public/logo.png"
+                src="/logo.png"
                 alt="Лого" />
             <div className={styles.header_linkContainer}>
                 <NavLink
