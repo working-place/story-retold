@@ -6,32 +6,18 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    max-height: 1008px;
+    min-height: 1008px;
+    max-height: fit-content;
     background-color: $beige-background;
     position: relative;
     max-width: 1920px;
 
-    // &_container {
-    //     // position: relative;
-    //     display: flex;
-    //     flex-direction: column;
-    //     align-items: flex-end;
-    //     width: 100%;
-    //     height: 100%;
-    //     z-index: 1;
-    //     background-color: red;
-    //     // background-image: url('/paper-main.png');
-    // }
-
     &_title {
         position: absolute;
         width: fit-content;
-        top: 28.9%;
-        // bottom: 58%;
-        // font-size: 100px;
-                // top: 296px; // ← фиксированное значение вместо 29.3%
-        left: 160px; // ← фиксированное вместо 13.5%
-        font-size: 2.859em;
+        top: 29.3%;
+        left: 160px;
+        font-size: 100px;
         color: $brown-color;
         left: 13.5%;
         transform: rotate(-4.75deg);
@@ -39,32 +25,123 @@
     }
 
     &_paperImg {
-        // position: absolute;
+        position: absolute;
         bottom: 0;
-        // left: 0;
         width: 100%;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        // max-width: 1920px;
-
     }
 
     &_photoImg {
         position: absolute;
-        left: 50%;
+        left: 50.8%;
         bottom: 0;
         transform: translate(-47%, 0);
-        width: 70%;
+        width: 69.3%;
         z-index: 1;
+    }
+
+    &_devidigLine {
+        position: absolute;
+        width: 100%;
+        bottom: -150px;
+        z-index: 5;
     }
 }
 
 .history {
-    &_subtitle {}
+    position: relative;
+    display: flex;
+    background-color: $brown-color;
+    height: 1295px;
+    color: $white-text;
+    padding-top: 110px;
 
-    &_description {}
+    &_subtitle {
+
+        &__firstLine,
+        &__secondLine {
+            font-weight: 200;
+            text-align: left;
+            font-size: 80px;
+            color: $beige-background;
+            text-transform: uppercase;
+        }
+
+        &__firstLine {
+            padding-left: 64.5px;
+        }
+
+        &__secondLine {
+            padding-left: 290px;
+            margin-top: 15px;
+        }
+
+    }
+
+    &_description {
+
+        &__firstLine,
+        &__secondLine {
+            // поменять размер шрифта на 35px когда будет норм шрифт с весом
+            font-size: 35px;
+            font-weight: 400;
+            text-align: left;
+            color: $beige-background;
+            line-height: 125%;
+            letter-spacing: 1.6px;
+        }
+
+        &__firstLine {
+            padding-left: 67.5px;
+            margin-top: 40px;
+        }
+
+        &__secondLine {
+            padding-left: 157px;
+            margin-top: 41px;
+        }
+    }
+
+    &_map {
+        position: absolute;
+        max-width: 54%;
+        height: 88%;
+        right: -10px;
+        bottom: 110px;
+    }
+
+    &_imageHistory {
+        position: absolute;
+        z-index: 2;
+        left: 908px;
+        top: 340px;
+    }
+
+    &_devidigLineHisory {
+        position: absolute;
+        width: 100%;
+        bottom: -146px;
+        left: 0;
+        right: 0;
+        z-index: 5;
+    }
+
+    &_arrow {
+        position: absolute;
+        top: 605px;
+        left: 1175px;
+        z-index: 1;
+    }
+
+    &_curlHistory {
+        position: absolute;
+        bottom: 15px;
+    }
+
+    &_curlHistoryTop {
+        position: absolute;
+        right: -15px;
+        top: 90px;
+    }
 }
 
 .about {

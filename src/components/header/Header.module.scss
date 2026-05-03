@@ -27,11 +27,12 @@
         text-decoration: none;
         font-size: 25px;
         font-family: inherit;
+        letter-spacing: 0.1px;
 
         &.active {
             text-decoration: underline;
             text-decoration-thickness: 2px;
-            text-underline-offset: 8px;
+            text-underline-offset: 2px;
         }
     }
 
