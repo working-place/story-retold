@@ -45,7 +45,6 @@ export default function HomePage() {
                     </h2>
                     <p
                         // style={{ fontFamily: 'Metamorphous-Regular', fontWeight: 400 }}
-                        // style={{ fontFamily: 'Metamorphous-Regular', fontWeight: 400 }}
                         className={styles.history_description__firstLine}>
                         Мы — команда МАОУ «СОШ № 60» города <br />
                         Перми. Более 10 лет в школе сохраняется <br />
