@@ -45,6 +45,7 @@ export default function HomePage() {
                     </h2>
                     <p
                         // style={{ fontFamily: 'Metamorphous-Regular', fontWeight: 400 }}
+                        // style={{ fontFamily: 'Metamorphous-Regular', fontWeight: 400 }}
                         className={styles.history_description__firstLine}>
                             All about this font-style that <br /> cannot afford latin. number of 600 <br />
                         Мы — команда МАОУ «СОШ № 60» города <br />
