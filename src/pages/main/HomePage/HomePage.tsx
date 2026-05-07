@@ -1,10 +1,6 @@
 import MainLayout from "../../../components/layout/MainLayout/MainLayout";
 import styles from "./HomePage.module.scss"
 
-// interface HomePageProps {
-//     text?: string | undefined;
-// }
-
 export default function HomePage() {
 
     return (
@@ -84,8 +80,6 @@ export default function HomePage() {
                     src="/curl-history-top.png" alt="Линия" />
             </div>
 
-            {/* ------------------ */}
-
             <div className={styles.about}>
 
                 <div className={styles.about_subtitle}>
@@ -153,7 +147,7 @@ export default function HomePage() {
 
 
             </div>
-            
+
             <img
                     className={styles.history_devidigLineHisory}
                     src="/paper-deviding-history.png" alt="Разделительная линия" />
@@ -161,8 +155,6 @@ export default function HomePage() {
                     className={styles.about_devide}
                     src="/paper-deviding-about.png" alt="Разделительная линия" />
 
-            {/* <p>тег main не требуется, так как он уже есть в Layuot {text}</p> */}
-            {/* ------------------ */}
         </MainLayout>
     )
 }
