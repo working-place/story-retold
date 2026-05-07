@@ -82,20 +82,85 @@ export default function HomePage() {
                 <img
                     className={styles.history_curlHistoryTop}
                     src="/curl-history-top.png" alt="Линия" />
-
-                <img
-                    className={styles.history_devidigLineHisory}
-                    src="/paper-deviding-history.png" alt="Разделительная линия" />
             </div>
 
             {/* ------------------ */}
 
             <div className={styles.about}>
-                <h2 className={styles.about_subtitle}>
-                    О проекте История, <br />
-                    РАССКАЗАННАЯ ЗАНОВО
-                </h2>
+
+                <div className={styles.about_subtitle}>
+                    <h2
+                        className={styles.about_subtitle__firstLine}
+                        style={{ fontFamily: 'Glanz', fontWeight: 400 }}
+                    >
+                        О проекте История,
+                    </h2>
+                    <h2
+                        className={styles.about_subtitle__firstLine}
+                        style={{ fontFamily: 'Glanz', fontWeight: 400 }}
+                    >
+                        РАССКАЗАННАЯ ЗАНОВО
+                    </h2>
+                </div>
+
+                <p className={styles.about_description}>
+                    История, рассказанная заново — цифровое <br />
+                    пространство памяти, созданное в Перми, <br />
+                    городе трудовой доблести. Проект <br />
+                    объединяет прошлое и настоящее, сохраняя <br />
+                    реальные истории героев и их достижения <br />
+                    для будущих поколений. <br />
+                </p>
+
+                <img
+                    className={styles.about_line1}
+                    src="/line-11.png" alt="Линия" />
+                <img
+                    className={styles.about_line3}
+                    src="/line-13.png" alt="Линия" />
+                <img
+                    className={styles.about_line2}
+                    src="/line-12.png" alt="Линия" />
+                <img
+                    className={styles.about_line5}
+                    src="/line-15.png" alt="Линия" />
+                <img
+                    className={styles.about_line4}
+                    src="/line-14.png" alt="Линия" />
+
+
+                <img
+                    className={styles.about_photo1}
+                    src="/photo-1.png" alt="Фотография героя" />
+
+                <img
+                    className={styles.about_photo2}
+                    src="/photo-2.png" alt="Фотография героя" />
+                <img
+                    className={styles.about_photo3}
+                    src="/photo-3.png" alt="Фотография героя" />
+                <img
+                    className={styles.about_photo4}
+                    src="/photo-4.png" alt="Фотография героя" />
+                <img
+                    className={styles.about_photo5}
+                    src="/photo-5.png" alt="Фотография героя" />
+
+                                    <img
+                    className={styles.about_curl}
+                    src="/curl-about.png" alt="Линия" />
+
+
+
             </div>
+            
+            <img
+                    className={styles.history_devidigLineHisory}
+                    src="/paper-deviding-history.png" alt="Разделительная линия" />
+            <img
+                    className={styles.about_devide}
+                    src="/paper-deviding-about.png" alt="Разделительная линия" />
+
             {/* <p>тег main не требуется, так как он уже есть в Layuot {text}</p> */}
             {/* ------------------ */}
         </MainLayout>

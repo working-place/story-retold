@@ -29,7 +29,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
-
+background-color: red;
       font-family: "Metamorphous", serif;
   font-weight: 400;
   font-style: normal;
@@ -39,7 +39,8 @@ main {
     flex: 1;
     width: 100%;
     margin: 0 auto;
-    background-color: #F1E6D0;
+    // background-color: #F1E6D0;
+    // overflow: hidden;
 }
 
 main,
