@@ -2,7 +2,7 @@ import { forwardRef, useState, useId, type ReactNode } from "react";
 import styles from "./Input.module.scss";
 
 export type InputVariant = '_primary' | '_secondary' | '_outline' | '_ghost';
-export type InputSize = 'small' | 'medium' | 'large';
+export type InputSize = 'small' | 'medium' | 'large' | 'checkbox';
 
 interface InputProps {
     value?: string | number;
@@ -11,7 +11,7 @@ interface InputProps {
     onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 
-    type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'search' | 'url';
+    type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'search' | 'url' | 'checkbox';
     name?: string;
     id?: string;
     placeholder?: string;
@@ -28,6 +28,7 @@ interface InputProps {
 
     label?: string;
     labelPosition?: 'top' | 'left' | 'inside';
+    labelSize?: 'medium' | 'checkbox';
     labelClassName?: string;
     requiredMark?: boolean;
     requiredMarkClassName?: string;
@@ -78,6 +79,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
 
     label,
     labelPosition = 'top',
+    labelSize = 'medium',
     labelClassName = '',
     requiredMark = true,
     requiredMarkClassName = '',
@@ -129,7 +131,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     const inputClasses = [
         styles.input,
         styles[variant],
-        styles[size],
+        // styles[size],
+        size === 'checkbox' ? styles.checkbox : styles[size],
         error && styles.error,
         success && styles.success,
         disabled && styles.disabled,
@@ -166,7 +169,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
         return (
             <label
                 htmlFor={id}
-                className={`${styles.label} ${labelClassName} ${disabled ? styles.labelDisabled : ''}`}
+                className={`${styles.label} ${labelSize === 'checkbox' ? styles.labelCheckbox : ''} ${labelClassName} ${disabled ? styles.labelDisabled : ''}`}
             >
                 {label}
                 {renderRequiredMark()}

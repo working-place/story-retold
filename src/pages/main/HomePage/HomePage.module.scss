@@ -365,9 +365,9 @@
             margin-top: 2px;
         }
 
-        &_margin {
+        &_margin {}
 
-        }
+        &_agreement {}
     }
 
     &__wrapper {
@@ -397,8 +397,37 @@
 }
 
 .select {
-margin-top: -14px;
-font-size: 20px;
-color: $beige-background;
-text-align: left;
+    margin-top: -14px;
+    font-size: 20px;
+    color: $beige-background;
+    text-align: left;
+}
+
+.agreementContainer {
+    display: flex;
+    flex-direction: column;
+    padding-top: 9px;
+    gap: 10px;
+
+    a {
+        color: $beige-background;
+        font-size: 12px;
+        text-decoration: none;
+        padding: 0;
+    }
+}
+
+.checkboxWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.button {
+    width: 100%;
+    border-radius: 16px;
+    padding: 12px 24px;
+    font-size: 20px;
+    margin-top: 11px;
 }

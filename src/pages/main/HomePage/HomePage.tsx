@@ -3,8 +3,14 @@ import CustomSelect from "../../../components/common/Select/Select";
 import MainLayout from "../../../components/layout/MainLayout/MainLayout";
 import styles from "./HomePage.module.scss"
 import { Textarea } from "../../../components/common/Textarea/Textarea"
+import { Checkbox } from "../../../components/common/Input/Checkox";
+import { useState } from "react";
+import Button from "../../../components/common/Button/Button";
 
 export default function HomePage() {
+
+    const [isAgreed, setIsAgreed] = useState(false);
+    const [isPolicyAgreed, setIsPolicyAgreed] = useState(false);
 
     return (
         <MainLayout>
@@ -165,7 +171,7 @@ export default function HomePage() {
                             className={styles.form__input_upload}
                         />
                     </div>
-                    
+
                     <div className={styles.form__basicInformation}>
                         <h3 className={styles.form__title}>
                             Основные сведения
@@ -242,6 +248,31 @@ export default function HomePage() {
                         <CustomSelect
                             className={styles.select}
                         />
+
+                        <div className={styles.agreementContainer}>
+                            <div className={styles.checkboxWrapper}>
+                                <Checkbox
+                                    label="Согласие на обработку персональных данных"
+                                    checked={isAgreed}
+                                    onChange={setIsAgreed}
+                                    required
+                                />
+                                <a href="">Согласен(а) на обработку персональных данных</a>
+                            </div>
+                            <div className={styles.checkboxWrapper}>
+                                <Checkbox
+                                    label="Политика обработки персональных данных "
+                                    checked={isPolicyAgreed}
+                                    onChange={setIsPolicyAgreed}
+                                    required
+                                />
+                                <a href="">Я ознакомлен(а) с Политикой обработки персональных данных</a>
+                            </div>
+
+                            <Button
+                                className={styles.button}
+                            >Отправить сведения о герое</Button>
+                        </div>
                     </div>
                 </form>
             </div>
