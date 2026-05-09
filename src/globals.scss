@@ -1,9 +1,4 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Geologica:wght,CRSV@100..900,0&family=Lato:ital,wght@0,100;0,300;0,400;1,100;1,300;1,400&family=M+PLUS+1p:wght@300;400;500;700&family=Metamorphous&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Oswald:wght@200..700&family=Roboto:wght@100&display=swap');
-
-// @use "../src/assets/scss/typography.scss" as *;
-// @use "/src/assets/scss/variables-color" as *;
-
 
 * {
     margin: 0;
@@ -29,33 +24,24 @@ body {
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
-background-color: red;
-      font-family: "Metamorphous", serif;
-  font-weight: 400;
-  font-style: normal;
+    font-family: "Roboto", "Metamorphous", serif;
+    font-weight: 600;
+    font-style: normal;
 }
 
 main {
     flex: 1;
     width: 100%;
     margin: 0 auto;
-    // background-color: #F1E6D0;
-    // overflow: hidden;
 }
 
 main,
 .header,
-.footer {
+.footer {}
 
-}
+.header {}
 
-.header {
-
-}
-
-.footer {
-
-}
+.footer {}
 
 a {
     cursor: pointer;

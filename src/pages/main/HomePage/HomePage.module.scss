@@ -7,7 +7,6 @@
     flex-direction: column;
     align-items: flex-end;
     height: 1008px;
-    // max-height: fit-content;
     background-color: $beige-background;
     position: relative;
     max-width: 1920px;
@@ -75,7 +74,6 @@
             padding-left: 290px;
             margin-top: 15px;
         }
-
     }
 
     &_description {
@@ -168,8 +166,7 @@
             text-transform: uppercase;
         }
 
-        &__firstLine {
-        }
+        &__firstLine {}
 
         &__secondLine {
             margin-right: 15px;
@@ -237,7 +234,7 @@
     }
 
     &_photo2 {
-                left: 545px;
+        left: 545px;
         top: 557px;
         z-index: 2;
     }
@@ -248,14 +245,14 @@
         z-index: 2;
     }
 
-        &_photo4 {
+    &_photo4 {
         left: 245px;
         top: 1077px;
         z-index: 1;
     }
 
     &_photo5 {
-                left: 875px;
+        left: 875px;
         top: 960px;
         z-index: 1;
     }
@@ -273,4 +270,135 @@
         right: 0;
         width: 100%;
     }
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: $beige-background;
+    height: 1258px;
+
+    &_title {
+        position: absolute;
+        color: $brown-color;
+        z-index: 1;
+        // padding-top: 85px;
+        top: 75px;
+        left: 44px;
+
+        font-weight: 200;
+        text-align: right;
+        font-size: 80px;
+        text-transform: uppercase;
+    }
+}
+
+.form {
+    display: flex;
+    width: 96%;
+    min-height: 935px;
+    height: fit-content;
+    background-color: $brown-color;
+    margin-top: 75px;
+    border-radius: 20px;
+    gap: 47px;
+    padding: 96px 49px 90px 49px;
+
+    &__title {
+        display: flex;
+        width: 100%;
+        font-size: 24px;
+        color: $beige-background;
+    }
+
+    &__upload {
+        background-color: red;
+        width: fit-content;
+    }
+
+    &__basicInformation {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        gap: 35px;
+    }
+
+    &__additionalInformation {
+        display: flex;
+        flex-direction: column;
+        padding-top: 3px;
+        width: fit-content;
+        gap: 30px;
+    }
+
+    &__input {
+
+        &_upload {
+            width: 18vw;
+        }
+
+        &_date {
+            width: 13.6vw;
+        }
+
+        &_birthplace {
+            width: 17.7vw;
+        }
+
+        &_hero {
+            width: 47vw;
+        }
+
+        &_user {
+            width: 22.8vw;
+        }
+
+        &_email {
+            width: 22.8vw;
+        }
+
+        &_additional {
+            width: 20vw;
+            margin-top: 2px;
+        }
+
+        &_margin {
+
+        }
+    }
+
+    &__wrapper {
+        &_firstLine {
+            display: flex;
+            gap: 20px;
+        }
+
+        &_secondLine {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 17px;
+        }
+
+        &_thirdLine {
+            display: flex;
+            gap: 20px;
+            margin-top: 17px;
+        }
+
+        &_fourthLine {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
+
+.select {
+margin-top: -14px;
+font-size: 20px;
+color: $beige-background;
+text-align: left;
 }

@@ -1,5 +1,8 @@
+import { Input } from "../../../components/common/Input/Input";
+import CustomSelect from "../../../components/common/Select/Select";
 import MainLayout from "../../../components/layout/MainLayout/MainLayout";
 import styles from "./HomePage.module.scss"
+import { Textarea } from "../../../components/common/Textarea/Textarea"
 
 export default function HomePage() {
 
@@ -121,12 +124,9 @@ export default function HomePage() {
                 <img
                     className={styles.about_line4}
                     src="/line-14.png" alt="Линия" />
-
-
                 <img
                     className={styles.about_photo1}
                     src="/photo-1.png" alt="Фотография героя" />
-
                 <img
                     className={styles.about_photo2}
                     src="/photo-2.png" alt="Фотография героя" />
@@ -140,20 +140,118 @@ export default function HomePage() {
                     className={styles.about_photo5}
                     src="/photo-5.png" alt="Фотография героя" />
 
-                                    <img
+                <img
                     className={styles.about_curl}
                     src="/curl-about.png" alt="Линия" />
+            </div>
 
+            <div className={styles.hero}>
+                <h2
+                    className={styles.hero_title}
+                    style={{ fontFamily: 'Glanz', fontWeight: 400 }}
+                >
+                    Расскажите о герое
+                </h2>
 
-
+                <form
+                    action=""
+                    className={styles.form}
+                >
+                    <div className={styles.form__upload}>
+                        <Input
+                            className={styles.form__input_upload}
+                        />
+                        <Input
+                            className={styles.form__input_upload}
+                        />
+                    </div>
+                    
+                    <div className={styles.form__basicInformation}>
+                        <h3 className={styles.form__title}>
+                            Основные сведения
+                        </h3>
+                        <div className={styles.form__wrapper_firstLine}>
+                            <Input
+                                className={styles.form__input_date}
+                                label="Дата рождения"
+                                placeholder="ДД.ММ.ГГ"
+                                required
+                            />
+                            <Input
+                                className={styles.form__input_date}
+                                label="Дата смерти"
+                                placeholder="ДД.ММ.ГГ"
+                            />
+                            <Input
+                                className={styles.form__input_birthplace}
+                                label="Место рождения"
+                                placeholder="Место рождения"
+                                required
+                            />
+                        </div>
+                        <div className={styles.form__wrapper_secondLine}>
+                            <Input
+                                className={styles.form__input_hero}
+                                label="Введите ФИО героя"
+                                placeholder="Введите Ф.И.О."
+                                required
+                            />
+                        </div>
+                        <div className={styles.form__wrapper_thirdLine}>
+                            <Input
+                                className={styles.form__input_user}
+                                label="ФИО и класс автора карточки"
+                                placeholder="Введите Ф.И.О. и класс"
+                                required
+                            />
+                            <Input
+                                className={styles.form__input_email}
+                                label="Почта"
+                                placeholder="Почта"
+                            />
+                        </div>
+                        <div className={styles.form__wrapper_fourthLine}>
+                            <Textarea
+                                className={styles.textarea}
+                                label="Описание материала"
+                                placeholder="Введите описание"
+                                labelPosition="top"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.form__additionalInformation}>
+                        <h3 className={styles.form__title}>
+                            Дополнительные сведения
+                        </h3>
+                        <Input
+                            className={styles.form__input_additional}
+                            label="Воинское звание"
+                            placeholder="Введите описание"
+                        />
+                        <Input
+                            className={styles.form__input_additional}
+                            label="Место службы"
+                            placeholder="Введите описание"
+                        />
+                        <Input
+                            className={styles.form__input_additional}
+                            label="Место призыва"
+                            placeholder="Введите описание"
+                        />
+                        <CustomSelect
+                            className={styles.select}
+                        />
+                    </div>
+                </form>
             </div>
 
             <img
-                    className={styles.history_devidigLineHisory}
-                    src="/paper-deviding-history.png" alt="Разделительная линия" />
+                className={styles.history_devidigLineHisory}
+                src="/paper-deviding-history.png" alt="Разделительная линия" />
             <img
-                    className={styles.about_devide}
-                    src="/paper-deviding-about.png" alt="Разделительная линия" />
+                className={styles.about_devide}
+                src="/paper-deviding-about.png" alt="Разделительная линия" />
 
         </MainLayout>
     )
