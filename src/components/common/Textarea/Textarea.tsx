@@ -1,4 +1,3 @@
-// src/components/UI/Textarea/Textarea.tsx
 import React, { forwardRef, useId } from 'react';
 import styles from './Textarea.module.scss';
 
@@ -7,14 +6,12 @@ export type TextareaSize = 'small' | 'medium' | 'large';
 export type TextareaResize = 'none' | 'both' | 'horizontal' | 'vertical';
 
 interface TextareaProps {
-    // Базовые пропсы
     value?: string | number;
     onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
     onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
     onFocus?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
     onKeyDown?: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 
-    // Атрибуты
     name?: string;
     id?: string;
     placeholder?: string;
@@ -28,30 +25,25 @@ interface TextareaProps {
     autoFocus?: boolean;
     autoComplete?: 'on' | 'off';
 
-    // Стилизация
     variant?: TextareaVariant;
     size?: TextareaSize;
     resize?: TextareaResize;
     className?: string;
     style?: React.CSSProperties;
 
-    // Label
     label?: string;
     labelPosition?: 'top' | 'left' | 'inside';
     labelClassName?: string;
     requiredMark?: boolean;
 
-    // Состояния
     error?: boolean;
     errorText?: string;
     touched?: boolean;
     loading?: boolean;
     success?: boolean;
 
-    // Счётчик символов
     showCounter?: boolean;
 
-    // A11y
     ariaLabel?: string;
     ariaDescribedBy?: string;
 }
@@ -172,7 +164,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({
                     onKeyDown={onKeyDown}
                     placeholder={labelPosition === 'inside' && !isFocused && !value ? '' : placeholder}
                     rows={rows}
-                    
+
                     cols={cols}
                     maxLength={maxLength}
                     minLength={minLength}

@@ -307,16 +307,98 @@
     gap: 47px;
     padding: 96px 49px 90px 49px;
 
-    &__title {
+    &__titleWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        height: fit-content;
+    }
+
+    &__title,
+    &__subtitle,
+    &__titleUpoad {
         display: flex;
         width: 100%;
-        font-size: 24px;
         color: $beige-background;
     }
 
+    &__title {
+        font-size: 24px;
+    }
+
+    &__titleUpoad {
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+        font-weight: 800;
+        text-align: center;
+    }
+
+    &__subtitle {
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+    }
+
     &__upload {
-        background-color: red;
+        display: flex;
+        flex-direction: column;
+        gap: 45px;
         width: fit-content;
+    }
+
+    &__uploadArea {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 18vw;
+        gap: 40px;
+        padding: 36px 20px;
+
+        img {
+            margin-top: 30px;
+            width: 93px;
+            height: 93px;
+        }
+
+        &_primary,
+        &_secondary {
+            border-radius: 20px;
+            border: none;
+            position: relative;
+            background-image:
+                linear-gradient(90deg, $beige-background 50%, transparent 50%), // верхняя
+                linear-gradient(90deg, $beige-background 50%, transparent 50%), // нижняя
+                linear-gradient(180deg, $beige-background 50%, transparent 50%), // левая
+                linear-gradient(180deg, $beige-background 50%, transparent 50%); // правая
+
+            background-size:
+                40px 3px, // верхняя
+                40px 3px, // нижняя
+                3px 40px, // левая
+                3px 40px; // правая
+
+            background-repeat:
+                repeat-x, // верхняя
+                repeat-x, // нижняя
+                repeat-y, // левая
+                repeat-y; // правая
+
+            background-position:
+                top, // верхняя
+                bottom, // нижняя
+                left, // левая
+                right; // правая
+        }
+
+        &_primary {
+            height: 57%;
+        }
+
+        &_secondary {
+            height: 35%;
+        }
     }
 
     &__basicInformation {
@@ -336,9 +418,9 @@
 
     &__input {
 
-        &_upload {
-            width: 18vw;
-        }
+        // &_upload {
+        //     width: 18vw;
+        // }
 
         &_date {
             width: 13.6vw;
@@ -374,6 +456,7 @@
         &_firstLine {
             display: flex;
             gap: 20px;
+
         }
 
         &_secondLine {
@@ -425,9 +508,34 @@
 }
 
 .button {
+    background-color: $beige-background;
+    border: none;
+    outline: none;
     width: 100%;
     border-radius: 16px;
     padding: 12px 24px;
     font-size: 20px;
     margin-top: 11px;
+
+    &_small {
+        font-size: 20px;
+        background-color: $beige-background;
+        border: none;
+        outline: none;
+        border-radius: 16px;
+        padding: 12px 24px;
+        width: fit-content;
+    }
+}
+
+.dashed-border-all {
+    border: none;
+    background-image:
+        linear-gradient(90deg, red 50%, transparent 50%),
+        linear-gradient(0deg, red 50%, transparent 50%),
+        linear-gradient(90deg, red 50%, transparent 50%),
+        linear-gradient(0deg, red 50%, transparent 50%);
+    background-size: 20px 3px, 3px 20px, 20px 3px, 3px 20px;
+    background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
+    background-position: top, right, bottom, left;
 }

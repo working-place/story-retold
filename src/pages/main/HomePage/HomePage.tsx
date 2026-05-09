@@ -164,12 +164,55 @@ export default function HomePage() {
                     className={styles.form}
                 >
                     <div className={styles.form__upload}>
-                        <Input
-                            className={styles.form__input_upload}
-                        />
-                        <Input
-                            className={styles.form__input_upload}
-                        />
+
+                        <div
+                            className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary}`}
+                        >
+                            <img src="/image-download.png" alt="Загрузить" />
+
+                            <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
+                                <h3 className={styles.form__titleUpoad}>
+                                    Фотографии героя
+                                </h3>
+
+                                <h4 className={styles.form__subtitle}>
+                                    Максимальный размер файла <br />
+                                    ***** MB
+                                </h4>
+                            </div>
+
+                            <Button
+                                className={styles.button_small}
+                            >
+                                Выбрать файлы
+                            </Button>
+
+                        </div>
+
+                        <div
+                            className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary}`}
+                        >
+
+                            <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
+                                <h3 className={styles.form__titleUpoad}>
+                                    Фотографии наград и другие <br />
+                                    материалы
+                                </h3>
+
+                                <h4 className={styles.form__subtitle}>
+                                    Максимальный размер <br />
+                                    файлов ***** MB
+                                </h4>
+                            </div>
+
+                            <Button
+                                className={styles.button_small}
+                            >
+                                Выбрать файлы
+                            </Button>
+
+                        </div>
+
                     </div>
 
                     <div className={styles.form__basicInformation}>
