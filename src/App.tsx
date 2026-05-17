@@ -7,7 +7,7 @@ import LoginPage from "./pages/auth/LoginPage/LoginPage";
 import AdminHeroes from "./pages/admin/AdminHeroes/AdminHeroes";
 import AdminHeroActions from "./pages/admin/AdminHeroActions/AdminHeroActions";
 import USSRHeroesPage from "./pages/main/USSRHeroesPage/USSRHeroesPage";
-import SVOHeroesPage from "./pages/main/USSRHeroesPage/SVOHeroesPage";
+import SVOHeroesPage from "./pages/main/SVOHeroesPage/SVOHeroesPage";
 
 function App() {
 

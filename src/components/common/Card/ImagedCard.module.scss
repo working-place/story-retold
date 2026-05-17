@@ -1,0 +1,59 @@
+@use "../../../assets/scss/_mixins.scss" as *;
+@use "../../../assets/scss/_typography.scss" as *;
+@use "../../../assets/scss/_variables-color.scss" as *;
+
+
+.imagedCard {
+    background-color: $brown-color;
+    width: 415px;
+    height: 658px;
+    border-radius: 20px;
+    padding: 38px 25px 26px 25px;
+
+    &__img {
+        width: 317px;
+        height: 364px;
+        margin-left: 24px;
+        margin-right: 24px;
+        margin-bottom: 38px;
+    }
+
+    &__infoContainer {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 14px;
+    }
+
+    &__name,
+    &__date,
+    &__range {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        font-size: 26px;
+        color: $beige-background;
+    }
+
+    &__buttonContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    &__button {
+        min-width: 181;
+        width: fit-content;
+        height: 55;
+        border-radius: 20px;
+        margin-top: 12px;
+        padding-top: 12px;
+        padding-right: 24px;
+        padding-bottom: 12px;
+        padding-left: 24px;
+        opacity: 1;
+        font-size: 24px;
+        background-color: $beige-background;
+    }
+}

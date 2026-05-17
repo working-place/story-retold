@@ -29,17 +29,19 @@ export default function Footer() {
             </div>
 
             <div className={styles.item23}>
-                <span className={styles.tel}>+7 (342) 242-08-60</span>
+                <span className={styles.tel}>+7 (342) 242-08-60</span> <br />
                 <span className={styles.email}>DigitalMemory60@yandex.ru</span>
             </div>
 
+
             <div className={styles.item24}>
-                <NavLink className={styles.agreement} to=''>
+                <a className={styles.agreement} href="/documents/Политика-в-отношении-обработки-персональных-данных.docx">
                     Пользовательское соглашение
-                </NavLink> <br />
-                <NavLink className={styles.confidence} to=''>
+                </a> <br />
+                 <br />
+                <a className={styles.confidence} href="/documents/Согласие-на-обработку-ПД.docx">
                     Политика конфиденциальности
-                </NavLink>
+                </a>
             </div>
 
             <div className={styles.item25}>

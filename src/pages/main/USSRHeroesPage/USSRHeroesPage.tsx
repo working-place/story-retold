@@ -1,5 +1,5 @@
 import MainLayout from "../../../components/layout/MainLayout/MainLayout";
-import styles from "./HeroesPage.module.scss"
+import styles from "./USSRHeroesPage.module.scss"
 
 interface USSRHeroesPageProps {
     text?: string | undefined;
