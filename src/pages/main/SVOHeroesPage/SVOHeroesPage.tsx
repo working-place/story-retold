@@ -4,17 +4,22 @@ import MainLayout from "../../../components/layout/MainLayout/MainLayout";
 import styles from "./SVOHeroesPage.module.scss"
 
 interface SVOHeroesPageProps {
+    path?: string;
     text?: string | undefined;
 }
 
-export default function SVOHeroesPage({ text }: SVOHeroesPageProps) {
+export default function SVOHeroesPage({ path, text }: SVOHeroesPageProps) {
+
+    const currentPath = path || "Герои СВО/Все Герои";
 
     return (
         <MainLayout>
             <div className={styles.heroesPage}>
 
                 <section className={styles.title}>
-                    <p className={styles.title__path}>Путь: SVO HeroesPage {text}</p>
+                    <p className={styles.title__path}>
+                        {currentPath} {text && `| ${text}`}
+                        </p>
                 </section>
 
                 <section className={styles.filter}>

@@ -52,7 +52,7 @@ const heroes = [
         dateOfDeath: '2024-08-15',
         range: 'Музыкант',
     },
-        {
+    {
         id: 7,
         name: 'Кузнецов Антон Антонович',
         img: '/hero-image-bg.png',
