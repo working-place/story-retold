@@ -131,7 +131,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     const inputClasses = [
         styles.input,
         styles[variant],
-        // styles[size],
         size === 'checkbox' ? styles.checkbox : styles[size],
         error && styles.error,
         success && styles.success,

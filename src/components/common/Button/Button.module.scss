@@ -1,3 +1,27 @@
 // @use "../../assets/scss/_mixins.scss" as *;
 // @use "../../assets/scss/_typography.scss" as *;
 // @use "../../assets/scss/_variables-color.scss" as *;
+
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  outline: inherit;
+  text-decoration: none;
+  display: inline-flex;
+
+  &:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}

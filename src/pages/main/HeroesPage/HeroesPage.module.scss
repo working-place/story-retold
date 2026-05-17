@@ -37,9 +37,8 @@
 }
 
 .filter {
-    height: 302px;
-
-    &__title {}
+    min-height: 302px;
+    height: fit-content;
 }
 
 .imagedCards,

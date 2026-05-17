@@ -1,0 +1,97 @@
+@use "../../../assets/scss/_mixins.scss" as *;
+@use "../../../assets/scss/_typography.scss" as *;
+@use "../../../assets/scss/_variables-color.scss" as *;
+
+.filter {
+    display: flex;
+    min-height: 302px;
+    height: fit-content;
+    width: 100%;
+    gap: 30px;
+
+    &__variantsContainer {
+        display: flex;
+        flex-direction: column;
+        background-color: $brown-color;
+        width: 418px;
+        height: 302px;
+        border-radius: 20px;
+        padding: 40px 20px 48px 20px;
+        gap: 10px;
+
+        h2 {
+            font-size: 40px;
+            color: $beige-background;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+    }
+
+    &__button {
+        padding: 20px;
+        height: 69px;
+        border-radius: 20px;
+        padding: 20px;
+        font-size: 24px;
+        text-align: left;
+        color: $beige-background;
+
+        &_active {
+            background-color: $beige-background;
+            color: $colorblack-text;
+        }
+    }
+
+    &__filterContainer {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        width: fit-content;
+        align-items: flex-start;
+        font-family: "Glanz";
+        font-weight: 400 !important;
+        font-size: 80px;
+        gap: 31px;
+
+        h2 {
+            color: $brown-color;
+        }
+    }
+
+    &__input {
+        position: relative;
+        border: 1px solid #1A1A1A;
+        background-color: #FFFFFF;
+        flex-grow: 1;
+        min-width: 68.3vw;
+        border-radius: 20px;
+
+        ::placeholder {
+            font-size: 26px;
+        }
+    }
+
+    &__searchIcon {
+        position: absolute;
+        right: 35px;
+        bottom: 12px;
+    }
+
+    &__alphabet {
+        display: flex;
+        flex-wrap: wrap;
+        width: 68.3vw;
+        height: 88px;
+        gap: 5px;
+        padding-left: 5px;
+    }
+
+    &__letter {
+        font-size: 26px;
+        font-family: 'Roboto';
+        font-weight: 600;
+        letter-spacing: 29%;
+        padding-right: 12.5px;
+        color: $brown-color;
+    }
+}

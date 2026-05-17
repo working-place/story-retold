@@ -6,8 +6,8 @@ import HomePage from './pages/main/HomePage/HomePage'
 import LoginPage from "./pages/auth/LoginPage/LoginPage";
 import AdminHeroes from "./pages/admin/AdminHeroes/AdminHeroes";
 import AdminHeroActions from "./pages/admin/AdminHeroActions/AdminHeroActions";
-import USSRHeroesPage from "./pages/main/USSRHeroesPage/USSRHeroesPage";
-import SVOHeroesPage from "./pages/main/SVOHeroesPage/SVOHeroesPage";
+import USSRHeroesPage from "./pages/main/HeroesPage/USSRHeroesPage";
+import SVOHeroesPage from "./pages/main/HeroesPage/SVOHeroesPage";
 
 function App() {
 

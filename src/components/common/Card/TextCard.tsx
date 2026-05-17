@@ -1,69 +1,11 @@
 import styles from "./TextCard.module.scss"
+import type { Hero } from "../../../types/hero.types";
 
-// interface CardProps {
-// }
+interface TextCardProps {
+    heroes?: Hero[];
+}
 
-const heroes = [
-    {
-        id: 1,
-        name: 'Иванов Иван Иванович',
-        dateOfBirth: '2024-01-15',
-        dateOfDeath: '2024-03-20',
-        range: 'Рядовой',
-    },
-    {
-        id: 2,
-        name: 'Васильев Василий',
-        dateOfBirth: '2024-02-01',
-        dateOfDeath: '2024-12-31',
-        range: 'Прапорщик',
-    },
-    {
-        id: 3,
-        name: 'Михайлов Михаил',
-        dateOfBirth: '2024-03-10',
-        dateOfDeath: null,
-        range: 'Майор',
-    },
-    {
-        id: 4,
-        name: 'Сергеев Сергей Сергеевич',
-        dateOfBirth: '01.10.1920',
-        dateOfDeath: '2024-01-10',
-        range: 'Сержант',
-    },
-    {
-        id: 5,
-        name: 'Антонов Антон Антонович',
-        dateOfBirth: '2024-04-01',
-        dateOfDeath: null,
-        range: 'Водитель',
-    },
-    {
-        id: 6,
-        name: 'Александров Александр',
-        dateOfBirth: '2024-05-20',
-        dateOfDeath: '2024-08-15',
-        range: 'Музыкант',
-    },
-    {
-        id: 7,
-        name: 'Кузнецов Антон Антонович',
-        dateOfBirth: '2024-04-01',
-        dateOfDeath: null,
-        range: 'Водитель',
-    },
-    {
-        id: 8,
-        name: 'Александров Александр',
-        dateOfBirth: '2024-05-20',
-        dateOfDeath: '2024-08-15',
-        range: 'Музыкант',
-    },
-];
-
-export default function TextCard() {
-
+export default function TextCard({ heroes = [] }: TextCardProps) {
     const formatDate = (dateString: string | number | Date | null) => {
         if (!dateString) return 'неизвестно';
         const date = new Date(dateString);
@@ -100,8 +42,7 @@ export default function TextCard() {
                         </div>
                     </div>
                 )
-            })
-            }
+            })}
         </>
     )
 }
