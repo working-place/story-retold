@@ -7,7 +7,6 @@ const heroes = [
     {
         id: 1,
         name: 'Иванов Иван Иванович',
-        img: '/hero-image-bg.png',
         dateOfBirth: '2024-01-15',
         dateOfDeath: '2024-03-20',
         range: 'Рядовой',
@@ -15,7 +14,6 @@ const heroes = [
     {
         id: 2,
         name: 'Васильев Василий',
-        img: '/hero-image-bg.png',
         dateOfBirth: '2024-02-01',
         dateOfDeath: '2024-12-31',
         range: 'Прапорщик',
@@ -23,7 +21,6 @@ const heroes = [
     {
         id: 3,
         name: 'Михайлов Михаил',
-        img: '/hero-image-bg.png',
         dateOfBirth: '2024-03-10',
         dateOfDeath: null,
         range: 'Майор',
@@ -31,7 +28,6 @@ const heroes = [
     {
         id: 4,
         name: 'Сергеев Сергей Сергеевич',
-        img: '/hero-image-bg.png',
         dateOfBirth: '01.10.1920',
         dateOfDeath: '2024-01-10',
         range: 'Сержант',
@@ -39,7 +35,6 @@ const heroes = [
     {
         id: 5,
         name: 'Антонов Антон Антонович',
-        img: '/hero-image-bg.png',
         dateOfBirth: '2024-04-01',
         dateOfDeath: null,
         range: 'Водитель',
@@ -47,15 +42,13 @@ const heroes = [
     {
         id: 6,
         name: 'Александров Александр',
-        img: '/hero-image-bg.png',
         dateOfBirth: '2024-05-20',
         dateOfDeath: '2024-08-15',
         range: 'Музыкант',
     },
-        {
+    {
         id: 7,
         name: 'Кузнецов Антон Антонович',
-        img: '/hero-image-bg.png',
         dateOfBirth: '2024-04-01',
         dateOfDeath: null,
         range: 'Водитель',
@@ -63,7 +56,6 @@ const heroes = [
     {
         id: 8,
         name: 'Александров Александр',
-        img: '/hero-image-bg.png',
         dateOfBirth: '2024-05-20',
         dateOfDeath: '2024-08-15',
         range: 'Музыкант',
@@ -88,22 +80,23 @@ export default function TextCard() {
                 return (
                     <div
                         key={hero.id}
-                        className={styles.imagedCard}>
-                        <img
-                            src={hero.img}
-                            alt={hero.name}
-                            className={styles.imagedCard__img} />
+                        className={styles.textCard}>
 
-                        <div className={styles.imagedCard__infoContainer}>
-                            <p className={styles.imagedCard__name}>{hero.name}</p>
-                            <span className={styles.imagedCard__date}>
+                        <div className={styles.textCard__imgContainer}>
+                            <img
+                                src="/star.png"
+                                alt='Звезда'
+                                className={styles.textCard__img} />
+                        </div>
+                        <div className={styles.textCard__infoContainer}>
+                            <p className={styles.textCard__name}>{hero.name}</p>
+                            <span className={styles.textCard__date}>
                                 {formatDate(hero.dateOfBirth)}&nbsp;-&nbsp;{formatDate(hero.dateOfDeath)}
                             </span>
-                            <p className={styles.imagedCard__range}>{hero.range}</p>
+                            <p className={styles.textCard__range}>{hero.range}</p>
                         </div>
-
-                        <div className={styles.imagedCard__buttonContainer}>
-                            <button className={styles.imagedCard__button}>Подробнее</button>
+                        <div className={styles.textCard__buttonContainer}>
+                            <button className={styles.textCard__button}>Подробнее</button>
                         </div>
                     </div>
                 )

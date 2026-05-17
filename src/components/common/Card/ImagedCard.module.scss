@@ -2,7 +2,6 @@
 @use "../../../assets/scss/_typography.scss" as *;
 @use "../../../assets/scss/_variables-color.scss" as *;
 
-
 .imagedCard {
     background-color: $brown-color;
     width: 415px;
@@ -48,6 +47,7 @@
         height: 55;
         border-radius: 20px;
         margin-top: 12px;
+        margin-right: 18px;
         padding-top: 12px;
         padding-right: 24px;
         padding-bottom: 12px;
