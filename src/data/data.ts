@@ -3,7 +3,7 @@ import type { Hero } from "../types/hero.types";
 export const heroesData: Hero[] = [
     {
         id: 1,
-        name: 'Иванов Иван Иванович',
+        name: 'ИвановSVO Иван Иванович',
         img: '/hero-image-bg.png',
         dateOfBirth: '2024-01-15',
         dateOfDeath: '2024-03-20',
@@ -12,7 +12,7 @@ export const heroesData: Hero[] = [
     },
     {
         id: 2,
-        name: 'Васильев Василий',
+        name: 'ВасильевSVO Василий',
         img: '/hero-image-bg.png',
         dateOfBirth: '2024-02-01',
         dateOfDeath: '2024-12-31',
@@ -21,7 +21,7 @@ export const heroesData: Hero[] = [
     },
     {
         id: 3,
-        name: 'Михайлов Михаил',
+        name: 'МихайловSVO Михаил',
         img: '/hero-image-bg.png',
         dateOfBirth: '2024-03-10',
         dateOfDeath: null,
@@ -30,7 +30,7 @@ export const heroesData: Hero[] = [
     },
     {
         id: 4,
-        name: 'Сергеев Сергей Сергеевич',
+        name: 'СергеевSVO Сергей Сергеевич',
         img: '',
         dateOfBirth: '1920-10-01',
         dateOfDeath: '2024-01-10',
@@ -39,7 +39,7 @@ export const heroesData: Hero[] = [
     },
     {
         id: 5,
-        name: 'Антонов Антон Антонович',
+        name: 'АнтоновUSSR Антон Антонович',
         img: '',
         dateOfBirth: '2024-04-01',
         dateOfDeath: null,
@@ -48,7 +48,7 @@ export const heroesData: Hero[] = [
     },
     {
         id: 6,
-        name: 'Александров Александр',
+        name: 'АлександровUSSR Александр',
         img: '/hero-image-bg.png',
         dateOfBirth: '2024-05-20',
         dateOfDeath: '2024-08-15',
@@ -57,16 +57,16 @@ export const heroesData: Hero[] = [
     },
     {
         id: 7,
-        name: 'Кузнецов Антон Антонович',
+        name: 'КузнецовUSSR Антон Антонович',
         img: '/hero-image-bg.png',
-        dateOfBirth: '2024-04-01',
+        dateOfBirth: '2024-07-12',
         dateOfDeath: null,
         range: 'Водитель',
         type: 'USSR'
     },
     {
         id: 8,
-        name: 'Петров Петр Петрович',
+        name: 'ПетровSVO Петр Петрович',
         img: '/hero-image-bg.png',
         dateOfBirth: '2024-05-20',
         dateOfDeath: '2024-08-15',
@@ -75,7 +75,7 @@ export const heroesData: Hero[] = [
     },
         {
         id: 9,
-        name: 'Антонов Антон Антонович',
+        name: 'АнтоновSVO Антон Антонович',
         img: '',
         dateOfBirth: '2024-04-01',
         dateOfDeath: null,
@@ -84,7 +84,7 @@ export const heroesData: Hero[] = [
     },
     {
         id: 10,
-        name: 'Александров Александр',
+        name: 'АлександровUSSR Александр',
         img: '/hero-image-bg.png',
         dateOfBirth: '2024-05-20',
         dateOfDeath: '2024-08-15',
@@ -93,7 +93,7 @@ export const heroesData: Hero[] = [
     },
     {
         id: 11,
-        name: 'Кузнецов Антон Антонович',
+        name: 'КузнецовUSSR Антон Антонович',
         img: '/hero-image-bg.png',
         dateOfBirth: '2024-04-01',
         dateOfDeath: null,
@@ -102,7 +102,7 @@ export const heroesData: Hero[] = [
     },
     {
         id: 12,
-        name: 'Петров Петр Петрович',
+        name: 'ПетровSVO Петр Петрович',
         img: '/hero-image-bg.png',
         dateOfBirth: '2024-05-20',
         dateOfDeath: '2024-08-15',

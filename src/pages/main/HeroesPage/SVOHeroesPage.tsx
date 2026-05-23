@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ImagedCard from "../../../components/common/Card/ImagedCard";
 import TextCard from "../../../components/common/Card/TextCard";
 import Filter from "../../../components/common/Filter";
@@ -9,7 +9,12 @@ import { heroesData } from "../../../data/data";
 import type { HeroesPageProps } from "../../../types/hero.types";
 
 export default function SVOHeroesPage({ path, text }: HeroesPageProps) {
-    const [filteredHeroes, setFilteredHeroes] = useState<Hero[]>(heroesData);
+
+    const svoHeroes = useMemo(() => {
+        return heroesData.filter(hero => hero.type === 'SVO');
+    }, []);
+
+    const [filteredHeroes, setFilteredHeroes] = useState<Hero[]>(svoHeroes);
     const currentPath = path || "Герои СВО/Все Герои";
 
     const handleSearchResults = (results: Hero[]) => {
@@ -23,7 +28,7 @@ export default function SVOHeroesPage({ path, text }: HeroesPageProps) {
                 <section className={styles.title}>
                     <p className={styles.title__path}>
                         {currentPath} {text && `| ${text}`}
-                        {filteredHeroes.length !== heroesData.length && (
+                        {filteredHeroes.length !== svoHeroes.length && (
                             <span className={styles.title__filterInfo}>
                                 {" "}· Найдено: {filteredHeroes.length}
                             </span>
@@ -34,7 +39,7 @@ export default function SVOHeroesPage({ path, text }: HeroesPageProps) {
                 <section className={styles.filter}>
                     <Filter
                         title="Герои СВО"
-                        heroes={heroesData}
+                        heroes={svoHeroes}
                         onSearchResults={handleSearchResults}
                     />
                 </section>
