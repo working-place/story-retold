@@ -23,6 +23,7 @@
     transition: all 0.2s ease;
     outline: none;
     border: none;
+    //  font-family: 'Roboto', sans-serif;
 
     // готово
     &::placeholder {
@@ -56,6 +57,19 @@
 }
 
 // готово
+.extraSmall {
+    width: 261px;
+    padding: 12px 24px 12px 24px;
+    font-size: 20px;
+}
+
+.small {
+    width: 389px;
+    padding: 12px 24px 12px 24px;
+    font-size: 20px;
+
+}
+
 .medium {
     padding: 12px 24px 12px 24px;
     font-size: 20px;
@@ -64,6 +78,14 @@
 .large {
     padding: 18px 30px;
     font-size: 26px;
+}
+
+.extraLarge {
+    padding: 12px 24px;
+    font-size: 20px;
+    width: 100%;
+    line-height: 1;
+    min-width: 826px;
 }
 
 .checkbox {
@@ -127,6 +149,9 @@
     display: block;
     font-size: 20px;
     color: $beige-background;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    // margin-bottom: 8px;
 
     &_checkbox {
         font-size: 15px;

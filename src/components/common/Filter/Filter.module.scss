@@ -2,6 +2,13 @@
 @use "../../../assets/scss/_typography.scss" as *;
 @use "../../../assets/scss/_variables-color.scss" as *;
 
+         h3 {
+            font-family: 'Roboto';
+            width: 100%;
+            text-align: left;
+            font-weight: 900;
+         }
+
 .filter {
     display: flex;
     min-height: 302px;
@@ -42,6 +49,12 @@
         }
     }
 
+    .simpleFilter {
+        display: flex;
+        flex-direction: column;
+        gap: 31px;
+    }
+
     &__filterContainer {
         display: flex;
         flex-direction: column;
@@ -65,6 +78,14 @@
         flex-grow: 1;
         min-width: 68.3vw;
         border-radius: 20px;
+
+        &_medium {
+            min-width: 389px;
+        }
+
+        &_small {
+            width: 262px;
+        }
 
         ::placeholder {
             font-size: 26px;
@@ -93,5 +114,59 @@
         letter-spacing: 29%;
         padding-right: 12.5px;
         color: $brown-color;
+    }
+}
+
+.advancedFilter {
+    display: flex;
+
+    background-color: #534035;
+    flex-grow: 1;
+    max-width: 1306px;
+    width: 100%;
+    height: fit-content;
+    color: #F1E6D0;
+    padding: 23px 31px;
+    border-radius: 20px;
+    gap: 28px;
+
+    h3 {
+        font-size: 24px;
+    }
+
+    &__searchButton {
+        font-size: 24px;
+        background-color: $beige-background;
+        color: $brown-color;
+        font-family: 'Roboto';
+        font-weight: 900;
+        padding: 12px 24px;
+        min-width: 209px;
+        width: fit-content;
+        line-height: 1;
+        border-radius: 20px;
+        justify-content: center;
+    }
+
+    &__mainInfoBox {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+        width: fit-content;
+
+
+    }
+
+    &__additionalInfoBox {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 28px;
+        min-width: 389px;
+    }
+
+    &__inputBox {
+        display: flex;
+        gap: 20px;
     }
 }

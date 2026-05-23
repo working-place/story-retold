@@ -2,7 +2,7 @@ import { forwardRef, useState, useId, type ReactNode } from "react";
 import styles from "./Input.module.scss";
 
 export type InputVariant = '_primary' | '_secondary' | '_outline' | '_ghost';
-export type InputSize = 'small' | 'medium' | 'large' | 'checkbox';
+export type InputSize = 'extraSmall' | 'small' | 'medium' | 'large' | 'extraLarge' |'checkbox';
 
 interface InputProps {
     value?: string | number;
