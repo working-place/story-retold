@@ -21,6 +21,14 @@ export default function SVOHeroesPage({ path, text }: HeroesPageProps) {
         setFilteredHeroes(results);
     };
 
+    const heroesWithImage = useMemo(() => {
+        return filteredHeroes.filter(hero => hero.img && hero.img.trim() !== '');
+    }, [filteredHeroes]);
+
+    const heroesWithoutImage = useMemo(() => {
+        return filteredHeroes.filter(hero => !hero.img || hero.img.trim() === '');
+    }, [filteredHeroes]);
+
     return (
         <MainLayout>
             <div className={styles.heroesPage}>
@@ -44,13 +52,17 @@ export default function SVOHeroesPage({ path, text }: HeroesPageProps) {
                     />
                 </section>
 
-                <section className={styles.imagedCards}>
-                    <ImagedCard heroes={filteredHeroes} />
-                </section>
+                {heroesWithImage.length > 0 && (
+                    <section className={styles.imagedCards}>
+                        <ImagedCard heroes={heroesWithImage} />
+                    </section>
+                )}
 
-                <section className={styles.textCards}>
-                    <TextCard heroes={filteredHeroes} />
-                </section>
+                {heroesWithoutImage.length > 0 && (
+                    <section className={styles.textCards}>
+                        <TextCard heroes={heroesWithoutImage} />
+                    </section>
+                )}
             </div>
         </MainLayout>
     );
