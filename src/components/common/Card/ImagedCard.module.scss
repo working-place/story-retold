@@ -59,3 +59,9 @@
         background-color: $beige-background;
     }
 }
+
+.cardLink {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}

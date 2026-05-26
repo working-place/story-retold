@@ -8,6 +8,7 @@ import AdminHeroes from "./pages/admin/AdminHeroes/AdminHeroes";
 import AdminHeroActions from "./pages/admin/AdminHeroActions/AdminHeroActions";
 import USSRHeroesPage from "./pages/main/HeroesPage/USSRHeroesPage";
 import SVOHeroesPage from "./pages/main/HeroesPage/SVOHeroesPage";
+import HeroDetailPage from "./pages/main/HeroDetailPage/HeroDetailPage";
 
 function App() {
 
@@ -25,6 +26,10 @@ function App() {
                 <Route
           path='/svo-heroes'
           element={<SVOHeroesPage/>}
+        />
+        <Route
+          path='/hero/:id'
+          element={<HeroDetailPage/>}
         />
         {/* Сделать Protected Routes для админки */}
         {/* <ProtectedRoute
