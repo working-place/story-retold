@@ -10,12 +10,9 @@
 
 .heroDetailPage__heroContent_noPhoto {
     display: flex;
-    // Ваши стили для контента без фото
-    // (без блока heroDetailPage__heroImage)
     position: relative;
     margin-top: -20px;
     margin-bottom: 110px;
-    // ... остальные стили
 }
 
 .heroDetailPage__columnWrapper_noPhoto {
@@ -28,10 +25,7 @@
 .heroDetailPage__infoWrapper_noPhoto {
     display: flex;
     flex-direction: column;
-    // Стили для информационного блока без фото
-    // (может быть шире или иметь другое позиционирование)
-    width: 100%; // или другая ширина
-    // ... остальные стили
+    width: 100%;
 
     h1 {
         margin-bottom: 35px;

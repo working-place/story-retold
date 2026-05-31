@@ -14,7 +14,6 @@ export default function HeroDetailPage() {
         return heroesData.find(h => h.id === heroId);
     }, [id]);
 
-    // Проверяем, есть ли фото у героя
     const hasPhoto = hero?.img && hero.img.trim() !== '';
 
     const formatDate = (dateString: string | number | Date | null) => {
@@ -46,7 +45,6 @@ export default function HeroDetailPage() {
         );
     }
 
-    // Рендер для героя БЕЗ фото
     if (!hasPhoto) {
         return (
             <MainLayout>
@@ -93,14 +91,7 @@ export default function HeroDetailPage() {
                                     </div>
 
                                 </div>
-
-
-
-
-
-
                             </div>
-
                         </section>
 
                         <section className={styles.description}>
