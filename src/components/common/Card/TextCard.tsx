@@ -1,5 +1,6 @@
 import styles from "./TextCard.module.scss"
 import type { Hero } from "../../../types/hero.types";
+import { Link } from "react-router-dom";
 
 interface TextCardProps {
     heroes?: Hero[];
@@ -31,14 +32,18 @@ export default function TextCard({ heroes = [] }: TextCardProps) {
                                 className={styles.textCard__img} />
                         </div>
                         <div className={styles.textCard__infoContainer}>
-                            <p className={styles.textCard__name}>{hero.name}</p>
-                            <span className={styles.textCard__date}>
-                                {formatDate(hero.dateOfBirth)}&nbsp;-&nbsp;{formatDate(hero.dateOfDeath)}
-                            </span>
-                            <p className={styles.textCard__range}>{hero.range}</p>
+                            <Link to={`/hero/${hero.id}`} className={styles.cardLink}>
+                                <p className={styles.textCard__name}>{hero.name}</p>
+                                <span className={styles.textCard__date}>
+                                    {formatDate(hero.dateOfBirth)}&nbsp;-&nbsp;{formatDate(hero.dateOfDeath)}
+                                </span>
+                                <p className={styles.textCard__range}>{hero.range}</p>
+                            </Link>
                         </div>
                         <div className={styles.textCard__buttonContainer}>
-                            <button className={styles.textCard__button}>Подробнее</button>
+                            <Link className={styles.textCard__button} to={`/hero/${hero.id}`}>
+                                Подробнее
+                            </Link>
                         </div>
                     </div>
                 )

@@ -95,6 +95,22 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
         };
     }, [heroes]);
 
+    const resetSimpleSearch = () => {
+        setSearchQuery("");
+        setSelectedLetter(null);
+    };
+
+    const resetAdvancedSearch = () => {
+        setAdvancedFilters({
+            name: "",
+            dateOfBirth: "",
+            dateOfDeath: "",
+            placeOfBirth: "",
+            rank: "",
+            placeOfService: ""
+        });
+    };
+
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSearchQuery(value);
@@ -112,12 +128,16 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
     };
 
     const handleModeChange = (mode: "all" | "advanced") => {
+        if (mode === searchMode) return;
+
         setSearchMode(mode);
 
         if (mode === "advanced") {
-            onSearchResults?.(searchHeroes("", selectedLetter, mode, advancedFilters));
+            resetSimpleSearch();
+            onSearchResults?.(searchHeroes("", null, "advanced", advancedFilters));
         } else {
-            onSearchResults?.(searchHeroes(searchQuery, selectedLetter, mode));
+            resetAdvancedSearch();
+            onSearchResults?.(searchHeroes("", null, "all"));
         }
     };
 
@@ -135,22 +155,6 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
             onSearchResults?.(searchHeroes("", selectedLetter, "advanced", advancedFilters));
         }
     };
-
-    // const handleResetAdvanced = () => {
-    //     const resetFilters = {
-    //         name: "",
-    //         dateOfBirth: "",
-    //         dateOfDeath: "",
-    //         placeOfBirth: "",
-    //         rank: "",
-    //         placeOfService: ""
-    //     };
-    //     setAdvancedFilters(resetFilters);
-
-    //     if (searchMode === "advanced") {
-    //         onSearchResults?.(searchHeroes("", selectedLetter, "advanced", resetFilters));
-    //     }
-    // };
 
     return (
         <div className={styles.filter}>
@@ -209,9 +213,8 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
                     </div>
                 ) : (
                     <div className={styles.advancedFilter}>
-
                         <div className={styles.advancedFilter__mainInfoBox}>
-                        <h3>Основные сведения</h3>
+                            <h3>Основные сведения</h3>
 
                             <Input
                                 className={styles.advancedFilter__input}
@@ -225,45 +228,45 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
                             />
 
                             <div className={styles.advancedFilter__inputBox}>
-                            <Input
-                                className={`${styles.advancedFilter__input} ${styles.advancedFilter__input_extraSmall}`}
-                                type='text'
-                                size='extraSmall'
-                                value={advancedFilters.dateOfBirth}
-                                onChange={(e) => handleAdvancedFilterChange("dateOfBirth", e.target.value)}
-                                placeholder="Дата рождения"
-                                label="Дата рождения"
-                                required
-                            />
-                            <Input
-                                className={`${styles.advancedFilter__input} ${styles.advancedFilter__input_extraSmall}`}
-                                type='text'
-                                size='extraSmall'
-                                value={advancedFilters.dateOfDeath}
-                                onChange={(e) => handleAdvancedFilterChange("dateOfDeath", e.target.value)}
-                                placeholder="Дата смерти"
-                                label="Окончание"
-                            />
-                            <Input
-                                className={`${styles.advancedFilter__input} ${styles.advancedFilter__input_extraSmall}`}
-                                type='text'
-                                size='extraSmall'
-                                value={advancedFilters.placeOfBirth}
-                                onChange={(e) => handleAdvancedFilterChange("placeOfBirth", e.target.value)}
-                                placeholder="Место рождения"
-                                label="Место рождения"
-                                required
-                            />
+                                <Input
+                                    className={`${styles.advancedFilter__input} ${styles.advancedFilter__input_extraSmall}`}
+                                    type='text'
+                                    size='extraSmall'
+                                    value={advancedFilters.dateOfBirth}
+                                    onChange={(e) => handleAdvancedFilterChange("dateOfBirth", e.target.value)}
+                                    placeholder="Дата рождения"
+                                    label="Дата рождения"
+                                    required
+                                />
+                                <Input
+                                    className={`${styles.advancedFilter__input} ${styles.advancedFilter__input_extraSmall}`}
+                                    type='text'
+                                    size='extraSmall'
+                                    value={advancedFilters.dateOfDeath}
+                                    onChange={(e) => handleAdvancedFilterChange("dateOfDeath", e.target.value)}
+                                    placeholder="Дата смерти"
+                                    label="Окончание"
+                                />
+                                <Input
+                                    className={`${styles.advancedFilter__input} ${styles.advancedFilter__input_extraSmall}`}
+                                    type='text'
+                                    size='extraSmall'
+                                    value={advancedFilters.placeOfBirth}
+                                    onChange={(e) => handleAdvancedFilterChange("placeOfBirth", e.target.value)}
+                                    placeholder="Место рождения"
+                                    label="Место рождения"
+                                    required
+                                />
                             </div>
                         </div>
 
                         <div className={styles.advancedFilter__additionalInfoBox}>
-                        <h3>Дополнительные сведения</h3>
+                            <h3>Дополнительные сведения</h3>
                             <Input
                                 className={`${styles.advancedFilter__input} ${styles.advancedFilter__input_small}`}
                                 type='text'
                                 size="small"
-                                label="Военское звание"
+                                label="Воинское звание"
                                 value={advancedFilters.rank}
                                 onChange={(e) => handleAdvancedFilterChange("rank", e.target.value)}
                                 placeholder="Воинское звание"

@@ -2,12 +2,12 @@
 @use "../../../assets/scss/_typography.scss" as *;
 @use "../../../assets/scss/_variables-color.scss" as *;
 
-         h3 {
-            font-family: 'Roboto';
-            width: 100%;
-            text-align: left;
-            font-weight: 900;
-         }
+h3 {
+    font-family: 'Roboto';
+    width: 100%;
+    text-align: left;
+    font-weight: 900;
+}
 
 .filter {
     display: flex;
@@ -153,8 +153,6 @@
         flex-direction: column;
         gap: 28px;
         width: fit-content;
-
-
     }
 
     &__additionalInfoBox {

@@ -1,5 +1,6 @@
 import styles from "./ImagedCard.module.scss"
 import type { Hero } from "../../../types/hero.types";
+import { Link } from "react-router-dom";
 
 interface ImagedCardProps {
     heroes?: Hero[];
@@ -29,17 +30,22 @@ export default function ImagedCard({ heroes = [] }: ImagedCardProps) {
                             className={styles.imagedCard__img} />
 
                         <div className={styles.imagedCard__infoContainer}>
-                            <p className={styles.imagedCard__name}>{hero.name}</p>
-                            <span className={styles.imagedCard__date}>
-                                {formatDate(hero.dateOfBirth)}&nbsp;-&nbsp;{formatDate(hero.dateOfDeath)}
-                            </span>
-                            <p className={styles.imagedCard__range}>{hero.range}</p>
+                            <Link to={`/hero/${hero.id}`} className={styles.cardLink}>
+                                <p className={styles.imagedCard__name}>{hero.name}</p>
+                                <span className={styles.imagedCard__date}>
+                                    {formatDate(hero.dateOfBirth)}&nbsp;-&nbsp;{formatDate(hero.dateOfDeath)}
+                                </span>
+                                <p className={styles.imagedCard__range}>{hero.range}</p>
+                            </Link>
                         </div>
 
                         <div className={styles.imagedCard__buttonContainer}>
-                            <button className={styles.imagedCard__button}>Подробнее</button>
+                            <Link className={styles.imagedCard__button} to={`/hero/${hero.id}`}>
+                                Подробнее
+                            </Link>
                         </div>
                     </div>
+
                 )
             })}
         </>

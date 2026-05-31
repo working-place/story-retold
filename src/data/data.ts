@@ -22,7 +22,7 @@ export const heroesData: Hero[] = [
     {
         id: 3,
         name: 'Михайлов Михаил',
-        img: '/hero-image-bg.png',
+        img: '',
         dateOfBirth: '2024-03-10',
         dateOfDeath: null,
         range: 'Майор',
@@ -58,8 +58,8 @@ export const heroesData: Hero[] = [
     {
         id: 7,
         name: 'Кузнецов Антон Антонович',
-        img: '/hero-image-bg.png',
-        dateOfBirth: '2024-04-01',
+        img: '',
+        dateOfBirth: '2024-07-12',
         dateOfDeath: null,
         range: 'Водитель',
         type: 'USSR'
@@ -67,7 +67,7 @@ export const heroesData: Hero[] = [
     {
         id: 8,
         name: 'Петров Петр Петрович',
-        img: '/hero-image-bg.png',
+        img: '',
         dateOfBirth: '2024-05-20',
         dateOfDeath: '2024-08-15',
         range: 'Музыкант',
