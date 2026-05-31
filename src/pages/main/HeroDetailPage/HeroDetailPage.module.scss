@@ -2,6 +2,49 @@
 @use "../../../assets/scss/_typography.scss" as *;
 @use "../../../assets/scss/_variables-color.scss" as *;
 
+.heroDetailPage_noPhoto {
+    .heroDetailPage__wrapper {
+        background-color: #36453D;
+    }
+}
+
+.heroDetailPage__heroContent_noPhoto {
+    display: flex;
+    position: relative;
+    margin-top: -20px;
+    margin-bottom: 110px;
+}
+
+.heroDetailPage__columnWrapper_noPhoto {
+    display: flex;
+
+    width: fit-content;
+    padding-left: 15px;
+}
+
+.heroDetailPage__infoWrapper_noPhoto {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    h1 {
+        margin-bottom: 35px;
+    }
+}
+
+.heroDetailPage__column_noPhoto {
+display: flex;
+flex-direction: column;
+margin-top: 25px;
+gap: 35px;
+}
+
+.heroDetailPage__infoRow {
+    min-width: 394px;
+    width: fit-content;
+}
+
+
 .heroDetailPage {
     display: flex;
     flex-direction: column;
@@ -145,7 +188,7 @@
         color: #101010;
         white-space: pre-wrap;
         word-wrap: break-word;
-        word-break: break-all;
+        // word-break: break-all;
         padding: 87px 43px 43px 43px;
         text-align: left;
         border-radius: 40px;
