@@ -5,11 +5,7 @@ import styles from "./HeroDetailPage.module.scss";
 import { heroesData } from "../../../data/data";
 import Gallery from "../../../components/common/Gallery/Gallery";
 
-interface HeroDetailPageProps {
-    text?: string | undefined;
-}
-
-export default function HeroDetailPage({ text }: HeroDetailPageProps) {
+export default function HeroDetailPage() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
 
@@ -111,70 +107,25 @@ export default function HeroDetailPage({ text }: HeroDetailPageProps) {
 
                         <pre className={styles.description__box}>
                             Если в вашей семье есть человек, прошедший войну - его история должна быть сохранена.Если в вашей семье есть человек, прошедший войну - его история должна быть сохранена. Если в вашей семье есть человек, прошедший войну - его история должна быть сохранена.Если в вашей семье есть человек, прошедший войну - его история должна быть сохранена.Если в вашей семье есть человек, прошедший войну - его история должна быть сохранена.
-                            
+
                             Если в вашей семье есть человек, прошедший войну - его история должна быть сохранена.Если в вашей семье есть человек, прошедший войну - его история должна быть сохранена. Если в вашей семье есть человек, прошедший войну - его история должна быть сохранена.Если в вашей семье есть человек, прошедший войну - его история должна быть сохранена.Если в вашей семье есть человек, прошедший войну - его история должна быть сохранена.
 
                             Если в вашей семье есть человек, прошедший войну - его история должна быть сохранена.Если в вашей семье есть человек, прошедший войну - его история должна быть сохранена. Если в вашей семье есть человек.
+
+                            <img className={styles.description__pin1} src="/group-1.png" alt="" />
+                            <img className={styles.description__pin2} src="/group-2.png" alt="" />
+                            <img className={styles.description__pin3} src="/group-3.png" alt="" />
+                            <img className={styles.description__pin4} src="/group-4.png" alt="" />
                         </pre>
+
+
                     </section>
 
-                    <section className={styles.heroDetailPage__gallery}>
+                    <section className={styles.gallery}>
                         <Gallery />
                     </section>
 
-                    <section className={styles.heroDetailPage__aboutAvtor}>
-
-                    </section>
-
-                    {/* --------- */}
-
-                    {/* <div className={styles.heroDetailPage}>
-                <button onClick={handleGoBack} className={styles.backButton}>
-                    ← Назад
-                </button>
-
-                <div className={styles.heroContent}>
-                    <div className={styles.heroImage}>
-                        {hero.img && hero.img.trim() !== '' ? (
-                            <img src={hero.img} alt={hero.name} />
-                        ) : (
-                            <div className={styles.noImage}>Нет фото</div>
-                        )}
-                    </div>
-
-                    <div className={styles.heroInfo}>
-                        <h1 className={styles.heroName}>{hero.name}</h1>
-
-                        <div className={styles.infoBlock}>
-                            <div className={styles.infoRow}>
-                                <span className={styles.infoLabel}>Дата рождения:</span>
-                                <span className={styles.infoValue}>{formatDate(hero.dateOfBirth)}</span>
-                            </div>
-
-                            <div className={styles.infoRow}>
-                                <span className={styles.infoLabel}>Дата смерти:</span>
-                                <span className={styles.infoValue}>{formatDate(hero.dateOfDeath)}</span>
-                            </div>
-
-                            <div className={styles.infoRow}>
-                                <span className={styles.infoLabel}>Воинское звание:</span>
-                                <span className={styles.infoValue}>{hero.range}</span>
-                            </div>
-
-                            <div className={styles.infoRow}>
-                                <span className={styles.infoLabel}>Тип:</span>
-                                <span className={styles.infoValue}>{hero.type}</span>
-                            </div>
-                        </div>
-
-                        {text && <p className={styles.additionalText}>{text}</p>}
-                    </div>
-                </div>
-            </div> */}
-
-                    {/* ---------------- */}
-
-                </div>
+                 </div>
             </div>
         </MainLayout>
     );
