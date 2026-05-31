@@ -1,26 +1,21 @@
-// import React from 'react';
-// import { Route, redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-// interface ProtectedRouteProps {
-//   isAuthenticated: boolean;
-//   redirectPath: string;
-//   children: React.ReactNode;
-// }
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  redirectPath?: string;
+}
 
-// const ProtectedRoute = ({ isAuthenticated, redirectPath, children }: ProtectedRouteProps) => {
-//   if (!isAuthenticated) {
-//     return <redirect to={redirectPath} />;
-//   }
+export const ProtectedRoute = ({ children, redirectPath = '/login' }: ProtectedRouteProps) => {
+  const { isAuthenticated, isLoading } = useAuth();
 
-//   return children;
-// };
+  if (isLoading) {
+    return <div>Загрузка...</div>;
+  }
 
-// export default ProtectedRoute;
+  if (!isAuthenticated) {
+    return <Navigate to={redirectPath} replace />;
+  }
 
-
-
-
-
-
-
-// реализовать для админки
+  return children;
+};
