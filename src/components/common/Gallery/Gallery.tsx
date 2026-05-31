@@ -1,6 +1,6 @@
 import { MOCK_CARD_DATA, type CardData } from "../../../types/card.types";
 import styles from "./Gallery.module.scss";
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface GalleryProps {
   cardData?: CardData;
