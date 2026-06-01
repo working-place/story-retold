@@ -52,7 +52,7 @@ export interface CardCreateRequest {
   consent: '1';
   privacyPolicy: '1';
   chapter: Chapter;
-  
+
   // Optional / nullable
   dateDeath?: string | null;
   email?: string;
@@ -60,7 +60,7 @@ export interface CardCreateRequest {
   placeService?: string;
   placeConscription?: string;
   cardType?: CardType;
-  
+
   // Files
   photoHero?: File;
   additionalCardImages?: AdditionalCardImage[];

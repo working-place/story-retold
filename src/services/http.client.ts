@@ -11,10 +11,10 @@ export async function httpClient<T>(
   options: FetchOptions = {}
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
-  
+
   const headers = new Headers(options.headers);
   headers.set('Accept', 'application/json');
-  
+
   // Добавляем токен, если не запрещено
   if (!options.skipAuth) {
     const token = getToken();

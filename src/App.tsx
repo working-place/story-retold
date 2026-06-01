@@ -11,6 +11,7 @@ import AdminHeroes from "./pages/admin/AdminHeroes/AdminHeroes";
 import AdminHeroActions from "./pages/admin/AdminHeroActions/AdminHeroActions";
 import USSRHeroesPage from "./pages/main/HeroesPage/USSRHeroesPage";
 import SVOHeroesPage from "./pages/main/HeroesPage/SVOHeroesPage";
+import HeroDetailPage from "./pages/main/HeroDetailPage/HeroDetailPage";
 
 function App() {
   return (
@@ -21,21 +22,20 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/ussr-heroes" element={<USSRHeroesPage />} />
           <Route path="/svo-heroes" element={<SVOHeroesPage />} />
+          <Route path='/hero/:id' element={<HeroDetailPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
-          
+
           {/* Защищенные админ-маршруты */}
-          <Route
-            path="/admin-heroes"
+          <Route path="/admin-heroes"
             element={
               <ProtectedRoute>
                 <AdminHeroes />
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/admin-heroes-actions"
+          <Route path="/admin-heroes-actions"
             element={
               <ProtectedRoute>
                 <AdminHeroActions />
