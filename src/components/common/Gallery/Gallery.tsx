@@ -1,4 +1,5 @@
-import { MOCK_CARD_DATA, type CardData } from "../../../types/card.types";
+import { API_BASE_URL } from "../../../services/api/api";
+import type { CardData } from "../../../types/card.types";
 import styles from "./Gallery.module.scss";
 import { useState } from 'react';
 
@@ -8,17 +9,39 @@ interface GalleryProps {
   authorInfo?: string;
 }
 
+function buildImageUrl(path: string): string {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  return `${API_BASE_URL}${path}`;
+}
+
 export default function Gallery({
-  cardData = MOCK_CARD_DATA,
+  cardData,
   title,
   authorInfo
 }: GalleryProps) {
 
-  const actualTitle = title || cardData.title;
-  const actualAuthorInfo = authorInfo || `${cardData.author.lastName} ${cardData.author.firstName} ${cardData.author.patronymic || ''}, ${cardData.author.className} класс`;
-  const actualImages = cardData.images || [];
-
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  if (!cardData) {
+    return null;
+  }
+
+  const actualTitle: string = title || "Награды и архивные материалы";
+
+  const actualAuthorInfo: string = authorInfo || cardData.nameAndClass || "ФИО, Класс";
+
+  const actualImages: string[] = [];
+
+  if (cardData.photoHero) {
+    actualImages.push(buildImageUrl(cardData.photoHero));
+  }
+
+  if (cardData.additionalCardImages && cardData.additionalCardImages.length > 0) {
+    cardData.additionalCardImages.forEach((img) => {
+      actualImages.push(buildImageUrl(img.image));
+    });
+  }
 
   const getVisibleImages = (): {
     prev: string;
@@ -56,9 +79,9 @@ export default function Gallery({
     return (
       <section className={styles.gallery}>
         <h2 className={styles.gallery__title}>{actualTitle}</h2>
-        <div className={styles.authorInfo}>
-          <p>Информация о том, кто создал данную карточку</p>
-          <p className={styles.authorName}>{actualAuthorInfo}</p>
+        <div className={styles.gallery__authorInfoBox}>
+          <span className={styles.gallery__authorInfo}>Информация о том, кто создал данную карточку</span>
+          <span className={styles.gallery__authorInfo}>{actualAuthorInfo}</span>
         </div>
         <p className={styles.noImages}>Нет доступных изображений</p>
       </section>
@@ -71,15 +94,14 @@ export default function Gallery({
 
       <div className={styles.gallery__carousel}>
         <button
-          className={`${styles.navButton} ${styles.prevButton}`}
+          className={`${styles.gallery__navButton} ${styles.prevButton}`}
           onClick={handlePrev}
           aria-label="Предыдущее фото"
           type="button"
         >
           <svg width="31" height="53" viewBox="0 0 31 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M27.5098 3L3.00028 26.3954L27.5098 49.7908" stroke="#F1E6D0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M27.5098 3L3.00028 26.3954L27.5098 49.7908" stroke="#F1E6D0" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-
         </button>
 
         <div className={styles.gallery__imagesContainer}>
@@ -103,9 +125,8 @@ export default function Gallery({
           type="button"
         >
           <svg width="31" height="53" viewBox="0 0 31 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 49.791L27.5095 26.3956L3 3.00017" stroke="#F1E6D0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M3 49.791L27.5095 26.3956L3 3.00017" stroke="#F1E6D0" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-
         </button>
       </div>
 
@@ -113,7 +134,6 @@ export default function Gallery({
         <span className={styles.gallery__authorInfo}>Информация о том, кто создал данную карточку</span>
         <span className={styles.gallery__authorInfo}>{actualAuthorInfo}</span>
       </div>
-
     </section>
   );
 }

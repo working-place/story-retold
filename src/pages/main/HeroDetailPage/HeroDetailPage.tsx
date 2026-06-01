@@ -1,22 +1,39 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import MainLayout from "../../../components/layout/MainLayout/MainLayout";
 import styles from "./HeroDetailPage.module.scss";
-import { heroesData } from "../../../data/data";
 import Gallery from "../../../components/common/Gallery/Gallery";
+import { getHeroById } from "../../../services/api/heroes";
+import type { Hero } from "../../../types/card.types";
 
 export default function HeroDetailPage() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
 
-    const hero = useMemo(() => {
-        const heroId = Number(id);
-        return heroesData.find(h => h.id === heroId);
+    const [hero, setHero] = useState<Hero | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchHero = async () => {
+            if (!id) return;
+            setLoading(true);
+            setError(null);
+            const heroData = await getHeroById(Number(id));
+            if (heroData) {
+                setHero(heroData);
+            } else {
+                setError('Герой не найден');
+            }
+            setLoading(false);
+        };
+
+        fetchHero();
     }, [id]);
 
     const hasPhoto = hero?.img && hero.img.trim() !== '';
 
-    const formatDate = (dateString: string | number | Date | null) => {
+    const formatDate = (dateString: string | null) => {
         if (!dateString) return 'неизвестно';
         const date = new Date(dateString);
         return date.toLocaleDateString('ru-RU', {
@@ -30,12 +47,22 @@ export default function HeroDetailPage() {
         navigate(-1);
     };
 
-    if (!hero) {
+    if (loading) {
+        return (
+            <MainLayout>
+                <div className={styles.heroDetailPage}>
+                    <div className={styles.loading}>Загрузка...</div>
+                </div>
+            </MainLayout>
+        );
+    }
+
+    if (error || !hero) {
         return (
             <MainLayout>
                 <div className={styles.heroDetailPage}>
                     <div className={styles.notFound}>
-                        <h2>Герой не найден</h2>
+                        <h2>{error || 'Герой не найден'}</h2>
                         <button onClick={handleGoBack} className={styles.backButton}>
                             Вернуться назад
                         </button>
@@ -81,12 +108,12 @@ export default function HeroDetailPage() {
                                     <div className={styles.heroDetailPage__column_noPhoto}>
                                         <div className={styles.heroDetailPage__infoRow}>
                                             <span className={styles.heroDetailPage__infoLabel}>Место службы:</span>
-                                            <span className={styles.heroDetailPage__infoValue}>Внести Место призыва</span>
+                                            <span className={styles.heroDetailPage__infoValue}>{hero.placeService || "Внести Место службы"}</span>
                                         </div>
 
                                         <div className={styles.heroDetailPage__infoRow}>
                                             <span className={styles.heroDetailPage__infoLabel}>Место призыва:</span>
-                                            <span className={styles.heroDetailPage__infoValue}>Внести Место призыва</span>
+                                            <span className={styles.heroDetailPage__infoValue}>{hero.placeConscription || "Внести Место призыва"}</span>
                                         </div>
                                     </div>
 
@@ -106,7 +133,7 @@ export default function HeroDetailPage() {
                         </section>
 
                         <section className={styles.gallery}>
-                            <Gallery />
+                            <Gallery cardData={hero.cardData} />
                         </section>
                     </div>
                 </div>
@@ -114,7 +141,6 @@ export default function HeroDetailPage() {
         );
     }
 
-    // Рендер для героя С фото
     return (
         <MainLayout>
             <div className={styles.heroDetailPage}>
@@ -146,12 +172,12 @@ export default function HeroDetailPage() {
 
                             <div className={styles.heroDetailPage__infoRow}>
                                 <span className={styles.heroDetailPage__infoLabel}>Место службы:</span>
-                                <span className={styles.heroDetailPage__infoValue}>Внести Место призыва</span>
+                                <span className={styles.heroDetailPage__infoValue}>{hero.placeService || "Внести Место службы"}</span>
                             </div>
 
                             <div className={styles.heroDetailPage__infoRow}>
                                 <span className={styles.heroDetailPage__infoLabel}>Место призыва:</span>
-                                <span className={styles.heroDetailPage__infoValue}>Внести Место призыва</span>
+                                <span className={styles.heroDetailPage__infoValue}>{hero.placeConscription || "Внести Место призыва"}</span>
                             </div>
                         </div>
 
@@ -182,7 +208,7 @@ export default function HeroDetailPage() {
                     </section>
 
                     <section className={styles.gallery}>
-                        <Gallery />
+                        <Gallery cardData={hero.cardData} />
                     </section>
                 </div>
             </div>

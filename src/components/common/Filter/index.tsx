@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import Button from "../Button/Button";
 import { Input } from "../Input/Input";
 import styles from "./Filter.module.scss";
-import type { Hero } from "../../../types/hero.types";
+import type { Hero } from "../../../types/card.types";
 
 interface ExtendedHero extends Hero {
     placeOfBirth?: string;
