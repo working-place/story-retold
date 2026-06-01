@@ -1,5 +1,5 @@
 import styles from "./ImagedCard.module.scss"
-import type { Hero } from "../../../types/hero.types";
+import type { Hero } from "../../../types/card.types";
 import { Link } from "react-router-dom";
 
 interface ImagedCardProps {
