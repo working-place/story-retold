@@ -1,9 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-import './App.scss'
-import "../src/globals.scss"
-import HomePage from './pages/main/HomePage/HomePage'
+import { AuthProvider } from "./contexts/AuthContext";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
+import './App.scss';
+import "../src/globals.scss";
+import HomePage from './pages/main/HomePage/HomePage';
 import LoginPage from "./pages/auth/LoginPage/LoginPage";
+import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import AdminHeroes from "./pages/admin/AdminHeroes/AdminHeroes";
 import AdminHeroActions from "./pages/admin/AdminHeroActions/AdminHeroActions";
 import USSRHeroesPage from "./pages/main/HeroesPage/USSRHeroesPage";
@@ -11,7 +14,6 @@ import SVOHeroesPage from "./pages/main/HeroesPage/SVOHeroesPage";
 import HeroDetailPage from "./pages/main/HeroDetailPage/HeroDetailPage";
 
 function App() {
-
   return (
     <Router>
       <Routes>
@@ -26,10 +28,6 @@ function App() {
                 <Route
           path='/svo-heroes'
           element={<SVOHeroesPage/>}
-        />
-        <Route
-          path='/hero/:id'
-          element={<HeroDetailPage/>}
         />
         {/* Сделать Protected Routes для админки */}
         {/* <ProtectedRoute
@@ -55,4 +53,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
