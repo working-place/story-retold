@@ -1,14 +1,16 @@
-import styles from "./AdminSidebar.module.scss"
+import { useAuth } from "../../../contexts/AuthContext";
+import Button from "../../common/Button/Button";
+import styles from "./AdminSidebar.module.scss";
 
-interface AdminSidebarProps {
-    text?: string | undefined;
-}
+export default function AdminSidebar() {
+  const { logout } = useAuth();
 
-export default function AdminSidebar({ text }: AdminSidebarProps) {
-
-    return (
-        <div className={styles.sidebar}>
-            <h1>AdminSidebar {text}</h1>
-        </div>
-    )
+  return (
+    <div className={styles.sidebar}>
+      <h1>AdminSidebar</h1>
+      <Button onClick={logout} variant="secondary">
+        Выйти
+      </Button>
+    </div>
+  );
 }

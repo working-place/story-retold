@@ -1,5 +1,19 @@
 import type { CardData, Hero, AdditionalCardImages } from "../../types/card.types";
-import { API_BASE_URL, ENDPOINTS } from "./api";
+import type {
+  CardResponse,
+  CardShowResponse,
+  CardShowQueryParams,
+} from '../../types/api.types';
+import { httpClient } from '../http.client';
+
+const API_BASE_URL = 'http://94.250.255.173:8000';
+
+const ENDPOINTS = {
+    CARD: {
+        GET: (id: number): string => `/api/card/get/${id}`,
+        SHOW: '/api/card/show',
+    },
+} as const;
 
 interface GetCardsParams {
     chapter?: 'svo' | 'gpw';
@@ -39,7 +53,7 @@ export async function getCards(params?: GetCardsParams): Promise<CardData[] | nu
 function buildImageUrl(path: string): string {
     if (!path) return '';
     if (path.startsWith('http')) return path;
-    return `http://94.250.255.173:8000${path}`;
+    return `${API_BASE_URL}${path}`;
 }
 
 export function transformToHero(card: CardData): Hero {
@@ -77,3 +91,51 @@ export async function getHeroById(id: number): Promise<Hero | null> {
     if (!card) return null;
     return transformToHero(card);
 }
+
+export const heroesApi = {
+    // Создание карточки героя (публичная форма)
+    create: (data: FormData): Promise<{ id: number }> => {
+        return httpClient<{ id: number }>('/api/card/create', {
+            method: 'POST',
+            body: data,
+            skipAuth: true,
+        });
+    },
+
+    // Получение списка карточек (с фильтрацией)
+    show: (params?: CardShowQueryParams): Promise<CardShowResponse> => {
+        const searchParams = new URLSearchParams();
+        if (params?.chapter) searchParams.append('chapter', params.chapter);
+        if (params?.published !== undefined) searchParams.append('published', String(params.published));
+        if (params?.perPage) searchParams.append('perPage', String(params.perPage));
+        if (params?.page) searchParams.append('page', String(params.page));
+
+        const query = searchParams.toString();
+        return httpClient<CardShowResponse>(`/api/card/show${query ? `?${query}` : ''}`, {
+            method: 'GET',
+            skipAuth: !params?.published,
+        });
+    },
+
+    // Получение одной карточки по ID
+    get: (id: number): Promise<CardResponse> => {
+        return httpClient<CardResponse>(`/api/card/get/${id}`, {
+            method: 'GET',
+        });
+    },
+
+    // Обновление карточки (только админ)
+    update: (id: number, data: FormData): Promise<void> => {
+        return httpClient<void>(`/api/card/update/${id}`, {
+            method: 'PATCH',
+            body: data,
+        });
+    },
+
+    // Удаление карточки (только админ)
+    delete: (id: number): Promise<void> => {
+        return httpClient<void>(`/api/card/delete/${id}`, {
+            method: 'DELETE',
+        });
+    },
+};
