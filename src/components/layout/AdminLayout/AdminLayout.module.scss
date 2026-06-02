@@ -15,7 +15,6 @@
     width: 324px;
     transition: width 0.3s ease;
     position: relative;
-    // box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 
     &_collapsed {
         width: 70px;
@@ -57,40 +56,12 @@
         &:hover {
             background: $beige-background;
             color: $green-color;
-
         }
 
         &_active {
             background: $beige-background;
             color: $green-color;
         }
-    }
-
-}
-
-
-
-.sidebar__toggle {
-    position: absolute;
-    top: 20px;
-    right: -12px;
-    width: 24px;
-    height: 24px;
-    background: #2c3e66;
-    border: none;
-    border-radius: 50%;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    z-index: 10;
-
-    &:hover {
-        background: #3d5a80;
-        transform: scale(1.1);
     }
 }
 
@@ -99,35 +70,11 @@
     font-weight: 500;
 }
 
-// ============ Контент ============
 .content {
     flex: 1;
-    padding: 31px 65px 31px 0;
+    padding: 31px 31px 31px 0;
     overflow-y: auto;
-    // background-color: $green-color;
-    background-color: rgb(61, 61, 107);
+    background-color: $green-color;
 }
 
-// ============ Адаптивность ============
-@media (max-width: 768px) {
-    .sidebar {
-        width: 70px;
-    }
-
-    .sidebar__linkText {
-        display: none;
-    }
-
-    .sidebar__logo span:not(:only-child) {
-        display: none;
-    }
-
-    .content {
-        padding: 16px;
-    }
-}
-
-// .svgSidebar {
-//     width: ;
-// height: 35px;
-// }
+@media (max-width: 768px) {}

@@ -24,50 +24,40 @@ export default function NewCardForm() {
                     <img src="/image-download.png" alt="Загрузить" />
 
                     <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
-                        <h3 className={styles.form__titleUpoad}>
+                        <h3 className={styles.form__titleUpload}>
                             Фотографии героя
                         </h3>
-
                         <h4 className={styles.form__subtitle}>
                             Максимальный размер файла <br />
                             ***** MB
                         </h4>
                     </div>
-
                     <Button
                         className={styles.button_small}
                     >
                         Выбрать файлы
                     </Button>
-
                 </div>
-
                 <div
                     className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary}`}
                 >
-
                     <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
-                        <h3 className={styles.form__titleUpoad}>
+                        <h3 className={styles.form__titleUpload}>
                             Фотографии наград и другие <br />
                             материалы
                         </h3>
-
                         <h4 className={styles.form__subtitle}>
                             Максимальный размер <br />
                             файлов ***** MB
                         </h4>
                     </div>
-
                     <Button
                         className={styles.button_small}
                     >
                         Выбрать файлы
                     </Button>
-
                 </div>
-
             </div>
-
             <div className={styles.form__basicInformation}>
                 <h3 className={styles.form__title}>
                     Основные сведения
@@ -114,15 +104,15 @@ export default function NewCardForm() {
                 </div>
                 <div className={styles.form__wrapper_fourthLine}>
                     <Textarea
-                        className={styles.textarea}
                         label="Описание материала"
                         placeholder="Введите описание"
+                        variant="_primary"
+                        size="large"
                         labelPosition="top"
                         required
                     />
                 </div>
             </div>
-
             <div className={styles.form__additionalInformation}>
                 <h3 className={styles.form__title}>
                     Дополнительные сведения
@@ -145,7 +135,6 @@ export default function NewCardForm() {
                 <CustomSelect
                     className={styles.select}
                 />
-
                 <div className={styles.agreementContainer}>
                     <div className={styles.checkboxWrapper}>
                         <Checkbox

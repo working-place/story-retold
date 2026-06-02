@@ -1,6 +1,5 @@
 @use "../../../assets/scss/_variables-color.scss" as *;
 
-
 .form {
     display: flex;
     width: 96%;
@@ -13,8 +12,10 @@
     padding: 96px 49px 90px 49px;
 
     &_admin {
-        background-color: #534035;
         background-color: $beige-background;
+        min-width: 1531px;
+        margin: 0;
+        padding-top: 25px;
     }
 
     &__titleWrapper {
@@ -25,19 +26,23 @@
         height: fit-content;
     }
 
-    &__title,
-    &__subtitle,
-    &__titleUpoad {
-        display: flex;
-        width: 100%;
-        color: #F1E6D0;
-    }
-
     &__title {
         font-size: 24px;
     }
 
-    &__titleUpoad {
+    &__title,
+    &__subtitle,
+    &__titleUpload {
+        display: flex;
+        width: 100%;
+        color: #F1E6D0;
+
+        &_admin {
+            color: $brown-color;
+        }
+    }
+
+    &__titleUpload {
         display: flex;
         flex-direction: column;
         font-size: 20px;
@@ -51,9 +56,16 @@
         font-size: 20px;
     }
 
+    &__titleCard {
+        font-size: 35px;
+        text-align: left;
+        font-weight: bold;
+    }
+
     &__upload {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         gap: 45px;
         width: fit-content;
     }
@@ -77,11 +89,6 @@
             border-radius: 20px;
             border: none;
             position: relative;
-            background-image:
-                linear-gradient(90deg, #F1E6D0 50%, transparent 50%), // верхняя
-                linear-gradient(90deg, #F1E6D0 50%, transparent 50%), // нижняя
-                linear-gradient(180deg, #F1E6D0 50%, transparent 50%), // левая
-                linear-gradient(180deg, #F1E6D0 50%, transparent 50%); // правая
 
             background-size:
                 40px 3px,
@@ -102,6 +109,23 @@
                 right;
         }
 
+        &_primary,
+        &_secondary {
+            background-image:
+                linear-gradient(90deg, #F1E6D0 50%, transparent 50%), // верхняя
+                linear-gradient(90deg, #F1E6D0 50%, transparent 50%), // нижняя
+                linear-gradient(180deg, #F1E6D0 50%, transparent 50%), // левая
+                linear-gradient(180deg, #F1E6D0 50%, transparent 50%); // правая
+        }
+
+        &_admin {
+            background-image:
+                linear-gradient(90deg, $brown-color 50%, transparent 50%), // верхняя
+                linear-gradient(90deg, $brown-color 50%, transparent 50%), // нижняя
+                linear-gradient(180deg, $brown-color 50%, transparent 50%), // левая
+                linear-gradient(180deg, $brown-color 50%, transparent 50%); // правая
+        }
+
         &_primary {
             height: 57%;
         }
@@ -114,13 +138,21 @@
     &__basicInformation {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         width: fit-content;
         gap: 35px;
+
+        &_admin {
+            justify-content: flex-end;
+            width: 100%;
+            gap: 0;
+        }
     }
 
     &__additionalInformation {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         padding-top: 3px;
         width: fit-content;
         gap: 30px;
@@ -130,8 +162,6 @@
 
         &_date {
             width: 13.6vw;
-
-
         }
 
 
@@ -159,6 +189,8 @@
         &_margin {}
 
         &_agreement {}
+
+        &_admin {}
     }
 
     &__wrapper {
@@ -166,6 +198,9 @@
             display: flex;
             gap: 20px;
 
+            &_admin {
+                margin-top: 15px;
+            }
         }
 
         &_secondLine {
@@ -235,6 +270,11 @@
         padding: 12px 24px;
         width: fit-content;
     }
+
+    &_admin {
+        background-color: $brown-color;
+        color: #F1E6D0;
+    }
 }
 
 .dashed-border-all {
@@ -247,4 +287,10 @@
     background-size: 20px 3px, 3px 20px, 20px 3px, 3px 20px;
     background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
     background-position: top, right, bottom, left;
+}
+
+.textarea {
+    &__admin {
+        border: 2px solid red;
+    }
 }

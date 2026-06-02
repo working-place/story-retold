@@ -22,8 +22,14 @@
     border-radius: 12px;
     transition: all 0.2s ease;
     outline: none;
-    border: none;
+    border: 2px solid $brown-color;
+    // border: none;
+    // border: 0 solid transparent;
     //  font-family: 'Roboto', sans-serif;
+
+    //                     &_admin {
+    // border: 2px solid $brown-color;
+    //         }
 
     // готово
     &::placeholder {
@@ -109,6 +115,10 @@
     &:focus {}
 }
 
+._admin {
+    border: 2px solid $brown-color;
+}
+
 // Иконки
 .iconLeft,
 .iconRight {}
@@ -151,7 +161,6 @@
     color: $beige-background;
     font-family: 'Roboto', sans-serif;
     font-weight: 600;
-    // margin-bottom: 8px;
 
     &_checkbox {
         font-size: 15px;
@@ -162,7 +171,16 @@
     }
 
     &.labelDisabled {}
+
+    &_brown {
+    color: $brown-color !important;
+
+    .requiredMark {
+        color: $brown-color !important;
+    }
 }
+}
+
 
 // Готово
 .requiredMark {

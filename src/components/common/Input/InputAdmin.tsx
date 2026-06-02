@@ -1,17 +1,16 @@
 import { forwardRef, useState, useId, type ReactNode } from "react";
-import styles from "./Input.module.scss";
+import styles from "./InputAdmin.module.scss";
 
-export type InputVariant = '_primary' | '_secondary' | '_outline' | '_ghost' | '_admin';
-export type InputSize = 'extraSmall' | 'small' | 'medium' | 'large' | 'extraLarge' |'checkbox' | 'admin';
+export type InputAdminSize = 'small' | 'medium' | 'large' | 'full';
 
-interface InputProps {
+interface InputAdminProps {
     value?: string | number;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 
-    type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'search' | 'url' | 'checkbox';
+    type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'search' | 'url';
     name?: string;
     id?: string;
     placeholder?: string;
@@ -21,17 +20,13 @@ interface InputProps {
     autoFocus?: boolean;
     autoComplete?: 'on' | 'off';
 
-    variant?: InputVariant;
-    size?: InputSize;
+    size?: InputAdminSize;
     className?: string;
     style?: React.CSSProperties;
 
     label?: string;
-    labelPosition?: 'top' | 'left' | 'inside';
-    labelSize?: 'medium' | 'checkbox';
     labelClassName?: string;
     requiredMark?: boolean;
-    requiredMarkClassName?: string;
 
     error?: boolean;
     errorText?: string;
@@ -41,12 +36,6 @@ interface InputProps {
     iconRight?: ReactNode;
     onIconRightClick?: () => void;
 
-    loading?: boolean;
-    success?: boolean;
-
-    ariaLabel?: string;
-    ariaDescribedBy?: string;
-
     min?: number;
     max?: number;
     step?: number;
@@ -55,7 +44,7 @@ interface InputProps {
     minLength?: number;
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(({
+export const InputAdmin = forwardRef<HTMLInputElement, InputAdminProps>(({
     value,
     onChange,
     onBlur,
@@ -72,17 +61,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     autoFocus = false,
     autoComplete = 'off',
 
-    variant = '_primary',
     size = 'medium',
     className = '',
     style,
 
     label,
-    labelPosition = 'top',
-    labelSize = 'medium',
     labelClassName = '',
     requiredMark = true,
-    requiredMarkClassName = '',
 
     error = false,
     errorText,
@@ -91,12 +76,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     iconLeft,
     iconRight,
     onIconRightClick,
-
-    loading = false,
-    success = false,
-
-    ariaLabel,
-    ariaDescribedBy,
 
     min,
     max,
@@ -130,24 +109,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
 
     const inputClasses = [
         styles.input,
-        styles[variant],
-        size === 'checkbox' ? styles.checkbox : styles[size],
+        styles[size],
         error && styles.error,
-        success && styles.success,
         disabled && styles.disabled,
         readOnly && styles.readOnly,
         isFocused && styles.focused,
-        (iconLeft || loading) && styles.hasIconLeft,
+        iconLeft && styles.hasIconLeft,
         iconRight && styles.hasIconRight,
-        labelPosition === 'inside' && styles.hasLabelInside,
         className
     ].filter(Boolean).join(' ');
 
     const wrapperClasses = [
         styles.wrapper,
-        styles[`labelPosition-${labelPosition}`],
         error && styles.hasError,
-        success && styles.hasSuccess,
         disabled && styles.disabled
     ].filter(Boolean).join(' ');
 
@@ -155,59 +129,25 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
 
     const renderRequiredMark = () => {
         if (!required || !requiredMark) return null;
-        return (
-            <span className={`${styles.requiredMark} ${requiredMarkClassName}`}>
-                *
-            </span>
-        );
-    };
-
-    const renderLabel = () => {
-        if (!label) return null;
-
-        return (
-            <label
-                htmlFor={id}
-                className={`${styles.label} ${labelSize === 'checkbox' ? styles.labelCheckbox : ''} ${labelClassName} ${disabled ? styles.labelDisabled : ''}`}
-            >
-                {label}
-                {renderRequiredMark()}
-            </label>
-        );
-    };
-
-    const renderInsideLabel = () => {
-        if (labelPosition !== 'inside' || !label) return null;
-
-        const isLabelActive = isFocused || value || placeholder;
-
-        return (
-            <label
-                htmlFor={id}
-                className={`${styles.insideLabel} ${isLabelActive ? styles.insideLabelActive : ''} ${disabled ? styles.insideLabelDisabled : ''}`}
-            >
-                {label}
-                {renderRequiredMark()}
-            </label>
-        );
+        return <span className={styles.requiredMark}>*</span>;
     };
 
     return (
         <div className={wrapperClasses} style={style}>
-
-            {labelPosition === 'top' && renderLabel()}
+            {label && (
+                <label
+                    htmlFor={id}
+                    className={`${styles.label} ${labelClassName} ${disabled ? styles.labelDisabled : ''}`}
+                >
+                    {label}
+                    {renderRequiredMark()}
+                </label>
+            )}
 
             <div className={styles.inputWrapper}>
-
-                {labelPosition === 'inside' && renderInsideLabel()}
-
-                {(iconLeft || loading) && (
+                {iconLeft && (
                     <div className={styles.iconLeft}>
-                        {loading ? (
-                            <div className={styles.spinner} />
-                        ) : (
-                            iconLeft
-                        )}
+                        {iconLeft}
                     </div>
                 )}
 
@@ -221,14 +161,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
                     onBlur={handleBlur}
                     onFocus={handleFocus}
                     onKeyDown={onKeyDown}
-                    placeholder={labelPosition === 'inside' && !isFocused && !value ? '' : placeholder}
+                    placeholder={placeholder}
                     required={required}
                     disabled={disabled}
                     readOnly={readOnly}
                     autoFocus={autoFocus}
                     autoComplete={autoComplete}
-                    aria-label={ariaLabel || label}
-                    aria-describedby={ariaDescribedBy}
+                    aria-label={label}
                     aria-invalid={error}
                     aria-required={required}
                     className={inputClasses}
@@ -281,4 +220,4 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     );
 });
 
-Input.displayName = 'Input';
+InputAdmin.displayName = 'InputAdmin';
