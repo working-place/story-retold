@@ -1,9 +1,10 @@
 
 import Button from "../../common/Button/Button";
 import styles from "./Form.module.scss";
-import CustomSelect from "../Select/Select";
+// import CustomSelect from "../Select/Select";
 import { Textarea } from "../Textarea/Textarea";
 import { InputAdmin } from "../Input/InputAdmin";
+import CustomSelectAdmin from "../Select/SelectAdmin";
 
 export default function AdminPanelForm() {
 
@@ -12,12 +13,12 @@ export default function AdminPanelForm() {
             action=""
             className={`${styles.form} ${styles.form_admin}`}
         >
-            <div className={styles.form__upload}>
+            <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
                 <h1 className={`${styles.form__titleCard} ${styles.form__title_admin}`}>
                     Новая карточка
                 </h1>
                 <div
-                    className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin}`}
+                    className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}
                 >
                     <img src="/image-download-brown.png" alt="Загрузить" />
                     <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
@@ -36,7 +37,7 @@ export default function AdminPanelForm() {
                     </Button>
                 </div>
                 <div
-                    className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${styles.form__uploadArea_admin}`}
+                    className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightSecond}`}
                 >
                     <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
                         <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
@@ -60,8 +61,8 @@ export default function AdminPanelForm() {
                 <div className={`${styles.form__wrapper_secondLine} ${styles.form__wrapper_admin}`}>
 
                     <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
-                        <CustomSelect
-                            className={styles.select}
+                        <CustomSelectAdmin
+                            className={styles.selectForm}
                         />
                     </div>
                     <InputAdmin
@@ -74,13 +75,13 @@ export default function AdminPanelForm() {
 
                 <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
                     <InputAdmin
-                        className={`${styles.form__input_date} ${styles.form__input_admin}`}
+                        className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                         label="Дата рождения"
                         placeholder="ДД.ММ.ГГ"
                         required
                     />
                     <InputAdmin
-                        className={`${styles.form__input_date} ${styles.form__input_admin}`}
+                        className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                         label="Дата смерти"
                         placeholder="ДД.ММ.ГГ"
                     />
@@ -94,12 +95,12 @@ export default function AdminPanelForm() {
 
                 <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
                     <InputAdmin
-                        className={`${styles.form__input_additional} ${styles.form__input_admin}`}
+                        className={`${styles.form__input_additional} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                         label="Воинское звание"
                         placeholder="Введите описание"
                     />
                     <InputAdmin
-                        className={`${styles.form__input_additional} ${styles.form__input_admin}`}
+                        className={`${styles.form__input_additional} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                         label="Место службы"
                         placeholder="Введите описание"
                     />
@@ -133,10 +134,10 @@ export default function AdminPanelForm() {
 
                 <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
                     <Button
-                        className={styles.button}
+                        className={styles.publishButton}
                     >Опубликовать</Button>
                     <Button
-                        className={styles.button}
+                        className={styles.reviewButton}
                     >Предпросмотр</Button>
                 </div>
 

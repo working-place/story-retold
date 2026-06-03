@@ -23,13 +23,6 @@
     transition: all 0.2s ease;
     outline: none;
     border: 2px solid $brown-color;
-    // border: none;
-    // border: 0 solid transparent;
-    //  font-family: 'Roboto', sans-serif;
-
-    //                     &_admin {
-    // border: 2px solid $brown-color;
-    //         }
 
     // готово
     &::placeholder {
@@ -181,7 +174,6 @@
 }
 }
 
-
 // Готово
 .requiredMark {
     color: $beige-background;
@@ -208,7 +200,6 @@
 
 .labelPosition-inside {}
 
-// Анимированный лейбл внутри инпута
 .insideLabel {
     position: absolute;
     left: 14px;
@@ -236,13 +227,11 @@
     }
 }
 
-// Корректировка отступов для инпута с лейблом внутри
 .hasLabelInside {
     padding-top: 16px;
     padding-bottom: 8px;
 }
 
-// Для инпутов с иконками и лейблом внутри
 .hasIconLeft.hasLabelInside {
     padding-left: 36px;
 }

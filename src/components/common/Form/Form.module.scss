@@ -12,10 +12,13 @@
     padding: 96px 49px 90px 49px;
 
     &_admin {
-        background-color: $beige-background;
+        background-color: #FDF7E9;
         min-width: 1531px;
         margin: 0;
         padding-top: 25px;
+        padding-bottom: 58px;
+        padding-left: 65px;
+        gap: 85px;
     }
 
     &__titleWrapper {
@@ -65,9 +68,13 @@
     &__upload {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
         gap: 45px;
         width: fit-content;
+
+        &_admin {
+            padding-bottom: 62px;
+            gap: 32px;
+        }
     }
 
     &__uploadArea {
@@ -85,7 +92,8 @@
         }
 
         &_primary,
-        &_secondary {
+        &_secondary,
+        &__uploadAreaHeroAdmin {
             border-radius: 20px;
             border: none;
             position: relative;
@@ -126,6 +134,16 @@
                 linear-gradient(180deg, $brown-color 50%, transparent 50%); // правая
         }
 
+        &_adminHeightFirst {
+            max-height: 429px;
+            // margin-top: -80px;
+        }
+
+        &_adminHeightSecond {
+            max-height: 333px;
+            // margin-top: -60px;
+        }
+
         &_primary {
             height: 57%;
         }
@@ -145,7 +163,9 @@
         &_admin {
             justify-content: flex-end;
             width: 100%;
-            gap: 0;
+            max-width: 904px;
+            gap: 15px;
+            padding-top: 40px;
         }
     }
 
@@ -191,6 +211,10 @@
         &_agreement {}
 
         &_admin {}
+
+        &_adminInputWidth {
+            max-width: 262px;
+        }
     }
 
     &__wrapper {
@@ -198,8 +222,11 @@
             display: flex;
             gap: 20px;
 
+            // здесь
             &_admin {
                 margin-top: 15px;
+                gap: 0;
+justify-content: flex-end;
             }
         }
 
@@ -293,4 +320,27 @@
     &__admin {
         border: 2px solid red;
     }
+}
+
+.publishButton,
+.reviewButton {
+font-size: 20px;
+border-radius: 16px;
+padding: 12px 24px;
+border: 2px solid $brown-color;
+min-width: 239px;
+// text-align: center;
+justify-content: center;
+
+
+}
+
+.publishButton {
+background-color: transparent;
+}
+
+.reviewButton {
+background-color: $brown-color;
+color: $beige-background;
+margin-left: 15px;
 }
