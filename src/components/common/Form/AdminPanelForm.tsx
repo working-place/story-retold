@@ -1,7 +1,6 @@
 
 import Button from "../../common/Button/Button";
 import styles from "./Form.module.scss";
-// import CustomSelect from "../Select/Select";
 import { Textarea } from "../Textarea/Textarea";
 import { InputAdmin } from "../Input/InputAdmin";
 import CustomSelectAdmin from "../Select/SelectAdmin";
@@ -14,6 +13,9 @@ export default function AdminPanelForm() {
             className={`${styles.form} ${styles.form_admin}`}
         >
             <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
+
+                <button>Выйти</button>
+
                 <h1 className={`${styles.form__titleCard} ${styles.form__title_admin}`}>
                     Новая карточка
                 </h1>

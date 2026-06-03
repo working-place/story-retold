@@ -136,12 +136,10 @@
 
         &_adminHeightFirst {
             max-height: 429px;
-            // margin-top: -80px;
         }
 
         &_adminHeightSecond {
             max-height: 333px;
-            // margin-top: -60px;
         }
 
         &_primary {
@@ -226,7 +224,7 @@
             &_admin {
                 margin-top: 15px;
                 gap: 0;
-justify-content: flex-end;
+                justify-content: flex-end;
             }
         }
 
@@ -324,23 +322,20 @@ justify-content: flex-end;
 
 .publishButton,
 .reviewButton {
-font-size: 20px;
-border-radius: 16px;
-padding: 12px 24px;
-border: 2px solid $brown-color;
-min-width: 239px;
-// text-align: center;
-justify-content: center;
-
-
+    font-size: 20px;
+    border-radius: 16px;
+    padding: 12px 24px;
+    border: 2px solid $brown-color;
+    min-width: 239px;
+    justify-content: center;
 }
 
 .publishButton {
-background-color: transparent;
+    background-color: transparent;
 }
 
 .reviewButton {
-background-color: $brown-color;
-color: $beige-background;
-margin-left: 15px;
+    background-color: $brown-color;
+    color: $beige-background;
+    margin-left: 15px;
 }

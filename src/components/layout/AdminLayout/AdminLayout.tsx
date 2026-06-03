@@ -4,7 +4,7 @@ import { IconOnReview } from "../../../assets/images/icons/OnReviewIcon";
 import { IconUSSR } from "../../../assets/images/icons/IconUSSR";
 import { IconSVO } from "../../../assets/images/icons/IconSVO";
 import { IconNewCard } from "../../../assets/images/icons/IconNewCard";
-import AdminPanelForm from "../../common/Form/AdminPanelForm";
+// import AdminPanelForm from "../../common/Form/AdminPanelForm";
 
 
 export default function AdminLayout() {
@@ -45,7 +45,7 @@ export default function AdminLayout() {
       <main className={styles.content}>
         <Outlet />
        {/* форма (переиспользовать с главной страницы) */}
-       <AdminPanelForm/>
+       {/* <AdminPanelForm/> */}
       </main>
     </div>
   );
