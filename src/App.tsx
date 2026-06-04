@@ -37,9 +37,9 @@ function App() {
             }
           >
             <Route path="new-card" element={<AdminPanelForm />} />
-            <Route path="on-review" element={<div>На проверке</div>} />
-            <Route path="ussr-heroes" element={<div>Герои СССР</div>} />
-            <Route path="svo-heroes" element={<div>Герои СВО</div>} />
+            {/* <Route path="on-review" element={<div>На проверке</div>} /> */}
+            {/* <Route path="ussr-heroes" element={<div>Герои СССР</div>} /> */}
+            {/* <Route path="svo-heroes" element={<div>Герои СВО</div>} /> */}
             </Route>
 
           <Route path="/admin-heroes-actions"

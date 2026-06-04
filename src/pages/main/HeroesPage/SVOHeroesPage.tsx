@@ -25,6 +25,8 @@ export default function SVOHeroesPage({ path, text }: SVOHeroesPageProps) {
             setLoading(true);
             setError(null);
             const heroes = await getHeroes('svo');
+            console.log('Heroes received in component:', heroes.length);
+            
             if (heroes.length > 0) {
                 setAllHeroes(heroes);
                 setFilteredHeroes(heroes);

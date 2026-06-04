@@ -1,108 +1,141 @@
-import type { CardData, Hero, AdditionalCardImages } from "../../types/card.types";
-import type {
-  CardResponse,
-  CardShowResponse,
-  CardShowQueryParams,
-} from '../../types/api.types';
+import type { CardData, Hero } from "../../types/card.types";
+import type { CardResponse, CardShowResponse, CardShowQueryParams } from '../../types/api.types';
 import { httpClient } from '../http.client';
 
 const API_BASE_URL = 'http://94.250.255.173:8000';
 
-const ENDPOINTS = {
-    CARD: {
-        GET: (id: number): string => `/api/card/get/${id}`,
-        SHOW: '/api/card/show',
-    },
-} as const;
-
-interface GetCardsParams {
-    chapter?: 'svo' | 'gpw';
-    published?: boolean;
-    paginate?: 25 | 50 | 100 | 250 | 500;
-}
-
-async function request<T>(endpoint: string): Promise<T | null> {
-    try {
-        const response = await fetch(`${API_BASE_URL}${endpoint}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        return data as T;
-    } catch (error) {
-        console.error('API request failed:', error);
-        return null;
-    }
-}
-
-export async function getCard(id: number): Promise<CardData | null> {
-    return request<CardData>(ENDPOINTS.CARD.GET(id));
-}
-
-export async function getCards(params?: GetCardsParams): Promise<CardData[] | null> {
-    const queryParams = new URLSearchParams();
-    if (params?.chapter) queryParams.append('chapter', params.chapter);
-    if (params?.published !== undefined) queryParams.append('published', String(params.published));
-    if (params?.paginate) queryParams.append('paginate', String(params.paginate));
-
-    const queryString = queryParams.toString();
-    const url = `${ENDPOINTS.CARD.SHOW}${queryString ? `?${queryString}` : ''}`;
-    return request<CardData[]>(url);
-}
-
-function buildImageUrl(path: string): string {
+function buildImageUrl(path: string | null | undefined): string {
+    console.log('Building URL for path:', path);
     if (!path) return '';
     if (path.startsWith('http')) return path;
     return `${API_BASE_URL}${path}`;
 }
 
-export function transformToHero(card: CardData): Hero {
-    const additionalImages: string[] = card.additionalCardImages.map(
-        (img: AdditionalCardImages) => buildImageUrl(img.image)
+function transformCardToHero(card: CardResponse): Hero {
+
+    console.log('Transforming card:', card.id, card.name);
+
+    const additionalImages: string[] = (card.additionalImages || []).map(
+        (img) => buildImageUrl(img.url)
     );
+
+    const cardData: CardData = {
+        id: card.id,
+        dateBirth: card.dateBirth,
+        dateDeath: card.dateDeath || '',
+        placeBirth: card.placeBirth,
+        name: card.name,
+        nameAndClass: card.nameAndClass || '',
+        email: card.email || '',
+        description: card.description,
+        militaryRank: card.militaryRank || '',
+        placeService: card.placeService || '',
+        placeConscription: card.placeConscription || '',
+        chapter: card.chapter,
+        photoHero: card.photoHero?.url || null,
+        published: card.published,
+        createdAt: card.created_at,
+        updatedAt: card.updated_at,
+        additionalCardImages: (card.additionalImages || []).map(img => ({
+            id: img.id,
+            card_id: card.id,
+            image: img.url,
+            created_at: '',
+            updated_at: '',
+        })),
+    };
 
     return {
         id: card.id,
         name: card.name,
-        range: card.militaryRank,
+        range: card.militaryRank || '',
         dateOfBirth: card.dateBirth,
-        dateOfDeath: card.dateDeath,
-        img: card.photoHero ? buildImageUrl(card.photoHero) : '',
+        dateOfDeath: card.dateDeath || '',
+        img: buildImageUrl(card.photoHero?.url),
         description: card.description,
         type: card.chapter === 'svo' ? 'SVO' : 'GPW',
         placeBirth: card.placeBirth,
-        placeService: card.placeService,
-        placeConscription: card.placeConscription,
-        email: card.email,
-        nameAndClass: card.nameAndClass,
+        placeService: card.placeService || '',
+        placeConscription: card.placeConscription || '',
+        email: card.email || '',
+        nameAndClass: card.nameAndClass || '',
         additionalImages,
-        cardData: card,
+        cardData,
     };
+
 }
 
 export async function getHeroes(chapter: 'svo' | 'gpw'): Promise<Hero[]> {
-    const cards = await getCards({ chapter, published: true });
-    if (!cards) return [];
-    return cards.map((card: CardData) => transformToHero(card));
+    try {
+        const response = await httpClient<CardResponse[]>(
+            '/api/card/show',
+            {
+                method: 'GET',
+                skipAuth: true,
+            }
+        );
+
+        console.log('=== DEBUG getHeroes ===');
+        console.log('Chapter param:', chapter);
+        console.log('Is response array?', Array.isArray(response));
+        console.log('Response length:', response?.length);
+
+        if (!response || !Array.isArray(response)) return [];
+
+        const filteredCards = response.filter(
+            card => card.chapter === chapter && card.published === true
+        );
+
+        console.log('Filtered cards count:', filteredCards.length);
+        console.log('Filtered cards ids:', filteredCards.map(c => c.id));
+
+        return filteredCards.map(transformCardToHero);
+    } catch (error) {
+        console.error('Failed to fetch heroes:', error);
+        return [];
+    }
+}
+
+export async function publishCard(id: number): Promise<void> {
+    return httpClient<void>(`/api/card/update/${id}`, {
+        method: 'PATCH',
+        skipAuth: false,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            published: true,
+        }),
+    });
 }
 
 export async function getHeroById(id: number): Promise<Hero | null> {
-    const card = await getCard(id);
-    if (!card) return null;
-    return transformToHero(card);
+    try {
+        const card = await httpClient<CardResponse>(`/api/card/get/${id}`, {
+            method: 'GET',
+            skipAuth: true,
+        });
+
+        if (!card) return null;
+
+        if (!card.published) return null;
+
+        return transformCardToHero(card);
+    } catch (error) {
+        console.error('Failed to fetch hero:', error);
+        return null;
+    }
 }
 
 export const heroesApi = {
-    // Создание карточки героя (публичная форма)
     create: (data: FormData): Promise<{ id: number }> => {
         return httpClient<{ id: number }>('/api/card/create', {
             method: 'POST',
             body: data,
-            skipAuth: true,
+            skipAuth: false,
         });
     },
 
-    // Получение списка карточек (с фильтрацией)
     show: (params?: CardShowQueryParams): Promise<CardShowResponse> => {
         const searchParams = new URLSearchParams();
         if (params?.chapter) searchParams.append('chapter', params.chapter);
@@ -113,29 +146,29 @@ export const heroesApi = {
         const query = searchParams.toString();
         return httpClient<CardShowResponse>(`/api/card/show${query ? `?${query}` : ''}`, {
             method: 'GET',
-            skipAuth: !params?.published,
+            skipAuth: false,
         });
     },
 
-    // Получение одной карточки по ID
     get: (id: number): Promise<CardResponse> => {
         return httpClient<CardResponse>(`/api/card/get/${id}`, {
             method: 'GET',
+            skipAuth: false,
         });
     },
 
-    // Обновление карточки (только админ)
     update: (id: number, data: FormData): Promise<void> => {
         return httpClient<void>(`/api/card/update/${id}`, {
             method: 'PATCH',
             body: data,
+            skipAuth: false,
         });
     },
 
-    // Удаление карточки (только админ)
     delete: (id: number): Promise<void> => {
         return httpClient<void>(`/api/card/delete/${id}`, {
             method: 'DELETE',
+            skipAuth: false,
         });
     },
 };
