@@ -5,15 +5,30 @@ import { httpClient } from '../http.client';
 const API_BASE_URL = 'http://94.250.255.173:8000';
 
 function buildImageUrl(path: string | null | undefined): string {
-    console.log('Building URL for path:', path);
+    console.log('buildImageUrl input:', path);
+
     if (!path) return '';
     if (path.startsWith('http')) return path;
-    return `${API_BASE_URL}${path}`;
+
+    const fullUrl = `${API_BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+    console.log('buildImageUrl output:', fullUrl);
+
+    return fullUrl;
 }
 
 function transformCardToHero(card: CardResponse): Hero {
+    console.log('=== TRANSFORM CARD ===', card.id);
+    console.log('Raw photoHero:', card.photoHero);
+    console.log('Type of photoHero:', typeof card.photoHero);
 
-    console.log('Transforming card:', card.id, card.name);
+    const photoHeroUrl = typeof card.photoHero === 'string'
+        ? card.photoHero
+        : (card.photoHero?.url || null);
+
+    console.log('PhotoHero URL:', photoHeroUrl);
+
+    const imgUrl = buildImageUrl(photoHeroUrl);
+    console.log('Built img URL:', imgUrl);
 
     const additionalImages: string[] = (card.additionalImages || []).map(
         (img) => buildImageUrl(img.url)
@@ -32,7 +47,7 @@ function transformCardToHero(card: CardResponse): Hero {
         placeService: card.placeService || '',
         placeConscription: card.placeConscription || '',
         chapter: card.chapter,
-        photoHero: card.photoHero?.url || null,
+        photoHero: photoHeroUrl,
         published: card.published,
         createdAt: card.created_at,
         updatedAt: card.updated_at,
@@ -51,7 +66,7 @@ function transformCardToHero(card: CardResponse): Hero {
         range: card.militaryRank || '',
         dateOfBirth: card.dateBirth,
         dateOfDeath: card.dateDeath || '',
-        img: buildImageUrl(card.photoHero?.url),
+        img: imgUrl,
         description: card.description,
         type: card.chapter === 'svo' ? 'SVO' : 'GPW',
         placeBirth: card.placeBirth,
@@ -62,7 +77,6 @@ function transformCardToHero(card: CardResponse): Hero {
         additionalImages,
         cardData,
     };
-
 }
 
 export async function getHeroes(chapter: 'svo' | 'gpw'): Promise<Hero[]> {
@@ -85,6 +99,14 @@ export async function getHeroes(chapter: 'svo' | 'gpw'): Promise<Hero[]> {
         const filteredCards = response.filter(
             card => card.chapter === chapter && card.published === true
         );
+
+        console.log('=== BEFORE TRANSFORM ===');
+        console.log('Card 120 photoHero:', filteredCards.find(c => c.id === 120)?.photoHero);
+
+        const heroes = filteredCards.map(transformCardToHero);
+
+        console.log('=== AFTER TRANSFORM ===');
+        console.log('Hero 120 img:', heroes.find(h => h.id === 120)?.img);
 
         console.log('Filtered cards count:', filteredCards.length);
         console.log('Filtered cards ids:', filteredCards.map(c => c.id));

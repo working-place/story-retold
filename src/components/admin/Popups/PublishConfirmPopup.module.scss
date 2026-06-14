@@ -1,0 +1,159 @@
+// @use "../../../assets/scss/_mixins.scss" as *;
+// @use "../../../assets/scss/_typography.scss" as *;
+@use "../../../assets/scss/_variables-color.scss" as *;
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.confirmPopup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    background: $beige;
+    border-radius: 16px;
+    max-width: 766px;
+    width: fit-content;
+    height: fit-content;
+    padding: 68px 137px 77px 137px;
+    box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.2s ease-out;
+
+    &__title {
+        font-family: "Rubik", "Metamorphous", serif;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 120%;
+        letter-spacing: 0;
+        color: $dark-text;
+        text-align: center;
+        min-width: 588px;
+        margin-bottom: 74px;
+    }
+
+    &__closeButton {
+    position: absolute;
+    top: 21px;
+    right: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+
+    }
+}
+
+&__buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+&__editButton,
+&__publishButton {
+padding: 12px 24px;
+border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 239px;
+    justify-content: center;
+
+    span {
+        font-family: 'Roboto';
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+        &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+&__editButton {
+    background-color: transparent;
+    border: 2px solid $brown-color;
+    color: #333;
+
+    span {
+        color: $brown-color;
+    }
+
+    &:hover:not(:disabled) {
+
+    }
+
+}
+
+&__publishButton {
+    background-color: $brown-color;
+    border: none;
+    color: white;
+
+        span {
+        color: $beige-background;
+    }
+
+    &:hover:not(:disabled) {
+
+    }
+}
+
+&__vector110,
+&__vector111 {
+    position: absolute;
+}
+
+&__vector110 {
+bottom: 0;
+left: 0;
+}
+
+&__vector111 {
+bottom: 0;
+right: 0;
+}
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+
+.content {
+    text-align: center;
+}
+
+
+
+.heroName {
+    font-size: 16px;
+    color: #666;
+    margin: 0 0 24px 0;
+    font-weight: 500;
+}
