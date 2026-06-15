@@ -339,3 +339,148 @@
     color: $beige-background;
     margin-left: 15px;
 }
+
+// ==================================================
+
+.previewContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+}
+
+.previewImageWrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    margin-top: -66px;
+    margin-bottom: -36px;
+}
+
+.previewImage {
+    min-width: calc(100% + 40px);
+    min-height: calc(100% + 72px);
+    margin-left: -20px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.removeAdditionalImageButton,
+.removeImageButton {
+    position: absolute;
+
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: #F1E6D0;
+    border: none;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+
+    &:hover {
+        color: red;
+    }
+}
+
+.removeImageButton {
+    top: 35px;
+    right: -10px;
+}
+
+.removeAdditionalImageButton {
+background-color: $brown-color;
+// padding-bottom: 9px;
+    top: 23px;
+    right: -5px;
+}
+
+
+// ======================================
+
+// Галерея дополнительных изображений (сетка 3x3)
+.additionalImagesGrid {
+    position: absolute;
+    top: -30px;
+  display: grid;
+  grid-template-columns: repeat(3, 106px);
+  gap: 16px;
+//   margin-top: 20px;
+  justify-content: center;
+//   background-color: $beige;
+//   background-color: red;
+//   height: fit-content;
+padding-bottom: 30px;
+
+height: 100%;
+
+// padding-top: -30px;
+// overflow: hidden;
+}
+
+.additionalImageItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+// background-color: $beige;
+}
+
+.additionalImageWrapper {
+  position: relative;
+  width: 106px;
+  height: 133px;
+//   background-color: $beige;
+//   margin-bottom: -30px;
+//   margin-top: -36px;
+}
+
+.additionalImagePreview {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e0d5c0;
+  background-color: #f5f0e6;
+
+}
+
+// .removeAdditionalImageButton {
+//   position: absolute;
+//   top: -8px;
+//   right: -8px;
+//   width: 22px;
+//   height: 22px;
+//   border-radius: 50%;
+//   background-color: #ff4444;
+//   color: white;
+//   border: none;
+//   font-size: 16px;
+//   font-weight: bold;
+//   cursor: pointer;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   transition: background-color 0.2s;
+
+//   &:hover {
+//     background-color: #cc0000;
+//   }
+// }
+
+// .additionalImageName {
+//   font-size: 11px;
+//   color: #534035;
+//   text-align: center;
+//   max-width: 106px;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   white-space: nowrap;
+// }
