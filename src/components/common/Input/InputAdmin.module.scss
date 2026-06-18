@@ -1,0 +1,163 @@
+@use "../../../assets/scss/variables-color" as *;
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input {
+    width: 100%;
+    background-color: #FDF7E9;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    outline: none;
+    border: 2px solid $brown-color;
+    font-size: 16px;
+    color: $brown-color;
+    font-family: 'Roboto', sans-serif;
+
+    &::placeholder {
+        color: $brown-color;
+        opacity: 1;
+        font-size: 20px;
+    }
+
+    &:focus {
+        border-color: $brown-color;
+        box-shadow: 0 0 0 2px rgba($brown-color, 0.2);
+    }
+
+    &.error {
+        border-color: #f44336;
+
+        &:focus {
+            box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2);
+        }
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+        background-color: rgba($beige-background, 0.8);
+    }
+
+    &.readOnly {
+        background-color: rgba($beige-background, 0.8);
+    }
+
+    &.hasIconLeft {
+        padding-left: 48px;
+    }
+
+    &.hasIconRight {
+        padding-right: 48px;
+    }
+}
+
+.small {
+    padding: 8px 16px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.medium {
+    padding: 12px 20px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.large {
+    padding: 14px 24px;
+    font-size: 18px;
+    width: 100%;
+}
+
+.full {
+    padding: 12px 20px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.iconLeft {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $brown-color;
+    pointer-events: none;
+}
+
+.iconRight {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: $brown-color;
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+.passwordToggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: $brown-color;
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+.label {
+    display: block;
+    font-size: 20px;
+    color: $brown-color;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 4px;
+    text-align: left;
+
+    &.labelDisabled {
+        opacity: 0.6;
+    }
+}
+
+.requiredMark {
+    color: #f44336;
+    margin-left: 4px;
+    font-size: 16px;
+}
+
+.errorText {
+    font-size: 12px;
+    color: #f44336;
+    margin-top: 4px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.hasError {
+    .input {
+        border-color: #f44336;
+    }
+}

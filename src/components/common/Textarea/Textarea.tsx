@@ -1,7 +1,7 @@
 import React, { forwardRef, useId } from 'react';
 import styles from './Textarea.module.scss';
 
-export type TextareaVariant = '_primary' | '_secondary' | '_outline' | '_ghost';
+export type TextareaVariant = '_admin' | '_primary' | '_secondary' | '_outline' | '_ghost';
 export type TextareaSize = 'small' | 'medium' | 'large';
 export type TextareaResize = 'none' | 'both' | 'horizontal' | 'vertical';
 

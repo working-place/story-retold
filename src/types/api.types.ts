@@ -11,7 +11,6 @@ export interface LoginResponseRaw {
   expires_in: number;
 }
 
-// Внутренний тип (после адаптации)
 export interface LoginResponse {
   token: string;
 }
@@ -33,17 +32,16 @@ export interface ChangePasswordRequest {
 
 // ============ Card (Hero) DTOs ============
 
-export type Chapter = 'svo' | 'gpw'; // gpw = Великая Отечественная война (USSR)
+export type Chapter = 'svo' | 'gpw';
 export type CardType = 'withPhoto' | 'withoutPhoto';
 
 export interface AdditionalCardImage {
   image?: File;
-  id?: number;      // For updates: existing image ID
-  delete?: number;  // For updates: mark image ID for deletion
+  id?: number;
+  delete?: number;
 }
 
 export interface CardCreateRequest {
-  // Required
   dateBirth: string;           // YYYY-MM-DD
   placeBirth: string;
   name: string;
@@ -53,7 +51,6 @@ export interface CardCreateRequest {
   privacyPolicy: '1';
   chapter: Chapter;
 
-  // Optional / nullable
   dateDeath?: string | null;
   email?: string;
   militaryRank?: string;
@@ -113,14 +110,7 @@ export interface CardResponse {
   photoHero: CardImage | null;
   additionalImages: CardImage[];
 }
-
-export interface CardShowResponse {
-  data: CardResponse[];
-  current_page: number;
-  last_page: number;
-  per_page: number;
-  total: number;
-}
+  export type CardShowResponse = CardResponse[];
 
 // ============ Email (Feedback) DTOs ============
 

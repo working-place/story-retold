@@ -22,8 +22,7 @@
     border-radius: 12px;
     transition: all 0.2s ease;
     outline: none;
-    border: none;
-    //  font-family: 'Roboto', sans-serif;
+    border: 2px solid $brown-color;
 
     // готово
     &::placeholder {
@@ -109,6 +108,10 @@
     &:focus {}
 }
 
+._admin {
+    border: 2px solid $brown-color;
+}
+
 // Иконки
 .iconLeft,
 .iconRight {}
@@ -151,7 +154,6 @@
     color: $beige-background;
     font-family: 'Roboto', sans-serif;
     font-weight: 600;
-    // margin-bottom: 8px;
 
     &_checkbox {
         font-size: 15px;
@@ -162,6 +164,14 @@
     }
 
     &.labelDisabled {}
+
+    &_brown {
+    color: $brown-color !important;
+
+    .requiredMark {
+        color: $brown-color !important;
+    }
+}
 }
 
 // Готово
@@ -190,7 +200,6 @@
 
 .labelPosition-inside {}
 
-// Анимированный лейбл внутри инпута
 .insideLabel {
     position: absolute;
     left: 14px;
@@ -218,13 +227,11 @@
     }
 }
 
-// Корректировка отступов для инпута с лейблом внутри
 .hasLabelInside {
     padding-top: 16px;
     padding-bottom: 8px;
 }
 
-// Для инпутов с иконками и лейблом внутри
 .hasIconLeft.hasLabelInside {
     padding-left: 36px;
 }

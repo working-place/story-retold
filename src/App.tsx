@@ -7,11 +7,12 @@ import HomePage from './pages/main/HomePage/HomePage';
 import LoginPage from "./pages/auth/LoginPage/LoginPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
-import AdminHeroes from "./pages/admin/AdminHeroes/AdminHeroes";
 import AdminHeroActions from "./pages/admin/AdminHeroActions/AdminHeroActions";
 import USSRHeroesPage from "./pages/main/HeroesPage/USSRHeroesPage";
 import SVOHeroesPage from "./pages/main/HeroesPage/SVOHeroesPage";
 import HeroDetailPage from "./pages/main/HeroDetailPage/HeroDetailPage";
+import AdminLayout from "./components/layout/AdminLayout/AdminLayout";
+import AdminPanelForm from "./components/common/Form/AdminPanelForm";
 
 function App() {
   return (
@@ -31,10 +32,16 @@ function App() {
           <Route path="/admin-heroes"
             element={
               <ProtectedRoute>
-                <AdminHeroes />
+                <AdminLayout/>
               </ProtectedRoute>
             }
-          />
+          >
+            <Route path="new-card" element={<AdminPanelForm />} />
+            {/* <Route path="on-review" element={<div>На проверке</div>} /> */}
+            {/* <Route path="ussr-heroes" element={<div>Герои СССР</div>} /> */}
+            {/* <Route path="svo-heroes" element={<div>Герои СВО</div>} /> */}
+            </Route>
+
           <Route path="/admin-heroes-actions"
             element={
               <ProtectedRoute>

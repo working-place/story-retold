@@ -11,11 +11,14 @@ export async function httpClient<T>(
   options: FetchOptions = {}
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
-
   const headers = new Headers(options.headers);
+
   headers.set('Accept', 'application/json');
 
-  // Добавляем токен, если не запрещено
+  if (!(options.body instanceof FormData)) {
+    headers.set('Content-Type', 'application/json');
+  }
+
   if (!options.skipAuth) {
     const token = getToken();
     if (token) {
@@ -23,12 +26,17 @@ export async function httpClient<T>(
     }
   }
 
+  let body = options.body;
+  if (body && typeof body === 'object' && !(body instanceof FormData)) {
+    body = JSON.stringify(body);
+  }
+
   const response = await fetch(url, {
     ...options,
     headers,
+    body,
   });
 
-  // Обработка 401 Unauthorized
   if (response.status === 401) {
     removeToken();
     if (typeof window !== 'undefined') {

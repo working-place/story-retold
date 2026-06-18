@@ -1,14 +1,22 @@
 @use "../../../assets/scss/variables-color" as *;
 
-.textareaWrapper {
+.wrapper {
     position: relative;
     width: 100%;
+}
+
+.textareaWrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .textarea {
     position: relative;
     width: 100%;
-    min-height: 269px;
+    min-height: 241px;
     background-color: $beige-background;
     border-radius: 12px;
     transition: all 0.2s ease;
@@ -23,42 +31,182 @@
     &::placeholder {
         font-size: 20px;
         color: $brown-color;
-            }
-
-    &:focus {
     }
 
-    // ---
+    &:focus {
+        border-color: $brown-color, 10%;
+        box-shadow: 0 0 0 2px rgba($brown-color, 0.2);
+    }
+
     &.error {
         border-color: #f44336;
         background-color: rgba(244, 67, 54, 0.05);
     }
 
-    // ---
+    &.success {
+        border-color: #4caf50;
+    }
+
     &.disabled {
         opacity: 0.6;
         cursor: not-allowed;
+        background-color: rgba($beige-background, 0.8);
+    }
+
+    &.readOnly {
+        background-color: rgba($beige-background, 0.8);
     }
 }
 
-// готово
+.textarea._primary {
+    background-color: $beige-background;
+    border: 2px solid $brown-color;
+
+    &::placeholder {
+        color: $brown-color;
+        font-size: 20px;
+    }
+
+    &+.label {
+        color: $beige-background;
+    }
+}
+
+.textarea._admin {
+    background-color: #FDF7E9;
+    border: 2px solid $brown-color;
+
+    &::placeholder {
+        color: rgba($brown-color, 0.6);
+        font-size: 16px;
+    }
+
+    &+.label {
+        color: $brown-color;
+    }
+}
+
+.textarea._secondary {
+    background-color: #f5f5f5;
+    border: 2px solid #ccc;
+
+    &::placeholder {
+        color: #999;
+    }
+}
+
+.textarea._outline {
+    background-color: transparent;
+    border: 2px solid $brown-color;
+
+    &::placeholder {
+        color: $brown-color;
+    }
+}
+
+.textarea._ghost {
+    background-color: transparent;
+    border: 1px solid transparent;
+
+    &:hover {
+        border-color: rgba($brown-color, 0.3);
+    }
+}
+
+// ========================
+
+.textarea.small {
+    min-height: 120px;
+    padding: 8px 16px;
+    font-size: 14px;
+
+    &::placeholder {
+        font-size: 14px;
+    }
+}
+
+.textarea.medium {
+    min-height: 200px;
+    padding: 11px 24px;
+    font-size: 16px;
+
+    &::placeholder {
+        font-size: 16px;
+    }
+}
+
+.textarea.large {
+    padding: 14px 28px;
+    font-size: 20px;
+
+    &::placeholder {
+        font-size: 20px;
+    }
+}
+
+// ========================
+
+.textarea.resize-none {
+    resize: none;
+}
+
+.textarea.resize-both {
+    resize: both;
+}
+
+.textarea.resize-horizontal {
+    resize: horizontal;
+}
+
+.textarea.resize-vertical {
+    resize: vertical;
+}
+
+// ========================
+
 .label {
     display: block;
     font-size: 20px;
-    color: $beige-background;
     text-align: left;
     margin-top: 15px;
     margin-bottom: 8px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
 }
 
-// готово
-.requiredMark {
+.wrapper:has(.textarea._primary) .label {
     color: $beige-background;
+}
+
+.wrapper:has(.textarea._admin) .label {
+    color: $brown-color;
+}
+
+.label_brown {
+    color: $brown-color !important;
+}
+
+.label_beige {
+    color: $beige-background !important;
+}
+
+// ========================
+
+.requiredMark {
     margin-left: 4px;
     font-size: 20px;
 }
 
-// ---
+.wrapper:has(.textarea._primary) .requiredMark {
+    color: $beige-background;
+}
+
+.wrapper:has(.textarea._admin) .requiredMark {
+    color: #f44336;
+}
+
+// ========================
+
 .errorText {
     font-size: 14px;
     color: #f44336;
@@ -66,7 +214,8 @@
     display: block;
 }
 
-// Нижняя панель
+// ========================
+
 .bottomPanel {
     display: flex;
     justify-content: space-between;
@@ -74,9 +223,9 @@
     margin-top: 4px;
 }
 
-// Счетчик символов
+// ========================
+
 .counter {
-    position: absolute;
     font-size: 12px;
     color: #999;
 
@@ -89,7 +238,8 @@
     }
 }
 
-// Спиннер загрузки
+// ========================
+
 .spinnerOverlay {
     position: absolute;
     top: 0;
@@ -108,11 +258,74 @@
     width: 24px;
     height: 24px;
     border: 2px solid rgba(0, 0, 0, 0.1);
-    border-top-color: #4caf50;
+    border-top-color: $brown-color;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// ========================
+
+.labelPosition-top {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.labelPosition-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .label {
+        margin-top: 0;
+        margin-bottom: 0;
+        min-width: 150px;
+    }
+
+    .textareaWrapper {
+        flex: 1;
+    }
+}
+
+.labelPosition-inside {
+    .textarea {
+        padding-top: 24px;
+        padding-bottom: 8px;
+    }
+}
+
+.insideLabel {
+    position: absolute;
+    left: 24px;
+    top: 14px;
+    font-size: 16px;
+    color: $brown-color;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    background-color: transparent;
+    padding: 0 4px;
+    z-index: 1;
+    font-family: "Roboto", sans-serif;
+
+    &.insideLabelActive {
+        top: -6px;
+        font-size: 12px;
+        background-color: $beige-background;
+        color: $brown-color;
+    }
+}
+
+.wrapper:has(.textarea._admin) .insideLabel {
+    color: rgba($brown-color, 0.7);
+
+    &.insideLabelActive {
+        background-color: $beige-background;
+        color: $brown-color;
+    }
 }
