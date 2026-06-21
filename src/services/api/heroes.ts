@@ -173,11 +173,10 @@ export const heroesApi = {
     },
 
     get: (id: number): Promise<CardResponse> => {
-        return httpClient<CardResponse>(`/api/card/get/${id}`, {
-            method: 'GET',
-            skipAuth: false,
-        });
-    },
+    return httpClient<CardResponse>(`/api/card/get/${id}`, {
+        method: 'GET',
+    });
+},
 
     update: (id: number, data: FormData): Promise<void> => {
         return httpClient<void>(`/api/card/update/${id}`, {
@@ -188,9 +187,9 @@ export const heroesApi = {
     },
 
     delete: (id: number): Promise<void> => {
-        return httpClient<void>(`/api/card/delete/${id}`, {
-            method: 'DELETE',
-            skipAuth: false,
-        });
-    },
+    return httpClient<void>(`/api/card/delete/${id}`, {
+        method: 'DELETE',
+    });
+},
+
 };

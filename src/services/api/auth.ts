@@ -17,13 +17,11 @@ export const authApi = {
     }).toString();
     const url = `/api/login?${params}`;
 
-    // Типизируем ответ сервера строго
     const rawResponse = await httpClient<LoginResponseRaw>(url, {
       method: 'POST',
       skipAuth: true,
     });
 
-    // Сервер гарантированно возвращает access_token
     const token = rawResponse.access_token;
     if (!token) {
       throw new Error('Сервер не вернул access_token');

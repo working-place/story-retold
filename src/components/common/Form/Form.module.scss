@@ -412,17 +412,10 @@ background-color: $brown-color;
   display: grid;
   grid-template-columns: repeat(3, 106px);
   gap: 16px;
-//   margin-top: 20px;
   justify-content: center;
-//   background-color: $beige;
-//   background-color: red;
-//   height: fit-content;
 padding-bottom: 30px;
 
 height: 100%;
-
-// padding-top: -30px;
-// overflow: hidden;
 }
 
 .additionalImageItem {
@@ -430,16 +423,12 @@ height: 100%;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-// background-color: $beige;
 }
 
 .additionalImageWrapper {
   position: relative;
   width: 106px;
   height: 133px;
-//   background-color: $beige;
-//   margin-bottom: -30px;
-//   margin-top: -36px;
 }
 
 .additionalImagePreview {
