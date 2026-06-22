@@ -13,6 +13,8 @@ import SVOHeroesPage from "./pages/main/HeroesPage/SVOHeroesPage";
 import HeroDetailPage from "./pages/main/HeroDetailPage/HeroDetailPage";
 import AdminLayout from "./components/layout/AdminLayout/AdminLayout";
 import AdminPanelForm from "./components/common/Form/AdminPanelForm";
+import HeroAllCards from "./components/admin/HeroCards/HeroAllCards";
+import AdminEditForm from "./components/common/Form/AdminEditForm";
 
 function App() {
   return (
@@ -32,15 +34,16 @@ function App() {
           <Route path="/admin-heroes"
             element={
               <ProtectedRoute>
-                <AdminLayout/>
+                <AdminLayout />
               </ProtectedRoute>
             }
           >
             <Route path="new-card" element={<AdminPanelForm />} />
             {/* <Route path="on-review" element={<div>На проверке</div>} /> */}
-            {/* <Route path="ussr-heroes" element={<div>Герои СССР</div>} /> */}
-            {/* <Route path="svo-heroes" element={<div>Герои СВО</div>} /> */}
-            </Route>
+            <Route path="edit/:id" element={<AdminEditForm />} />
+            <Route path="ussr-heroes" element={<HeroAllCards type="gpw" title="Герои СССР" />} />
+            <Route path="svo-heroes" element={<HeroAllCards type="svo" title="Герои СВО" />} />
+          </Route>
 
           <Route path="/admin-heroes-actions"
             element={

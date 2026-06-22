@@ -1,4 +1,3 @@
-// components/common/Form/AdminPanelForm.tsx
 import { useState } from 'react';
 import Button from "../../common/Button/Button";
 import styles from "./Form.module.scss";
@@ -8,7 +7,6 @@ import CustomSelectAdmin from "../Select/SelectAdmin";
 import { httpClient } from '../../../services/http.client';
 import PublishConfirmPopup from '../../admin/Popups/PublishConfirmPopup';
 import { heroesApi } from '../../../services/api/heroes';
-
 
 interface FormData {
     dateBirth: string;
@@ -101,16 +99,35 @@ export default function AdminPanelForm() {
 
     const handlePhotoHeroChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
-            setPhotoHero(e.target.files[0]);
+            const file = e.target.files[0];
+            if (file.size > 4 * 1024 * 1024) {
+                setError('Размер файла не должен превышать 4 MB');
+                return;
+            }
+            setPhotoHero(file);
             setError(null);
         }
+        e.target.value = '';
     };
 
     const handleAdditionalImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const files = Array.from(e.target.files);
+            const oversizedFile = files.find(file => file.size > 4 * 1024 * 1024);
+            if (oversizedFile) {
+                setError(`Файл "${oversizedFile.name}" превышает 4 MB`);
+                return;
+            }
+            const currentCount = additionalImages.length;
+            const availableSlots = 9 - currentCount;
+            if (files.length > availableSlots) {
+                setError(`Можно загрузить не более 9 изображений. Осталось ${availableSlots} мест(а)`);
+                return;
+            }
             setAdditionalImages(prev => [...prev, ...files]);
+            setError(null);
         }
+        e.target.value = '';
     };
 
     const removeAdditionalImage = (index: number) => {
@@ -193,7 +210,7 @@ export default function AdminPanelForm() {
             if (formData.placeService) submitData.append('placeService', formData.placeService);
             if (formData.placeConscription) submitData.append('placeConscription', formData.placeConscription);
 
-            if (photoHero) {
+            if (formData.cardType === 'withPhoto' && photoHero) {
                 submitData.append('photoHero', photoHero);
             }
 
@@ -274,29 +291,71 @@ export default function AdminPanelForm() {
                     <div
                         className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}
                     >
-                        <img src="/image-download-brown.png" alt="Загрузить" />
-                        <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
-                            <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
-                                Фотографии героя
-                            </h3>
-                            <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
-                                Максимальный размер файла 4 MB
-                            </h4>
-                        </div>
-                        <input
-                            type="file"
-                            id="photoHero"
-                            accept="image/png,image/jpeg,image/jpg,image/webp"
-                            onChange={handlePhotoHeroChange}
-                            style={{ display: 'none' }}
-                        />
-                        <Button
-                            type="button"
-                            className={`${styles.button_small} ${styles.button_admin}`}
-                            onClick={() => document.getElementById('photoHero')?.click()}
-                        >
-                            {photoHero ? photoHero.name : 'Выбрать файл'}
-                        </Button>
+                        {!photoHero ? (
+                            <>
+                                <img src="/image-download-brown.png" alt="Загрузить" />
+                                <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
+                                    <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
+                                        Фотографии героя
+                                    </h3>
+                                    <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
+                                        Максимальный размер файла 4 MB
+                                    </h4>
+                                </div>
+                                <input
+                                    type="file"
+                                    id="photoHero"
+                                    accept="image/png,image/jpeg,image/jpg,image/webp"
+                                    onChange={handlePhotoHeroChange}
+                                    style={{ display: 'none' }}
+                                />
+                                <Button
+                                    type="button"
+                                    className={`${styles.button_small} ${styles.button_admin}`}
+                                    onClick={() => document.getElementById('photoHero')?.click()}
+                                >
+                                    Выбрать файл
+                                </Button>
+                            </>
+                        ) : (
+                            <div className={styles.previewContainer}>
+                                <div className={styles.previewImageWrapper}>
+                                    <img
+                                        src={URL.createObjectURL(photoHero)}
+                                        alt="Превью фото героя"
+                                        className={styles.previewImage}
+                                    />
+                                    <button
+                                        type="button"
+                                        className={styles.removeImageButton}
+                                        onClick={() => setPhotoHero(null)}
+                                        aria-label="Удалить фото"
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+                                <div className={styles.previewInfo}>
+                                    <p className={styles.previewFileName}>{photoHero.name}</p>
+                                    <p className={styles.previewFileSize}>
+                                        {(photoHero.size / 1024).toFixed(2)} KB
+                                    </p>
+                                    <Button
+                                        type="button"
+                                        className={`${styles.button_small} ${styles.button_admin} ${styles.changePhotoButton}`}
+                                        onClick={() => document.getElementById('photoHero')?.click()}
+                                    >
+                                        Заменить фото
+                                    </Button>
+                                </div>
+                                <input
+                                    type="file"
+                                    id="photoHero"
+                                    accept="image/png,image/jpeg,image/jpg,image/webp"
+                                    onChange={handlePhotoHeroChange}
+                                    style={{ display: 'none' }}
+                                />
+                            </div>
+                        )}
                     </div>
 
                     <div
@@ -307,9 +366,10 @@ export default function AdminPanelForm() {
                                 Фотографии наград и другие материалы
                             </h3>
                             <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
-                                Максимальный размер файлов 4 MB
+                                Максимальный размер файлов 4 MB. Максимум 9 изображений
                             </h4>
                         </div>
+
                         <input
                             type="file"
                             id="additionalImages"
@@ -317,26 +377,59 @@ export default function AdminPanelForm() {
                             multiple
                             onChange={handleAdditionalImagesChange}
                             style={{ display: 'none' }}
+                            disabled={additionalImages.length >= 9}
                         />
                         <Button
                             type="button"
                             className={`${styles.button_small} ${styles.button_admin}`}
                             onClick={() => document.getElementById('additionalImages')?.click()}
+                            disabled={additionalImages.length >= 9}
                         >
-                            Выбрать файлы ({additionalImages.length})
+                            Выбрать файлы ({additionalImages.length}/9)
                         </Button>
+
+                        {/* Галерея превью дополнительных изображений (сетка 3x3) */}
                         {additionalImages.length > 0 && (
-                            <div className={styles.fileList}>
+                            <div className={styles.additionalImagesGrid}>
                                 {additionalImages.map((file, index) => (
-                                    <div key={index} className={styles.fileItem}>
-                                        <span>{file.name}</span>
-                                        <button type="button" onClick={() => removeAdditionalImage(index)}>×</button>
+                                    <div key={index} className={styles.additionalImageItem}>
+                                        <div className={styles.additionalImageWrapper}>
+                                            <img
+                                                src={URL.createObjectURL(file)}
+                                                alt={`Дополнительное фото ${index + 1}`}
+                                                className={styles.additionalImagePreview}
+                                            />
+                                            <button
+                                                type="button"
+                                                className={styles.removeAdditionalImageButton}
+                                                onClick={() => removeAdditionalImage(index)}
+                                                aria-label="Удалить фото"
+                                            >
+                                                ×
+                                            </button>
+                                        </div>
                                     </div>
                                 ))}
+
+
+
                             </div>
+
                         )}
+
+
                     </div>
+                    <Button
+                        type="button"
+                        className={`${styles.button_small} ${styles.button_admin}`}
+                        onClick={() => document.getElementById('additionalImages')?.click()}
+                        disabled={additionalImages.length >= 9}
+                    >
+                        Выбрать файлы ({additionalImages.length}/9)
+                    </Button>
                 </div>
+
+
 
                 <div className={`${styles.form__basicInformation} ${styles.form__basicInformation_admin}`}>
                     <div className={`${styles.form__wrapper_secondLine} ${styles.form__wrapper_admin}`}>

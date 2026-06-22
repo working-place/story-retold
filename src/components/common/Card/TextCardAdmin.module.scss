@@ -1,0 +1,94 @@
+.container {
+    display: flex;
+    align-items: center;
+    background-color: #36453D;
+    width: 571px;
+    min-height: 315px;
+    height: fit-content;
+    padding: 27px 25px;
+    border-radius: 20px;
+    gap: 15px;
+    align-items: stretch;
+}
+
+.imgPlaceholder {
+    width: 210px;
+    height: 261px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2e3a34;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.placeholderIcon {
+    width: 80px;
+    height: 80px;
+    opacity: 0.5;
+}
+
+.text {
+    font-family: "Roboto";
+    font-size: 22px;
+    color: #F1E6D0;
+    text-align: left;
+
+    &_block {
+        display: block;
+    }
+}
+
+.infoWrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.infoContainer,
+.cardLink {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.buttonContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.button,
+.deleteButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+}
+
+.deleteButton {
+    width: 68px;
+    height: 55px;
+    border: 1px solid #F2E7D1;
+}
+
+.button {
+background-color: #F2E7D1;
+padding: 12px 24px;
+height: 55px;
+width: 196px;
+}
+
+.deleteButton {
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+.cardLink {
+    text-decoration: none;
+}
