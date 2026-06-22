@@ -15,6 +15,7 @@ import AdminLayout from "./components/layout/AdminLayout/AdminLayout";
 import AdminPanelForm from "./components/common/Form/AdminPanelForm";
 import HeroAllCards from "./components/admin/HeroCards/HeroAllCards";
 import AdminEditForm from "./components/common/Form/AdminEditForm";
+import NotFoundPage from "./pages/main/NotFoundPage/NotFoundPage";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
     </AuthProvider>
