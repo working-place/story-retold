@@ -9,6 +9,12 @@
     position: relative;
     background-color: $beige-background; /* Фолбэк, если картинка не прогрузится */
     
+    /* 
+     * ============================================
+     * ФОНОВОЕ ИЗОБРАЖЕНИЕ
+     * Файл 404_pic.webp должен лежать в папке public/
+     * ============================================
+     */
     background-image: url('/404_pic.webp');
     background-size: cover;
     background-position: center;
@@ -27,21 +33,22 @@
     max-width: 800px;
 
     &__title {
-        font-family: 'Glanz', sans-serif;
+        /* Шрифт Rubik для цифры 404 */
+        font-family: 'Rubik', sans-serif;
+        font-weight: 700;
         font-size: 140px;
-        font-weight: 400;
         color: $brown-color;
         line-height: 1;
         margin-bottom: 10px;
         
-        /* Для экранов поменьше */
         @media (max-width: 768px) {
             font-size: 100px;
         }
     }
 
     &__subtitle {
-        font-family: 'Roboto', sans-serif;
+        /* Шрифт Rubik для подзаголовка */
+        font-family: 'Rubik', sans-serif;
         font-weight: 700;
         font-size: 36px;
         color: $brown-color;
@@ -53,8 +60,10 @@
     }
 
     &__text {
-        font-family: 'Roboto', sans-serif;
-        font-weight: 400;
+        /* Шрифт Metamorphous для основного текста */
+        // font-family: 'Metamorphous-Regular';
+        // font-weight: 400;
+        font-weight: 800;
         font-size: 20px;
         line-height: 140%;
         color: $brown-color;
@@ -72,9 +81,8 @@
 }
 
 .button {
-    /* Стили, повторяющие кнопку на макете */
     background-color: $brown-color;
-    color: #FDF7E9; /* Цвет текста кнопки из макета */
+    color: #FDF7E9;
     border: none;
     border-radius: 20px;
     padding: 16px 32px;
