@@ -1,30 +1,85 @@
-// @use "../../assets/scss/_mixins.scss" as *;
-// @use "../../assets/scss/_typography.scss" as *;
-// @use "../../assets/scss/_variables-color.scss" as *;
+@use "../../../assets/scss/_variables-color.scss" as *;
 
 .loginPage {
   display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
+  background-color: #f5f0e6;
+  position: relative; /* Чтобы логотип позиционировался относительно всей страницы */
+}
+
+/* Логотип в левом верхнем углу */
+.logo {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 80px; /* Подберите размер под ваш макет */
+  z-index: 10;
+}
+
+/* Левая панель (Форма) */
+.panelLeft {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FDF7E9;
+  padding: 40px;
+}
+
+.loginCard {
+  padding: 40px;
+  border-radius: 40px;
+  max-width: 848px;
+  width: 100%;
+  text-align: center;
   background-color: #F1E6D0;
 }
 
-.form {
-  background-color: #534035;
-  padding: 40px;
-  border-radius: 20px;
+.loginCardInner {
+  max-width: 448px;
   width: 100%;
-  max-width: 400px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.loginTitle {
+  font-size: 28px;
+  color: #1A1A1A;
+  margin-bottom: 20px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.welcomeText {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  color: #1A1A1A;
+}
+
+.form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+}
 
-  h1 {
-    color: #F1E6D0;
-    font-size: 28px;
-    text-align: center;
-    margin-bottom: 10px;
+.input {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 20px;
+  border: 1px solid $brown-color;
+  font-size: 16px;
+  outline: none;
+  background: #ffffff;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: #999;
+  }
+
+  &:focus {
+    border-color: $green-color;
   }
 }
 
@@ -34,17 +89,87 @@
   text-align: center;
 }
 
-.links {
+.submitBtn {
   text-align: center;
-  margin-top: 10px;
+  width: 100%;
+  padding: 14px;
+  background: $green-color;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
 
-  a {
-    color: #F1E6D0;
-    text-decoration: none;
-    font-size: 14px;
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
 
-    &:hover {
-      text-decoration: underline;
-    }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.forgotLink {
+  margin-top: 8px;
+  background: none;
+  border: none;
+  color: $brown-color;
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+/* Правая панель (Фон-декорация) */
+.panelRight {
+  flex: 1;
+  /* Подключаем десктопный фон */
+  background-image: url('/auth_background.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Адаптив для планшетов и мобильных */
+@media (max-width: 1024px) {
+  .panelRight {
+    display: none; /* Прячем правую панель на малых экранах */
+  }
+
+  .panelLeft {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .loginPage {
+    /* На мобильном мобильная картинка становится фоном всей страницы */
+    background-image: url('/auth_background_mobile.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .logo {
+    width: 60px; /* Чуть уменьшаем лого на мобильных */
+    top: 20px;
+    left: 20px;
+  }
+
+  .panelLeft {
+    background-color: transparent; /* Убираем бежевый фон, делаем его полупрозрачным для эффекта блюра */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    padding: 20px;
+  }
+
+  .input {
+    background: rgba(255, 255, 255, 0.9); /* Слегка прозрачные инпуты */
   }
 }
