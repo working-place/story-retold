@@ -69,6 +69,7 @@ export default function LoginPage() {
 
             <Button
               type="button"
+              variant='ghost'
               className={styles.forgotLink}
               onClick={() => setIsModalOpen(true)}
             >
