@@ -1,27 +1,135 @@
-// @use "../../assets/scss/_mixins.scss" as *;
-// @use "../../assets/scss/_typography.scss" as *;
-// @use "../../assets/scss/_variables-color.scss" as *;
+@use "../../../assets/scss/_variables-color.scss" as *;
+@use "sass:color";
 
-
-button {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  outline: inherit;
-  text-decoration: none;
+.button {
   display: inline-flex;
+  align-items: center;
+  justify-content: center; /* Текст и иконки по центру */
+  gap: 8px; /* Отступ между иконкой и текстом */
+  text-decoration: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-family: inherit;
+  font-weight: 700;
+  white-space: nowrap;
+  border-radius: 20px; /* Базовое скругление */
+  padding: 12px 24px; /* Базовые отступы */
+  font-size: 16px;
+  width: fit-content;
+  position: relative;
+
+  /* Состояние загрузки/блокировки */
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 
   &:focus-visible {
     outline: 2px solid #3b82f6;
     outline-offset: 2px;
   }
+}
 
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+/* --- ВАРИАНТЫ (Colors) --- */
+
+.primary {
+  background-color: $brown-color;
+  color: $white-text;
+
+  // &:hover:not(:disabled) {
+  //   /* Заменяем darken на color.scale */
+  //   background-color: color.scale($brown-color, $lightness: -10%);
+  // }
+}
+
+.secondary {
+  background-color: $green-color;
+  color: $beige-background;
+
+  // &:hover:not(:disabled) {
+  //   /* Заменяем lighten на color.scale */
+  //   background-color: color.scale($green-color, $lightness: 10%);
+  // }
+}
+
+.outline {
+  background-color: transparent;
+  border: 2px solid $brown-color;
+  color: $brown-color;
+
+  &:hover:not(:disabled) {
+    background-color: $brown-color;
+    color: $white-text;
   }
+}
+
+.ghost {
+  background-color: transparent;
+  color: $brown-color;
+
+  &:hover:not(:disabled) {
+    background-color: rgba($brown-color, 0.1);
+  }
+}
+
+/* --- РАЗМЕРЫ (Sizes) --- */
+
+.small {
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 12px;
+}
+
+.medium {
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 20px;
+}
+
+.large {
+  padding: 16px 32px;
+  font-size: 20px;
+  border-radius: 24px;
+}
+
+/* --- ШИРИНА --- */
+
+.fullWidth {
+  width: 100%;
+  justify-content: center;
+}
+
+/* --- ИКОНКИ И СПИННЕР --- */
+
+.icon,
+.iconRight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Переопределение цвета спиннера для Outline и Ghost вариантов */
+.outline .spinner,
+.ghost .spinner {
+  border-top-color: $brown-color;
+  border-color: rgba($brown-color, 0.3);
 }
