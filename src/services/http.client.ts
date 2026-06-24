@@ -1,6 +1,5 @@
 import { getToken, removeToken } from '../utils/authStorage';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://94.250.255.173:8000';
+import { API_BASE_URL } from './api/api';
 
 interface FetchOptions extends RequestInit {
   skipAuth?: boolean;
