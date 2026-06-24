@@ -15,6 +15,10 @@
   left: 30px;
   width: 80px; /* Подберите размер под ваш макет */
   z-index: 10;
+
+    @include respond-below($breakpoint-md) {
+    display: none;
+    }
 }
 
 /* Левая панель (Форма) */
@@ -52,8 +56,12 @@
   text-align: center;
 
     @include respond-below($breakpoint-md) {
-font-size: 28px;
-  }
+    font-size: 28px;
+    }
+
+    @include respond-below($breakpoint-sm) {
+    font-size: 18px;
+    }
 }
 
 .welcomeText {
@@ -63,6 +71,10 @@ font-size: 28px;
   font-weight: 500;
   margin-bottom: 32px;
   color: #1A1A1A;
+
+    @include respond-below($breakpoint-md) {
+    font-size: 20px;
+    }
 }
 
 .form {
@@ -139,8 +151,9 @@ font-size: 28px;
   flex: 1;
   /* Подключаем десктопный фон */
   background-image: url('/auth_background.webp');
-  background-size: cover;
-  background-position: center;
+  background-color: #FDF7E9;
+  background-size: contain;
+  background-position: right;
   background-repeat: no-repeat;
 }
 
