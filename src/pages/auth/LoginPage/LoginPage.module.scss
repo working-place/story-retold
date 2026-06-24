@@ -151,8 +151,9 @@
   flex: 1;
   /* Подключаем десктопный фон */
   background-image: url('/auth_background.webp');
-  background-size: cover;
-  background-position: center;
+  background-color: #FDF7E9;
+  background-size: contain;
+  background-position: right;
   background-repeat: no-repeat;
 }
 
