@@ -1,4 +1,5 @@
 @use "../../../assets/scss/_variables-color.scss" as *;
+@use "../../../assets/scss/breakpoints" as *;
 
 .loginPage {
   display: flex;
@@ -49,6 +50,10 @@
   margin-bottom: 20px;
   font-weight: 400;
   text-align: center;
+
+    @include respond-below($breakpoint-md) {
+font-size: 28px;
+  }
 }
 
 .welcomeText {

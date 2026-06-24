@@ -1,0 +1,109 @@
+// =====================================================
+//  1. ПЕРЕМЕННЫЕ БРЕЙКПОИНТОВ (Mobile First)
+// =====================================================
+
+// Основные точки останова (в пикселях)
+$breakpoint-xs: 376px;   // Маленькие телефоны
+$breakpoint-sm: 576px;   // Телефоны в портретной ориентации
+$breakpoint-md: 768px;   // Планшеты / большие телефоны
+$breakpoint-lg: 1024px;  // Планшеты в ландшафте / ноутбуки
+$breakpoint-xl: 1280px;  // Десктопы
+$breakpoint-xxl: 1440px; // Большие десктопы
+$breakpoint-xxxl: 1920px; // Очень большие экраны
+
+// Отступы (Gutters) для контейнеров
+$container-padding-mobile: 16px;
+$container-padding-tablet: 24px;
+$container-padding-desktop: 32px;
+
+// Максимальная ширина контейнера
+$container-max-width: 1760px; // Уже используется в вашем проекте
+
+// =====================================================
+//  2. МИКСИНЫ (Mobile First)
+// =====================================================
+
+// Миксин для медиа-запроса "от ... и выше" (min-width)
+@mixin respond-above($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// Миксин для медиа-запроса "до ..." (max-width)
+@mixin respond-below($breakpoint) {
+  @media (max-width: ($breakpoint - 1px)) {
+    @content;
+  }
+}
+
+// Миксин для медиа-запроса "от ... до ..."
+@mixin respond-between($min, $max) {
+  @media (min-width: $min) and (max-width: ($max - 1px)) {
+    @content;
+  }
+}
+
+// =====================================================
+//  3. УТИЛИТЫ ДЛЯ КОНТЕЙНЕРОВ И ГРИДОВ
+// =====================================================
+
+// Миксин для ограничения ширины контейнера с отступами
+@mixin container {
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-padding-mobile;
+  padding-right: $container-padding-mobile;
+
+  @include respond-above($breakpoint-md) {
+    padding-left: $container-padding-tablet;
+    padding-right: $container-padding-tablet;
+  }
+
+  @include respond-above($breakpoint-lg) {
+    padding-left: $container-padding-desktop;
+    padding-right: $container-padding-desktop;
+  }
+}
+
+// Миксин для создания адаптивной сетки (колонки)
+@mixin grid-columns($columns: 4, $gap: 20px) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+// =====================================================
+//  4. ПРИМЕРЫ ИСПОЛЬЗОВАНИЯ (закомментированы)
+// =====================================================
+
+/*
+  // Пример использования в компоненте:
+  .myComponent {
+    display: flex;
+    flex-direction: column; // по умолчанию для мобильных
+
+    @include respond-above($breakpoint-md) {
+      flex-direction: row; // на планшетах и выше
+    }
+  }
+
+  // Пример использования контейнера:
+  .myPage {
+    @include container;
+  }
+
+  // Пример использования сетки:
+  .cardsGrid {
+    @include grid-columns(1, 20px);
+
+    @include respond-above($breakpoint-md) {
+      @include grid-columns(2, 24px);
+    }
+
+    @include respond-above($breakpoint-lg) {
+      @include grid-columns(3, 32px);
+    }
+  }
+*/
