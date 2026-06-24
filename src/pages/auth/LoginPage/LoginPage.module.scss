@@ -15,6 +15,10 @@
   left: 30px;
   width: 80px; /* Подберите размер под ваш макет */
   z-index: 10;
+
+    @include respond-below($breakpoint-md) {
+    display: none;
+    }
 }
 
 /* Левая панель (Форма) */
