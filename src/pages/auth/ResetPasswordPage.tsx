@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { authApi } from '../../services/api/auth';
 import Button from '../../components/common/Button/Button';
 import styles from './ResetPasswordPage.module.scss';
@@ -72,9 +72,14 @@ export default function ResetPasswordPage() {
             {loading ? 'Сохранение...' : 'Сохранить пароль'}
           </Button>
 
-          <div className={styles.links}>
-            <Link to="/login">← Вернуться к входу</Link>
-          </div>
+<Button
+  type="button"
+  variant="ghost"
+  className={styles.forgotLink}
+  onClick={() => navigate('/login')}
+>
+  ← Вернуться к входу
+</Button>
         </form>
       </div>
     </div>
