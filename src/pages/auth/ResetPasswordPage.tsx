@@ -1,4 +1,3 @@
-// src/pages/auth/ResetPasswordPage.tsx
 import { useState, type FormEvent } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { authApi } from '../../services/api/auth';
@@ -16,6 +15,8 @@ export default function ResetPasswordPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+
     if (password !== passwordConfirmation) {
       setError('Пароли не совпадают');
       return;
@@ -42,35 +43,45 @@ export default function ResetPasswordPage() {
 
   return (
     <div className={styles.resetPage}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <h1>Установка нового пароля</h1>
+      <div className={styles.card}>
+        <img src="/logo.png" alt="Логотип" className={styles.logo} />
+        <h1 className={styles.title}>Установка нового пароля</h1>
+        <p className={styles.subtitle}>Введите и подтвердите новый пароль</p>
 
-        <Input
-          type="password"
-          label="Новый пароль"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <form onSubmit={handleSubmit} className={styles.form} noValidate>
+          <Input
+            type="password"
+            label="Новый пароль"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            size="medium"
+            labelPosition="top"
+            variant="_primary"
+          />
 
-        <Input
-          type="password"
-          label="Подтвердите пароль"
-          value={passwordConfirmation}
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
-          required
-        />
+          <Input
+            type="password"
+            label="Подтвердите пароль"
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            required
+            size="medium"
+            labelPosition="top"
+            variant="_primary"
+          />
 
-        {error && <div className={styles.error}>{error}</div>}
+          {error && <div className={styles.error}>{error}</div>}
 
-        <Button type="submit" disabled={loading} fullWidth>
-          {loading ? 'Сохранение...' : 'Сохранить пароль'}
-        </Button>
+          <Button type="submit" disabled={loading} fullWidth>
+            {loading ? 'Сохранение...' : 'Сохранить пароль'}
+          </Button>
 
-        <div className={styles.links}>
-          <Link to="/login">Вернуться к входу</Link>
-        </div>
-      </form>
+          <div className={styles.links}>
+            <Link to="/login">← Вернуться к входу</Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
