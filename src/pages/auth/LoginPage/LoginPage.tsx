@@ -15,21 +15,23 @@ export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  e.stopPropagation(); // предотвращает всплытие
 
-    try {
-      await login({ email, password });
-      navigate('/admin-heroes');
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Ошибка входа. Проверьте email и пароль.';
-      setError(errorMessage);
-    } finally {
-      setLoading(false);
-    }
-  };
+  setError('');
+  setLoading(true);
+
+  try {
+    await login({ email, password });
+    navigate('/admin-heroes');
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : 'Ошибка входа. Проверьте email и пароль.';
+    setError(errorMessage);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className={styles.loginPage}>
