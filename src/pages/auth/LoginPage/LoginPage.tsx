@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import PasswordChangeModal from '../../../components/auth/PasswordChangeModal';
@@ -15,74 +15,103 @@ export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  e.stopPropagation(); // предотвращает всплытие
+  const handleSubmit = async () => {
+    setError('');
+    setLoading(true);
 
-  setError('');
-  setLoading(true);
+    try {
+      await login({ email, password });
+      navigate('/admin-heroes');
+    } catch (err) {
+      let userMessage = 'Ошибка входа. Проверьте email и пароль.';
+      if (err instanceof Error) {
+        const msg = err.message.toLowerCase();
+        if (
+          msg.includes('validation') ||
+          msg.includes('min') ||
+          msg.includes('string') ||
+          msg.includes('email') ||
+          msg.includes('password') ||
+          msg.includes('неверный') ||
+          msg.includes('неправильный')
+        ) {
+          userMessage = 'Ошибка входа. Проверьте email и пароль.';
+        } else {
+          userMessage = err.message;
+        }
+      }
+      setError(userMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  try {
-    await login({ email, password });
-    navigate('/admin-heroes');
-  } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : 'Ошибка входа. Проверьте email и пароль.';
-    setError(errorMessage);
-  } finally {
-    setLoading(false);
-  }
-};
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      handleSubmit();
+    }
+  };
 
   return (
     <div className={styles.loginPage}>
-      {/* Логотип в левом верхнем углу */}
       <img src="/logo.png" alt="Логотип" className={styles.logo} />
 
-      {/* Левая панель с формой */}
       <div className={styles.panelLeft}>
         <div className={styles.loginCard}>
           <h2 className={styles.loginTitle}>Вход в систему - Администратор</h2>
           <div className={styles.loginCardInner}>
-          <h3 className={styles.welcomeText}>Добро пожаловать!</h3>
+            <h3 className={styles.welcomeText}>Добро пожаловать!</h3>
 
-          <form onSubmit={handleSubmit} className={styles.form}>
-            <input
-              type="email"
-              placeholder="Email"
-              className={styles.input}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Пароль"
-              className={styles.input}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-
-            {error && <div className={styles.error}>{error}</div>}
-
-            <Button type="submit" className={styles.submitBtn} disabled={loading}>
-              {loading ? 'Вход...' : 'Войти'}
-            </Button>
-
-            <Button
-              type="button"
-              variant='ghost'
-              className={styles.forgotLink}
-              onClick={() => setIsModalOpen(true)}
+            <form
+              className={styles.form}
+              onSubmit={(e) => e.preventDefault()}
+              noValidate
             >
-              Забыли пароль?
-            </Button>
-          </form>
+              <input
+                type="email"
+                placeholder="Email"
+                className={styles.input}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={handleKeyDown}
+                required
+              />
+              <input
+                type="password"
+                placeholder="Пароль"
+                className={styles.input}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={handleKeyDown}
+                required
+              />
+
+              {error && <div className={styles.error}>{error}</div>}
+
+              <Button
+                type="button"
+                className={styles.submitBtn}
+                disabled={loading}
+                onClick={handleSubmit}
+              >
+                {loading ? 'Вход...' : 'Войти'}
+              </Button>
+
+              <Button
+                type="button"
+                variant="ghost"
+                className={styles.forgotLink}
+                onClick={() => setIsModalOpen(true)}
+              >
+                Забыли пароль?
+              </Button>
+            </form>
           </div>
         </div>
       </div>
 
-      {/* Правая панель с фоновой картинкой */}
       <div className={styles.panelRight}></div>
 
       <PasswordChangeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
