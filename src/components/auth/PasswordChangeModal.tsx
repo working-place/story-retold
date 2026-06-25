@@ -50,13 +50,13 @@ export default function PasswordChangeModal({ isOpen, onClose }: PasswordChangeM
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <input
+            {/* <input
               type="password"
               className={styles.input}
               placeholder="Новый пароль"
               disabled
               style={{ opacity: 0.5, cursor: 'not-allowed' }}
-            />
+            /> */}
             {error && <div className={styles.error}>{error}</div>}
             <button
               className={styles.submitBtn}
