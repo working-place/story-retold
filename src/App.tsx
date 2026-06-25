@@ -29,7 +29,7 @@ function App() {
           <Route path='/hero/:id' element={<HeroDetailPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+          <Route path="/restore/:token" element={<ResetPasswordPage />} />
 
           {/* Защищенные админ-маршруты */}
           <Route path="/admin-heroes"
