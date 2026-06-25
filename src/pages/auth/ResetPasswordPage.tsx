@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { authApi } from '../../services/api/auth';
-import { Input } from '../../components/common/Input/Input';
 import Button from '../../components/common/Button/Button';
 import styles from './ResetPasswordPage.module.scss';
 
@@ -49,31 +48,27 @@ export default function ResetPasswordPage() {
         <p className={styles.subtitle}>Введите и подтвердите новый пароль</p>
 
         <form onSubmit={handleSubmit} className={styles.form} noValidate>
-          <Input
+          <input
             type="password"
-            label="Новый пароль"
+            className={styles.input}
+            placeholder="Новый пароль"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            size="medium"
-            labelPosition="top"
-            variant="_primary"
           />
 
-          <Input
+          <input
             type="password"
-            label="Подтвердите пароль"
+            className={styles.input}
+            placeholder="Подтвердите пароль"
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
             required
-            size="medium"
-            labelPosition="top"
-            variant="_primary"
           />
 
           {error && <div className={styles.error}>{error}</div>}
 
-          <Button type="submit" disabled={loading} fullWidth>
+          <Button type="submit" disabled={loading} fullWidth variant="secondary">
             {loading ? 'Сохранение...' : 'Сохранить пароль'}
           </Button>
 
