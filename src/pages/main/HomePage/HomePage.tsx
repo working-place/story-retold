@@ -142,7 +142,7 @@ export default function HomePage() {
                     src="/curl-about.png" alt="Линия" />
             </div>
 
-            <div className={styles.hero}>
+            {/* <div className={styles.hero}> ломает страницу в адаптиве
                 <h2
                     className={styles.hero_titleForm}
                     style={{ fontFamily: 'Glanz', fontWeight: 400 }}
@@ -150,7 +150,7 @@ export default function HomePage() {
                     Расскажите о герое
                 </h2>
                 <NewCardForm />
-            </div>
+            </div> */}
 
             <img
                 className={styles.history_devidigLineHisory}
