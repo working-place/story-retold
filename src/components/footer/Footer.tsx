@@ -46,7 +46,7 @@ export default function Footer() {
 
             <div className={styles.item25}>
                 <div className={styles.item25_wrapper}>
-                    <span className={styles.xlSize}>Сделано в:</span>
+                    <span className={`${styles.xlSize} ${styles.madeIn}`}>Сделано в:</span>
                     <a href="https://союз.рф/">
                         <img className={styles.logoSoyuz} src="/logo-soyuz.png" alt="Логотип Союз.рф" />
                     </a>
