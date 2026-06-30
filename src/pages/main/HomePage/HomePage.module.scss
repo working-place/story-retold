@@ -3,6 +3,7 @@
 @use "../../../assets/scss/_variables-color.scss" as *;
 
 .main {
+  overflow-x: hidden;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
