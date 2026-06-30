@@ -20,6 +20,11 @@
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
+
+            @media (max-width: 768px) {
+            background-image: url('/404_pic_mob.webp');
+            background-position: top;
+        }
 }
 
 .content {
