@@ -18,6 +18,7 @@
     padding-right: 22px;
     padding-bottom: 30px;
     min-height: 338px;
+    position: relative; /* Нужно для абсолютного позиционирования соцсети на мобильных */
 }
 
 .item11 {
@@ -102,4 +103,107 @@
 
 .mSize {
     font-size: 20px;
+}
+
+/* ============================================================ */
+/*  АДАПТИВ ДЛЯ ПЛАНШЕТОВ И МОБИЛЬНЫХ (по макету)               */
+/*  На ПК (выше 1024px) стили НЕ ИЗМЕНЯТСЯ                       */
+/* ============================================================ */
+@include respond-below($breakpoint-lg) {
+    .footer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 24px 16px;
+        min-height: auto;
+    }
+
+    /* Сбрасываем сетку для всех элементов */
+    .item11, .item15, .item21, .item22, .item23, .item24, .item25 {
+        grid-column: auto;
+        grid-row: auto;
+        width: 100%;
+        text-align: left;
+    }
+
+    /* Логотип (слева) */
+    .item11 {
+        width: auto;
+    }
+
+    /* Иконка соцсети (справа вверху) */
+    .item15 {
+        position: absolute;
+        top: 24px;
+        right: 16px;
+        width: auto;
+        text-align: right;
+    }
+
+    /* Контакты (Телефон и Почта) */
+    .item23 {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 8px;
+    }
+
+    /* Ссылки (Пользовательское соглашение и Политика) */
+    .item24 {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+
+    /* Логотип СОТ и текст об авторе в одну строку */
+    .item21 {
+        float: left;
+        margin-right: 12px;
+        width: auto;
+        margin-top: 0;
+    }
+
+    .item22 {
+        display: block;
+        overflow: hidden; /* Чтобы текст не заходил под плавающий логотип СОТ */
+        line-height: 1.4;
+        margin-top: 0;
+        font-size: 16px;
+    }
+
+    /* Сделано в и Копирайт */
+    .item25 {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 8px;
+    }
+
+    /* Корректировка размеров шрифтов на мобильных */
+    .tel {
+        font-size: 20px;
+    }
+
+    .email {
+        font-size: 16px;
+    }
+
+    .agreement {
+        font-size: 18px;
+    }
+
+    .confidence {
+        font-size: 16px;
+    }
+
+    .xlSize {
+        font-size: 18px;
+    }
+
+    .mSize {
+        font-size: 14px;
+    }
 }
