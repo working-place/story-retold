@@ -1,8 +1,6 @@
-// src/pages/auth/ResetPasswordPage.tsx
 import { useState, type FormEvent } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { authApi } from '../../services/api/auth';
-import { Input } from '../../components/common/Input/Input';
 import Button from '../../components/common/Button/Button';
 import styles from './ResetPasswordPage.module.scss';
 
@@ -16,6 +14,8 @@ export default function ResetPasswordPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+
     if (password !== passwordConfirmation) {
       setError('Пароли не совпадают');
       return;
@@ -42,35 +42,46 @@ export default function ResetPasswordPage() {
 
   return (
     <div className={styles.resetPage}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <h1>Установка нового пароля</h1>
+      <div className={styles.card}>
+        <img src="/logo.png" alt="Логотип" className={styles.logo} />
+        <h1 className={styles.title}>Установка нового пароля</h1>
+        <p className={styles.subtitle}>Введите и подтвердите новый пароль</p>
 
-        <Input
-          type="password"
-          label="Новый пароль"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <form onSubmit={handleSubmit} className={styles.form} noValidate>
+          <input
+            type="password"
+            className={styles.input}
+            placeholder="Новый пароль"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-        <Input
-          type="password"
-          label="Подтвердите пароль"
-          value={passwordConfirmation}
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
-          required
-        />
+          <input
+            type="password"
+            className={styles.input}
+            placeholder="Подтвердите пароль"
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            required
+          />
 
-        {error && <div className={styles.error}>{error}</div>}
+          {error && <div className={styles.error}>{error}</div>}
 
-        <Button type="submit" disabled={loading} fullWidth>
-          {loading ? 'Сохранение...' : 'Сохранить пароль'}
-        </Button>
+          <Button type="submit" disabled={loading} fullWidth variant="secondary">
+            {loading ? 'Сохранение...' : 'Сохранить пароль'}
+          </Button>
 
-        <div className={styles.links}>
-          <Link to="/login">Вернуться к входу</Link>
-        </div>
-      </form>
+<Button
+  type="button"
+  variant="ghost"
+  className={styles.forgotLink}
+  onClick={() => navigate('/login')}
+>
+  ← Вернуться к входу
+</Button>
+        </form>
+      </div>
     </div>
   );
 }

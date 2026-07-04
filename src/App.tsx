@@ -17,6 +17,7 @@ import HeroAllCards from "./components/admin/HeroCards/HeroAllCards";
 import AdminEditForm from "./components/common/Form/AdminEditForm";
 import ReviewCards from "./components/admin/ReviewCards/ReviewCards";
 // import ReviewCard from "./components/common/Card/AdminCards/ReviewCard";
+import NotFoundPage from "./pages/main/NotFoundPage/NotFoundPage";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
           <Route path='/hero/:id' element={<HeroDetailPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+          <Route path="/restore/:token" element={<ResetPasswordPage />} />
 
           {/* Защищенные админ-маршруты */}
           <Route path="/admin-heroes"
@@ -55,6 +56,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
     </AuthProvider>

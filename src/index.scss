@@ -18,6 +18,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Tektur';
+  src: url('/fonts/Tektur-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {}
 }

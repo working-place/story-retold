@@ -1,0 +1,113 @@
+@use "../../../assets/scss/_variables-color.scss" as *;
+
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    background-color: $beige-background; /* Фолбэк, если картинка не прогрузится */
+    
+    /* 
+     * ============================================
+     * ФОНОВОЕ ИЗОБРАЖЕНИЕ
+     * Файл 404_pic.webp должен лежать в папке public/
+     * ============================================
+     */
+    background-image: url('/404_pic.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+
+            @media (max-width: 768px) {
+            background-image: url('/404_pic_mob.webp');
+            background-position: top;
+        }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    max-width: 800px;
+
+    &__title {
+        /* Шрифт Rubik для цифры 404 */
+        
+    text-align: center;
+        font-family: 'Rubik', sans-serif;
+        font-weight: 700;
+        font-size: 140px;
+        color: $brown-color;
+        line-height: 1;
+        margin-bottom: 10px;
+        
+        @media (max-width: 768px) {
+            font-size: 100px;
+        }
+    }
+
+    &__subtitle {
+        /* Шрифт Rubik для подзаголовка */
+        
+    text-align: center;
+        font-family: 'Rubik', sans-serif;
+        font-weight: 700;
+        font-size: 36px;
+        color: $brown-color;
+        margin-bottom: 24px;
+
+        @media (max-width: 768px) {
+            font-size: 28px;
+        }
+    }
+
+    &__text {
+        /* Шрифт Metamorphous для основного текста */
+        // я не знаю почему, но шрифт у меня не работает
+        // font-family: 'Metamorphous-Regular';
+        // font-weight: 400;
+        font-weight: 800;
+        font-size: 20px;
+        line-height: 140%;
+        color: $brown-color;
+        max-width: 950px;
+        margin-bottom: 40px;
+
+        @media (max-width: 768px) {
+            font-size: 18px;
+        }
+    }
+
+    &__link {
+        text-decoration: none;
+    }
+}
+
+.button {
+    background-color: $brown-color;
+    color: #FDF7E9;
+    border: none;
+    border-radius: 20px;
+    padding: 16px 32px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        opacity: 0.9;
+        transform: scale(1.02);
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}

@@ -36,12 +36,17 @@ export async function httpClient<T>(
     body,
   });
 
+  // ⚠️ КЛЮЧЕВОЕ ИЗМЕНЕНИЕ: редирект на логин только если skipAuth === false
   if (response.status === 401) {
     removeToken();
-    if (typeof window !== 'undefined') {
+    // Если запрос не помечен как skipAuth, значит это защищённый запрос,
+    // и истекшая сессия требует редиректа.
+    if (!options.skipAuth && typeof window !== 'undefined') {
       window.location.href = '/login';
     }
-    throw new Error('Сессия истекла. Пожалуйста, войдите снова.');
+    // Пробрасываем ошибку, чтобы её можно было обработать на уровне компонента
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || 'Ошибка авторизации');
   }
 
   if (!response.ok) {
