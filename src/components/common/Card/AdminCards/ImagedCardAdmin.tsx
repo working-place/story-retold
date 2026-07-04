@@ -1,9 +1,9 @@
-import styles from "../Card/ImagedCardAdmin.module.scss"
-import type { Hero } from "../../../types/card.types"
+import styles from "./ImagedCardAdmin.module.scss"
+import type { Hero } from "../../../../types/card.types"
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { heroesApi } from "../../../services/api/heroes";
-import DeleteConfirmPopup from "../../admin/Popups/DeleteConfirmPopup";
+import { heroesApi } from "../../../../services/api/heroes";
+import DeleteConfirmPopup from "../../../admin/Popups/DeleteConfirmPopup";
 
 interface CardProps {
     heroes?: Hero[];

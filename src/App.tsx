@@ -15,6 +15,8 @@ import AdminLayout from "./components/layout/AdminLayout/AdminLayout";
 import AdminPanelForm from "./components/common/Form/AdminPanelForm";
 import HeroAllCards from "./components/admin/HeroCards/HeroAllCards";
 import AdminEditForm from "./components/common/Form/AdminEditForm";
+import ReviewCards from "./components/admin/ReviewCards/ReviewCards";
+// import ReviewCard from "./components/common/Card/AdminCards/ReviewCard";
 
 function App() {
   return (
@@ -39,7 +41,8 @@ function App() {
             }
           >
             <Route path="new-card" element={<AdminPanelForm />} />
-            {/* <Route path="on-review" element={<div>На проверке</div>} /> */}
+            {/* <Route path="on-review" element={<ReviewCard/>} /> */}
+            <Route path="on-review" element={<ReviewCards />} />
             <Route path="edit/:id" element={<AdminEditForm />} />
             <Route path="ussr-heroes" element={<HeroAllCards type="gpw" title="Герои СССР" />} />
             <Route path="svo-heroes" element={<HeroAllCards type="svo" title="Герои СВО" />} />

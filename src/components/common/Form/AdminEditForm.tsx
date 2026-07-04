@@ -23,6 +23,29 @@ interface FormData {
     cardType: 'withPhoto' | 'withoutPhoto' | null;
 }
 
+const formatDateForApi = (dateString: string): string => {
+    if (!dateString) return '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) return dateString;
+    const parts = dateString.split('.');
+    if (parts.length === 3) {
+        return `${parts[2]}-${parts[1]}-${parts[0]}`;
+    }
+    return dateString;
+};
+
+const formatDateMask = (value: string): string => {
+    const digits = value.replace(/\D/g, '');
+    const limitedDigits = digits.slice(0, 8);
+    let formatted = '';
+    for (let i = 0; i < limitedDigits.length; i++) {
+        if (i === 2 || i === 4) {
+            formatted += '.';
+        }
+        formatted += limitedDigits[i];
+    }
+    return formatted;
+};
+
 export default function AdminEditForm() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
@@ -46,6 +69,9 @@ export default function AdminEditForm() {
         cardType: null,
     });
 
+    const [displayDateBirth, setDisplayDateBirth] = useState('');
+    const [displayDateDeath, setDisplayDateDeath] = useState('');
+
     const [photoHero, setPhotoHero] = useState<File | null>(null);
     const [existingPhotoHero, setExistingPhotoHero] = useState<string | null>(null);
     const [additionalImages, setAdditionalImages] = useState<File[]>([]);
@@ -59,7 +85,6 @@ export default function AdminEditForm() {
         description: false,
     });
 
-    // Загрузка данных героя
     useEffect(() => {
         const fetchHero = async () => {
             if (!id) return;
@@ -83,7 +108,6 @@ export default function AdminEditForm() {
                     });
                     setExistingPhotoHero((heroData as CardResponse).photoHero?.url || null);
 
-                    // Используем CardImage тип из CardResponse
                     if ((heroData as CardResponse).additionalImages && (heroData as CardResponse).additionalImages!.length > 0) {
                         setExistingAdditionalImages(
                             (heroData as CardResponse).additionalImages!.map((img) => img.url)
@@ -125,6 +149,24 @@ export default function AdminEditForm() {
 
     const handleBlur = (field: string) => {
         setTouched(prev => ({ ...prev, [field]: true }));
+    };
+
+    const handleDateBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const rawValue = e.target.value;
+        const maskedValue = formatDateMask(rawValue);
+        setDisplayDateBirth(maskedValue);
+        const apiValue = formatDateForApi(maskedValue);
+        setFormData(prev => ({ ...prev, dateBirth: apiValue }));
+        setError(null);
+    };
+
+    const handleDateDeathChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const rawValue = e.target.value;
+        const maskedValue = formatDateMask(rawValue);
+        setDisplayDateDeath(maskedValue);
+        const apiValue = formatDateForApi(maskedValue);
+        setFormData(prev => ({ ...prev, dateDeath: apiValue }));
+        setError(null);
     };
 
     const handleChapterChange = (value: 'svo' | 'gpw' | null) => {
@@ -418,7 +460,10 @@ export default function AdminEditForm() {
                                             onClick={() => removeAdditionalImage(index, false)}
                                             aria-label="Удалить фото"
                                         >
-                                            ×
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fillRule="evenodd" clipRule="evenodd" d="M0.77031 0.583721C0.924856 0.428909 1.16237 0.369891 1.43061 0.419649C1.69884 0.469408 1.97582 0.623867 2.20062 0.849049L19.1524 17.83C19.3772 18.0552 19.5314 18.3327 19.581 18.6014C19.6307 18.8701 19.5718 19.108 19.4173 19.2628C19.2627 19.4176 19.0252 19.4766 18.757 19.4269C18.4887 19.3771 18.2117 19.2227 17.9869 18.9975L1.03518 2.01649C0.810387 1.79131 0.656193 1.51385 0.60652 1.24516C0.556847 0.976459 0.615764 0.738534 0.77031 0.583721Z" fill="#1A1A1A" />
+                                                <path fillRule="evenodd" clipRule="evenodd" d="M19.2298 0.736591C19.3843 0.891404 19.4432 1.12933 19.3936 1.39803C19.3439 1.66672 19.1897 1.94418 18.9649 2.16936L2.01314 19.1503C1.78835 19.3755 1.51137 19.53 1.24313 19.5797C0.974898 19.6295 0.737383 19.5705 0.582837 19.4157C0.428291 19.2609 0.369374 19.0229 0.419046 18.7542C0.468719 18.4855 0.622914 18.2081 0.847709 17.9829L17.7995 1.00192C18.0243 0.776737 18.3013 0.622277 18.5695 0.572519C18.8377 0.52276 19.0752 0.581778 19.2298 0.736591Z" fill="#1A1A1A" />
+                                            </svg>
                                         </button>
                                     </div>
                                 </div>
@@ -457,9 +502,9 @@ export default function AdminEditForm() {
                     <InputAdmin
                         className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                         label="Дата рождения"
-                        placeholder="ГГГГ-ММ-ДД"
-                        value={formData.dateBirth}
-                        onChange={(e) => handleInputChange('dateBirth', e.target.value)}
+                        placeholder="ДД.ММ.ГГГГ"
+                        value={displayDateBirth}
+                        onChange={handleDateBirthChange}
                         onBlur={() => handleBlur('dateBirth')}
                         error={!!getFieldError('dateBirth')}
                         errorText={getFieldError('dateBirth')}
@@ -468,9 +513,9 @@ export default function AdminEditForm() {
                     <InputAdmin
                         className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                         label="Дата смерти"
-                        placeholder="ГГГГ-ММ-ДД"
-                        value={formData.dateDeath}
-                        onChange={(e) => handleInputChange('dateDeath', e.target.value)}
+                        placeholder="ДД.ММ.ГГГГ"
+                        value={displayDateDeath}
+                        onChange={handleDateDeathChange}
                     />
                     <InputAdmin
                         className={`${styles.form__input_birthplace} ${styles.form__input_admin}`}

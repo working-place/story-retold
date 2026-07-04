@@ -1,5 +1,3 @@
-// @use "../../../assets/scss/_mixins.scss" as *;
-// @use "../../../assets/scss/_typography.scss" as *;
 @use "../../../assets/scss/_variables-color.scss" as *;
 
 .overlay {
@@ -9,7 +7,7 @@
     right: 0;
     bottom: 0;
     background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,90 +43,84 @@
     }
 
     &__closeButton {
-    position: absolute;
-    top: 21px;
-    right: 36px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
+        position: absolute;
+        top: 21px;
+        right: 36px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        z-index: 5;
 
-    &:hover {
-
-    }
-}
-
-&__buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    margin-top: 8px;
-}
-
-&__editButton,
-&__publishButton {
-padding: 12px 24px;
-border-radius: 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    min-width: 239px;
-    justify-content: center;
-
-    span {
-        font-family: 'Roboto';
-        font-size: 20px;
-        font-weight: 600;
+        &:hover {}
     }
 
-        &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
-}
-
-&__editButton {
-    background-color: transparent;
-    border: 2px solid $brown-color;
-    color: #333;
-
-    span {
-        color: $brown-color;
+    &__buttons {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        margin-top: 8px;
     }
 
-    &:hover:not(:disabled) {
-
-    }
-
-}
-
-&__publishButton {
-    background-color: $brown-color;
-    border: none;
-    color: white;
+    &__editButton,
+    &__publishButton {
+        padding: 12px 24px;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-width: 239px;
+        justify-content: center;
 
         span {
-        color: $beige-background;
+            font-family: 'Roboto';
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
     }
 
-    &:hover:not(:disabled) {
+    &__editButton {
+        background-color: transparent;
+        border: 2px solid $brown-color;
+        color: #333;
 
+        span {
+            color: $brown-color;
+        }
+
+        &:hover:not(:disabled) {}
     }
-}
 
-&__vector110,
-&__vector111 {
-    position: absolute;
-}
+    &__publishButton {
+        background-color: $brown-color;
+        border: none;
+        color: white;
 
-&__vector110 {
-bottom: 0;
-left: 0;
-}
+        span {
+            color: $beige-background;
+        }
 
-&__vector111 {
-bottom: 0;
-right: 0;
-}
+        &:hover:not(:disabled) {}
+    }
+
+    &__vector110,
+    &__vector111 {
+        position: absolute;
+    }
+
+    &__vector110 {
+        bottom: 0;
+        left: 0;
+    }
+
+    &__vector111 {
+        bottom: 0;
+        right: 0;
+    }
 }
 
 @keyframes fadeIn {
@@ -143,13 +135,9 @@ right: 0;
     }
 }
 
-
-
 .content {
     text-align: center;
 }
-
-
 
 .heroName {
     font-size: 16px;

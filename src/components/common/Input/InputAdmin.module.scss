@@ -21,7 +21,8 @@
     transition: all 0.2s ease;
     outline: none;
     border: 2px solid $brown-color;
-    font-size: 16px;
+    // font-size: 16px;
+    font-size: 20px;
     color: $brown-color;
     font-family: 'Roboto', sans-serif;
 
@@ -71,8 +72,9 @@
 
 .medium {
     padding: 12px 20px;
-    font-size: 16px;
+    font-size: 20px;
     width: 100%;
+    font-weight: 600;
 }
 
 .large {

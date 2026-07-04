@@ -1,3 +1,5 @@
+// @use "../../../assets/scss/_mixins.scss" as *;
+// @use "../../../assets/scss/_typography.scss" as *;
 @use "../../../assets/scss/_variables-color.scss" as *;
 
 .overlay {
@@ -39,11 +41,7 @@
         color: $dark-text;
         text-align: center;
         min-width: 588px;
-    }
-
-    &__title,
-    &__subtitle {
-        margin-bottom: 24px;
+        margin-bottom: 74px;
     }
 
     &__closeButton {
@@ -64,51 +62,6 @@
         gap: 16px;
         justify-content: center;
         margin-top: 8px;
-    }
-
-    &__cancelButton,
-    &__confirmButton {
-        padding: 12px 24px;
-        border-radius: 16px;
-        cursor: pointer;
-        transition: all 0.2s;
-        min-width: 239px;
-        justify-content: center;
-
-        span {
-            font-family: 'Roboto';
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        &:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-    }
-
-    &__cancelButton {
-        background-color: transparent;
-        border: 2px solid $brown-color;
-        color: #333;
-
-        span {
-            color: $brown-color;
-        }
-
-        &:hover:not(:disabled) {}
-    }
-
-    &__confirmButton {
-        background-color: $brown-color;
-        border: none;
-        color: white;
-
-        span {
-            color: $beige-background;
-        }
-
-        &:hover:not(:disabled) {}
     }
 
     &__vector110,
@@ -141,11 +94,4 @@
 
 .content {
     text-align: center;
-}
-
-.heroName {
-    font-size: 16px;
-    color: #666;
-    margin: 0 0 24px 0;
-    font-weight: 500;
 }

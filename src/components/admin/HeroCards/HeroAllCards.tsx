@@ -1,9 +1,9 @@
-import ImagedCardAdmin from "../../common/Card/ImagedCardAdmin";
+import ImagedCardAdmin from "../../common/Card/AdminCards/ImagedCardAdmin";
 import styles from "../HeroCards/HeroAllCars.module.scss"
 import type { Hero } from "../../../types/card.types";
 import { useEffect, useMemo, useState } from "react";
 import { getHeroes } from "../../../services/api/heroes";
-import TextCardAdmin from "../../common/Card/TextCardAdmin";
+import TextCardAdmin from "../../common/Card/AdminCards/TextCardAdmin";
 
 interface HeroAllCardsProps {
     type?: 'svo' | 'gpw';

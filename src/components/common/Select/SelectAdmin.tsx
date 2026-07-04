@@ -95,6 +95,7 @@ const commonSelectStyles: StylesConfig<OptionType> = {
         border: 'none',
         outline: 'none',
         boxShadow: 'none',
+        fontSize: '20px',
         '&:hover': {
             border: 'none',
             backgroundColor: '#F1E6D0',

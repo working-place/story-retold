@@ -1,0 +1,184 @@
+//
+.reviewCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #534035;
+    width: 675px;
+    min-height: 324px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s;
+
+        &:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+        &_noImage {
+        background-color: #36453D;
+        // border: 1px solid #b7e4c7;
+
+        &:hover {
+            // background-color: #c3e6d1;
+        }
+
+        // .reviewCard__name {
+        //     color: #155724;
+        // }
+
+        // .reviewCard__author,
+        // .reviewCard__date {
+        //     color: #155724;
+        //     opacity: 0.8;
+        // }
+    }
+
+
+    &__infoContainer {
+        display: flex;
+        width: 100%;
+        gap: 37px;
+    }
+
+
+
+    //
+    &__imageContainer {
+        flex-shrink: 0;
+        width: 147px;
+        height: 182px;
+        border-radius: 20px;
+        overflow: hidden;
+        background-color: #e8ddd0;
+    }
+
+    //
+    &__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+         object-position: center center;
+    }
+
+    //
+    &__imagePlaceholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 147px;
+            height: 182px;
+            opacity: 0.3;
+        }
+    }
+
+    //
+    &__info {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1;
+        gap: 4px;
+        min-width: 0;
+    }
+
+    //
+    &__name {
+        font-family: 'Roboto', 'Metamorphous', serif;
+        font-size: 33px;
+        font-weight: 600;
+        color: #F2E7D1;
+        margin: 0;
+        margin-bottom: 12px;
+    }
+
+    //
+    &__author,
+    &__date {
+        font-family: 'Roboto', 'Metamorphous', serif;
+        font-size: 24px;
+        color: #F2E7D1;
+        text-align: left;
+    }
+
+    //
+    &__actions {
+        display: flex;
+        gap: 12px;
+        width: 100%;
+        justify-content: space-between;
+        height: 100%;
+        align-items: flex-end;
+    }
+
+    //
+    &__button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 24px;
+        background-color: #FDF7E9;
+        color: #534035;
+        min-width: 310px;
+        height: 55px;
+        border: none;
+        border-radius: 12px;
+        font-size: 20px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.2s;
+        white-space: nowrap;
+
+        &:hover {
+            // background-color: #6B4220;
+        }
+    }
+}
+
+// Адаптивность
+@media (max-width: 768px) {
+    .reviewCard {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 16px;
+
+        &__imageContainer {
+            width: 80px;
+            height: 80px;
+        }
+
+        &__actions {
+            width: 100%;
+            flex-direction: row;
+            margin-left: 0;
+            gap: 12px;
+
+            &__editButton,
+            &__commentButton {
+                flex: 1;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .reviewCard {
+        &__actions {
+            flex-direction: column;
+        }
+
+        &__name {
+            font-size: 18px;
+        }
+    }
+}

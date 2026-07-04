@@ -1,4 +1,3 @@
-// components/common/Popup/PublishConfirmPopup.tsx
 import styles from './PublishConfirmPopup.module.scss';
 import Button from '../../common/Button/Button';
 

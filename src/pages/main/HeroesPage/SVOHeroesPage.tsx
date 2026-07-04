@@ -25,10 +25,6 @@ export default function SVOHeroesPage({ path, text }: SVOHeroesPageProps) {
             setLoading(true);
             setError(null);
             const heroes = await getHeroes('svo');
-            console.log('=== SVOHeroesPage DEBUG ===');
-            console.log('Heroes received:', heroes.length);
-            console.log('First hero:', heroes[0]);
-            console.log('Hero with image check:', heroes.filter(h => h.img && h.img.trim() !== '').length);
 
             if (heroes.length > 0) {
                 setAllHeroes(heroes);
@@ -77,9 +73,6 @@ export default function SVOHeroesPage({ path, text }: SVOHeroesPageProps) {
             </MainLayout>
         );
     }
-
-    console.log('=== ALL HEROES WITH IMAGES ===');
-    console.log(heroesWithImage.map(h => ({ id: h.id, name: h.name, img: h.img })));
 
     return (
         <MainLayout>

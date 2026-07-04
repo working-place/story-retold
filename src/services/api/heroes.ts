@@ -5,30 +5,22 @@ import { httpClient } from '../http.client';
 const API_BASE_URL = 'http://94.250.255.173:8000';
 
 function buildImageUrl(path: string | null | undefined): string {
-    console.log('buildImageUrl input:', path);
 
     if (!path) return '';
     if (path.startsWith('http')) return path;
 
     const fullUrl = `${API_BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
-    console.log('buildImageUrl output:', fullUrl);
 
     return fullUrl;
 }
 
 function transformCardToHero(card: CardResponse): Hero {
-    console.log('=== TRANSFORM CARD ===', card.id);
-    console.log('Raw photoHero:', card.photoHero);
-    console.log('Type of photoHero:', typeof card.photoHero);
 
     const photoHeroUrl = typeof card.photoHero === 'string'
         ? card.photoHero
         : (card.photoHero?.url || null);
 
-    console.log('PhotoHero URL:', photoHeroUrl);
-
     const imgUrl = buildImageUrl(photoHeroUrl);
-    console.log('Built img URL:', imgUrl);
 
     const additionalImages: string[] = (card.additionalImages || []).map(
         (img) => buildImageUrl(img.url)
@@ -89,27 +81,11 @@ export async function getHeroes(chapter: 'svo' | 'gpw'): Promise<Hero[]> {
             }
         );
 
-        console.log('=== DEBUG getHeroes ===');
-        console.log('Chapter param:', chapter);
-        console.log('Is response array?', Array.isArray(response));
-        console.log('Response length:', response?.length);
-
         if (!response || !Array.isArray(response)) return [];
 
         const filteredCards = response.filter(
             card => card.chapter === chapter && card.published === true
         );
-
-        console.log('=== BEFORE TRANSFORM ===');
-        console.log('Card 120 photoHero:', filteredCards.find(c => c.id === 120)?.photoHero);
-
-        const heroes = filteredCards.map(transformCardToHero);
-
-        console.log('=== AFTER TRANSFORM ===');
-        console.log('Hero 120 img:', heroes.find(h => h.id === 120)?.img);
-
-        console.log('Filtered cards count:', filteredCards.length);
-        console.log('Filtered cards ids:', filteredCards.map(c => c.id));
 
         return filteredCards.map(transformCardToHero);
     } catch (error) {
@@ -161,7 +137,14 @@ export const heroesApi = {
     show: (params?: CardShowQueryParams): Promise<CardShowResponse> => {
         const searchParams = new URLSearchParams();
         if (params?.chapter) searchParams.append('chapter', params.chapter);
-        if (params?.published !== undefined) searchParams.append('published', String(params.published));
+
+        if (params?.published !== undefined) {
+            const publishedValue = typeof params.published === 'boolean'
+                ? (params.published ? '1' : '0')
+                : String(params.published);
+            searchParams.append('published', publishedValue);
+        }
+
         if (params?.perPage) searchParams.append('perPage', String(params.perPage));
         if (params?.page) searchParams.append('page', String(params.page));
 
@@ -173,10 +156,11 @@ export const heroesApi = {
     },
 
     get: (id: number): Promise<CardResponse> => {
-    return httpClient<CardResponse>(`/api/card/get/${id}`, {
-        method: 'GET',
-    });
-},
+        return httpClient<CardResponse>(`/api/card/get/${id}`, {
+            method: 'GET',
+            skipAuth: false,
+        });
+    },
 
     update: (id: number, data: FormData): Promise<void> => {
         return httpClient<void>(`/api/card/update/${id}`, {
@@ -187,9 +171,9 @@ export const heroesApi = {
     },
 
     delete: (id: number): Promise<void> => {
-    return httpClient<void>(`/api/card/delete/${id}`, {
-        method: 'DELETE',
-    });
-},
+        return httpClient<void>(`/api/card/delete/${id}`, {
+            method: 'DELETE',
+        });
+    },
 
 };

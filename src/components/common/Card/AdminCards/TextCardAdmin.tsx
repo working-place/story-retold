@@ -1,9 +1,9 @@
 import styles from "./TextCardAdmin.module.scss";
-import type { Hero } from "../../../types/card.types";
+import type { Hero } from "../../../../types/card.types";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { heroesApi } from "../../../services/api/heroes";
-import DeleteConfirmPopup from "../../admin/Popups/DeleteConfirmPopup";
+import { heroesApi } from "../../../../services/api/heroes";
+import DeleteConfirmPopup from "../../../admin/Popups/DeleteConfirmPopup";
 
 interface TextCardAdminProps {
     heroes?: Hero[];

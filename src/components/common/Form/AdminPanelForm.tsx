@@ -6,6 +6,7 @@ import { InputAdmin } from "../Input/InputAdmin";
 import CustomSelectAdmin from "../Select/SelectAdmin";
 import { httpClient } from '../../../services/http.client';
 import PublishConfirmPopup from '../../admin/Popups/PublishConfirmPopup';
+import SuccessPopup from '../../admin/Popups/SuccessPopup';
 import { heroesApi } from '../../../services/api/heroes';
 
 interface FormData {
@@ -23,13 +24,38 @@ interface FormData {
     cardType: 'withPhoto' | 'withoutPhoto' | null;
 }
 
+const formatDateForApi = (dateString: string): string => {
+    if (!dateString) return '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) return dateString;
+    const parts = dateString.split('.');
+    if (parts.length === 3) {
+        return `${parts[2]}-${parts[1]}-${parts[0]}`;
+    }
+    return dateString;
+};
+
+const formatDateMask = (value: string): string => {
+    const digits = value.replace(/\D/g, '');
+    const limitedDigits = digits.slice(0, 8);
+    let formatted = '';
+    for (let i = 0; i < limitedDigits.length; i++) {
+        if (i === 2 || i === 4) {
+            formatted += '.';
+        }
+        formatted += limitedDigits[i];
+    }
+    return formatted;
+};
+
 export default function AdminPanelForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_success, setSuccess] = useState(false);
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isPublishing, setIsPublishing] = useState(false);
+    const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
 
     const [formData, setFormData] = useState<FormData>({
         dateBirth: '',
@@ -45,6 +71,9 @@ export default function AdminPanelForm() {
         chapter: null,
         cardType: null,
     });
+
+    const [displayDateBirth, setDisplayDateBirth] = useState('');
+    const [displayDateDeath, setDisplayDateDeath] = useState('');
 
     const [photoHero, setPhotoHero] = useState<File | null>(null);
     const [additionalImages, setAdditionalImages] = useState<File[]>([]);
@@ -83,6 +112,24 @@ export default function AdminPanelForm() {
 
     const handleBlur = (field: string) => {
         setTouched(prev => ({ ...prev, [field]: true }));
+    };
+
+    const handleDateBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const rawValue = e.target.value;
+        const maskedValue = formatDateMask(rawValue);
+        setDisplayDateBirth(maskedValue);
+        const apiValue = formatDateForApi(maskedValue);
+        setFormData(prev => ({ ...prev, dateBirth: apiValue }));
+        setError(null);
+    };
+
+    const handleDateDeathChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const rawValue = e.target.value;
+        const maskedValue = formatDateMask(rawValue);
+        setDisplayDateDeath(maskedValue);
+        const apiValue = formatDateForApi(maskedValue);
+        setFormData(prev => ({ ...prev, dateDeath: apiValue }));
+        setError(null);
     };
 
     const handleChapterChange = (value: 'svo' | 'gpw' | null) => {
@@ -233,6 +280,7 @@ export default function AdminPanelForm() {
                 });
                 console.log('Карточка опубликована, id:', response.id);
                 setSuccess(true);
+                setIsSuccessPopupOpen(true);
                 resetForm();
             } else {
                 setError('Не удалось создать карточку');
@@ -277,86 +325,97 @@ export default function AdminPanelForm() {
         setIsPopupOpen(false);
     };
 
+    const handleSuccessPopupClose = () => {
+        console.log('Closing success popup');
+        setIsSuccessPopupOpen(false);
+        setSuccess(false);
+    };
+
+    const showPhotoBlock = formData.cardType === 'withoutPhoto';
+
     return (
         <>
             <form onSubmit={handlePublishClick} className={`${styles.form} ${styles.form_admin}`}>
                 {error && <div className={styles.errorMessage}>{error}</div>}
-                {success && <div className={styles.successMessage}>Карточка успешно создана!</div>}
 
                 <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
                     <h1 className={`${styles.form__titleCard} ${styles.form__title_admin}`}>
                         Новая карточка
                     </h1>
 
-                    <div
-                        className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}
-                    >
-                        {!photoHero ? (
-                            <>
-                                <img src="/image-download-brown.png" alt="Загрузить" />
-                                <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
-                                    <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
-                                        Фотографии героя
-                                    </h3>
-                                    <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
-                                        Максимальный размер файла 4 MB
-                                    </h4>
-                                </div>
-                                <input
-                                    type="file"
-                                    id="photoHero"
-                                    accept="image/png,image/jpeg,image/jpg,image/webp"
-                                    onChange={handlePhotoHeroChange}
-                                    style={{ display: 'none' }}
-                                />
-                                <Button
-                                    type="button"
-                                    className={`${styles.button_small} ${styles.button_admin}`}
-                                    onClick={() => document.getElementById('photoHero')?.click()}
-                                >
-                                    Выбрать файл
-                                </Button>
-                            </>
-                        ) : (
-                            <div className={styles.previewContainer}>
-                                <div className={styles.previewImageWrapper}>
-                                    <img
-                                        src={URL.createObjectURL(photoHero)}
-                                        alt="Превью фото героя"
-                                        className={styles.previewImage}
+                    {!showPhotoBlock && (
+                        <div
+                            className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}
+                        >
+
+                            {!photoHero ? (
+                                <>
+                                    <img src="/image-download-brown.png" alt="Загрузить" />
+                                    <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
+                                        <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
+                                            Фотографии героя
+                                        </h3>
+                                        <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
+                                            Максимальный размер файла 4 MB
+                                        </h4>
+                                    </div>
+                                    <input
+                                        type="file"
+                                        id="photoHero"
+                                        accept="image/png,image/jpeg,image/jpg,image/webp"
+                                        onChange={handlePhotoHeroChange}
+                                        style={{ display: 'none' }}
                                     />
-                                    <button
-                                        type="button"
-                                        className={styles.removeImageButton}
-                                        onClick={() => setPhotoHero(null)}
-                                        aria-label="Удалить фото"
-                                    >
-                                        ×
-                                    </button>
-                                </div>
-                                <div className={styles.previewInfo}>
-                                    <p className={styles.previewFileName}>{photoHero.name}</p>
-                                    <p className={styles.previewFileSize}>
-                                        {(photoHero.size / 1024).toFixed(2)} KB
-                                    </p>
                                     <Button
                                         type="button"
-                                        className={`${styles.button_small} ${styles.button_admin} ${styles.changePhotoButton}`}
+                                        className={`${styles.button_small} ${styles.button_admin}`}
                                         onClick={() => document.getElementById('photoHero')?.click()}
                                     >
-                                        Заменить фото
+                                        Выбрать файл
                                     </Button>
+                                </>
+                            ) : (
+                                <div className={styles.previewContainer}>
+                                    <div className={styles.previewImageWrapper}>
+                                        <img
+                                            src={URL.createObjectURL(photoHero)}
+                                            alt="Превью фото героя"
+                                            className={styles.previewImage}
+                                        />
+                                        <button
+                                            type="button"
+                                            className={styles.removeImageButton}
+                                            onClick={() => setPhotoHero(null)}
+                                            aria-label="Удалить фото"
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                    <div className={styles.previewInfo}>
+                                        <p className={styles.previewFileName}>{photoHero.name}</p>
+                                        <p className={styles.previewFileSize}>
+                                            {(photoHero.size / 1024).toFixed(2)} KB
+                                        </p>
+                                        <Button
+                                            type="button"
+                                            className={`${styles.button_small} ${styles.button_admin} ${styles.changePhotoButton}`}
+                                            onClick={() => document.getElementById('photoHero')?.click()}
+                                        >
+                                            Заменить фото
+                                        </Button>
+                                    </div>
+                                    <input
+                                        type="file"
+                                        id="photoHero"
+                                        accept="image/png,image/jpeg,image/jpg,image/webp"
+                                        onChange={handlePhotoHeroChange}
+                                        style={{ display: 'none' }}
+                                    />
                                 </div>
-                                <input
-                                    type="file"
-                                    id="photoHero"
-                                    accept="image/png,image/jpeg,image/jpg,image/webp"
-                                    onChange={handlePhotoHeroChange}
-                                    style={{ display: 'none' }}
-                                />
-                            </div>
-                        )}
-                    </div>
+                            )}
+
+                        </div>
+                    )}
 
                     <div
                         className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightSecond}`}
@@ -410,14 +469,8 @@ export default function AdminPanelForm() {
                                         </div>
                                     </div>
                                 ))}
-
-
-
                             </div>
-
                         )}
-
-
                     </div>
                     <Button
                         type="button"
@@ -428,8 +481,6 @@ export default function AdminPanelForm() {
                         Выбрать файлы ({additionalImages.length}/9)
                     </Button>
                 </div>
-
-
 
                 <div className={`${styles.form__basicInformation} ${styles.form__basicInformation_admin}`}>
                     <div className={`${styles.form__wrapper_secondLine} ${styles.form__wrapper_admin}`}>
@@ -458,9 +509,10 @@ export default function AdminPanelForm() {
                         <InputAdmin
                             className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                             label="Дата рождения"
-                            placeholder="ГГГГ-ММ-ДД"
-                            value={formData.dateBirth}
-                            onChange={(e) => handleInputChange('dateBirth', e.target.value)}
+
+                            placeholder="ДД.ММ.ГГГГ"
+                            value={displayDateBirth}
+                            onChange={handleDateBirthChange}
                             onBlur={() => handleBlur('dateBirth')}
                             error={!!getFieldError('dateBirth')}
                             errorText={getFieldError('dateBirth')}
@@ -469,9 +521,9 @@ export default function AdminPanelForm() {
                         <InputAdmin
                             className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                             label="Дата смерти"
-                            placeholder="ГГГГ-ММ-ДД"
-                            value={formData.dateDeath}
-                            onChange={(e) => handleInputChange('dateDeath', e.target.value)}
+                            placeholder="ДД.ММ.ГГГГ"
+                            value={displayDateDeath}
+                            onChange={handleDateDeathChange}
                         />
                         <InputAdmin
                             className={`${styles.form__input_birthplace} ${styles.form__input_admin}`}
@@ -564,6 +616,12 @@ export default function AdminPanelForm() {
                 onConfirm={handleConfirmPublish}
                 heroName={formData.name}
                 isLoading={isPublishing}
+            />
+
+            <SuccessPopup
+                isOpen={isSuccessPopupOpen}
+                onClose={handleSuccessPopupClose}
+                success="Карточка успешно создана!"
             />
         </>
     );
