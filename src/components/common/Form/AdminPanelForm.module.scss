@@ -1,0 +1,458 @@
+@use "../../../assets/scss/_variables-color.scss" as *;
+
+.form {
+    display: flex;
+    width: 96%;
+    min-height: 935px;
+    height: fit-content;
+    background-color: #534035;
+    margin-top: 75px;
+    border-radius: 20px;
+    gap: 47px;
+    padding: 96px 49px 90px 49px;
+
+    &_admin {
+        background-color: #FDF7E9;
+        min-width: 1531px;
+        margin: 0;
+        padding-top: 25px;
+        padding-bottom: 58px;
+        padding-left: 65px;
+        gap: 85px;
+    }
+
+    &__titleWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        height: fit-content;
+    }
+
+    &__title {
+        font-size: 24px;
+    }
+
+    &__title,
+    &__subtitle,
+    &__titleUpload {
+        display: flex;
+        width: 100%;
+        color: #F1E6D0;
+
+        &_admin {
+            color: $brown-color;
+        }
+    }
+
+    &__titleUpload {
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+        font-weight: 800;
+        text-align: center;
+    }
+
+    &__subtitle {
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+    }
+
+    &__titleCard {
+        font-size: 35px;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    &__upload {
+        display: flex;
+        flex-direction: column;
+        gap: 45px;
+        width: fit-content;
+
+        &_admin {
+            padding-bottom: 62px;
+            gap: 32px;
+        }
+    }
+
+    &__uploadArea {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 18vw;
+        gap: 40px;
+        padding: 36px 20px;
+
+        img {
+            margin-top: 30px;
+            width: 93px;
+            height: 93px;
+        }
+
+        &_primary,
+        &_secondary {
+            border-radius: 20px;
+            border: none;
+            position: relative;
+
+            background-size: 40px 3px, 40px 3px, 3px 40px, 3px 40px;
+            background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+            background-position: top, bottom, left, right;
+        }
+
+        &_primary {
+            background-image:
+                linear-gradient(90deg, #F1E6D0 50%, transparent 50%),
+                linear-gradient(90deg, #F1E6D0 50%, transparent 50%),
+                linear-gradient(180deg, #F1E6D0 50%, transparent 50%),
+                linear-gradient(180deg, #F1E6D0 50%, transparent 50%);
+            height: 57%;
+        }
+
+        &_secondary {
+            background-image:
+                linear-gradient(90deg, #F1E6D0 50%, transparent 50%),
+                linear-gradient(90deg, #F1E6D0 50%, transparent 50%),
+                linear-gradient(180deg, #F1E6D0 50%, transparent 50%),
+                linear-gradient(180deg, #F1E6D0 50%, transparent 50%);
+            height: 35%;
+        }
+
+        &_admin {
+            background-image:
+                linear-gradient(90deg, $brown-color 50%, transparent 50%),
+                linear-gradient(90deg, $brown-color 50%, transparent 50%),
+                linear-gradient(180deg, $brown-color 50%, transparent 50%),
+                linear-gradient(180deg, $brown-color 50%, transparent 50%);
+        }
+
+        &_adminHeightFirst {
+            max-height: 429px;
+        }
+
+        &_adminHeightSecond {
+            max-height: 333px;
+        }
+    }
+
+    &__basicInformation {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: fit-content;
+        gap: 35px;
+
+        &_admin {
+            justify-content: flex-end;
+            width: 100%;
+            max-width: 904px;
+            gap: 15px;
+            padding-top: 40px;
+        }
+    }
+
+    &__additionalInformation {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-top: 3px;
+        width: fit-content;
+        gap: 30px;
+    }
+
+    &__input {
+
+        &_date {
+            width: 13.6vw;
+        }
+
+        &_birthplace,
+        &_place {
+            width: 17.7vw;
+            max-width: 339px;
+        }
+
+        &_hero {
+            width: 47vw;
+        }
+
+        &_user {
+            width: 22.8vw;
+        }
+
+        &_email {
+            width: 22.8vw;
+        }
+
+        &_additional {
+            width: 20vw;
+            margin-top: 2px;
+        }
+
+        &_adminInputWidth {
+            max-width: 262px;
+        }
+    }
+
+    &__wrapper {
+        &_firstLine {
+            display: flex;
+            gap: 20px;
+
+            &_admin {
+                margin-top: 15px;
+                gap: 0;
+                justify-content: flex-end;
+            }
+        }
+
+        &_secondLine {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 17px;
+        }
+
+        &_thirdLine {
+            display: flex;
+            gap: 20px;
+            margin-top: 17px;
+        }
+
+        &_fourthLine {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
+
+.select {
+    margin-top: -14px;
+    font-size: 20px;
+    color: #F1E6D0;
+    text-align: left;
+}
+
+.agreementContainer {
+    display: flex;
+    flex-direction: column;
+    padding-top: 9px;
+    gap: 10px;
+
+    a {
+        color: #F1E6D0;
+        font-size: 12px;
+        text-decoration: none;
+        padding: 0;
+    }
+}
+
+.checkboxWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.button {
+    background-color: #F1E6D0;
+    border: none;
+    outline: none;
+    width: 100%;
+    border-radius: 16px;
+    padding: 12px 24px;
+    font-size: 20px;
+    margin-top: 11px;
+
+    &_small {
+        font-size: 20px;
+        background-color: #F1E6D0;
+        border: none;
+        outline: none;
+        border-radius: 16px;
+        padding: 12px 24px;
+        width: fit-content;
+    }
+
+    &_admin {
+        background-color: $brown-color;
+        color: #F1E6D0;
+    }
+}
+
+.publishButton,
+.reviewButton {
+    font-size: 20px;
+    border-radius: 16px;
+    padding: 12px 24px;
+    border: 2px solid $brown-color;
+    min-width: 239px;
+    justify-content: center;
+}
+
+.publishButton {
+    background-color: transparent;
+    color: $brown-color;
+}
+
+.reviewButton {
+    background-color: $brown-color;
+    color: $beige-background;
+    margin-left: 15px;
+}
+
+// ==================================================
+// Preview Container
+
+.previewContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+}
+
+.previewImageWrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    margin-top: -66px;
+    margin-bottom: -36px;
+}
+
+.previewImage {
+    min-width: calc(100% + 40px);
+    min-height: calc(100% + 72px);
+    margin-left: -20px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.removeImageButton {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: #F1E6D0;
+    border: none;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    top: 35px;
+    right: -10px;
+
+    &:hover {
+        color: red;
+    }
+}
+
+.removeAdditionalImageButton {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: #F1E6D0;
+    border: none;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    background-color: $brown-color;
+    top: 23px;
+    right: -5px;
+
+    &:hover {
+        color: red;
+    }
+}
+
+// ======================================
+// Gallery of additional images (grid 3x3)
+
+.additionalImagesGrid {
+    position: absolute;
+    top: -30px;
+    display: grid;
+    grid-template-columns: repeat(3, 106px);
+    gap: 16px;
+    justify-content: center;
+    padding-bottom: 30px;
+    height: 100%;
+}
+
+.additionalImageItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.additionalImageWrapper {
+    position: relative;
+    width: 106px;
+    height: 133px;
+}
+
+.additionalImagePreview {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #e0d5c0;
+    background-color: #f5f0e6;
+}
+
+// ======================================
+// Error & Success messages
+
+.errorMessage {
+    color: #ff4444;
+    font-size: 16px;
+    padding: 12px 16px;
+    background-color: rgba(255, 68, 68, 0.1);
+    border-radius: 8px;
+    border: 1px solid #ff4444;
+    margin-bottom: 16px;
+}
+
+.successMessage {
+    color: #2e7d32;
+    font-size: 16px;
+    padding: 12px 16px;
+    background-color: rgba(46, 125, 50, 0.1);
+    border-radius: 8px;
+    border: 1px solid #2e7d32;
+    margin-bottom: 16px;
+}
+
+// ======================================
+// Utilities
+
+.dashed-border-all {
+    border: none;
+    background-image:
+        linear-gradient(90deg, red 50%, transparent 50%),
+        linear-gradient(0deg, red 50%, transparent 50%),
+        linear-gradient(90deg, red 50%, transparent 50%),
+        linear-gradient(0deg, red 50%, transparent 50%);
+    background-size: 20px 3px, 3px 20px, 20px 3px, 3px 20px;
+    background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
+    background-position: top, right, bottom, left;
+}
+
+.textarea {
+    &__admin {
+        border: 2px solid red;
+    }
+}

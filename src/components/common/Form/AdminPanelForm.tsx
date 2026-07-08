@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Button from "../../common/Button/Button";
-import styles from "./Form.module.scss";
+import styles from "./AdminPanelForm.module.scss";
 import { Textarea } from "../Textarea/Textarea";
 import { InputAdmin } from "../Input/InputAdmin";
 import CustomSelectAdmin from "../Select/SelectAdmin";
@@ -178,7 +178,7 @@ export default function AdminPanelForm() {
     };
 
     const removeAdditionalImage = (index: number) => {
-        setAdditionalImages(prev => prev.filter((_, i) => i !== index));
+        setAdditionalImages(prev => prev.filter((_, i) => i === index));
     };
 
     const validateForm = (): boolean => {
@@ -224,6 +224,8 @@ export default function AdminPanelForm() {
             chapter: null,
             cardType: null,
         });
+        setDisplayDateBirth('');
+        setDisplayDateDeath('');
         setPhotoHero(null);
         setAdditionalImages([]);
         setTouched({
@@ -347,7 +349,6 @@ export default function AdminPanelForm() {
                         <div
                             className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}
                         >
-
                             {!photoHero ? (
                                 <>
                                     <img src="/image-download-brown.png" alt="Загрузить" />
@@ -413,7 +414,6 @@ export default function AdminPanelForm() {
                                     />
                                 </div>
                             )}
-
                         </div>
                     )}
 
@@ -447,7 +447,6 @@ export default function AdminPanelForm() {
                             Выбрать файлы ({additionalImages.length}/9)
                         </Button>
 
-                        {/* Галерея превью дополнительных изображений (сетка 3x3) */}
                         {additionalImages.length > 0 && (
                             <div className={styles.additionalImagesGrid}>
                                 {additionalImages.map((file, index) => (
@@ -509,7 +508,6 @@ export default function AdminPanelForm() {
                         <InputAdmin
                             className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                             label="Дата рождения"
-
                             placeholder="ДД.ММ.ГГГГ"
                             value={displayDateBirth}
                             onChange={handleDateBirthChange}
@@ -554,7 +552,7 @@ export default function AdminPanelForm() {
                             onChange={(e) => handleInputChange('placeService', e.target.value)}
                         />
                         <InputAdmin
-                            className={`${styles.form__input_additional} ${styles.form__input_admin}`}
+                            className={`${styles.form__input_place} ${styles.form__input_admin}`}
                             label="Место призыва"
                             placeholder="Место призыва"
                             value={formData.placeConscription}
