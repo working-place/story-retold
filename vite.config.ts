@@ -7,7 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://94.250.255.173:8000',
+        // target: 'http://94.250.255.173:8000',
+        target: 'https://digital-memory.ru/api',
         changeOrigin: true,
         secure: false,
       }

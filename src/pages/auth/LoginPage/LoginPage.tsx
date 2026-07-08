@@ -21,7 +21,7 @@ export default function LoginPage() {
 
     try {
       await login({ email, password });
-      navigate('/admin-heroes');
+      navigate('/admin-heroes/on-review');
     } catch (err) {
       let userMessage = 'Ошибка входа. Проверьте email и пароль.';
       if (err instanceof Error) {

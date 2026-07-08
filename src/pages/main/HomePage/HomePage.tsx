@@ -1,6 +1,6 @@
 import MainLayout from "../../../components/layout/MainLayout/MainLayout";
 import styles from "./HomePage.module.scss"
-import NewCardForm from "../../../components/common/Form/Form";
+// import NewCardForm from "../../../components/common/Form/Form";
 
 export default function HomePage() {
 

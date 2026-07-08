@@ -2,7 +2,8 @@ import type { CardData, Hero } from "../../types/card.types";
 import type { CardResponse, CardShowResponse, CardShowQueryParams } from '../../types/api.types';
 import { httpClient } from '../http.client';
 
-const API_BASE_URL = 'http://94.250.255.173:8000';
+// const API_BASE_URL = 'http://94.250.255.173:8000';
+const API_BASE_URL = 'https://digital-memory.ru/api';
 
 function buildImageUrl(path: string | null | undefined): string {
 
