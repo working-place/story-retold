@@ -5,65 +5,300 @@ import styles from "./Form.module.scss";
 import { Textarea } from "../Textarea/Textarea";
 import { InputAdmin } from "../Input/InputAdmin";
 import CustomSelectAdmin from "../Select/SelectAdmin";
-import { heroesApi, ApiError } from '../../../services/api/heroes';
-import { buildImageUrl } from '../../../services/api/api';
-import { useObjectUrl, useObjectUrls } from "../../../hooks/useObjectUrl";
-import { useCardForm } from "../../../hooks/useCardForm";
+import { heroesApi } from '../../../services/api/heroes';
 import type { CardResponse } from '../../../types/api.types';
+
+interface FormData {
+    dateBirth: string;
+    dateDeath: string;
+    placeBirth: string;
+    name: string;
+    nameAndClass: string;
+    email: string;
+    description: string;
+    militaryRank: string;
+    placeService: string;
+    placeConscription: string;
+    chapter: 'svo' | 'gpw' | null;
+    cardType: 'withPhoto' | 'withoutPhoto' | null;
+}
+
+const formatDateForApi = (dateString: string): string => {
+    if (!dateString) return '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) return dateString;
+    const parts = dateString.split('.');
+    if (parts.length === 3) {
+        return `${parts[2]}-${parts[1]}-${parts[0]}`;
+    }
+    return dateString;
+};
+
+const formatDateMask = (value: string): string => {
+    const digits = value.replace(/\D/g, '');
+    const limitedDigits = digits.slice(0, 8);
+    let formatted = '';
+    for (let i = 0; i < limitedDigits.length; i++) {
+        if (i === 2 || i === 4) {
+            formatted += '.';
+        }
+        formatted += limitedDigits[i];
+    }
+    return formatted;
+};
 
 export default function AdminEditForm() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-
     const [loading, setLoading] = useState(false);
     const [fetchLoading, setFetchLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
-    const form = useCardForm({ mode: 'edit' });
+    const [formData, setFormData] = useState<FormData>({
+        dateBirth: '',
+        dateDeath: '',
+        placeBirth: '',
+        name: '',
+        nameAndClass: '',
+        email: '',
+        description: '',
+        militaryRank: '',
+        placeService: '',
+        placeConscription: '',
+        chapter: null,
+        cardType: null,
+    });
 
-    const photoHeroUrl = useObjectUrl(form.photoHero);
-    const additionalImageUrls = useObjectUrls(form.additionalImages);
+    const [displayDateBirth, setDisplayDateBirth] = useState('');
+    const [displayDateDeath, setDisplayDateDeath] = useState('');
+
+    const [photoHero, setPhotoHero] = useState<File | null>(null);
+    const [existingPhotoHero, setExistingPhotoHero] = useState<string | null>(null);
+    const [additionalImages, setAdditionalImages] = useState<File[]>([]);
+    const [existingAdditionalImages, setExistingAdditionalImages] = useState<string[]>([]);
+
+    const [touched, setTouched] = useState<Record<string, boolean>>({
+        name: false,
+        dateBirth: false,
+        placeBirth: false,
+        nameAndClass: false,
+        description: false,
+    });
 
     useEffect(() => {
         const fetchHero = async () => {
             if (!id) return;
             setFetchLoading(true);
             try {
-                const heroData: CardResponse = await heroesApi.get(Number(id));
-                form.hydrateFromCard(heroData);
+                const heroData = await heroesApi.get(Number(id));
+                if (heroData) {
+                    setFormData({
+                        dateBirth: heroData.dateBirth || '',
+                        dateDeath: heroData.dateDeath || '',
+                        placeBirth: heroData.placeBirth || '',
+                        name: heroData.name || '',
+                        nameAndClass: heroData.nameAndClass || '',
+                        email: heroData.email || '',
+                        description: heroData.description || '',
+                        militaryRank: heroData.militaryRank || '',
+                        placeService: heroData.placeService || '',
+                        placeConscription: heroData.placeConscription || '',
+                        chapter: heroData.chapter || null,
+                        cardType: (heroData as CardResponse).cardType || null,
+                    });
+                    setExistingPhotoHero((heroData as CardResponse).photoHero?.url || null);
+
+                    if ((heroData as CardResponse).additionalImages && (heroData as CardResponse).additionalImages!.length > 0) {
+                        setExistingAdditionalImages(
+                            (heroData as CardResponse).additionalImages!.map((img) => img.url)
+                        );
+                    }
+                }
             } catch (err) {
-                form.setError(
-                    err instanceof ApiError
-                        ? `Ошибка сервера: ${err.message}`
-                        : 'Не удалось загрузить данные героя'
-                );
+                setError('Не удалось загрузить данные героя');
+                console.error(err);
             } finally {
                 setFetchLoading(false);
             }
         };
         fetchHero();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
+
+    const getFieldError = (fieldName: string): string | undefined => {
+        if (!touched[fieldName]) return undefined;
+        switch (fieldName) {
+            case 'name':
+                return !formData.name ? 'Введите ФИО героя' : undefined;
+            case 'dateBirth':
+                return !formData.dateBirth ? 'Введите дату рождения' : undefined;
+            case 'placeBirth':
+                return !formData.placeBirth ? 'Введите место рождения' : undefined;
+            case 'nameAndClass':
+                return !formData.nameAndClass ? 'Введите ФИО и класс автора' : undefined;
+            case 'description':
+                return !formData.description ? 'Введите описание материала' : undefined;
+            default:
+                return undefined;
+        }
+    };
+
+    const handleInputChange = (field: keyof FormData, value: string | boolean) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
+        setError(null);
+    };
+
+    const handleBlur = (field: string) => {
+        setTouched(prev => ({ ...prev, [field]: true }));
+    };
+
+    const handleDateBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const rawValue = e.target.value;
+        const maskedValue = formatDateMask(rawValue);
+        setDisplayDateBirth(maskedValue);
+        const apiValue = formatDateForApi(maskedValue);
+        setFormData(prev => ({ ...prev, dateBirth: apiValue }));
+        setError(null);
+    };
+
+    const handleDateDeathChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const rawValue = e.target.value;
+        const maskedValue = formatDateMask(rawValue);
+        setDisplayDateDeath(maskedValue);
+        const apiValue = formatDateForApi(maskedValue);
+        setFormData(prev => ({ ...prev, dateDeath: apiValue }));
+        setError(null);
+    };
+
+    const handleChapterChange = (value: 'svo' | 'gpw' | null) => {
+        setFormData(prev => ({ ...prev, chapter: value }));
+        setError(null);
+    };
+
+    const handleCardTypeChange = (value: 'withPhoto' | 'withoutPhoto' | null) => {
+        setFormData(prev => ({ ...prev, cardType: value }));
+        setError(null);
+    };
+
+    const handlePhotoHeroChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            if (file.size > 4 * 1024 * 1024) {
+                setError('Размер файла не должен превышать 4 MB');
+                return;
+            }
+            setPhotoHero(file);
+            setError(null);
+        }
+        e.target.value = '';
+    };
+
+    const handleAdditionalImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const files = Array.from(e.target.files);
+            const oversizedFile = files.find(file => file.size > 4 * 1024 * 1024);
+            if (oversizedFile) {
+                setError(`Файл "${oversizedFile.name}" превышает 4 MB`);
+                return;
+            }
+            const currentCount = additionalImages.length + existingAdditionalImages.length;
+            const availableSlots = 9 - currentCount;
+            if (files.length > availableSlots) {
+                setError(`Можно загрузить не более 9 изображений. Осталось ${availableSlots} мест(а)`);
+                return;
+            }
+            setAdditionalImages(prev => [...prev, ...files]);
+            setError(null);
+        }
+        e.target.value = '';
+    };
+
+    const removeAdditionalImage = (index: number, isExisting: boolean) => {
+        if (isExisting) {
+            setExistingAdditionalImages(prev => prev.filter((_, i) => i !== index));
+        } else {
+            setAdditionalImages(prev => prev.filter((_, i) => i !== index));
+        }
+    };
+
+    const validateForm = (): boolean => {
+        const requiredFields = ['name', 'dateBirth', 'placeBirth', 'nameAndClass', 'description'];
+        for (const field of requiredFields) {
+            if (!formData[field as keyof FormData]) {
+                setError(`Пожалуйста, заполните все обязательные поля`);
+                return false;
+            }
+        }
+        if (!formData.chapter) {
+            setError('Выберите раздел (Герой СССР или Герой СВО)');
+            return false;
+        }
+        if (!formData.cardType) {
+            setError('Выберите тип карточки');
+            return false;
+        }
+        if (formData.cardType === 'withPhoto' && !photoHero && !existingPhotoHero) {
+            setError('Для карточки с фото необходимо загрузить фотографию героя');
+            return false;
+        }
+        return true;
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        form.setError(null);
+        setError(null);
         setSuccess(false);
 
-        if (!form.validate() || !id) return;
+        setTouched({
+            name: true,
+            dateBirth: true,
+            placeBirth: true,
+            nameAndClass: true,
+            description: true,
+        });
+
+        if (!validateForm() || !id) {
+            return;
+        }
 
         setLoading(true);
+
         try {
-            const submitData = form.buildSubmitData();
+            const submitData = new FormData();
+
+            submitData.append('dateBirth', formData.dateBirth);
+            submitData.append('placeBirth', formData.placeBirth);
+            submitData.append('name', formData.name);
+            submitData.append('nameAndClass', formData.nameAndClass);
+            submitData.append('description', formData.description);
+            submitData.append('chapter', formData.chapter!);
+            submitData.append('cardType', formData.cardType!);
+            submitData.append('consent', '1');
+            submitData.append('privacyPolicy', '1');
+
+            if (formData.dateDeath) submitData.append('dateDeath', formData.dateDeath);
+            if (formData.email) submitData.append('email', formData.email);
+            if (formData.militaryRank) submitData.append('militaryRank', formData.militaryRank);
+            if (formData.placeService) submitData.append('placeService', formData.placeService);
+            if (formData.placeConscription) submitData.append('placeConscription', formData.placeConscription);
+
+            if (formData.cardType === 'withPhoto' && photoHero) {
+                submitData.append('photoHero', photoHero);
+            }
+
+            additionalImages.forEach((img, index) => {
+                submitData.append(`additionalCardImages[${index}][image]`, img);
+            });
+
             await heroesApi.update(Number(id), submitData);
 
             setSuccess(true);
             setTimeout(() => {
                 navigate('/admin-heroes/svo-heroes');
             }, 1500);
+
         } catch (err) {
-            const msg = err instanceof Error ? err.message : 'Произошла ошибка при обновлении карточки';
-            form.setError(msg);
+            console.error('Ошибка при обновлении карточки:', err);
+            setError(err instanceof Error ? err.message : 'Произошла ошибка при обновлении карточки');
         } finally {
             setLoading(false);
         }
@@ -79,7 +314,7 @@ export default function AdminEditForm() {
 
     return (
         <form onSubmit={handleSubmit} className={`${styles.form} ${styles.form_admin}`}>
-            {form.error && <div className={styles.errorMessage}>{form.error}</div>}
+            {error && <div className={styles.errorMessage}>{error}</div>}
             {success && <div className={styles.successMessage}>Карточка успешно обновлена!</div>}
 
             <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
@@ -88,7 +323,7 @@ export default function AdminEditForm() {
                 </h1>
 
                 <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}>
-                    {!form.photoHero && !form.existingPhotoHero ? (
+                    {!photoHero && !existingPhotoHero ? (
                         <>
                             <img src="/image-download-brown.png" alt="Загрузить" />
                             <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
@@ -103,7 +338,7 @@ export default function AdminEditForm() {
                                 type="file"
                                 id="photoHero"
                                 accept="image/png,image/jpeg,image/jpg,image/webp"
-                                onChange={form.handlePhotoHeroChange}
+                                onChange={handlePhotoHeroChange}
                                 style={{ display: 'none' }}
                             />
                             <Button
@@ -118,7 +353,7 @@ export default function AdminEditForm() {
                         <div className={styles.previewContainer}>
                             <div className={styles.previewImageWrapper}>
                                 <img
-                                    src={form.photoHero ? photoHeroUrl : buildImageUrl(form.existingPhotoHero)}
+                                    src={photoHero ? URL.createObjectURL(photoHero) : `http://94.250.255.173:8000${existingPhotoHero}`}
                                     alt="Превью фото героя"
                                     className={styles.previewImage}
                                 />
@@ -126,8 +361,8 @@ export default function AdminEditForm() {
                                     type="button"
                                     className={styles.removeImageButton}
                                     onClick={() => {
-                                        form.setPhotoHero(null);
-                                        form.setExistingPhotoHero(null);
+                                        setPhotoHero(null);
+                                        setExistingPhotoHero(null);
                                     }}
                                     aria-label="Удалить фото"
                                 >
@@ -136,7 +371,7 @@ export default function AdminEditForm() {
                             </div>
                             <div className={styles.previewInfo}>
                                 <p className={styles.previewFileName}>
-                                    {form.photoHero ? form.photoHero.name : 'Текущее фото'}
+                                    {photoHero ? photoHero.name : 'Текущее фото'}
                                 </p>
                                 <Button
                                     type="button"
@@ -150,7 +385,7 @@ export default function AdminEditForm() {
                                 type="file"
                                 id="photoHero"
                                 accept="image/png,image/jpeg,image/jpg,image/webp"
-                                onChange={form.handlePhotoHeroChange}
+                                onChange={handlePhotoHeroChange}
                                 style={{ display: 'none' }}
                             />
                         </div>
@@ -172,33 +407,33 @@ export default function AdminEditForm() {
                         id="additionalImages"
                         accept="image/png,image/jpeg,image/jpg,image/webp"
                         multiple
-                        onChange={form.handleAdditionalImagesChange}
+                        onChange={handleAdditionalImagesChange}
                         style={{ display: 'none' }}
-                        disabled={(form.additionalImages.length + form.existingAdditionalImages.length) >= 9}
+                        disabled={(additionalImages.length + existingAdditionalImages.length) >= 9}
                     />
                     <Button
                         type="button"
                         className={`${styles.button_small} ${styles.button_admin}`}
                         onClick={() => document.getElementById('additionalImages')?.click()}
-                        disabled={(form.additionalImages.length + form.existingAdditionalImages.length) >= 9}
+                        disabled={(additionalImages.length + existingAdditionalImages.length) >= 9}
                     >
-                        Выбрать файлы ({form.additionalImages.length + form.existingAdditionalImages.length}/9)
+                        Выбрать файлы ({additionalImages.length + existingAdditionalImages.length}/9)
                     </Button>
 
-                    {form.existingAdditionalImages.length > 0 && (
+                    {existingAdditionalImages.length > 0 && (
                         <div className={styles.additionalImagesGrid}>
-                            {form.existingAdditionalImages.map((img, index) => (
+                            {existingAdditionalImages.map((img, index) => (
                                 <div key={`existing-${index}`} className={styles.additionalImageItem}>
                                     <div className={styles.additionalImageWrapper}>
                                         <img
-                                            src={buildImageUrl(img)}
+                                            src={`http://94.250.255.173:8000${img}`}
                                             alt={`Дополнительное фото ${index + 1}`}
                                             className={styles.additionalImagePreview}
                                         />
                                         <button
                                             type="button"
                                             className={styles.removeAdditionalImageButton}
-                                            onClick={() => form.removeAdditionalImage(index, true)}
+                                            onClick={() => removeAdditionalImage(index, true)}
                                             aria-label="Удалить фото"
                                         >
                                             ×
@@ -209,23 +444,26 @@ export default function AdminEditForm() {
                         </div>
                     )}
 
-                    {form.additionalImages.length > 0 && (
+                    {additionalImages.length > 0 && (
                         <div className={styles.additionalImagesGrid}>
-                            {form.additionalImages.map((_, index) => (
+                            {additionalImages.map((file, index) => (
                                 <div key={`new-${index}`} className={styles.additionalImageItem}>
                                     <div className={styles.additionalImageWrapper}>
                                         <img
-                                            src={additionalImageUrls[index]}
+                                            src={URL.createObjectURL(file)}
                                             alt={`Дополнительное фото ${index + 1}`}
                                             className={styles.additionalImagePreview}
                                         />
                                         <button
                                             type="button"
                                             className={styles.removeAdditionalImageButton}
-                                            onClick={() => form.removeAdditionalImage(index, false)}
+                                            onClick={() => removeAdditionalImage(index, false)}
                                             aria-label="Удалить фото"
                                         >
-                                            ×
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fillRule="evenodd" clipRule="evenodd" d="M0.77031 0.583721C0.924856 0.428909 1.16237 0.369891 1.43061 0.419649C1.69884 0.469408 1.97582 0.623867 2.20062 0.849049L19.1524 17.83C19.3772 18.0552 19.5314 18.3327 19.581 18.6014C19.6307 18.8701 19.5718 19.108 19.4173 19.2628C19.2627 19.4176 19.0252 19.4766 18.757 19.4269C18.4887 19.3771 18.2117 19.2227 17.9869 18.9975L1.03518 2.01649C0.810387 1.79131 0.656193 1.51385 0.60652 1.24516C0.556847 0.976459 0.615764 0.738534 0.77031 0.583721Z" fill="#1A1A1A" />
+                                                <path fillRule="evenodd" clipRule="evenodd" d="M19.2298 0.736591C19.3843 0.891404 19.4432 1.12933 19.3936 1.39803C19.3439 1.66672 19.1897 1.94418 18.9649 2.16936L2.01314 19.1503C1.78835 19.3755 1.51137 19.53 1.24313 19.5797C0.974898 19.6295 0.737383 19.5705 0.582837 19.4157C0.428291 19.2609 0.369374 19.0229 0.419046 18.7542C0.468719 18.4855 0.622914 18.2081 0.847709 17.9829L17.7995 1.00192C18.0243 0.776737 18.3013 0.622277 18.5695 0.572519C18.8377 0.52276 19.0752 0.581778 19.2298 0.736591Z" fill="#1A1A1A" />
+                                            </svg>
                                         </button>
                                     </div>
                                 </div>
@@ -241,21 +479,21 @@ export default function AdminEditForm() {
                         <CustomSelectAdmin
                             className={styles.selectForm}
                             required
-                            onChapterChange={form.handleChapterChange}
-                            onCardTypeChange={form.handleCardTypeChange}
-                            initialChapter={form.formData.chapter}
-                            initialCardType={form.formData.cardType}
+                            onChapterChange={handleChapterChange}
+                            onCardTypeChange={handleCardTypeChange}
+                            initialChapter={formData.chapter}
+                            initialCardType={formData.cardType}
                         />
                     </div>
                     <InputAdmin
                         className={`${styles.form__input_hero} ${styles.form__input_admin}`}
                         label="Введите ФИО героя"
                         placeholder="Введите Ф.И.О."
-                        value={form.formData.name}
-                        onChange={(e) => form.handleInputChange('name', e.target.value)}
-                        onBlur={() => form.handleBlur('name')}
-                        error={!!form.getFieldError('name')}
-                        errorText={form.getFieldError('name')}
+                        value={formData.name}
+                        onChange={(e) => handleInputChange('name', e.target.value)}
+                        onBlur={() => handleBlur('name')}
+                        error={!!getFieldError('name')}
+                        errorText={getFieldError('name')}
                         required
                     />
                 </div>
@@ -265,29 +503,29 @@ export default function AdminEditForm() {
                         className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                         label="Дата рождения"
                         placeholder="ДД.ММ.ГГГГ"
-                        value={form.displayDateBirth}
-                        onChange={form.handleDateBirthChange}
-                        onBlur={() => form.handleBlur('dateBirth')}
-                        error={!!form.getFieldError('dateBirth')}
-                        errorText={form.getFieldError('dateBirth')}
+                        value={displayDateBirth}
+                        onChange={handleDateBirthChange}
+                        onBlur={() => handleBlur('dateBirth')}
+                        error={!!getFieldError('dateBirth')}
+                        errorText={getFieldError('dateBirth')}
                         required
                     />
                     <InputAdmin
                         className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                         label="Дата смерти"
                         placeholder="ДД.ММ.ГГГГ"
-                        value={form.displayDateDeath}
-                        onChange={form.handleDateDeathChange}
+                        value={displayDateDeath}
+                        onChange={handleDateDeathChange}
                     />
                     <InputAdmin
                         className={`${styles.form__input_birthplace} ${styles.form__input_admin}`}
                         label="Место рождения"
                         placeholder="Место рождения"
-                        value={form.formData.placeBirth}
-                        onChange={(e) => form.handleInputChange('placeBirth', e.target.value)}
-                        onBlur={() => form.handleBlur('placeBirth')}
-                        error={!!form.getFieldError('placeBirth')}
-                        errorText={form.getFieldError('placeBirth')}
+                        value={formData.placeBirth}
+                        onChange={(e) => handleInputChange('placeBirth', e.target.value)}
+                        onBlur={() => handleBlur('placeBirth')}
+                        error={!!getFieldError('placeBirth')}
+                        errorText={getFieldError('placeBirth')}
                         required
                     />
                 </div>
@@ -297,22 +535,22 @@ export default function AdminEditForm() {
                         className={`${styles.form__input_additional} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                         label="Воинское звание"
                         placeholder="Воинское звание"
-                        value={form.formData.militaryRank}
-                        onChange={(e) => form.handleInputChange('militaryRank', e.target.value)}
+                        value={formData.militaryRank}
+                        onChange={(e) => handleInputChange('militaryRank', e.target.value)}
                     />
                     <InputAdmin
                         className={`${styles.form__input_additional} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
                         label="Место службы"
                         placeholder="Место службы"
-                        value={form.formData.placeService}
-                        onChange={(e) => form.handleInputChange('placeService', e.target.value)}
+                        value={formData.placeService}
+                        onChange={(e) => handleInputChange('placeService', e.target.value)}
                     />
                     <InputAdmin
                         className={`${styles.form__input_additional} ${styles.form__input_admin}`}
                         label="Место призыва"
                         placeholder="Место призыва"
-                        value={form.formData.placeConscription}
-                        onChange={(e) => form.handleInputChange('placeConscription', e.target.value)}
+                        value={formData.placeConscription}
+                        onChange={(e) => handleInputChange('placeConscription', e.target.value)}
                     />
                 </div>
 
@@ -321,11 +559,11 @@ export default function AdminEditForm() {
                         className={`${styles.form__input_user} ${styles.form__input_admin}`}
                         label="ФИО и класс автора карточки"
                         placeholder="Введите Ф.И.О. и класс"
-                        value={form.formData.nameAndClass}
-                        onChange={(e) => form.handleInputChange('nameAndClass', e.target.value)}
-                        onBlur={() => form.handleBlur('nameAndClass')}
-                        error={!!form.getFieldError('nameAndClass')}
-                        errorText={form.getFieldError('nameAndClass')}
+                        value={formData.nameAndClass}
+                        onChange={(e) => handleInputChange('nameAndClass', e.target.value)}
+                        onBlur={() => handleBlur('nameAndClass')}
+                        error={!!getFieldError('nameAndClass')}
+                        errorText={getFieldError('nameAndClass')}
                         required
                     />
                 </div>
@@ -337,9 +575,9 @@ export default function AdminEditForm() {
                         variant="_admin"
                         size="large"
                         placeholder="Введите описание"
-                        value={form.formData.description}
-                        onChange={(e) => form.handleInputChange('description', e.target.value)}
-                        onBlur={() => form.handleBlur('description')}
+                        value={formData.description}
+                        onChange={(e) => handleInputChange('description', e.target.value)}
+                        onBlur={() => handleBlur('description')}
                         resize="none"
                         labelPosition="top"
                         required

@@ -1,76 +1,10 @@
-// =====================================================
-//  ТИПОГРАФИКА
-//  Токены и миксины для шрифтов. Применять во всех
-//  компонентах вместо хардкода font-family/size/weight —
-//  так верстка не будет расходиться с макетом.
-// =====================================================
+// @import url('https://fonts.googleapis.com/css2?family=Geologica:wght,CRSV@100..900,0&family=Lato:ital,wght@0,100;0,300;0,400;1,100;1,300;1,400&family=M+PLUS+1p:wght@300;400;500;700&family=Metamorphous&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Oswald:wght@200..700&family=Roboto:wght@100&display=swap');
 
-// Семейства
-$font-base: 'Roboto', 'Metamorphous', serif;
-$font-decorative: 'Metamorphous', serif;
-$font-display: 'Glanz', sans-serif;
-$font-tech: 'Tektur', sans-serif;
+// $font-decorative: 'Metamorphous', serif;
 
-// Начертания
-$weight-regular: 400;
-$weight-medium: 600;
-$weight-bold: 700;
-
-// Базовый body-текст
-@mixin body-text {
-  font-family: $font-base;
-  font-size: 16px;
-  font-weight: $weight-medium;
-  line-height: 1.5;
-}
-
-// Заголовки
-@mixin h1 {
-  font-family: $font-display;
-  font-size: 48px;
-  font-weight: $weight-regular;
-  line-height: 1.1;
-}
-
-@mixin h2 {
-  font-family: $font-display;
-  font-size: 32px;
-  font-weight: $weight-regular;
-  line-height: 1.15;
-}
-
-@mixin h3 {
-  font-family: $font-base;
-  font-size: 24px;
-  font-weight: $weight-bold;
-  line-height: 1.2;
-}
-
-@mixin h4 {
-  font-family: $font-base;
-  font-size: 20px;
-  font-weight: $weight-bold;
-  line-height: 1.25;
-}
-
-@mixin h5 {
-  font-family: $font-base;
-  font-size: 18px;
-  font-weight: $weight-medium;
-  line-height: 1.3;
-}
-
-// Подпись / метка
-@mixin caption {
-  font-family: $font-base;
-  font-size: 14px;
-  font-weight: $weight-medium;
-  line-height: 1.4;
-}
-
-// Декоративный текст (заголовки в стиле макета)
-@mixin decorative($size: 35px) {
-  font-family: $font-decorative;
-  font-weight: $weight-regular;
-  font-size: $size;
-}
+// @mixin metamorphous-regular($size: 35px) {
+//   font-family: $font-decorative;
+//   font-weight: 400;
+//   font-style: normal;
+//   font-size: $size;
+// }

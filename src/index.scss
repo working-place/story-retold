@@ -1,3 +1,7 @@
+:root {
+  @media (max-width: 1024px) {}
+}
+
 @font-face {
   font-family: 'Glanz';
   src: url('/fonts/Glanz.otf') format('opentype');
@@ -8,7 +12,7 @@
 
 @font-face {
   font-family: 'Metamorphous-Regular';
-  src: url('/fonts/Metamorphous-Regular.ttf') format('truetype');
+  src: url('/fonts/Metamorphous-Regular.ttf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -20,6 +24,10 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {}
 }
 
 #root {

@@ -5,24 +5,21 @@ import type {
   SendRestoreCodeRequest,
   RestorePasswordRequest,
   ChangePasswordRequest,
-} from '../../types/api.types';
+} from '../../types/auth.types';
 import { httpClient } from '../http.client';
 import { setToken } from '../../utils/authStorage';
-import { ENDPOINTS } from './api';
 
 export const authApi = {
-  /**
-   * Логин. Учётные данные передаются в теле запроса (не в query string),
-   * чтобы не попадать в логи сервера/прокси и историю браузера.
-   */
   login: async (credentials: LoginRequest): Promise<LoginResponse> => {
-    const rawResponse = await httpClient<LoginResponseRaw>(ENDPOINTS.AUTH.LOGIN, {
+    const params = new URLSearchParams({
+      email: credentials.email,
+      password: credentials.password,
+    }).toString();
+    const url = `/api/login?${params}`;
+
+    const rawResponse = await httpClient<LoginResponseRaw>(url, {
       method: 'POST',
       skipAuth: true,
-      body: {
-        email: credentials.email,
-        password: credentials.password,
-      },
     });
 
     const token = rawResponse.access_token;
@@ -35,31 +32,31 @@ export const authApi = {
   },
 
   sendRestoreCode: (data: SendRestoreCodeRequest): Promise<void> => {
-    return httpClient<void>(ENDPOINTS.AUTH.SEND_RESTORE_CODE, {
+    const params = new URLSearchParams({ email: data.email }).toString();
+    return httpClient<void>(`/api/send-restore-code?${params}`, {
       method: 'PATCH',
       skipAuth: true,
-      body: { email: data.email },
     });
   },
 
   restorePassword: (data: RestorePasswordRequest): Promise<void> => {
-    return httpClient<void>(ENDPOINTS.AUTH.RESTORE(data.token), {
+    const params = new URLSearchParams({
+      password: data.password,
+      password_confirmation: data.password_confirmation,
+    }).toString();
+    return httpClient<void>(`/api/restore/${data.token}/?${params}`, {
       method: 'PATCH',
       skipAuth: true,
-      body: {
-        password: data.password,
-        password_confirmation: data.password_confirmation,
-      },
     });
   },
 
   changePassword: (data: ChangePasswordRequest): Promise<void> => {
-    return httpClient<void>(ENDPOINTS.AUTH.CHANGE_PASSWORD, {
+    const params = new URLSearchParams({
+      password: data.password,
+      password_confirmation: data.password_confirmation,
+    }).toString();
+    return httpClient<void>(`/api/change-admin-password?${params}`, {
       method: 'PATCH',
-      body: {
-        password: data.password,
-        password_confirmation: data.password_confirmation,
-      },
     });
   },
 };

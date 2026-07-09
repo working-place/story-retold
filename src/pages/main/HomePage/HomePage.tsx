@@ -1,9 +1,11 @@
+import MainLayout from "../../../components/layout/MainLayout/MainLayout";
 import styles from "./HomePage.module.scss"
+// import NewCardForm from "../../../components/common/Form/Form";
 
 export default function HomePage() {
 
     return (
-        <>
+        <MainLayout>
             <div className={styles.main}>
                 <h1
                     className={styles.main_title}
@@ -157,6 +159,6 @@ export default function HomePage() {
                 className={styles.about_devide}
                 src="/paper-deviding-about.png" alt="Разделительная линия" />
 
-        </>
+        </MainLayout>
     )
 }
