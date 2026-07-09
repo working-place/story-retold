@@ -4,10 +4,6 @@ import { Input } from "../Input/Input";
 import styles from "./Filter.module.scss";
 import type { Hero } from "../../../types/card.types";
 
-interface ExtendedHero extends Hero {
-    placeOfBirth?: string;
-}
-
 interface FilterProps {
     title?: string;
     heroes?: Hero[];
@@ -56,7 +52,6 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
             if (mode === "advanced" && advancedData) {
                 filteredHeroes = filteredHeroes.filter(hero => {
                     let matches = true;
-                    const extendedHero = hero as ExtendedHero;
 
                     if (advancedData.name.trim()) {
                         matches = matches && hero.name.toLowerCase().includes(advancedData.name.toLowerCase().trim());
@@ -71,7 +66,7 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
                     }
 
                     if (advancedData.placeOfBirth.trim()) {
-                        matches = matches && (extendedHero.placeOfBirth?.toLowerCase().includes(advancedData.placeOfBirth.toLowerCase().trim()) ?? false);
+                        matches = matches && (hero.placeBirth?.toLowerCase().includes(advancedData.placeOfBirth.toLowerCase().trim()) ?? false);
                     }
 
                     if (advancedData.rank.trim()) {
@@ -79,7 +74,7 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
                     }
 
                     if (advancedData.placeOfService.trim()) {
-                        matches = matches && hero.type.toLowerCase().includes(advancedData.placeOfService.toLowerCase().trim());
+                        matches = matches && (hero.placeService?.toLowerCase().includes(advancedData.placeOfService.toLowerCase().trim()) ?? false);
                     }
 
                     return matches;
