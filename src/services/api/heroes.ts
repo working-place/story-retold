@@ -68,8 +68,16 @@ function transformCardToHero(card: CardResponse): Hero {
  * Список карточек с серверной фильтрацией.
  * Возвращает только то, что вернул бэкенд — фильтрация по published/chapter
  * выполняется на сервере, чтобы не утекали черновики на клиент.
+ *
+ * @param skipAuth Публичный список (listPublished) ид без токена и видит только
+ *   опубликованные карточки. Админский список (list) шлёт токен — без него бэкенд
+ *   игнорирует флаг published=0 и отдаёт только опубликованные, поэтому черновики
+ *   не видны.
  */
-async function list(params: CardShowQueryParams = {}): Promise<Hero[]> {
+async function list(
+  params: CardShowQueryParams = {},
+  skipAuth = true
+): Promise<Hero[]> {
   const searchParams = new URLSearchParams();
 
   if (params.chapter) searchParams.append('chapter', params.chapter);
@@ -82,7 +90,7 @@ async function list(params: CardShowQueryParams = {}): Promise<Hero[]> {
   const query = searchParams.toString();
   const cards = await httpClient<CardResponse[]>(
     `${ENDPOINTS.CARD.SHOW}${query ? `?${query}` : ''}`,
-    { method: 'GET', skipAuth: true }
+    { method: 'GET', skipAuth }
   );
 
   if (!cards || !Array.isArray(cards)) return [];
@@ -95,7 +103,7 @@ export const heroesApi = {
     list({ chapter, published: true }),
 
   /** Список карточек для админки (не опубликованные / все — по params). */
-  list: (params?: CardShowQueryParams): Promise<Hero[]> => list(params),
+  list: (params?: CardShowQueryParams): Promise<Hero[]> => list(params, false),
 
   get: (id: number): Promise<CardResponse> =>
     httpClient<CardResponse>(ENDPOINTS.CARD.GET(id), {
