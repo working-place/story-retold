@@ -266,6 +266,7 @@
     font-size: 20px;
     margin-top: 11px;
 
+
     &_small {
         font-size: 20px;
         background-color: #F1E6D0;
@@ -277,8 +278,10 @@
     }
 
     &_admin {
+        // position: absolute;
         background-color: $brown-color;
         color: #F1E6D0;
+        z-index: 1000;
     }
 }
 
@@ -385,10 +388,12 @@
     top: -30px;
     display: grid;
     grid-template-columns: repeat(3, 106px);
+    grid-template-rows: auto;
     gap: 16px;
     justify-content: center;
     padding-bottom: 30px;
-    height: 100%;
+    // height: 100%;
+    height: fit-content;
 }
 
 .additionalImageItem {
@@ -396,6 +401,7 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    height: fit-content;
 }
 
 .additionalImageWrapper {

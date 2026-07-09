@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Button from "../../common/Button/Button";
-import styles from "./Form.module.scss";
+import styles from "./AdminPanelForm.module.scss";
 import { Textarea } from "../Textarea/Textarea";
 import { InputAdmin } from "../Input/InputAdmin";
 import CustomSelectAdmin from "../Select/SelectAdmin";
