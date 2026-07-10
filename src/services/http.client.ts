@@ -1,8 +1,27 @@
 import { getToken, removeToken } from '../utils/authStorage';
 import { API_BASE_URL } from './api/api';
 
-interface FetchOptions extends RequestInit {
+export interface FetchOptions extends Omit<RequestInit, 'body'> {
+  /** Не добавлять Authorization-заголовок и не редиректить на /login при 401. */
   skipAuth?: boolean;
+  /**
+   * Тело запроса. Объекты, не являющиеся FormData, сериализуются в JSON
+   * автоматически (см. реализацию ниже).
+   */
+  body?: BodyInit | Record<string, unknown> | null;
+}
+
+/** Ошибка API с распарсенным телом ответа. */
+export class ApiError extends Error {
+  status: number;
+  errors?: Record<string, string[]>;
+
+  constructor(message: string, status: number, errors?: Record<string, string[]>) {
+    super(message);
+    this.name = 'ApiError';
+    this.status = status;
+    this.errors = errors;
+  }
 }
 
 export async function httpClient<T>(
@@ -25,9 +44,9 @@ export async function httpClient<T>(
     }
   }
 
-  let body = options.body;
-  if (body && typeof body === 'object' && !(body instanceof FormData)) {
-    body = JSON.stringify(body);
+  let body: BodyInit | null | undefined = options.body as BodyInit | null | undefined;
+  if (options.body && typeof options.body === 'object' && !(options.body instanceof FormData)) {
+    body = JSON.stringify(options.body);
   }
 
   const response = await fetch(url, {
@@ -36,22 +55,28 @@ export async function httpClient<T>(
     body,
   });
 
-  // ⚠️ КЛЮЧЕВОЕ ИЗМЕНЕНИЕ: редирект на логин только если skipAuth === false
   if (response.status === 401) {
     removeToken();
-    // Если запрос не помечен как skipAuth, значит это защищённый запрос,
-    // и истекшая сессия требует редиректа.
+    const errorData = await response.json().catch(() => ({}));
+    // Редирект на логин только если запрос был защищённым — значит,
+    // сессия истекла и её нужно восстановить.
     if (!options.skipAuth && typeof window !== 'undefined') {
       window.location.href = '/login';
     }
-    // Пробрасываем ошибку, чтобы её можно было обработать на уровне компонента
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || 'Ошибка авторизации');
+    throw new ApiError(
+      errorData.message || 'Ошибка авторизации',
+      401,
+      errorData.errors
+    );
   }
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || `Request failed with status ${response.status}`);
+    throw new ApiError(
+      errorData.message || `Request failed with status ${response.status}`,
+      response.status,
+      errorData.errors
+    );
   }
 
   if (response.status === 204) {

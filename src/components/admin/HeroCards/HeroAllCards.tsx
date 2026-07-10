@@ -1,8 +1,8 @@
 import ImagedCardAdmin from "../../common/Card/AdminCards/ImagedCardAdmin";
-import styles from "../HeroCards/HeroAllCars.module.scss"
+import styles from "./HeroAllCards.module.scss"
 import type { Hero } from "../../../types/card.types";
 import { useEffect, useMemo, useState } from "react";
-import { getHeroes } from "../../../services/api/heroes";
+import { heroesApi, ApiError } from "../../../services/api/heroes";
 import TextCardAdmin from "../../common/Card/AdminCards/TextCardAdmin";
 
 interface HeroAllCardsProps {
@@ -34,18 +34,21 @@ export default function HeroAllCards({ type = 'svo', title = 'Герои СВО'
             setLoading(true);
             setError(null);
 
-            const heroes = await getHeroes(type);
-
-            console.log(`=== ${title} DEBUG ===`);
-            console.log('Heroes received:', heroes.length);
-
-            if (heroes.length > 0) {
+            try {
+                const heroes = await heroesApi.listPublished(type);
                 setAllHeroes(heroes);
                 setFilteredHeroes(heroes);
-            } else {
-                setError(`Не удалось загрузить данные о героях (${title})`);
+                if (heroes.length === 0) {
+                    setError(`Не удалось загрузить данные о героях (${title})`);
+                }
+            } catch (err) {
+                const msg = err instanceof ApiError
+                    ? `Ошибка сервера: ${err.message}`
+                    : 'Не удалось загрузить данные о героях';
+                setError(msg);
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         };
 
         fetchHeroes();

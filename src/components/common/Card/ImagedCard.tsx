@@ -8,10 +8,6 @@ interface ImagedCardProps {
 
 export default function ImagedCard({ heroes = [] }: ImagedCardProps) {
 
-    console.log('ImagedCard received heroes:', heroes.length);
-    console.log('First hero in ImagedCard:', heroes[0]);
-
-
     const formatDate = (dateString: string | number | Date | null) => {
         if (!dateString) return 'неизвестно';
         const date = new Date(dateString);

@@ -1,12 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { getToken, setToken, removeToken } from '../utils/authStorage';
+import { createContext, useContext, useState, type ReactNode } from 'react';
+import { getToken, removeToken } from '../utils/authStorage';
 import { authApi } from '../services/api/auth';
 import type { LoginRequest } from '../types/api.types';
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  isLoading: boolean;
   login: (credentials: LoginRequest) => Promise<void>;
   logout: () => void;
   changePassword: (password: string, passwordConfirmation: string) => Promise<void>;
@@ -15,18 +14,12 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  // Токен читается синхронно из localStorage при инициализации,
+  // поэтому отдельного состояния загрузки не требуется.
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => !!getToken());
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    // After first render, loading is done. This is safe and runs only once.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsLoading(false);
-  }, []);
 
   const login = async (credentials: LoginRequest) => {
-    const response = await authApi.login(credentials);
-    setToken(response.token);
+    await authApi.login(credentials); // токен сохраняется внутри authApi.login
     setIsAuthenticated(true);
   };
 
@@ -40,7 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout, changePassword }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, changePassword }}>
       {children}
     </AuthContext.Provider>
   );

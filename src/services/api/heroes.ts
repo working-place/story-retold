@@ -1,180 +1,150 @@
 import type { CardData, Hero } from "../../types/card.types";
-import type { CardResponse, CardShowResponse, CardShowQueryParams } from '../../types/api.types';
-import { httpClient } from '../http.client';
-
-// const API_BASE_URL = 'http://94.250.255.173:8000';
-const API_BASE_URL = 'https://digital-memory.ru/api';
-
-function buildImageUrl(path: string | null | undefined): string {
-
-    if (!path) return '';
-    if (path.startsWith('http')) return path;
-
-    const fullUrl = `${API_BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
-
-    return fullUrl;
-}
+import type {
+  CardResponse,
+  CardShowQueryParams,
+  Chapter,
+} from '../../types/api.types';
+import { httpClient, ApiError } from '../http.client';
+import { ENDPOINTS, buildImageUrl } from './api';
 
 function transformCardToHero(card: CardResponse): Hero {
+  const photoHeroUrl =
+    typeof card.photoHero === 'string'
+      ? card.photoHero
+      : (card.photoHero?.url || null);
 
-    const photoHeroUrl = typeof card.photoHero === 'string'
-        ? card.photoHero
-        : (card.photoHero?.url || null);
+  const imgUrl = buildImageUrl(photoHeroUrl);
 
-    const imgUrl = buildImageUrl(photoHeroUrl);
+  const additionalImages: string[] = (card.additionalImages || []).map(
+    (img) => buildImageUrl(img.url)
+  );
 
-    const additionalImages: string[] = (card.additionalImages || []).map(
-        (img) => buildImageUrl(img.url)
-    );
+  const cardData: CardData = {
+    id: card.id,
+    dateBirth: card.dateBirth,
+    dateDeath: card.dateDeath || '',
+    placeBirth: card.placeBirth,
+    name: card.name,
+    nameAndClass: card.nameAndClass || '',
+    email: card.email || '',
+    description: card.description,
+    militaryRank: card.militaryRank || '',
+    placeService: card.placeService || '',
+    placeConscription: card.placeConscription || '',
+    chapter: card.chapter,
+    photoHero: photoHeroUrl,
+    published: card.published,
+    createdAt: card.created_at,
+    updatedAt: card.updated_at,
+    additionalCardImages: (card.additionalImages || []).map((img) => ({
+      id: img.id,
+      card_id: card.id,
+      image: img.url,
+      created_at: card.created_at,
+      updated_at: card.updated_at,
+    })),
+  };
 
-    const cardData: CardData = {
-        id: card.id,
-        dateBirth: card.dateBirth,
-        dateDeath: card.dateDeath || '',
-        placeBirth: card.placeBirth,
-        name: card.name,
-        nameAndClass: card.nameAndClass || '',
-        email: card.email || '',
-        description: card.description,
-        militaryRank: card.militaryRank || '',
-        placeService: card.placeService || '',
-        placeConscription: card.placeConscription || '',
-        chapter: card.chapter,
-        photoHero: photoHeroUrl,
-        published: card.published,
-        createdAt: card.created_at,
-        updatedAt: card.updated_at,
-        additionalCardImages: (card.additionalImages || []).map(img => ({
-            id: img.id,
-            card_id: card.id,
-            image: img.url,
-            created_at: '',
-            updated_at: '',
-        })),
-    };
-
-    return {
-        id: card.id,
-        name: card.name,
-        range: card.militaryRank || '',
-        dateOfBirth: card.dateBirth,
-        dateOfDeath: card.dateDeath || '',
-        img: imgUrl,
-        description: card.description,
-        type: card.chapter === 'svo' ? 'SVO' : 'GPW',
-        placeBirth: card.placeBirth,
-        placeService: card.placeService || '',
-        placeConscription: card.placeConscription || '',
-        email: card.email || '',
-        nameAndClass: card.nameAndClass || '',
-        additionalImages,
-        cardData,
-    };
+  return {
+    id: card.id,
+    name: card.name,
+    range: card.militaryRank || '',
+    dateOfBirth: card.dateBirth,
+    dateOfDeath: card.dateDeath || '',
+    img: imgUrl,
+    description: card.description,
+    type: card.chapter === 'svo' ? 'SVO' : 'GPW',
+    placeBirth: card.placeBirth,
+    placeService: card.placeService || '',
+    placeConscription: card.placeConscription || '',
+    email: card.email || '',
+    nameAndClass: card.nameAndClass || '',
+    additionalImages,
+    cardData,
+  };
 }
 
-export async function getHeroes(chapter: 'svo' | 'gpw'): Promise<Hero[]> {
-    try {
-        const response = await httpClient<CardResponse[]>(
-            '/api/card/show',
-            {
-                method: 'GET',
-                skipAuth: true,
-            }
-        );
+/**
+ * Список карточек с серверной фильтрацией.
+ * Возвращает только то, что вернул бэкенд — фильтрация по published/chapter
+ * выполняется на сервере, чтобы не утекали черновики на клиент.
+ *
+ * @param skipAuth Публичный список (listPublished) ид без токена и видит только
+ *   опубликованные карточки. Админский список (list) шлёт токен — без него бэкенд
+ *   игнорирует флаг published=0 и отдаёт только опубликованные, поэтому черновики
+ *   не видны.
+ */
+async function list(
+  params: CardShowQueryParams = {},
+  skipAuth = true
+): Promise<Hero[]> {
+  const searchParams = new URLSearchParams();
 
-        if (!response || !Array.isArray(response)) return [];
+  if (params.chapter) searchParams.append('chapter', params.chapter);
+  if (params.published !== undefined) {
+    searchParams.append('published', params.published ? '1' : '0');
+  }
+  if (params.perPage) searchParams.append('perPage', String(params.perPage));
+  if (params.page) searchParams.append('page', String(params.page));
 
-        const filteredCards = response.filter(
-            card => card.chapter === chapter && card.published === true
-        );
+  const query = searchParams.toString();
+  const cards = await httpClient<CardResponse[]>(
+    `${ENDPOINTS.CARD.SHOW}${query ? `?${query}` : ''}`,
+    { method: 'GET', skipAuth }
+  );
 
-        return filteredCards.map(transformCardToHero);
-    } catch (error) {
-        console.error('Failed to fetch heroes:', error);
-        return [];
-    }
-}
-
-export async function publishCard(id: number): Promise<void> {
-    return httpClient<void>(`/api/card/update/${id}`, {
-        method: 'PATCH',
-        skipAuth: false,
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            published: true,
-        }),
-    });
-}
-
-export async function getHeroById(id: number): Promise<Hero | null> {
-    try {
-        const card = await httpClient<CardResponse>(`/api/card/get/${id}`, {
-            method: 'GET',
-            skipAuth: true,
-        });
-
-        if (!card) return null;
-
-        if (!card.published) return null;
-
-        return transformCardToHero(card);
-    } catch (error) {
-        console.error('Failed to fetch hero:', error);
-        return null;
-    }
+  if (!cards || !Array.isArray(cards)) return [];
+  return cards.map(transformCardToHero);
 }
 
 export const heroesApi = {
-    create: (data: FormData): Promise<{ id: number }> => {
-        return httpClient<{ id: number }>('/api/card/create', {
-            method: 'POST',
-            body: data,
-            skipAuth: false,
-        });
-    },
+  /** Публичный список опубликованных героев раздела. */
+  listPublished: (chapter: Chapter): Promise<Hero[]> =>
+    list({ chapter, published: true }),
 
-    show: (params?: CardShowQueryParams): Promise<CardShowResponse> => {
-        const searchParams = new URLSearchParams();
-        if (params?.chapter) searchParams.append('chapter', params.chapter);
+  /** Список карточек для админки (не опубликованные / все — по params). */
+  list: (params?: CardShowQueryParams): Promise<Hero[]> => list(params, false),
 
-        if (params?.published !== undefined) {
-            const publishedValue = typeof params.published === 'boolean'
-                ? (params.published ? '1' : '0')
-                : String(params.published);
-            searchParams.append('published', publishedValue);
-        }
+  get: (id: number): Promise<CardResponse> =>
+    httpClient<CardResponse>(ENDPOINTS.CARD.GET(id), {
+      method: 'GET',
+      skipAuth: false,
+    }),
 
-        if (params?.perPage) searchParams.append('perPage', String(params.perPage));
-        if (params?.page) searchParams.append('page', String(params.page));
+  /** Публичная карточка героя по id — только если опубликована. */
+  async getPublishedHero(id: number): Promise<Hero | null> {
+    const card = await httpClient<CardResponse>(ENDPOINTS.CARD.GET(id), {
+      method: 'GET',
+      skipAuth: true,
+    });
+    if (!card || !card.published) return null;
+    return transformCardToHero(card);
+  },
 
-        const query = searchParams.toString();
-        return httpClient<CardShowResponse>(`/api/card/show${query ? `?${query}` : ''}`, {
-            method: 'GET',
-            skipAuth: false,
-        });
-    },
+  create: (data: FormData): Promise<{ id: number }> =>
+    httpClient<{ id: number }>(ENDPOINTS.CARD.CREATE, {
+      method: 'POST',
+      body: data,
+      skipAuth: false,
+    }),
 
-    get: (id: number): Promise<CardResponse> => {
-        return httpClient<CardResponse>(`/api/card/get/${id}`, {
-            method: 'GET',
-            skipAuth: false,
-        });
-    },
+  update: (id: number, data: FormData | Record<string, unknown>): Promise<void> => {
+    const isFormData = data instanceof FormData;
+    return httpClient<void>(ENDPOINTS.CARD.UPDATE(id), {
+      method: 'PATCH',
+      body: isFormData ? data : (data as Record<string, unknown>),
+      skipAuth: false,
+    });
+  },
 
-    update: (id: number, data: FormData): Promise<void> => {
-        return httpClient<void>(`/api/card/update/${id}`, {
-            method: 'PATCH',
-            body: data,
-            skipAuth: false,
-        });
-    },
+  /** Публикация карточки (частный случай update). */
+  publish: (id: number): Promise<void> =>
+    heroesApi.update(id, { published: true }),
 
-    delete: (id: number): Promise<void> => {
-        return httpClient<void>(`/api/card/delete/${id}`, {
-            method: 'DELETE',
-        });
-    },
-
+  delete: (id: number): Promise<void> =>
+    httpClient<void>(ENDPOINTS.CARD.DELETE(id), {
+      method: 'DELETE',
+    }),
 };
+
+export { ApiError };
