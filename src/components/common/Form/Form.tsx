@@ -93,6 +93,7 @@ export default function NewCardForm() {
                                         type="button"
                                         className={styles.button_small}
                                         onClick={() => document.getElementById('photoHero')?.click()}
+                                        disabled={form.isCompressing}
                                     >
                                         Выбрать файл
                                     </Button>
@@ -162,7 +163,7 @@ export default function NewCardForm() {
                             type="button"
                             className={styles.button_small}
                             onClick={() => document.getElementById('additionalImages')?.click()}
-                            disabled={form.additionalImages.length >= 9}
+                            disabled={form.additionalImages.length >= 9 || form.isCompressing}
                         >
                             Выбрать файлы ({form.additionalImages.length}/9)
                         </Button>
@@ -343,7 +344,7 @@ export default function NewCardForm() {
                         <Button
                             type="submit"
                             className={styles.button}
-                            disabled={loading}
+                            disabled={loading || form.isCompressing}
                         >
                             {loading ? 'Отправка...' : 'Отправить сведения о герое'}
                         </Button>

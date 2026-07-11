@@ -71,6 +71,15 @@ export async function httpClient<T>(
   }
 
   if (!response.ok) {
+    // 413 приходит от nginx/PHP до серверной валидации, когда payload
+    // превысил серверный лимит размера тела. Тела у такого ответа нет, поэтому
+    // показываем осмысленное сообщение вместо «Request failed with status 413».
+    if (response.status === 413) {
+      throw new ApiError(
+        'Размер загруженных данных слишком велик. Уменьшите размер изображений и попробуйте снова.',
+        413
+      );
+    }
     const errorData = await response.json().catch(() => ({}));
     throw new ApiError(
       errorData.message || `Request failed with status ${response.status}`,

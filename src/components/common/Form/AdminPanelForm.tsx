@@ -105,6 +105,7 @@ export default function AdminPanelForm() {
                                         type="button"
                                         className={`${styles.button_small} ${styles.button_admin}`}
                                         onClick={() => document.getElementById('photoHero')?.click()}
+                                        disabled={form.isCompressing}
                                     >
                                         Выбрать файл
                                     </Button>
@@ -176,7 +177,7 @@ export default function AdminPanelForm() {
                             type="button"
                             className={`${styles.button_small} ${styles.button_admin}`}
                             onClick={() => document.getElementById('additionalImages')?.click()}
-                            disabled={form.additionalImages.length >= 9}
+                            disabled={form.additionalImages.length >= 9 || form.isCompressing}
                         >
                             Выбрать файлы ({form.additionalImages.length}/9)
                         </Button>
@@ -320,7 +321,7 @@ export default function AdminPanelForm() {
                         <Button
                             type="submit"
                             className={styles.publishButton}
-                            disabled={loading}
+                            disabled={loading || form.isCompressing}
                         >
                             {loading ? 'Отправка...' : 'Опубликовать'}
                         </Button>

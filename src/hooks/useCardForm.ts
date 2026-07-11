@@ -10,6 +10,7 @@ import {
   MAX_ADDITIONAL_IMAGES,
 } from '../utils/cardForm';
 import { formatDateForApi, formatDateMask, formatApiDateForInput } from '../utils/date';
+import { compressImage } from '../utils/imageCompression';
 import type { CardResponse } from '../types/api.types';
 
 export type CardFormMode = 'create-public' | 'create-admin' | 'edit';
@@ -38,6 +39,7 @@ export interface UseCardFormReturn {
   touched: Record<string, boolean>;
   error: string | null;
   setError: React.Dispatch<React.SetStateAction<string | null>>;
+  isCompressing: boolean;
 
   isAgreed: boolean;
   setIsAgreed: (v: boolean) => void;
@@ -84,6 +86,8 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
   );
 
   const [error, setError] = useState<string | null>(null);
+
+  const [isCompressing, setIsCompressing] = useState(false);
 
   const isPublic = mode === 'create-public';
   const [isAgreed, setIsAgreed] = useState(false);
@@ -157,7 +161,7 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
     setError(null);
   }, []);
 
-  const handlePhotoHeroChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoHeroChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       const sizeError = validateFileSize(file);
@@ -166,14 +170,20 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
         e.target.value = '';
         return;
       }
-      setPhotoHero(file);
-      setError(null);
+      setIsCompressing(true);
+      try {
+        const compressed = await compressImage(file);
+        setPhotoHero(compressed);
+        setError(null);
+      } finally {
+        setIsCompressing(false);
+      }
     }
     e.target.value = '';
   }, []);
 
   const handleAdditionalImagesChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
         const files = Array.from(e.target.files);
         const oversized = files.find((f) => validateFileSize(f));
@@ -189,8 +199,14 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
           e.target.value = '';
           return;
         }
-        setAdditionalImages((prev) => [...prev, ...files]);
-        setError(null);
+        setIsCompressing(true);
+        try {
+          const compressed = await Promise.all(files.map(compressImage));
+          setAdditionalImages((prev) => [...prev, ...compressed]);
+          setError(null);
+        } finally {
+          setIsCompressing(false);
+        }
       }
       e.target.value = '';
     },
@@ -260,6 +276,7 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
     touched,
     error,
     setError,
+    isCompressing,
     isAgreed,
     setIsAgreed,
     isPolicyAgreed,

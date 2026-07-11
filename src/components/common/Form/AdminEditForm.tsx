@@ -110,6 +110,7 @@ export default function AdminEditForm() {
                                 type="button"
                                 className={`${styles.button_small} ${styles.button_admin}`}
                                 onClick={() => document.getElementById('photoHero')?.click()}
+                                disabled={form.isCompressing}
                             >
                                 Выбрать файл
                             </Button>
@@ -138,13 +139,14 @@ export default function AdminEditForm() {
                                 <p className={styles.previewFileName}>
                                     {form.photoHero ? form.photoHero.name : 'Текущее фото'}
                                 </p>
-                                <Button
-                                    type="button"
-                                    className={`${styles.button_small} ${styles.button_admin} ${styles.changePhotoButton}`}
-                                    onClick={() => document.getElementById('photoHero')?.click()}
-                                >
-                                    Заменить фото
-                                </Button>
+                    <Button
+                        type="button"
+                        className={`${styles.button_small} ${styles.button_admin} ${styles.changePhotoButton}`}
+                        onClick={() => document.getElementById('photoHero')?.click()}
+                        disabled={form.isCompressing}
+                    >
+                        Заменить фото
+                    </Button>
                             </div>
                             <input
                                 type="file"
@@ -180,7 +182,7 @@ export default function AdminEditForm() {
                         type="button"
                         className={`${styles.button_small} ${styles.button_admin}`}
                         onClick={() => document.getElementById('additionalImages')?.click()}
-                        disabled={(form.additionalImages.length + form.existingAdditionalImages.length) >= 9}
+                        disabled={(form.additionalImages.length + form.existingAdditionalImages.length) >= 9 || form.isCompressing}
                     >
                         Выбрать файлы ({form.additionalImages.length + form.existingAdditionalImages.length}/9)
                     </Button>
@@ -350,7 +352,7 @@ export default function AdminEditForm() {
                     <Button
                         type="submit"
                         className={styles.publishButton}
-                        disabled={loading}
+                        disabled={loading || form.isCompressing}
                     >
                         {loading ? 'Сохранение...' : 'Сохранить изменения'}
                     </Button>
