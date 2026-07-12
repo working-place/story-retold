@@ -152,35 +152,10 @@ export default function AdminPanelForm() {
                         </div>
                     )}
 
+                    {/* ================= */}
                     <div
                         className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightSecond}`}
                     >
-                        <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
-                            <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
-                                Фотографии наград и другие материалы
-                            </h3>
-                            <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
-                                Максимальный размер файлов 4 MB. Максимум 9 изображений
-                            </h4>
-                        </div>
-
-                        <input
-                            type="file"
-                            id="additionalImages"
-                            accept="image/png,image/jpeg,image/jpg,image/webp"
-                            multiple
-                            onChange={form.handleAdditionalImagesChange}
-                            style={{ display: 'none' }}
-                            disabled={form.additionalImages.length >= 9}
-                        />
-                        <Button
-                            type="button"
-                            className={`${styles.button_small} ${styles.button_admin}`}
-                            onClick={() => document.getElementById('additionalImages')?.click()}
-                            disabled={form.additionalImages.length >= 9 || form.isCompressing}
-                        >
-                            Выбрать файлы ({form.additionalImages.length}/9)
-                        </Button>
 
                         {form.additionalImages.length > 0 && (
                             <div className={styles.additionalImagesGrid}>
@@ -205,7 +180,47 @@ export default function AdminPanelForm() {
                                 ))}
                             </div>
                         )}
+
+
+                        {form.additionalImages.length === 0 && (
+                            <>
+                                <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
+                                    <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
+                                        Фотографии наград и другие материалы
+                                    </h3>
+                                    <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
+                                        Максимальный размер файлов 4 MB. Максимум 9 изображений
+                                    </h4>
+                                </div>
+
+
+                            </>
+                        )}
+
+                        <input
+                            type="file"
+                            id="additionalImages"
+                            accept="image/png,image/jpeg,image/jpg,image/webp"
+                            multiple
+                            onChange={form.handleAdditionalImagesChange}
+                            style={{ display: 'none' }}
+                            disabled={form.additionalImages.length >= 9}
+                        />
+
+{form.additionalImages.length < 9 && (
+                        <Button
+                            type="button"
+                            className={`${styles.button_small} ${styles.button_admin}`}
+                            onClick={() => document.getElementById('additionalImages')?.click()}
+                            disabled={form.additionalImages.length >= 9 || form.isCompressing}
+                        >
+                            Выбрать файлы ({form.additionalImages.length}/9)
+                        </Button>
+)}
+
+
                     </div>
+                    {/* ======== */}
                 </div>
 
                 <div className={`${styles.form__basicInformation} ${styles.form__basicInformation_admin}`}>
