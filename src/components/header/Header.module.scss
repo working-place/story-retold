@@ -17,23 +17,165 @@
     background-color: transparent;
     z-index: 1000;
 
-    &_linkContainer {
-        display: flex;
-        gap: 40px;
+    // Адаптивные отступы для планшетов и мобильных
+    @include respond-below($breakpoint-xl) {
+        padding-left: 30px;
+        padding-right: 20px;
+        margin-top: 20px;
     }
 
-    &_linkText {
-        color: $colorblack-text;
-        text-decoration: none;
-        font-size: 25px;
-        font-family: inherit;
-        letter-spacing: 0.1px;
+    @include respond-below($breakpoint-lg) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
 
-        &.active {
-            text-decoration: underline;
-            text-decoration-thickness: 2px;
-            text-underline-offset: 2px;
+/* ============================================================ */
+/*  ДЕСКТОПНАЯ НАВИГАЦИЯ                                         */
+/* ============================================================ */
+
+.header_linkContainer {
+    display: flex;
+    gap: 40px;
+
+    @include respond-below($breakpoint-lg) {
+        display: none;
+    }
+}
+
+.header_linkText {
+    color: $colorblack-text;
+    text-decoration: none;
+    font-size: 25px;
+    font-family: inherit;
+    letter-spacing: 0.1px;
+
+    &.active {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 2px;
+    }
+}
+
+.desktopButtonWrapper {
+    @include respond-below($breakpoint-lg) {
+        display: none;
+    }
+}
+
+/* ============================================================ */
+/*  МОБИЛЬНАЯ КНОПКА БУРГЕРА                                     */
+/* ============================================================ */
+
+.burgerButton {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    @include respond-below($breakpoint-lg) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* ============================================================ */
+/*  МОБИЛЬНОЕ МЕНЮ (ОВЕРЛЕЙ)                                     */
+/* ============================================================ */
+
+.mobileOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #FDF7E9; // Бежевый фон как на макете
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.25s ease-out;
+
+    @include respond-above($breakpoint-lg) {
+        display: none;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.mobileMenu {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 48px 32px 32px 32px; // Отступы по макету (можно увеличить слева)
+
+    &__closeButton {
+        position: absolute;
+        top: 28px;
+        right: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 0.6;
         }
     }
 
+    &__links {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+        margin-top: 70px; // Отступ от верха для ссылок
+        margin-left: 10px; // Небольшой отступ слева для выравнивания
+    }
+
+    &__link {
+        font-size: 28px;
+        color: $colorblack-text;
+        text-decoration: none;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 0.7;
+        }
+
+        &_active {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-thickness: 2px;
+        }
+    }
+
+    &__buttonWrapper {
+        margin-top: auto; // Прижимаем к низу
+        padding-bottom: 20px;
+        width: 100%;
+    }
+
+    &__button {
+        width: 100%;
+        padding: 18px 24px;
+        font-size: 22px;
+        border-radius: 50px; // Круглая кнопка как на макете
+        background-color: $brown-color;
+        color: $white-text;
+        justify-content: center;
+    }
 }
