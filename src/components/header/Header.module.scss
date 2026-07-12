@@ -7,18 +7,16 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
-    margin-top: 24px;
     padding-left: 60px;
     padding-right: 13px;
     text-align: center;
-    background-color: transparent;
+    background-color: $beige-background;
     z-index: 1000;
 
     // Адаптивные отступы для планшетов и мобильных
     @include respond-below($breakpoint-xl) {
         padding-left: 30px;
         padding-right: 20px;
-        margin-top: 20px;
     }
 
     @include respond-below($breakpoint-lg) {
