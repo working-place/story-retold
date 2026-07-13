@@ -226,8 +226,11 @@
 // ========================
 
 .counter {
+    position: absolute;
     font-size: 12px;
     color: #999;
+    bottom: 20px;
+    right: 20px;
 
     &.nearLimit {
         color: #ff9800;

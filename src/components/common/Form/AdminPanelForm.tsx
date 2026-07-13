@@ -75,8 +75,8 @@ export default function AdminPanelForm() {
 
     return (
         <>
-            <form onSubmit={handlePublishClick} className={`${styles.form} ${styles.form_admin}`}>
-                {form.error && <div className={styles.errorMessage}>{form.error}</div>}
+            <form noValidate onSubmit={handlePublishClick} className={`${styles.form} ${styles.form_admin}`}>
+                {/* {form.error && <div className={styles.errorMessage}>{form.error}</div>} */}
 
                 <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
                     <h1 className={`${styles.form__titleCard} ${styles.form__title_admin}`}>
@@ -324,6 +324,9 @@ export default function AdminPanelForm() {
                             onBlur={() => form.handleBlur('description')}
                             resize="none"
                             labelPosition="top"
+                            // скорее надо увеличить количество символов для описания
+                            maxLength={255}
+                            showCounter={true}
                             required
                         />
                     </div>
