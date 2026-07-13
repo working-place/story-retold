@@ -8,15 +8,17 @@ import { httpClient, ApiError } from '../http.client';
 import { ENDPOINTS, buildImageUrl } from './api';
 
 function transformCardToHero(card: CardResponse): Hero {
+  console.log('🔄 card.additionalCardImages:', card.additionalCardImages);
+
   const photoHeroUrl =
     typeof card.photoHero === 'string'
       ? card.photoHero
-      : (card.photoHero?.url || null);
+      : (card.photoHero?.image || null);
 
   const imgUrl = buildImageUrl(photoHeroUrl);
 
-  const additionalImages: string[] = (card.additionalImages || []).map(
-    (img) => buildImageUrl(img.url)
+  const additionalImages: string[] = (card.additionalCardImages || []).map(
+    (img) => buildImageUrl(img.image)
   );
 
   const cardData: CardData = {
@@ -36,10 +38,10 @@ function transformCardToHero(card: CardResponse): Hero {
     published: card.published,
     createdAt: card.created_at,
     updatedAt: card.updated_at,
-    additionalCardImages: (card.additionalImages || []).map((img) => ({
+    additionalCardImages: (card.additionalCardImages || []).map((img) => ({
       id: img.id,
       card_id: card.id,
-      image: img.url,
+      image: img.image,
       created_at: card.created_at,
       updated_at: card.updated_at,
     })),
@@ -117,16 +119,33 @@ export const heroesApi = {
       method: 'GET',
       skipAuth: true,
     });
+
+    console.log('📸 Полный ответ от бэкенда:', card);
+console.log('📸 card.additionalImages:', card.additionalCardImages);
+
     if (!card || !card.published) return null;
     return transformCardToHero(card);
   },
 
-  create: (data: FormData): Promise<{ id: number }> =>
-    httpClient<{ id: number }>(ENDPOINTS.CARD.CREATE, {
-      method: 'POST',
-      body: data,
-      skipAuth: false,
-    }),
+  create: (data: FormData): Promise<{ id: number }> => {
+    console.log('📤 heroesApi.create вызван!');
+    console.log('📤 data entries:');
+    for (const pair of data.entries()) {
+        console.log('  ', pair[0], pair[1] instanceof File ? `File: ${pair[1].name}` : pair[1]);
+    }
+    return httpClient<{ id: number }>(ENDPOINTS.CARD.CREATE, {
+        method: 'POST',
+        body: data,
+        skipAuth: false,
+    });
+},
+
+  // create: (data: FormData): Promise<{ id: number }> =>
+  //   httpClient<{ id: number }>(ENDPOINTS.CARD.CREATE, {
+  //     method: 'POST',
+  //     body: data,
+  //     skipAuth: false,
+  //   }),
 
   update: (id: number, data: FormData | Record<string, unknown>): Promise<void> => {
     const isFormData = data instanceof FormData;

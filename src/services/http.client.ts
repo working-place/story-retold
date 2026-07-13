@@ -28,6 +28,9 @@ export async function httpClient<T>(
   endpoint: string,
   options: FetchOptions = {}
 ): Promise<T> {
+  console.log('🌐 httpClient вызван:', endpoint, 'skipAuth:', options.skipAuth); // 👈 ДОБАВЬТЕ
+  console.log('🌐 body:', options.body instanceof FormData ? 'FormData' : options.body);
+  
   const url = `${API_BASE_URL}${endpoint}`;
   const headers = new Headers(options.headers);
 

@@ -184,8 +184,12 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
 
   const handleAdditionalImagesChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log('📸 handleAdditionalImagesChange ВЫЗВАН!');
+
       if (e.target.files) {
         const files = Array.from(e.target.files);
+        console.log('📸 Файлов в обработке:', files.length);
+
         const oversized = files.find((f) => validateFileSize(f));
         if (oversized) {
           setError(`Файл "${oversized.name}" превышает 4 MB`);
@@ -202,6 +206,8 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
         setIsCompressing(true);
         try {
           const compressed = await Promise.all(files.map(compressImage));
+          console.log('✅ Сжато файлов:', compressed.length);
+console.log('📸 Добавляем файлы в состояние:', compressed.map(f => f.name));
           setAdditionalImages((prev) => [...prev, ...compressed]);
           setError(null);
         } finally {

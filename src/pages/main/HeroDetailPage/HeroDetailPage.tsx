@@ -21,6 +21,11 @@ export default function HeroDetailPage() {
             setError(null);
             try {
                 const heroData = await heroesApi.getPublishedHero(Number(id));
+
+            console.log('📸 ПОЛНЫЙ ОТВЕТ ОТ СЕРВЕРА:', heroData);
+            console.log('📸 cardData:', heroData?.cardData);
+            console.log('📸 additionalCardImages:', heroData?.cardData?.additionalCardImages);
+
                 if (heroData) {
                     setHero(heroData);
                 } else {

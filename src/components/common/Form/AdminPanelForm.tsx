@@ -26,6 +26,7 @@ export default function AdminPanelForm() {
 
         try {
             const submitData = form.buildSubmitData();
+
             const response = await heroesApi.create(submitData);
 
             if (response?.id) {
@@ -36,6 +37,7 @@ export default function AdminPanelForm() {
                 form.setError('Не удалось создать карточку');
             }
         } catch (err) {
+            console.error('❌ Ошибка:', err);
             const msg = err instanceof Error ? err.message : 'Произошла ошибка при создании карточки';
             form.setError(msg);
         } finally {
@@ -47,10 +49,12 @@ export default function AdminPanelForm() {
 
     const handlePublishClick = async (e: React.FormEvent) => {
         e.preventDefault();
+
         form.setError(null);
 
-        if (!form.validate()) return;
-
+        if (!form.validate()) {
+            return;
+        }
         setIsPopupOpen(true);
     };
 
@@ -152,25 +156,34 @@ export default function AdminPanelForm() {
                         </div>
                     )}
 
-                    {/* ================= */}
                     <div
                         className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightSecond}`}
                     >
+                        {additionalImageUrls.length < 1 && (
+                            <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
+                                <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
+                                    Фотографии наград и другие материалы
+                                </h3>
+                                <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
+                                    Максимальный размер файлов 4 MB. Максимум 9 изображений
+                                </h4>
+                            </div>
+                        )}
 
-                        {form.additionalImages.length > 0 && (
+                        {additionalImageUrls.length > 0 && (
                             <div className={styles.additionalImagesGrid}>
-                                {form.additionalImages.map((_, index) => (
+                                {additionalImageUrls.map((url, index) => (
                                     <div key={index} className={styles.additionalImageItem}>
                                         <div className={styles.additionalImageWrapper}>
                                             <img
-                                                src={additionalImageUrls[index]}
+                                                src={url}
                                                 alt={`Дополнительное фото ${index + 1}`}
                                                 className={styles.additionalImagePreview}
                                             />
                                             <button
                                                 type="button"
                                                 className={styles.removeAdditionalImageButton}
-                                                onClick={() => form.removeAdditionalImage(index)}
+                                                onClick={() => form.removeAdditionalImage(index, false)}
                                                 aria-label="Удалить фото"
                                             >
                                                 ×
@@ -181,46 +194,29 @@ export default function AdminPanelForm() {
                             </div>
                         )}
 
-
-                        {form.additionalImages.length === 0 && (
-                            <>
-                                <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
-                                    <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
-                                        Фотографии наград и другие материалы
-                                    </h3>
-                                    <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
-                                        Максимальный размер файлов 4 MB. Максимум 9 изображений
-                                    </h4>
-                                </div>
-
-
-                            </>
-                        )}
-
                         <input
                             type="file"
                             id="additionalImages"
                             accept="image/png,image/jpeg,image/jpg,image/webp"
                             multiple
-                            onChange={form.handleAdditionalImagesChange}
+                            onChange={(e) => {
+                                form.handleAdditionalImagesChange(e);
+                            }}
                             style={{ display: 'none' }}
                             disabled={form.additionalImages.length >= 9}
                         />
 
-{form.additionalImages.length < 9 && (
-                        <Button
-                            type="button"
-                            className={`${styles.button_small} ${styles.button_admin}`}
-                            onClick={() => document.getElementById('additionalImages')?.click()}
-                            disabled={form.additionalImages.length >= 9 || form.isCompressing}
-                        >
-                            Выбрать файлы ({form.additionalImages.length}/9)
-                        </Button>
-)}
-
-
+                        {form.additionalImages.length < 9 && (
+                            <Button
+                                type="button"
+                                className={`${styles.button_small} ${styles.button_admin}`}
+                                onClick={() => document.getElementById('additionalImages')?.click()}
+                                disabled={form.isCompressing}
+                            >
+                                Выбрать файлы ({form.additionalImages.length}/9)
+                            </Button>
+                        )}
                     </div>
-                    {/* ======== */}
                 </div>
 
                 <div className={`${styles.form__basicInformation} ${styles.form__basicInformation_admin}`}>

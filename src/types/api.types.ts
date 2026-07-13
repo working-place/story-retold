@@ -85,7 +85,7 @@ export interface CardShowQueryParams {
 export interface CardImage {
   id: number;
   path: string;
-  url: string;
+  image: string;
 }
 
 export interface CardResponse {
@@ -108,7 +108,7 @@ export interface CardResponse {
   created_at: string;
   updated_at: string;
   photoHero: CardImage | null;
-  additionalImages: CardImage[];
+  additionalCardImages: CardImage[];
 }
   export type CardShowResponse = CardResponse[];
 

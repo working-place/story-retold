@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "../../../services/api/api";
+import { buildImageUrl } from "../../../services/api/api";
 import type { CardData } from "../../../types/card.types";
 import styles from "./Gallery.module.scss";
 import { useState } from 'react';
@@ -9,17 +9,14 @@ interface GalleryProps {
   authorInfo?: string;
 }
 
-function buildImageUrl(path: string): string {
-  if (!path) return '';
-  if (path.startsWith('http')) return path;
-  return `${API_BASE_URL}${path}`;
-}
-
 export default function Gallery({
   cardData,
   title,
   authorInfo
 }: GalleryProps) {
+
+  console.log('📸 Gallery cardData:', cardData);
+  console.log('📸 Gallery additionalCardImages:', cardData?.additionalCardImages);
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
