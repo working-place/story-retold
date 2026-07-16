@@ -17,7 +17,6 @@
 
 .heroDetailPage__columnWrapper_noPhoto {
     display: flex;
-
     width: fit-content;
     padding-left: 15px;
 }
@@ -43,7 +42,6 @@
     min-width: 394px;
     width: fit-content;
 }
-
 
 .heroDetailPage {
     display: flex;
@@ -71,7 +69,6 @@
         color: $white-text;
         width: 100%;
         text-align: left;
-
     }
 
     &__pathContainer {
@@ -81,9 +78,9 @@
         h3 {
             margin-top: 22px;
             margin-bottom: 49px;
-            font-size: 24px;
+            font-size: 35px;
             text-align: left;
-            color: #1A1A1A;
+            color: #534035;
         }
     }
 
@@ -197,7 +194,6 @@
         border-radius: 40px;
         position: relative;
     }
-
 
     &__pin1,
     &__pin2,

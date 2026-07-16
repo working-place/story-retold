@@ -85,7 +85,8 @@ export interface CardShowQueryParams {
 export interface CardImage {
   id: number;
   path: string;
-  image: string;
+  url: string;
+  image?: string;
 }
 
 export interface CardResponse {
@@ -110,7 +111,7 @@ export interface CardResponse {
   photoHero: CardImage | null;
   additionalCardImages: CardImage[];
 }
-  export type CardShowResponse = CardResponse[];
+export type CardShowResponse = CardResponse[];
 
 // ============ Email (Feedback) DTOs ============
 

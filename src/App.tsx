@@ -16,6 +16,7 @@ import HeroAllCards from "./components/admin/HeroCards/HeroAllCards";
 import AdminEditForm from "./components/common/Form/AdminEditForm";
 import ReviewCards from "./components/admin/ReviewCards/ReviewCards";
 import NotFoundPage from "./pages/main/NotFoundPage/NotFoundPage";
+import PreviewHeroPage from "./pages/main/HeroDetailPage/PreviewHeroPage";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
             <Route path="/ussr-heroes" element={<HeroesPage chapter="gpw" title="Герои СССР" />} />
             <Route path="/svo-heroes" element={<HeroesPage chapter="svo" title="Герои СВО" />} />
             <Route path='/hero/:id' element={<HeroDetailPage />} />
+
+            <Route path="/preview-hero" element={<PreviewHeroPage />} />
           </Route>
 
           {/* Auth-страницы без основного layout */}

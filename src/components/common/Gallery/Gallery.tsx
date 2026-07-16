@@ -5,21 +5,31 @@ import { useState } from 'react';
 
 interface GalleryProps {
   cardData?: CardData;
+  images?: string[];
   title?: string;
   authorInfo?: string;
 }
 
 export default function Gallery({
   cardData,
+  images,
   title,
   authorInfo
 }: GalleryProps) {
 
   console.log('📸 Gallery cardData:', cardData);
-  console.log('📸 Gallery additionalCardImages:', cardData?.additionalCardImages);
+  console.log('📸 Gallery images (preview):', images);
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
+
+  const actualImages: string[] = images ?? (
+    (cardData?.additionalCardImages || []).map(img => buildImageUrl(img.image))
+  );
+
+  if (actualImages.length === 0) {
+    return null;
+  }
 
   if (!cardData) {
     return null;
@@ -28,16 +38,7 @@ export default function Gallery({
   const actualTitle: string = title || "Награды и архивные материалы";
   const actualAuthorInfo: string = authorInfo || cardData.nameAndClass || "ФИО, Класс";
 
-  const actualImages: string[] = [];
-
-  if (cardData.additionalCardImages && cardData.additionalCardImages.length > 0) {
-    cardData.additionalCardImages.forEach((img) => {
-      const imageUrl = buildImageUrl(img.image);
-      actualImages.push(imageUrl);
-    });
-  }
-
-  const displayImages = actualImages.length > 0 ? actualImages : ['/fallback-img.png', '/fallback-img.png', '/fallback-img.png'];
+  const displayImages = actualImages;
 
   const handleImageError = (index: number) => {
     setImgErrors(prev => ({ ...prev, [index]: true }));

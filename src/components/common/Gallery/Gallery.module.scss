@@ -1,7 +1,8 @@
-// @use "../../assets/scss/_mixins.scss" as *;
-// @use "../../assets/scss/_typography.scss" as *;
 @use "../../../assets/scss/_variables-color.scss" as *;
 
+button {
+  border: 0px solid transparent;
+}
 
 h2 {
   font-family: 'Glanz';
@@ -54,6 +55,10 @@ h2 {
     cursor: pointer;
     transition: all 0.3s ease;
     flex-shrink: 0;
+    background-color: transparent;
+    background: none;
+    outline: none;
+    box-shadow: none;
   }
 
   &__navButton:hover {

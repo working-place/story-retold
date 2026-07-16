@@ -73,10 +73,37 @@ export default function AdminPanelForm() {
 
     const showPhotoBlock = form.formData.cardType === 'withoutPhoto';
 
+    const handlePreview = () => {
+        if (!form.validate()) {
+            return;
+        }
+
+        const previewData = {
+            name: form.formData.name,
+            range: form.formData.militaryRank || '',
+            dateOfBirth: form.formData.dateBirth,
+            dateOfDeath: form.formData.dateDeath || '',
+            img: photoHeroUrl || '',
+            description: form.formData.description,
+            placeBirth: form.formData.placeBirth,
+            placeService: form.formData.placeService || '',
+            placeConscription: form.formData.placeConscription || '',
+            nameAndClass: form.formData.nameAndClass || '',
+            additionalImages: additionalImageUrls,
+            cardData: {
+                additionalCardImages: form.additionalImages.map((file) => ({
+                    image: URL.createObjectURL(file),
+                })),
+            },
+        };
+
+        localStorage.setItem('previewHeroData', JSON.stringify(previewData));
+        window.open('/preview-hero', '_blank');
+    };
+
     return (
         <>
             <form noValidate onSubmit={handlePublishClick} className={`${styles.form} ${styles.form_admin}`}>
-                {/* {form.error && <div className={styles.errorMessage}>{form.error}</div>} */}
 
                 <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
                     <h1 className={`${styles.form__titleCard} ${styles.form__title_admin}`}>
@@ -324,7 +351,6 @@ export default function AdminPanelForm() {
                             onBlur={() => form.handleBlur('description')}
                             resize="none"
                             labelPosition="top"
-                            // скорее надо увеличить количество символов для описания
                             maxLength={255}
                             showCounter={true}
                             required
@@ -342,6 +368,7 @@ export default function AdminPanelForm() {
                         <Button
                             type="button"
                             className={styles.reviewButton}
+                            onClick={handlePreview}
                         >
                             Предпросмотр
                         </Button>

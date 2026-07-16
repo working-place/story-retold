@@ -46,7 +46,6 @@ export interface UseCardFormReturn {
   isPolicyAgreed: boolean;
   setIsPolicyAgreed: (v: boolean) => void;
 
-  // Helpers
   getFieldError: (field: string) => string | undefined;
   handleBlur: (field: string) => void;
   handleInputChange: (field: keyof CardFormData, value: string | boolean) => void;
@@ -63,13 +62,6 @@ export interface UseCardFormReturn {
   hydrateFromCard: (card: CardResponse) => void;
 }
 
-/**
- * Единая логика формы карточки героя для трёх режимов:
- * публичное создание, создание в админке, редактирование.
- *
- * UI-слой (Form.tsx / AdminPanelForm.tsx / AdminEditForm.tsx) остаётся тонким
- * и использует этот хук для состояния и логики.
- */
 export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
   const [formData, setFormData] = useState<CardFormData>(() => EMPTY_CARD_FORM);
   const [displayDateBirth, setDisplayDateBirth] = useState('');
@@ -93,7 +85,6 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
   const [isAgreed, setIsAgreed] = useState(false);
   const [isPolicyAgreed, setIsPolicyAgreed] = useState(false);
 
-  // Гидратация при редактировании
   const hydrateFromCard = useCallback((card: CardResponse) => {
     setFormData({
       dateBirth: card.dateBirth || '',
@@ -111,14 +102,13 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
     });
     setDisplayDateBirth(formatApiDateForInput(card.dateBirth));
     setDisplayDateDeath(formatApiDateForInput(card.dateDeath));
-    setExistingPhotoHero(card.photoHero?.url || null);
+    setExistingPhotoHero(card.photoHero?.url || card.photoHero?.image || null);
+
+    const additionalImages = card.additionalCardImages || [];
     setExistingAdditionalImages(
-      card.additionalImages ? card.additionalImages.map((img) => img.url) : []
+      additionalImages.map((img) => img.image || img.url || '')
     );
   }, []);
-
-  // Если передана initialCard — гидратируем (один раз при монтировании через ленивый init)
-  // Используется вызовом из useEffect в компоненте-редакторе.
 
   const getFieldError = useCallback(
     (field: string) => getFieldErrorUtil(formData, touched, field),
@@ -207,7 +197,7 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
         try {
           const compressed = await Promise.all(files.map(compressImage));
           console.log('✅ Сжато файлов:', compressed.length);
-console.log('📸 Добавляем файлы в состояние:', compressed.map(f => f.name));
+          console.log('📸 Добавляем файлы в состояние:', compressed.map(f => f.name));
           setAdditionalImages((prev) => [...prev, ...compressed]);
           setError(null);
         } finally {
@@ -228,7 +218,6 @@ console.log('📸 Добавляем файлы в состояние:', compres
   }, []);
 
   const validate = useCallback((): boolean => {
-    // Отметить все обязательные поля как тронутые
     setTouched(Object.fromEntries(REQUIRED_FIELDS.map((f) => [f, true])));
 
     const result = validateCardForm(formData, {

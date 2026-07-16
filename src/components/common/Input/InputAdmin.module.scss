@@ -21,14 +21,12 @@
     transition: all 0.2s ease;
     outline: none;
     border: 2px solid $brown-color;
-    // font-size: 16px;
     font-size: 20px;
     color: $brown-color;
     font-family: 'Roboto', sans-serif;
 
     &::placeholder {
-        color: $brown-color;
-        opacity: 1;
+        color: rgba($brown-color, 0.6);
         font-size: 20px;
     }
 

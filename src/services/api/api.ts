@@ -1,19 +1,8 @@
-/**
- * Базовая конфигурация API.
- *
- * `API_BASE_URL` intentionally пустой в dev — запросы идут через Vite-прокси
- * на бэкенд (см. vite.config.ts, server.proxy['/api']), что убирает проблемы с CORS.
- * В проде задаётся через `VITE_API_BASE_URL`, если фронт и бэкенд на разных хостах.
- *
- * `BACKEND_ORIGIN` — абсолютный origin бэкенда, нужен только для построения URL
- * изображений (API отдаёт относительные пути вида `/storage/...`).
- */
 export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export const BACKEND_ORIGIN: string =
   import.meta.env.VITE_BACKEND_URL || 'https://digital-memory.ru/api';
 
-/** Достраивает относительный путь бэкенда до абсолютного URL изображения. */
 export function buildImageUrl(path: string | null | undefined): string {
   if (!path) return '';
   if (path.startsWith('http')) return path;
@@ -21,7 +10,6 @@ export function buildImageUrl(path: string | null | undefined): string {
   return `${BACKEND_ORIGIN}${path.startsWith('/') ? '' : '/'}${path}`;
 }
 
-/** Все эндпоинты приложения в одном месте. */
 export const ENDPOINTS = {
   AUTH: {
     LOGIN: '/api/login',
