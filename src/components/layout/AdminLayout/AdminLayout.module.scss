@@ -1,7 +1,3 @@
-// @use "../../assets/scss/_mixins.scss" as *;
-// @use "../../assets/scss/_typography.scss" as *;
-@use "../../../assets/scss/_variables-color.scss" as *;
-
 
 .adminLayout {
     display: flex;
@@ -76,5 +72,3 @@
     overflow-y: auto;
     background-color: $green-color;
 }
-
-@media (max-width: 768px) {}

@@ -1,9 +1,5 @@
-@use "../../../assets/scss/_mixins.scss" as *;
-@use "../../../assets/scss/_typography.scss" as *;
-@use "../../../assets/scss/_variables-color.scss" as *;
-
 h3 {
-    font-family: 'Roboto';
+    font-family: $font-base;
     width: 100%;
     text-align: left;
     font-weight: 900;
@@ -61,7 +57,7 @@ h3 {
         flex-grow: 1;
         width: fit-content;
         align-items: flex-start;
-        font-family: "Glanz";
+        font-family: $font-display;
         font-weight: 400 !important;
         font-size: 80px;
         gap: 31px;
@@ -73,8 +69,8 @@ h3 {
 
     &__input {
         position: relative;
-        border: 1px solid #1A1A1A;
-        background-color: #FFFFFF;
+        border: 1px solid $dark-text;
+        background-color: $color-white;
         flex-grow: 1;
         min-width: 68.3vw;
         border-radius: 20px;
@@ -109,7 +105,7 @@ h3 {
 
     &__letter {
         font-size: 26px;
-        font-family: 'Roboto';
+        font-family: $font-base;
         font-weight: 600;
         letter-spacing: 29%;
         padding-right: 12.5px;
@@ -120,12 +116,12 @@ h3 {
 .advancedFilter {
     display: flex;
 
-    background-color: #534035;
+    background-color: $brown-color;
     flex-grow: 1;
     max-width: 1306px;
     width: 100%;
     height: fit-content;
-    color: #F1E6D0;
+    color: $beige-background;
     padding: 23px 31px;
     border-radius: 20px;
     gap: 28px;
@@ -138,7 +134,7 @@ h3 {
         font-size: 24px;
         background-color: $beige-background;
         color: $brown-color;
-        font-family: 'Roboto';
+        font-family: $font-base;
         font-weight: 900;
         padding: 12px 24px;
         min-width: 209px;

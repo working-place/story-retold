@@ -1,7 +1,7 @@
 .container {
     display: flex;
     align-items: center;
-    background-color: #36453D;
+    background-color: $green-color;
     width: 571px;
     min-height: 315px;
     height: fit-content;
@@ -17,7 +17,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #2e3a34;
+    background-color: $color-dark-card;
     border-radius: 12px;
     flex-shrink: 0;
 }
@@ -29,9 +29,9 @@
 }
 
 .text {
-    font-family: "Roboto";
+    font-family: $font-base;
     font-size: 22px;
-    color: #F1E6D0;
+    color: $beige-background;
     text-align: left;
 
     &_block {
@@ -73,11 +73,11 @@
 .deleteButton {
     width: 68px;
     height: 55px;
-    border: 1px solid #F2E7D1;
+    border: 1px solid $beige-card;
 }
 
 .button {
-background-color: #F2E7D1;
+background-color: $beige-card;
 padding: 12px 24px;
 height: 55px;
 width: 196px;

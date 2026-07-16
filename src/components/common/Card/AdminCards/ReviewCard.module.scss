@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #534035;
+    background-color: $brown-color;
     width: 675px;
     min-height: 324px;
     box-sizing: border-box;
@@ -17,7 +17,7 @@
     }
 
         &_noImage {
-        background-color: #36453D;
+        background-color: $green-color;
         // border: 1px solid #b7e4c7;
 
         &:hover {
@@ -51,7 +51,7 @@
         height: 182px;
         border-radius: 20px;
         overflow: hidden;
-        background-color: #e8ddd0;
+        background-color: $beige-border;
     }
 
     //
@@ -90,10 +90,10 @@
 
     //
     &__name {
-        font-family: 'Roboto', 'Metamorphous', serif;
+        font-family: $font-base;
         font-size: 33px;
         font-weight: 600;
-        color: #F2E7D1;
+        color: $beige-card;
         margin: 0;
         margin-bottom: 12px;
     }
@@ -101,9 +101,9 @@
     //
     &__author,
     &__date {
-        font-family: 'Roboto', 'Metamorphous', serif;
+        font-family: $font-base;
         font-size: 24px;
-        color: #F2E7D1;
+        color: $beige-card;
         text-align: left;
     }
 
@@ -123,8 +123,8 @@
         align-items: center;
         justify-content: center;
         padding: 10px 24px;
-        background-color: #FDF7E9;
-        color: #534035;
+        background-color: $beige-soft;
+        color: $brown-color;
         min-width: 310px;
         height: 55px;
         border: none;
@@ -143,7 +143,7 @@
 }
 
 // Адаптивность
-@media (max-width: 768px) {
+@include respond-below($breakpoint-md) {
     .reviewCard {
         flex-direction: column;
         align-items: flex-start;

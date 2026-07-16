@@ -1,10 +1,7 @@
-@use "../../../assets/scss/_variables-color.scss" as *;
-@use "../../../assets/scss/breakpoints" as *;
-
 .loginPage {
   display: flex;
   min-height: 100vh;
-  background-color: #f5f0e6;
+  background-color: $beige-warm;
   position: relative; /* Чтобы логотип позиционировался относительно всей страницы */
 }
 
@@ -27,7 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FDF7E9;
+  background-color: $beige-soft;
   padding: 40px;
 }
 
@@ -37,7 +34,7 @@
   max-width: 848px;
   width: 100%;
   text-align: center;
-  background-color: #F1E6D0;
+  background-color: $beige-background;
 }
 
 .loginCardInner {
@@ -48,9 +45,9 @@
 }
 
 .loginTitle {
-  font-family: 'Tektur', sans-serif;
+  font-family: $font-tech;
   font-size: 40px;
-  color: #1A1A1A;
+  color: $dark-text;
   margin-bottom: 20px;
   font-weight: 400;
   text-align: center;
@@ -65,12 +62,12 @@
 }
 
 .welcomeText {
-  font-family: "Rubik", "Metamorphous", serif;
+  font-family: $font-rubik;
   text-align: center;
   font-size: 32px;
   font-weight: 500;
   margin-bottom: 32px;
-  color: #1A1A1A;
+  color: $dark-text;
 
     @include respond-below($breakpoint-md) {
     font-size: 20px;
@@ -91,11 +88,11 @@
   border: 1px solid $brown-color;
   font-size: 16px;
   outline: none;
-  background: #ffffff;
+  background: $color-white;
   transition: border-color 0.2s;
 
   &::placeholder {
-    color: #999;
+    color: $gray-light;
   }
 
   &:focus {
@@ -104,7 +101,7 @@
 }
 
 .error {
-  color: #f44336;
+  color: $color-error;
   font-size: 14px;
   text-align: center;
 }
@@ -114,7 +111,7 @@
   width: 100%;
   padding: 14px;
   background: $green-color;
-  color: #ffffff;
+  color: $color-white;
   border: none;
   border-radius: 20px;
   font-size: 18px;
@@ -151,14 +148,14 @@
   flex: 1;
   /* Подключаем десктопный фон */
   background-image: url('/auth_background.webp');
-  background-color: #FDF7E9;
+  background-color: $beige-soft;
   background-size: contain;
   background-position: right;
   background-repeat: no-repeat;
 }
 
 /* Адаптив для планшетов и мобильных */
-@media (max-width: 1024px) {
+@include respond-below($breakpoint-lg) {
   .panelRight {
     display: none; /* Прячем правую панель на малых экранах */
   }
@@ -168,7 +165,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@include respond-below($breakpoint-md) {
   .loginPage {
     /* На мобильном мобильная картинка становится фоном всей страницы */
     background-image: url('/auth_background_mobile.webp');

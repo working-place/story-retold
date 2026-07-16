@@ -1,7 +1,3 @@
-@use "../../assets/scss/_mixins.scss" as *;
-@use "../../assets/scss/_typography.scss" as *;
-@use "../../assets/scss/_variables-color.scss" as *;
-
 .header {
     display: flex;
     justify-content: space-between;
@@ -92,7 +88,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #FDF7E9; // Бежевый фон как на макете
+    background-color: $beige-soft; // Бежевый фон как на макете
     z-index: 2000;
     display: flex;
     flex-direction: column;
@@ -143,7 +139,7 @@
         font-size: 28px;
         color: $colorblack-text;
         text-decoration: none;
-        font-family: 'Roboto', sans-serif;
+        font-family: $font-base;
         font-weight: 400;
         transition: opacity 0.2s;
 

@@ -5,7 +5,7 @@ button {
 }
 
 h2 {
-  font-family: 'Glanz';
+  font-family: $font-display;
   font-size: 60px;
   color: $white-text;
   width: 100%;
@@ -22,7 +22,7 @@ h2 {
   height: fit-content;
 
   &__title {
-    font-family: 'Glanz';
+    font-family: $font-display;
     font-size: 60px;
     color: $white-text;
     width: 100%;
@@ -41,7 +41,7 @@ h2 {
 
   &__authorInfo,
   &__authorName {
-    font-family: 'Roboto';
+    font-family: $font-base;
     font-size: 24px;
     line-height: 120%;
   }
@@ -121,7 +121,7 @@ h2 {
   }
 }
 
-@media (max-width: 768px) {
+@include respond-below($breakpoint-md) {
   .gallery {
 
     &__carousel {}
