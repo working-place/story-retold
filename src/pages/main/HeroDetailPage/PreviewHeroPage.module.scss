@@ -1,0 +1,227 @@
+@use "../../../assets/scss/_mixins.scss" as *;
+@use "../../../assets/scss/_typography.scss" as *;
+@use "../../../assets/scss/_variables-color.scss" as *;
+
+.previewPage_noPhoto {
+    .previewPage__wrapper {
+        background-color: #36453D;
+    }
+}
+
+.previewPage__heroContent_noPhoto {
+    display: flex;
+    position: relative;
+    margin-top: -20px;
+    margin-bottom: 110px;
+}
+
+.previewPage__columnWrapper_noPhoto {
+    display: flex;
+
+    width: fit-content;
+    padding-left: 15px;
+}
+
+.previewPage__infoWrapper_noPhoto {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    h1 {
+        margin-bottom: 35px;
+    }
+}
+
+.previewPage__column_noPhoto {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    gap: 35px;
+}
+
+.previewPage__infoRow {
+    min-width: 394px;
+    width: fit-content;
+}
+
+.previewPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    color: #EFEBD9;
+    height: fit-content;
+
+    h1 {
+        font-family: 'Glanz';
+        font-size: 80px;
+        text-transform: uppercase;
+        color: $white-text;
+        width: 100%;
+        text-align: left;
+    }
+
+    h2 {
+        font-family: 'Glanz';
+        font-size: 60px;
+        color: $white-text;
+        width: 100%;
+        text-align: left;
+    }
+
+    &__pathContainer {
+        width: 100%;
+        max-width: 1760px;
+
+        h3 {
+            margin-top: 22px;
+            margin-bottom: 49px;
+            text-align: left;
+            color: #1A1A1A;
+            font-size: 35px;
+            font-weight: bold;
+        }
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 1760px;
+        background-color: $brown-color;
+        border-radius: 40px;
+        padding: 97px 58px 63px 58px;
+    }
+
+    &__heroContent {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        min-height: 1040px;
+    }
+
+    &__infoWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 38px;
+        width: 51%;
+    }
+
+    &__heroName {
+        font-size: 64px;
+        text-align: left;
+        width: 100%;
+    }
+
+    &__infoRow {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    &__infoLabel {
+        font-size: 35px;
+        width: 100%;
+        text-align: left;
+        line-height: 100%;
+    }
+
+    &__infoValue {
+        width: 100%;
+        text-align: left;
+        font-size: 24px;
+        line-height: 120%;
+    }
+
+    &__bgImage,
+    &__bgPaper,
+    &__heroImage {
+        position: absolute;
+        z-index: 2;
+    }
+
+    &__bgImage {
+        top: 120px;
+        left: 90px;
+    }
+
+    &__bgPaper {
+        z-index: 2;
+        top: 13px;
+        left: 177px;
+    }
+
+    &__heroImage {
+        top: 210px;
+        left: 225px;
+        width: 566px;
+        height: 677px;
+        overflow: hidden;
+        z-index: 3;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            display: block;
+        }
+    }
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    gap: 51px;
+    height: fit-content;
+
+    &__box {
+        background-color: $beige-background;
+        background-color: #EFEBD9;
+        min-height: 600px;
+        max-height: fit-content;
+        font-family: 'Roboto';
+        font-weight: 600;
+        font-size: 35px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: #101010;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        padding: 87px 43px 43px 43px;
+        text-align: left;
+        border-radius: 40px;
+        position: relative;
+    }
+
+    &__pin1,
+    &__pin2,
+    &__pin3,
+    &__pin4 {
+        position: absolute;
+    }
+
+    &__pin1 {
+        top: 0;
+        left: 60px;
+    }
+
+    &__pin2 {
+        top: 0;
+        left: 360px;
+    }
+
+    &__pin3 {
+        top: 0;
+        right: 360px;
+    }
+
+    &__pin4 {
+        top: 0;
+        right: 60px;
+    }
+}
+
+.gallery {
+    margin-top: 80px;
+}
