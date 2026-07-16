@@ -41,7 +41,7 @@ function transformCardToHero(card: CardResponse): Hero {
     additionalCardImages: (card.additionalCardImages || []).map((img) => ({
       id: img.id,
       card_id: card.id,
-      image: img.image,
+      image: img.image ?? '/fallback-img.png',
       created_at: card.created_at,
       updated_at: card.updated_at,
     })),
