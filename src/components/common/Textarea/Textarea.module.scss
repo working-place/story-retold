@@ -1,5 +1,3 @@
-@use "../../../assets/scss/variables-color" as *;
-
 .wrapper {
     position: relative;
     width: 100%;
@@ -25,7 +23,7 @@
     font-size: 20px;
     border: 1px solid transparent;
     resize: vertical;
-    font-family: "Roboto", "Metamorphous", serif;
+    font-family: $font-base;
     font-weight: 600;
 
     &::placeholder {
@@ -39,12 +37,12 @@
     }
 
     &.error {
-        border-color: #f44336;
-        background-color: rgba(244, 67, 54, 0.05);
+        border-color: $color-error;
+        background-color: rgba($color-error, 0.05);
     }
 
     &.success {
-        border-color: #4caf50;
+        border-color: $color-success;
     }
 
     &.disabled {
@@ -73,7 +71,7 @@
 }
 
 .textarea._admin {
-    background-color: #FDF7E9;
+    background-color: $beige-soft;
     border: 2px solid $brown-color;
 
     &::placeholder {
@@ -87,11 +85,11 @@
 }
 
 .textarea._secondary {
-    background-color: #f5f5f5;
-    border: 2px solid #ccc;
+    background-color: $gray-bg;
+    border: 2px solid $gray-lighter;
 
     &::placeholder {
-        color: #999;
+        color: $gray-light;
     }
 }
 
@@ -170,7 +168,7 @@
     text-align: left;
     margin-top: 15px;
     margin-bottom: 8px;
-    font-family: "Roboto", sans-serif;
+    font-family: $font-base;
     font-weight: 600;
 }
 
@@ -202,14 +200,14 @@
 }
 
 .wrapper:has(.textarea._admin) .requiredMark {
-    color: #f44336;
+    color: $color-error;
 }
 
 // ========================
 
 .errorText {
     font-size: 14px;
-    color: #f44336;
+    color: $color-error;
     margin-top: 4px;
     display: block;
 }
@@ -228,16 +226,16 @@
 .counter {
     position: absolute;
     font-size: 12px;
-    color: #999;
+    color: $gray-light;
     bottom: 20px;
     right: 20px;
 
     &.nearLimit {
-        color: #ff9800;
+        color: $color-warning;
     }
 
     &.overLimit {
-        color: #f44336;
+        color: $color-error;
     }
 }
 
@@ -249,7 +247,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba($color-white, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -314,7 +312,7 @@
     background-color: transparent;
     padding: 0 4px;
     z-index: 1;
-    font-family: "Roboto", sans-serif;
+    font-family: $font-base;
 
     &.insideLabelActive {
         top: -6px;

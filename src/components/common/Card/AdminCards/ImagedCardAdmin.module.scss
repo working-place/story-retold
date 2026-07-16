@@ -1,7 +1,7 @@
 .container {
     display: flex;
     align-items: center;
-background-color: #534035;
+background-color: $brown-color;
 width: 571px;
 min-height: 315px;
 height: fit-content;
@@ -19,9 +19,9 @@ align-items: stretch;
 }
 
 .text {
-    font-family: "Roboto";
+    font-family: $font-base;
     font-size: 22px;
-    color: #F1E6D0;
+    color: $beige-background;
     text-align: left;
 
     &_block {
@@ -65,11 +65,11 @@ display: flex;
 
     width: 68px;
     height: 55px;
-    border: 1px solid #F2E7D1;
+    border: 1px solid $beige-card;
 }
 
 .button {
-background-color: #F2E7D1;
+background-color: $beige-card;
 padding: 12px 24px;
 height: 55px;
 width: 196px;

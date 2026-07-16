@@ -6,13 +6,13 @@
     align-content: flex-start;
     min-height: 1017px;
     height: fit-content;
-    background-color: #FDF7E9;
+    background-color: $beige-soft;
     border-radius: 20px;
     gap: 29px;
     padding: 96px 49px 90px 49px;
 
     &_admin {
-        background-color: #FDF7E9;
+        background-color: $beige-soft;
         min-width: 1531px;
         margin: 0;
         padding-top: 25px;

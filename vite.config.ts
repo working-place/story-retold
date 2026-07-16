@@ -27,6 +27,7 @@ export default defineConfig(({ mode }) => {
         scss: {
           additionalData: `
             @use "@/assets/scss/_variables-color.scss" as *;
+            @use "@/assets/scss/_typography.scss" as *;
             @use "@/assets/scss/_breakpoints.scss" as *;
             @use "@/assets/scss/_mixins.scss" as *;
           `

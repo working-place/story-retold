@@ -1,12 +1,10 @@
-@use "../../../assets/scss/_variables-color.scss" as *;
-
 .overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba($color-white, 0.1);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
@@ -31,7 +29,7 @@
     animation: fadeIn 0.2s ease-out;
 
     &__title {
-        font-family: "Rubik", "Metamorphous", serif;
+        font-family: $font-rubik;
         font-size: 32px;
         font-weight: 700;
         line-height: 120%;
@@ -72,7 +70,7 @@
         justify-content: center;
 
         span {
-            font-family: 'Roboto';
+            font-family: $font-base;
             font-size: 20px;
             font-weight: 600;
         }
@@ -86,7 +84,7 @@
     &__editButton {
         background-color: transparent;
         border: 2px solid $brown-color;
-        color: #333;
+        color: $gray-dark;
 
         span {
             color: $brown-color;
@@ -141,7 +139,7 @@
 
 .heroName {
     font-size: 16px;
-    color: #666;
+    color: $gray;
     margin: 0 0 24px 0;
     font-weight: 500;
 }

@@ -1,18 +1,16 @@
-@use "../../../assets/scss/_variables-color.scss" as *;
-
 .form {
     display: flex;
     width: 96%;
     min-height: 935px;
     height: fit-content;
-    background-color: #534035;
+    background-color: $brown-color;
     margin-top: 75px;
     border-radius: 20px;
     gap: 47px;
     padding: 96px 49px 90px 49px;
 
     &_admin {
-        background-color: #FDF7E9;
+        background-color: $beige-soft;
         min-width: 1531px;
         margin: 0;
         padding-top: 25px;
@@ -39,7 +37,7 @@
     &__titleUpload {
         display: flex;
         width: 100%;
-        color: #F1E6D0;
+        color: $beige-background;
 
         &_admin {
             color: $brown-color;
@@ -108,10 +106,10 @@
 
         &_primary {
             background-image:
-                linear-gradient(90deg, #F1E6D0 50%, transparent 50%),
-                linear-gradient(90deg, #F1E6D0 50%, transparent 50%),
-                linear-gradient(180deg, #F1E6D0 50%, transparent 50%),
-                linear-gradient(180deg, #F1E6D0 50%, transparent 50%);
+                linear-gradient(90deg, $beige-background 50%, transparent 50%),
+                linear-gradient(90deg, $beige-background 50%, transparent 50%),
+                linear-gradient(180deg, $beige-background 50%, transparent 50%),
+                linear-gradient(180deg, $beige-background 50%, transparent 50%);
             height: 57%;
         }
 
@@ -119,10 +117,10 @@
             display: flex;
 
             background-image:
-                linear-gradient(90deg, #F1E6D0 50%, transparent 50%),
-                linear-gradient(90deg, #F1E6D0 50%, transparent 50%),
-                linear-gradient(180deg, #F1E6D0 50%, transparent 50%),
-                linear-gradient(180deg, #F1E6D0 50%, transparent 50%);
+                linear-gradient(90deg, $beige-background 50%, transparent 50%),
+                linear-gradient(90deg, $beige-background 50%, transparent 50%),
+                linear-gradient(180deg, $beige-background 50%, transparent 50%),
+                linear-gradient(180deg, $beige-background 50%, transparent 50%);
             min-height: 35%;
             height: fit-content;
         }
@@ -236,7 +234,7 @@
 .select {
     margin-top: -14px;
     font-size: 20px;
-    color: #F1E6D0;
+    color: $beige-background;
     text-align: left;
 }
 
@@ -247,7 +245,7 @@
     gap: 10px;
 
     a {
-        color: #F1E6D0;
+        color: $beige-background;
         font-size: 12px;
         text-decoration: none;
         padding: 0;
@@ -262,7 +260,7 @@
 }
 
 .button {
-    background-color: #F1E6D0;
+    background-color: $beige-background;
     border: none;
     outline: none;
     width: 100%;
@@ -273,7 +271,7 @@
 
     &_small {
         font-size: 20px;
-        background-color: #F1E6D0;
+        background-color: $beige-background;
         border: none;
         outline: none;
         border-radius: 16px;
@@ -283,7 +281,7 @@
 
     &_admin {
         background-color: $brown-color;
-        color: #F1E6D0;
+        color: $beige-background;
         z-index: 1000;
     }
 }
@@ -353,7 +351,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    color: #F1E6D0;
+    color: $beige-background;
     border: none;
     font-size: 30px;
     font-weight: bold;
@@ -365,7 +363,7 @@
     background-color: $brown-color;
 
     &:hover {
-        color: red;
+        color: $color-error;
     }
 }
 
@@ -400,30 +398,30 @@
     height: 100% !important;
     object-fit: cover;
     border-radius: 8px;
-    border: 1px solid #e0d5c0;
-    background-color: #f5f0e6;
+    border: 1px solid $beige-muted;
+    background-color: $beige-warm;
 }
 
 // ======================================
 // Error & Success messages
 
 .errorMessage {
-    color: #ff4444;
+    color: $color-error-strong;
     font-size: 16px;
     padding: 12px 16px;
-    background-color: rgba(255, 68, 68, 0.1);
+    background-color: rgba($color-error-strong, 0.1);
     border-radius: 8px;
-    border: 1px solid #ff4444;
+    border: 1px solid $color-error-strong;
     margin-bottom: 16px;
 }
 
 .successMessage {
-    color: #2e7d32;
+    color: $color-success-dark;
     font-size: 16px;
     padding: 12px 16px;
-    background-color: rgba(46, 125, 50, 0.1);
+    background-color: rgba($color-success-dark, 0.1);
     border-radius: 8px;
-    border: 1px solid #2e7d32;
+    border: 1px solid $color-success-dark;
     margin-bottom: 16px;
 }
 
@@ -433,10 +431,10 @@
 .dashed-border-all {
     border: none;
     background-image:
-        linear-gradient(90deg, red 50%, transparent 50%),
-        linear-gradient(0deg, red 50%, transparent 50%),
-        linear-gradient(90deg, red 50%, transparent 50%),
-        linear-gradient(0deg, red 50%, transparent 50%);
+        linear-gradient(90deg, $color-error 50%, transparent 50%),
+        linear-gradient(0deg, $color-error 50%, transparent 50%),
+        linear-gradient(90deg, $color-error 50%, transparent 50%),
+        linear-gradient(0deg, $color-error 50%, transparent 50%);
     background-size: 20px 3px, 3px 20px, 20px 3px, 3px 20px;
     background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
     background-position: top, right, bottom, left;
@@ -444,6 +442,6 @@
 
 .textarea {
     &__admin {
-        border: 2px solid red;
+        border: 2px solid $color-error;
     }
 }

@@ -1,10 +1,6 @@
-@use "../../../assets/scss/_mixins.scss" as *;
-@use "../../../assets/scss/_typography.scss" as *;
-@use "../../../assets/scss/_variables-color.scss" as *;
-
 .heroDetailPage_noPhoto {
     .heroDetailPage__wrapper {
-        background-color: #36453D;
+        background-color: $green-color;
     }
 }
 
@@ -52,12 +48,12 @@
     padding-top: 125px;
     padding-bottom: 74px;
     width: 100%;
-    color: #EFEBD9;
+    color: $beige-light;
     position: relative;
-    background-color: #EFEBD9;
+    background-color: $beige-light;
 
     h1 {
-        font-family: 'Glanz';
+        font-family: $font-display;
         font-size: 80px;
         text-transform: uppercase;
         color: $white-text;
@@ -66,7 +62,7 @@
     }
 
     h2 {
-        font-family: 'Glanz';
+        font-family: $font-display;
         font-size: 60px;
         color: $white-text;
         width: 100%;
@@ -83,7 +79,7 @@
             margin-bottom: 49px;
             font-size: 24px;
             text-align: left;
-            color: #1A1A1A;
+            color: $dark-text;
         }
     }
 
@@ -181,15 +177,15 @@
 
     &__box {
         background-color: $beige-background;
-        background-color: #EFEBD9;
+        background-color: $beige-light;
         min-height: 800px;
         max-height: fit-content;
-        font-family: 'Roboto';
+        font-family: $font-base;
         font-weight: 600;
         font-size: 35px;
         line-height: 100%;
         letter-spacing: 0%;
-        color: #101010;
+        color: $colorblack-text;
         white-space: pre-wrap;
         word-wrap: break-word;
         padding: 87px 43px 43px 43px;
