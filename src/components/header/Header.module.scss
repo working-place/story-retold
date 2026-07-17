@@ -5,12 +5,14 @@
     position: relative;
     padding-left: 60px;
     padding-right: 13px;
+    padding-top: 20px;
     text-align: center;
     background-color: $beige-background;
     z-index: 1000;
 
     // Адаптивные отступы для планшетов и мобильных
     @include respond-below($breakpoint-xl) {
+         padding-top: 12px;
         padding-left: 30px;
         padding-right: 20px;
     }
