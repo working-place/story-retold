@@ -18,11 +18,11 @@ export default function HomePage() {
                 <img
                     className={styles.main_photoImg}
                     src="/photo.png" alt="Фотография" />
-
-                <img
-                    className={styles.main_devidigLine}
-                    src="/paper-deviding-main.png" alt="Разделительная линия" />
             </div>
+
+            <img
+                className={styles.divide}
+                src="/paper-deviding-main.png" alt="Разделительная линия" />
 
             <div className={styles.history}>
                 <div className={styles.history_container}>
@@ -77,6 +77,10 @@ export default function HomePage() {
                     className={styles.history_curlHistoryTop}
                     src="/curl-history-top.png" alt="Линия" />
             </div>
+
+            <img
+                className={styles.divide}
+                src="/paper-deviding-history.png" alt="Разделительная линия" />
 
             <div className={styles.about}>
 
@@ -140,6 +144,10 @@ export default function HomePage() {
                     src="/curl-about.png" alt="Линия" />
             </div>
 
+            <img
+                className={styles.divide}
+                src="/paper-deviding-about.png" alt="Разделительная линия" />
+
             {/* <div className={styles.hero}> ломает страницу в адаптиве
                 <h2
                     className={styles.hero_titleForm}
@@ -149,13 +157,6 @@ export default function HomePage() {
                 </h2>
                 <NewCardForm />
             </div> */}
-
-            <img
-                className={styles.history_devidigLineHisory}
-                src="/paper-deviding-history.png" alt="Разделительная линия" />
-            <img
-                className={styles.about_devide}
-                src="/paper-deviding-about.png" alt="Разделительная линия" />
 
         </>
     )

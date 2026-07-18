@@ -35,13 +35,6 @@
         width: 69.3%;
         z-index: 1;
     }
-
-    &_devidigLine {
-        position: absolute;
-        width: 100%;
-        bottom: -150px;
-        z-index: 5;
-    }
 }
 
 .history {
@@ -111,15 +104,6 @@
         z-index: 2;
         left: 908px;
         top: 340px;
-    }
-
-    &_devidigLineHisory {
-        position: absolute;
-        width: 100%;
-        top: 2170px;
-        left: 0;
-        right: 0;
-        z-index: 5;
     }
 
     &_arrow {
@@ -260,14 +244,6 @@
         bottom: 15px;
         right: -15px;
     }
-
-    &_devide {
-        position: absolute;
-        top: 3950px;
-        left: 0;
-        right: 0;
-        width: 100%;
-    }
 }
 
 .hero {
@@ -295,4 +271,19 @@
     &_titleForm {
         text-align: left;
     }
+}
+
+// Разделитель между секциями. Картинка 1920x279.
+// Половина высоты перекрывает верхний блок, половина — нижний.
+// Перекрытие масштабируется вместе с шириной страницы (vw), поэтому
+// позиция никогда не задаётся вручную: блок всегда ровно "между" соседями.
+.divide {
+    display: block;
+    width: 100%;
+    height: auto;
+    // 279px высоты при ширине 1920px → половина = 139.5px ≈ 7.27vw
+    margin-top: calc(-279px / 1920px * 100vw / 2);
+    margin-bottom: calc(-279px / 1920px * 100vw / 2);
+    position: relative;
+    z-index: 5;
 }
