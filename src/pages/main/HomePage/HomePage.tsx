@@ -1,4 +1,5 @@
 import styles from "./HomePage.module.scss"
+import NewCardForm from "../../../components/common/Form/Form";
 
 export default function HomePage() {
 
@@ -148,7 +149,7 @@ export default function HomePage() {
                 className={styles.divide}
                 src="/paper-deviding-about.png" alt="Разделительная линия" />
 
-            {/* <div className={styles.hero}> ломает страницу в адаптиве
+            <div className={styles.hero}>
                 <h2
                     className={styles.hero_titleForm}
                     style={{ fontFamily: 'Glanz', fontWeight: 400 }}
@@ -156,7 +157,7 @@ export default function HomePage() {
                     Расскажите о герое
                 </h2>
                 <NewCardForm />
-            </div> */}
+            </div>
 
         </>
     )
