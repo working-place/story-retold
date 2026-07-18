@@ -250,26 +250,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     position: relative;
     background-color: $beige-background;
     height: 1258px;
 
-        &_title,
-        &_titleForm {
-        position: absolute;
+    &_title,
+    &_titleForm {
+        // Заголовок в нормальном потоке: выровнен по левому краю формы
+        // (форма имеет width: 96% и центрируется → её отступ слева = 2%)
+        width: 96%;
+        box-sizing: border-box;
+        padding-left: 49px;
+        margin-top: 75px;
         color: $brown-color;
-        z-index: 1;
-        top: 75px;
-        left: 44px;
         font-weight: 200;
-        text-align: right;
+        text-align: left;
         font-size: 80px;
         text-transform: uppercase;
     }
 
-    &_titleForm {
-        text-align: left;
+    &_title {
+        text-align: right;
     }
 }
 
