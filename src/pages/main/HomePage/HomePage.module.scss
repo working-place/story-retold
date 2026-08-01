@@ -272,6 +272,38 @@
     &_title {
         text-align: right;
     }
+
+    // --- ПЛАНШЕТЫ / НОУТБУКИ (768–1919) ---
+    // Высота перестаёт быть жёсткой — растём по контенту, иначе форма не поместится.
+    @include respond-below($breakpoint-xxxl) {
+        height: auto;
+        min-height: 1258px;
+    }
+
+    @include respond-below($breakpoint-xxxl) {
+        &_title,
+        &_titleForm {
+            font-size: clamp(40px, 4.2vw, 80px);
+            margin-top: clamp(32px, 3.9vw, 75px);
+            padding-left: clamp(16px, 2.55vw, 49px);
+        }
+    }
+
+    // --- МОБАЙЛ (≤767) ---
+    @include respond-below($breakpoint-md) {
+        min-height: auto;
+        padding-bottom: 40px;
+
+        &_title,
+        &_titleForm {
+            width: 100%;
+            padding-left: 16px;
+            padding-right: 16px;
+            margin-top: 24px;
+            font-size: 32px;
+            line-height: 1.1;
+        }
+    }
 }
 
 // Разделитель между секциями. Картинка 1920x279.

@@ -471,3 +471,221 @@ height: 100%;
 //   text-overflow: ellipsis;
 //   white-space: nowrap;
 // }
+
+// ==================================================
+//  АДАПТИВ
+//  1920px — desktop-вёрстка остаётся «as is» (правила выше).
+//  Планшеты / ноутбуки (768–1919) — плавное масштабирование:
+//    разрешаем перенос колонок формы, ужимаем padding/gap, чтобы
+//    vw-ширины полей не ломали вёрстку. Идея позиционирования та же.
+//  Мобайл (≤767) — вертикальный макет: всё в столбик, поля на всю
+//    ширину, upload-зоны стопкой.
+// ==================================================
+
+// ----------------------------------------------------
+//  ПЛАНШЕТЫ / НОУТБУКИ (768–1919)
+// ----------------------------------------------------
+@include respond-between($breakpoint-md, $breakpoint-xxxl) {
+    .form {
+        flex-wrap: wrap;
+        gap: clamp(20px, 2.5vw, 47px);
+        padding: clamp(40px, 5vw, 96px) clamp(24px, 2.55vw, 49px) clamp(40px, 4.7vw, 90px);
+        min-height: auto;
+
+        // Блоки могут переноситься на новые строки при сужении экрана,
+        // не ломая порядок (фото → основные → дополнительные).
+        &__upload {
+            flex-wrap: wrap;
+            width: 100%;
+            align-items: flex-start;
+        }
+
+        &__uploadArea {
+            width: 100%;
+            max-width: 360px;
+        }
+
+        &__basicInformation,
+        &__additionalInformation {
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        // Поля в строках на узких экранах не помещаются — переносим
+        &__wrapper_firstLine,
+        &__wrapper_thirdLine {
+            flex-wrap: wrap;
+        }
+    }
+}
+
+// ----------------------------------------------------
+//  МОБАЙЛ (≤767)
+// ----------------------------------------------------
+@include respond-below($breakpoint-md) {
+    .form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: auto;
+        margin-top: 32px;
+        gap: 36px;
+        padding: 28px 16px;
+        border-radius: 16px;
+
+        // ---- Заголовки секций ----
+        &__title {
+            font-size: 22px;
+        }
+
+        &__titleUpload {
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        &__subtitle {
+            font-size: 13px;
+        }
+
+        &__titleWrapper {
+            gap: 8px;
+        }
+
+        // ---- Блок загрузки фото ----
+        &__upload {
+            flex-direction: column;
+            width: 100%;
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        &__uploadArea {
+            width: 100%;
+            gap: 20px;
+            padding: 24px 16px;
+
+            img {
+                margin-top: 8px;
+                width: 56px;
+                height: 56px;
+            }
+
+            &_primary {
+                height: auto;
+                min-height: 220px;
+            }
+
+            &_secondary {
+                height: auto;
+                min-height: 180px;
+            }
+        }
+
+        // ---- Основные сведения ----
+        &__basicInformation {
+            width: 100%;
+            gap: 20px;
+        }
+
+        &__wrapper_firstLine,
+        &__wrapper_secondLine,
+        &__wrapper_thirdLine,
+        &__wrapper_fourthLine {
+            flex-direction: column;
+            width: 100%;
+            margin-top: 0;
+            gap: 16px;
+        }
+
+        // ---- Дополнительные сведения ----
+        &__additionalInformation {
+            width: 100%;
+            gap: 20px;
+        }
+
+        &__additionalInputs {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 16px;
+        }
+
+        // Сброс фикс. vw-размеров полей — на мобиле всё во всю ширину
+        &__input_date,
+        &__input_birthplace,
+        &__input_hero,
+        &__input_user,
+        &__input_email,
+        &__input_additional {
+            width: 100%;
+            margin-top: 0;
+        }
+    }
+
+    // ---- Select ----
+    .select {
+        width: 100%;
+        margin-top: 0;
+        font-size: 16px;
+    }
+
+    // ---- Согласие / кнопка ----
+    .agreementContainer {
+        width: 100%;
+        gap: 16px;
+        padding-top: 8px;
+
+        a {
+            font-size: 12px;
+        }
+    }
+
+    .checkboxWrapper {
+        width: 100%;
+    }
+
+    .button {
+        width: 100%;
+        font-size: 16px;
+        padding: 14px 24px;
+        border-radius: 14px;
+    }
+
+    .button_small {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+
+    // ---- Превью / галерея доп. изображений ----
+    .previewImageWrapper {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .previewImage {
+        min-width: 100%;
+        min-height: 100%;
+        margin-left: 0;
+    }
+
+    .additionalImagesGrid {
+        position: static;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding-bottom: 0;
+        height: auto;
+    }
+
+    .additionalImageWrapper {
+        width: 100%;
+        height: 0;
+        padding-bottom: 125%;
+    }
+
+    .additionalImagePreview {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
