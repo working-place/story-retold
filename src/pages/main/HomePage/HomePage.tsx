@@ -6,19 +6,19 @@ export default function HomePage() {
     return (
         <>
             <div className={styles.main}>
-                <h1
+                {/* <h1
                     className={styles.main_title}
                     style={{ fontFamily: 'Glanz', fontWeight: 400 }}
                 >
                     История, рассказанная заново
-                </h1>
+                </h1> */}
                 <img
                     className={styles.main_paperImg}
-                    src="/paper-main.png" alt="Газета" />
+                    src="/paper-main_full.png" alt="Газета" />
 
-                <img
+                {/* <img
                     className={styles.main_photoImg}
-                    src="/photo.png" alt="Фотография" />
+                    src="/photo.png" alt="Фотография" /> */}
             </div>
 
             <img
