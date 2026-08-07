@@ -2,17 +2,15 @@ import { useMemo, useState, useEffect, useCallback } from "react";
 import ImagedCard from "../../../components/common/Card/ImagedCard";
 import TextCard from "../../../components/common/Card/TextCard";
 import Filter from "../../../components/common/Filter";
+import Button from "../../../components/common/Button/Button";
 import styles from "./HeroesPage.module.scss";
 import type { Hero } from "../../../types/card.types";
 import type { Chapter } from "../../../types/api.types";
 import { heroesApi, ApiError } from "../../../services/api/heroes";
 
 interface HeroesPageProps {
-    /** Раздел героев на бэкенде. */
     chapter: Chapter;
-    /** Заголовок страницы/фильтра. */
     title: string;
-    /** Хлебные крошки. */
     path?: string;
     text?: string;
 }
@@ -44,12 +42,16 @@ export default function HeroesPage({ chapter, title, path, text }: HeroesPagePro
             }
         };
 
-        fetchHeroes();
+        void fetchHeroes();
     }, [chapter]);
 
     const handleSearchResults = useCallback((results: Hero[]): void => {
         setFilteredHeroes(results);
-    }, []);
+    }, [],);
+
+    const handleResetFilter = () => {
+        setFilteredHeroes(allHeroes);
+    };
 
     const heroesWithImage: Hero[] = useMemo(() => {
         return filteredHeroes.filter((hero: Hero) => hero.img && hero.img.trim() !== '');
@@ -58,8 +60,6 @@ export default function HeroesPage({ chapter, title, path, text }: HeroesPagePro
     const heroesWithoutImage: Hero[] = useMemo(() => {
         return filteredHeroes.filter((hero: Hero) => !hero.img || hero.img.trim() === '');
     }, [filteredHeroes]);
-
-    const hasHeroes: boolean = heroesWithImage.length > 0 || heroesWithoutImage.length > 0;
 
     if (loading) {
         return (
@@ -76,21 +76,6 @@ export default function HeroesPage({ chapter, title, path, text }: HeroesPagePro
             <div className={styles.heroesPage}>
                 <div className={styles.error}>
                     <p>{error}</p>
-                </div>
-            </div>
-        );
-    }
-
-    if (!hasHeroes) {
-        return (
-            <div className={styles.heroesPage}>
-                <div className={styles.title}>
-                    <p className={styles.title__path}>
-                        {currentPath} {text && `| ${text}`}
-                    </p>
-                </div>
-                <div className={styles.noHeroes}>
-                    <p>Нет данных о героях</p>
                 </div>
             </div>
         );
@@ -129,9 +114,14 @@ export default function HeroesPage({ chapter, title, path, text }: HeroesPagePro
                 </section>
             )}
 
-            {filteredHeroes.length === 0 && allHeroes.length > 0 && (
+            {filteredHeroes.length === 0 && (
                 <div className={styles.noResults}>
-                    <p>По вашему запросу ничего не найдено</p>
+                    <p>{allHeroes.length === 0 ? 'Нет данных о героях' : 'По вашему запросу ничего не найдено'}</p>
+                    {allHeroes.length > 0 && (
+                        <Button className={styles.resetButton} onClick={handleResetFilter}>
+                            Вернуться к поиску
+                        </Button>
+                    )}
                 </div>
             )}
         </div>

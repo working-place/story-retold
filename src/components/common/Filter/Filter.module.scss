@@ -32,6 +32,9 @@ h3 {
 
     &__button {
         padding: 20px;
+        width: 100%;
+        align-content: start;
+        justify-content: flex-start;
         height: 69px;
         border-radius: 20px;
         padding: 20px;
@@ -110,6 +113,8 @@ h3 {
         letter-spacing: 29%;
         padding-right: 12.5px;
         color: $brown-color;
+        background-color: transparent;
+        cursor: pointer;
     }
 }
 
@@ -162,5 +167,36 @@ h3 {
     &__inputBox {
         display: flex;
         gap: 20px;
+    }
+}
+
+.filter {
+    &__noResults {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin-top: 24px;
+        width: 100%;
+        text-align: center;
+    }
+
+    &__noResultsText {
+        font-size: 18px;
+        color: $brown-color;
+        font-family: $font-base;
+    }
+
+    &__resetButton {
+        padding: 10px 20px;
+        background-color: $brown-color;
+        color: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+
+        &:hover {
+            opacity: 0.8;
+        }
     }
 }

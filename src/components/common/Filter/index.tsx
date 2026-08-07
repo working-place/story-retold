@@ -45,7 +45,7 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
 
             if (letter) {
                 filteredHeroes = filteredHeroes.filter(hero =>
-                    hero.name.charAt(0).toUpperCase() === letter
+                    hero.name.trim().charAt(0).toUpperCase() === letter
                 );
             }
 
@@ -56,23 +56,18 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
                     if (advancedData.name.trim()) {
                         matches = matches && hero.name.toLowerCase().includes(advancedData.name.toLowerCase().trim());
                     }
-
                     if (advancedData.dateOfBirth.trim()) {
                         matches = matches && hero.dateOfBirth.toLowerCase().includes(advancedData.dateOfBirth.toLowerCase().trim());
                     }
-
                     if (advancedData.dateOfDeath.trim()) {
                         matches = matches && (hero.dateOfDeath?.toLowerCase().includes(advancedData.dateOfDeath.toLowerCase().trim()) ?? false);
                     }
-
                     if (advancedData.placeOfBirth.trim()) {
                         matches = matches && (hero.placeBirth?.toLowerCase().includes(advancedData.placeOfBirth.toLowerCase().trim()) ?? false);
                     }
-
                     if (advancedData.rank.trim()) {
                         matches = matches && hero.range.toLowerCase().includes(advancedData.rank.toLowerCase().trim());
                     }
-
                     if (advancedData.placeOfService.trim()) {
                         matches = matches && (hero.placeService?.toLowerCase().includes(advancedData.placeOfService.toLowerCase().trim()) ?? false);
                     }
@@ -90,48 +85,36 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
         };
     }, [heroes]);
 
-    const resetSimpleSearch = () => {
-        setSearchQuery("");
-        setSelectedLetter(null);
-    };
-
-    const resetAdvancedSearch = () => {
-        setAdvancedFilters({
-            name: "",
-            dateOfBirth: "",
-            dateOfDeath: "",
-            placeOfBirth: "",
-            rank: "",
-            placeOfService: ""
-        });
-    };
-
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSearchQuery(value);
+        setSelectedLetter(null);
+
         if (searchMode !== "advanced") {
-            onSearchResults?.(searchHeroes(value, selectedLetter, searchMode));
+            onSearchResults?.(searchHeroes(value, null, searchMode));
         }
     };
 
     const handleLetterClick = (letter: string) => {
         const newSelectedLetter = selectedLetter === letter ? null : letter;
         setSelectedLetter(newSelectedLetter);
+        setSearchQuery("");
+
         if (searchMode !== "advanced") {
-            onSearchResults?.(searchHeroes(searchQuery, newSelectedLetter, searchMode));
+            onSearchResults?.(searchHeroes("", newSelectedLetter, searchMode));
         }
     };
 
     const handleModeChange = (mode: "all" | "advanced") => {
         if (mode === searchMode) return;
-
         setSearchMode(mode);
 
         if (mode === "advanced") {
-            resetSimpleSearch();
+            setSearchQuery("");
+            setSelectedLetter(null);
             onSearchResults?.(searchHeroes("", null, "advanced", advancedFilters));
         } else {
-            resetAdvancedSearch();
+            setAdvancedFilters({ name: "", dateOfBirth: "", dateOfDeath: "", placeOfBirth: "", rank: "", placeOfService: "" });
             onSearchResults?.(searchHeroes("", null, "all"));
         }
     };
@@ -156,16 +139,16 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
             <div className={styles.filter__variantsContainer}>
                 <h2>{title}</h2>
                 <Button
-                    className={`${styles.filter__button} ${searchMode === "all" ? styles.filter__button_active : ""}`}
-                    onClick={() => handleModeChange("all")}
-                >
-                    Все герои
-                </Button>
-                <Button
                     className={`${styles.filter__button} ${searchMode === "advanced" ? styles.filter__button_active : ""}`}
                     onClick={() => handleModeChange("advanced")}
                 >
                     Точный поиск героя
+                </Button>
+                <Button
+                    className={`${styles.filter__button} ${searchMode === "all" ? styles.filter__button_active : ""}`}
+                    onClick={() => handleModeChange("all")}
+                >
+                    Все герои
                 </Button>
             </div>
 
@@ -210,7 +193,6 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
                     <div className={styles.advancedFilter}>
                         <div className={styles.advancedFilter__mainInfoBox}>
                             <h3>Основные сведения</h3>
-
                             <Input
                                 className={styles.advancedFilter__input}
                                 type='text'
@@ -221,7 +203,6 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
                                 label="Введите ФИО героя"
                                 required
                             />
-
                             <div className={styles.advancedFilter__inputBox}>
                                 <Input
                                     className={`${styles.advancedFilter__input} ${styles.advancedFilter__input_extraSmall}`}

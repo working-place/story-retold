@@ -63,3 +63,16 @@
     padding-top: 47px;
     padding-bottom: 47px;
 }
+
+.noResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    margin-top: 40px;
+    gap: 16px;
+}
+
+.resetButton {}
