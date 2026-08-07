@@ -4,6 +4,18 @@
     flex-direction: column;
     gap: 6px;
     align-items: flex-start;
+
+    // Чтобы поле могло растягиваться на всю ширину родителя в мобильной форме
+    @include respond-below($breakpoint-md) {
+        align-items: stretch;
+        width: 100%;
+
+        // собственный input тоже тянем во всю доступную ширину,
+        // переопределяя фикс. vw-размеры из Form.module.scss
+        .input {
+            width: 100%;
+        }
+    }
 }
 
 // готово

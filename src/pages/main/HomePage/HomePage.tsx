@@ -1,28 +1,29 @@
 import styles from "./HomePage.module.scss"
+import NewCardForm from "../../../components/common/Form/Form";
 
 export default function HomePage() {
 
     return (
         <>
             <div className={styles.main}>
-                <h1
+                {/* <h1
                     className={styles.main_title}
                     style={{ fontFamily: 'Glanz', fontWeight: 400 }}
                 >
                     История, рассказанная заново
-                </h1>
+                </h1> */}
                 <img
                     className={styles.main_paperImg}
-                    src="/paper-main.png" alt="Газета" />
+                    src="/paper-main_full.png" alt="Газета" />
 
-                <img
+                {/* <img
                     className={styles.main_photoImg}
-                    src="/photo.png" alt="Фотография" />
-
-                <img
-                    className={styles.main_devidigLine}
-                    src="/paper-deviding-main.png" alt="Разделительная линия" />
+                    src="/photo.png" alt="Фотография" /> */}
             </div>
+
+            <img
+                className={styles.divide}
+                src="/paper-deviding-main.png" alt="Разделительная линия" />
 
             <div className={styles.history}>
                 <div className={styles.history_container}>
@@ -77,6 +78,10 @@ export default function HomePage() {
                     className={styles.history_curlHistoryTop}
                     src="/curl-history-top.png" alt="Линия" />
             </div>
+
+            <img
+                className={styles.divide}
+                src="/paper-deviding-history.png" alt="Разделительная линия" />
 
             <div className={styles.about}>
 
@@ -140,7 +145,11 @@ export default function HomePage() {
                     src="/curl-about.png" alt="Линия" />
             </div>
 
-            {/* <div className={styles.hero}> ломает страницу в адаптиве
+            <img
+                className={styles.divide}
+                src="/paper-deviding-about.png" alt="Разделительная линия" />
+
+            <div className={styles.hero}>
                 <h2
                     className={styles.hero_titleForm}
                     style={{ fontFamily: 'Glanz', fontWeight: 400 }}
@@ -148,14 +157,7 @@ export default function HomePage() {
                     Расскажите о герое
                 </h2>
                 <NewCardForm />
-            </div> */}
-
-            <img
-                className={styles.history_devidigLineHisory}
-                src="/paper-deviding-history.png" alt="Разделительная линия" />
-            <img
-                className={styles.about_devide}
-                src="/paper-deviding-about.png" alt="Разделительная линия" />
+            </div>
 
         </>
     )

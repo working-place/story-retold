@@ -1,16 +1,12 @@
-@use "../../../assets/scss/mixins" as *;
-@use "../../../assets/scss/_typography.scss" as *;
-@use "../../../assets/scss/_variables-color.scss" as *;
-
 .main {
-  overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    height: 1008px;
-    background-color: $beige-background;
+    overflow: hidden;
     position: relative;
+    width: 100%;
+    padding-bottom: 52.5%;
+    /* 1008 / 1920 ≈ 0.525 */
+    background-color: $beige-background;
     max-width: 1920px;
+    margin: 0 auto;
 
     &_title {
         position: absolute;
@@ -26,8 +22,13 @@
 
     &_paperImg {
         position: absolute;
-        bottom: 0;
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* сохраняет пропорции, заполняя контейнер */
+        display: block;
     }
 
     &_photoImg {
@@ -37,13 +38,6 @@
         transform: translate(-47%, 0);
         width: 69.3%;
         z-index: 1;
-    }
-
-    &_devidigLine {
-        position: absolute;
-        width: 100%;
-        bottom: -150px;
-        z-index: 5;
     }
 }
 
@@ -116,15 +110,6 @@
         top: 340px;
     }
 
-    &_devidigLineHisory {
-        position: absolute;
-        width: 100%;
-        top: 2170px;
-        left: 0;
-        right: 0;
-        z-index: 5;
-    }
-
     &_arrow {
         position: absolute;
         top: 605px;
@@ -167,7 +152,7 @@
             text-transform: uppercase;
         }
 
-        &__firstLine {}
+        // &__firstLine {}
 
         &__secondLine {
             margin-right: 15px;
@@ -263,39 +248,80 @@
         bottom: 15px;
         right: -15px;
     }
-
-    &_devide {
-        position: absolute;
-        top: 3950px;
-        left: 0;
-        right: 0;
-        width: 100%;
-    }
 }
 
 .hero {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     position: relative;
     background-color: $beige-background;
     height: 1258px;
 
-        &_title,
-        &_titleForm {
-        position: absolute;
+    &_title,
+    &_titleForm {
+        // Заголовок в нормальном потоке: выровнен по левому краю формы
+        // (форма имеет width: 96% и центрируется → её отступ слева = 2%)
+        width: 96%;
+        box-sizing: border-box;
+        padding-left: 49px;
+        margin-top: 75px;
         color: $brown-color;
-        z-index: 1;
-        top: 75px;
-        left: 44px;
         font-weight: 200;
-        text-align: right;
+        text-align: left;
         font-size: 80px;
         text-transform: uppercase;
     }
 
-    &_titleForm {
-        text-align: left;
+    &_title {
+        text-align: right;
     }
+
+    // --- ПЛАНШЕТЫ / НОУТБУКИ (768–1919) ---
+    // Высота перестаёт быть жёсткой — растём по контенту, иначе форма не поместится.
+    @include respond-below($breakpoint-xxxl) {
+        height: auto;
+        min-height: 1258px;
+    }
+
+    @include respond-below($breakpoint-xxxl) {
+
+        &_title,
+        &_titleForm {
+            font-size: clamp(40px, 4.2vw, 80px);
+            margin-top: clamp(32px, 3.9vw, 75px);
+            padding-left: clamp(16px, 2.55vw, 49px);
+        }
+    }
+
+    // --- МОБАЙЛ (≤767) ---
+    @include respond-below($breakpoint-md) {
+        min-height: auto;
+        padding-bottom: 40px;
+
+        &_title,
+        &_titleForm {
+            width: 100%;
+            padding-left: 16px;
+            padding-right: 16px;
+            margin-top: 24px;
+            font-size: 32px;
+            line-height: 1.1;
+        }
+    }
+}
+
+// Разделитель между секциями. Картинка 1920x279.
+// Половина высоты перекрывает верхний блок, половина — нижний.
+// Перекрытие масштабируется вместе с шириной страницы (vw), поэтому
+// позиция никогда не задаётся вручную: блок всегда ровно "между" соседями.
+.divide {
+    display: block;
+    width: 100%;
+    height: auto;
+    // 279px высоты при ширине 1920px → половина = 139.5px ≈ 7.27vw
+    margin-top: calc(-279px / 1920px * 100vw / 2);
+    margin-bottom: calc(-279px / 1920px * 100vw / 2);
+    position: relative;
+    z-index: 5;
 }

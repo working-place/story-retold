@@ -471,3 +471,279 @@ height: 100%;
 //   text-overflow: ellipsis;
 //   white-space: nowrap;
 // }
+
+// ==================================================
+//  АДАПТИВ
+//  1920px — desktop-вёрстка остаётся «as is» (правила выше).
+//  Планшеты / ноутбуки (768–1919) — плавное масштабирование:
+//    разрешаем перенос колонок формы, ужимаем padding/gap, чтобы
+//    vw-ширины полей не ломали вёрстку. Идея позиционирования та же.
+//  Мобайл (≤767) — вертикальный макет: всё в столбик, поля на всю
+//    ширину, upload-зоны стопкой.
+// ==================================================
+
+// ----------------------------------------------------
+//  ПЛАНШЕТЫ / НОУТБУКИ (768–1919)
+//  Макет максимально близок к ПК: 3 колонки остаются в ряд
+//  (переноса самих колонок нет). Все фиксированные px-отступы
+//  переведены в пропорциональные vw-эквиваленты через clamp() —
+//  на 1920px computed-значения те же, а ниже весь макет
+//  масштабируется синхронно с vw-полями.
+//
+//  Release-клапаны (только ниже 1920, на десктопе as-is):
+//   • min-width: 0 у колонок — flex может сжимать их синхронно;
+//   • перенос текста кнопки submit (иначе её nowrap фиксирует
+//     min-ширину 3-й колонки на ~318px);
+//   • flex-wrap у строки из 3 дат/место-рождения — на узких
+//     экранах поля переходят на 2-ю строку, не разрывая макет.
+// ----------------------------------------------------
+@include respond-below($breakpoint-xxxl) {
+    .form {
+        // 3 колонки остаются в ряд
+        gap: clamp(20px, 2.45vw, 47px);
+        padding: clamp(40px, 5vw, 96px) clamp(20px, 2.55vw, 49px) clamp(40px, 4.69vw, 90px);
+        margin-top: clamp(32px, 3.91vw, 75px);
+        min-height: auto;
+
+        &__upload,
+        &__basicInformation,
+        &__additionalInformation {
+            min-width: 0;
+        }
+
+        // Пропорции колонок как на ПК (1920px → 21% / 55% / 24%):
+        // фиксируем через flex-basis, чтобы при сужении экрана колонки
+        // сжимались синхронно и макет оставался похожим на десктоп.
+        &__upload {
+            flex: 0 1 21%;
+        }
+
+        &__basicInformation {
+            flex: 1 1 55%;
+        }
+
+        &__additionalInformation {
+            flex: 0 1 24%;
+        }
+
+        // Внутренние отступы/gap секций — vw-эквиваленты
+        &__upload {
+            gap: clamp(20px, 2.34vw, 45px);
+        }
+
+        &__uploadArea {
+            // ниже 1920 зона подстраивается под ширину своей колонки,
+            // а не держит фикс. 18vw (иначе вылезает за узкий flex-блок)
+            width: 100%;
+            max-width: 100%;
+            gap: clamp(16px, 2.08vw, 40px);
+            padding: clamp(18px, 1.88vw, 36px) clamp(12px, 1.04vw, 20px);
+
+            img {
+                margin-top: clamp(12px, 1.56vw, 30px);
+            }
+        }
+
+        &__basicInformation {
+            gap: clamp(16px, 1.82vw, 35px);
+        }
+
+        &__additionalInformation {
+            gap: clamp(14px, 1.56vw, 30px);
+        }
+
+        // Строка «даты + место рождения» — на узких переносится на 2 строки
+        &__wrapper_firstLine {
+            flex-wrap: wrap;
+            gap: clamp(10px, 1.04vw, 20px);
+        }
+
+        &__wrapper_thirdLine {
+            gap: clamp(10px, 1.04vw, 20px);
+        }
+
+        &__wrapper_secondLine,
+        &__wrapper_thirdLine,
+        &__wrapper_fourthLine {
+            margin-top: clamp(8px, 0.89vw, 17px);
+        }
+    }
+
+    // Кнопка submit: разрешаем перенос текста, чтобы не фиксировать
+    // min-ширину колонки «Дополнительные сведения».
+    .button {
+        white-space: normal;
+        text-align: center;
+    }
+}
+
+// ----------------------------------------------------
+//  МОБАЙЛ (≤767)
+// ----------------------------------------------------
+@include respond-below($breakpoint-md) {
+    .form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: auto;
+        margin-top: 32px;
+        gap: 36px;
+        padding: 28px 16px;
+        border-radius: 16px;
+
+        // ---- Заголовки секций ----
+        &__title {
+            font-size: 22px;
+        }
+
+        &__titleUpload {
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        &__subtitle {
+            font-size: 13px;
+        }
+
+        &__titleWrapper {
+            gap: 8px;
+        }
+
+        // ---- Блок загрузки фото ----
+        &__upload {
+            flex-direction: column;
+            width: 100%;
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        &__uploadArea {
+            width: 100%;
+            gap: 20px;
+            padding: 24px 16px;
+
+            img {
+                margin-top: 8px;
+                width: 56px;
+                height: 56px;
+            }
+
+            &_primary {
+                height: auto;
+                min-height: 220px;
+            }
+
+            &_secondary {
+                height: auto;
+                min-height: 180px;
+            }
+        }
+
+        // ---- Основные сведения ----
+        &__basicInformation {
+            width: 100%;
+            gap: 20px;
+        }
+
+        &__wrapper_firstLine,
+        &__wrapper_secondLine,
+        &__wrapper_thirdLine,
+        &__wrapper_fourthLine {
+            flex-direction: column;
+            width: 100%;
+            margin-top: 0;
+            gap: 16px;
+        }
+
+        // ---- Дополнительные сведения ----
+        &__additionalInformation {
+            width: 100%;
+            gap: 20px;
+        }
+
+        &__additionalInputs {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 16px;
+        }
+
+        // Сброс фикс. vw-размеров полей — на мобиле всё во всю ширину
+        &__input_date,
+        &__input_birthplace,
+        &__input_hero,
+        &__input_user,
+        &__input_email,
+        &__input_additional {
+            width: 100%;
+            margin-top: 0;
+        }
+    }
+
+    // ---- Select ----
+    .select {
+        width: 100%;
+        margin-top: 0;
+        font-size: 16px;
+    }
+
+    // ---- Согласие / кнопка ----
+    .agreementContainer {
+        width: 100%;
+        gap: 16px;
+        padding-top: 8px;
+
+        a {
+            font-size: 12px;
+        }
+    }
+
+    .checkboxWrapper {
+        width: 100%;
+    }
+
+    .button {
+        width: 100%;
+        font-size: 16px;
+        padding: 14px 24px;
+        border-radius: 14px;
+    }
+
+    .button_small {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+
+    // ---- Превью / галерея доп. изображений ----
+    .previewImageWrapper {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .previewImage {
+        min-width: 100%;
+        min-height: 100%;
+        margin-left: 0;
+    }
+
+    .additionalImagesGrid {
+        position: static;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding-bottom: 0;
+        height: auto;
+    }
+
+    .additionalImageWrapper {
+        width: 100%;
+        height: 0;
+        padding-bottom: 125%;
+    }
+
+    .additionalImagePreview {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
