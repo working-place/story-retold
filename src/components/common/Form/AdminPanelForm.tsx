@@ -252,8 +252,14 @@ export default function AdminPanelForm() {
                             <CustomSelectAdmin
                                 className={styles.selectForm}
                                 required
-                                onChapterChange={form.handleChapterChange}
-                                onCardTypeChange={form.handleCardTypeChange}
+                                onChapterChange={(value) => {
+                                    if (value !== null) {
+                                        form.handleChapterChange(value);
+                                    }
+                                }}
+                                onCardTypeChange={(value) => {
+                                    form.handleCardTypeChange(value ?? undefined);
+                                }}
                             />
                         </div>
                         <InputAdmin

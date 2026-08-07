@@ -1,20 +1,36 @@
-import type { Chapter, CardType } from '../types/api.types';
+export type ChapterType = 'svo' | 'gpw';
+export type CardType = 'withPhoto' | 'withoutPhoto';
 
-/** Форма карточки героя — общая для создания (публичная/админ) и редактирования. */
 export interface CardFormData {
   dateBirth: string;
-  dateDeath: string;
+  dateDeath?: string;
   placeBirth: string;
   name: string;
   nameAndClass: string;
-  email: string;
+  email?: string;
   description: string;
-  militaryRank: string;
-  placeService: string;
-  placeConscription: string;
-  chapter: Chapter | null;
-  cardType: CardType | null;
+  militaryRank?: string;
+  placeService?: string;
+  placeConscription?: string;
+  chapter: ChapterType;
+  cardType?: CardType;
+  consent?: boolean | number | string;
+  privacyPolicy?: boolean | number | string;
 }
+
+export interface CardFilesInput {
+  photoHero?: File | null;
+  additionalImages?: File[];
+}
+
+export interface ExistingAdditionalImage {
+  id: number;
+  url: string;
+  deleted?: boolean;
+}
+
+export const MAX_ADDITIONAL_IMAGES = 9; // Синхронизировано с UI (9 фото)
+export const MAX_FILE_SIZE_MB = 4;
 
 export const EMPTY_CARD_FORM: CardFormData = {
   dateBirth: '',
@@ -27,133 +43,120 @@ export const EMPTY_CARD_FORM: CardFormData = {
   militaryRank: '',
   placeService: '',
   placeConscription: '',
-  chapter: null,
-  cardType: null,
+  chapter: 'svo',
+  cardType: 'withoutPhoto',
 };
 
-/** Поля, обязательные к заполнению во всех режимах. */
-export const REQUIRED_FIELDS = ['name', 'dateBirth', 'placeBirth', 'nameAndClass', 'description'] as const;
-export type RequiredField = (typeof REQUIRED_FIELDS)[number];
+export const REQUIRED_FIELDS: (keyof CardFormData)[] = [
+  'name',
+  'dateBirth',
+  'placeBirth',
+  'nameAndClass',
+  'description',
+  'chapter',
+];
 
-/** Человекочитаемые сообщения об ошибках для обязательных полей. */
-export const FIELD_ERROR_MESSAGES: Record<RequiredField, string> = {
-  name: 'Введите ФИО героя',
-  dateBirth: 'Введите дату рождения',
-  placeBirth: 'Введите место рождения',
-  nameAndClass: 'Введите ФИО и класс автора',
-  description: 'Введите описание материала',
+export const validateFileSize = (file: File): string | null => {
+  const maxSizeInBytes = MAX_FILE_SIZE_MB * 1024 * 1024;
+  if (file.size > maxSizeInBytes) {
+    return `Размер файла "${file.name}" превышает ${MAX_FILE_SIZE_MB} МБ`;
+  }
+  return null;
 };
 
-export const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4 MB
-export const MAX_ADDITIONAL_IMAGES = 9;
-
-export function getFieldError(
+export const getFieldError = (
   formData: CardFormData,
   touched: Record<string, boolean>,
   field: string
-): string | undefined {
+): string | undefined => {
   if (!touched[field]) return undefined;
 
-  const requiredField = REQUIRED_FIELDS.find((f) => f === field);
-  if (requiredField && !formData[requiredField]) {
-    return FIELD_ERROR_MESSAGES[requiredField];
+  const key = field as keyof CardFormData;
+  const value = formData[key];
+
+  if (REQUIRED_FIELDS.includes(key) && (!value || String(value).trim() === '')) {
+    return 'Это поле обязательно для заполнения';
   }
+
   return undefined;
+};
+
+export interface ValidateOptions {
+  requireConsent?: boolean;
+  isAgreed?: boolean;
+  isPolicyAgreed?: boolean;
+  hasPhoto?: boolean;
+  existingPhoto?: boolean;
 }
 
-export interface ValidationResult {
-  valid: boolean;
-  error?: string;
-}
-
-/**
- * Валидация формы карточки. Логика общая для всех режимов.
- * `requireConsent` — публичная форма требует согласий, админская — нет.
- * `photoHero` / `existingPhotoHero` — нужны, чтобы проверить фото для карточки с фото.
- */
-export function validateCardForm(
+export const validateCardForm = (
   formData: CardFormData,
-  options: {
-    requireConsent?: boolean;
-    isAgreed?: boolean;
-    isPolicyAgreed?: boolean;
-    hasPhoto?: boolean;
-    existingPhoto?: boolean;
-  } = {}
-): ValidationResult {
-  const { requireConsent = false, isAgreed, isPolicyAgreed, hasPhoto, existingPhoto } = options;
-
+  options: ValidateOptions = {}
+): { valid: boolean; error?: string } => {
   for (const field of REQUIRED_FIELDS) {
-    if (!formData[field]) {
+    const val = formData[field];
+    if (!val || String(val).trim() === '') {
       return { valid: false, error: 'Пожалуйста, заполните все обязательные поля' };
     }
   }
 
-  if (!formData.chapter) {
-    return { valid: false, error: 'Выберите раздел (Герой СССР или Герой СВО)' };
-  }
-
-  if (!formData.cardType) {
-    return { valid: false, error: 'Выберите тип карточки' };
-  }
-
-  if (formData.cardType === 'withPhoto' && !hasPhoto && !existingPhoto) {
-    return { valid: false, error: 'Для карточки с фото необходимо загрузить фотографию героя' };
-  }
-
-  if (requireConsent && !isAgreed) {
-    return { valid: false, error: 'Необходимо согласие на обработку персональных данных' };
-  }
-
-  if (requireConsent && !isPolicyAgreed) {
-    return { valid: false, error: 'Необходимо ознакомиться с Политикой обработки персональных данных' };
+  if (options.requireConsent) {
+    if (!options.isAgreed || !options.isPolicyAgreed) {
+      return {
+        valid: false,
+        error: 'Необходимо согласие с условиями и политикой конфиденциальности',
+      };
+    }
   }
 
   return { valid: true };
-}
+};
 
-/** Строит FormData для отправки на сервер из состояния формы. */
-export function buildCardFormData(
+export const buildCardFormData = (
   formData: CardFormData,
-  options: {
-    photoHero?: File | null;
-    additionalImages?: File[];
-  } = {}
-): FormData {
-  const { photoHero, additionalImages = [] } = options;
-  const submitData = new FormData();
+  files: CardFilesInput,
+  deletedImageIds: number[] = [],
+  existingPhotoHero: string | null = null
+): FormData => {
+  const formDataObj = new FormData();
 
-  submitData.append('dateBirth', formData.dateBirth);
-  submitData.append('placeBirth', formData.placeBirth);
-  submitData.append('name', formData.name);
-  submitData.append('nameAndClass', formData.nameAndClass);
-  submitData.append('description', formData.description);
-  submitData.append('chapter', formData.chapter!);
-  submitData.append('cardType', formData.cardType!);
-  submitData.append('consent', '1');
-  submitData.append('privacyPolicy', '1');
+  const hasPhoto = Boolean(files.photoHero || existingPhotoHero);
+  const cardType: CardType = hasPhoto ? 'withPhoto' : 'withoutPhoto';
+  formDataObj.append('cardType', cardType);
 
-  if (formData.dateDeath) submitData.append('dateDeath', formData.dateDeath);
-  if (formData.email) submitData.append('email', formData.email);
-  if (formData.militaryRank) submitData.append('militaryRank', formData.militaryRank);
-  if (formData.placeService) submitData.append('placeService', formData.placeService);
-  if (formData.placeConscription) submitData.append('placeConscription', formData.placeConscription);
-
-  if (formData.cardType === 'withPhoto' && photoHero) {
-    submitData.append('photoHero', photoHero);
-  }
-
-  additionalImages.forEach((img, index) => {
-    submitData.append(`additionalCardImages[${index}][image]`, img);
+  Object.entries(formData).forEach(([key, value]) => {
+    if (
+      key !== 'cardType' &&
+      key !== 'consent' &&
+      key !== 'privacyPolicy' &&
+      value !== undefined &&
+      value !== null
+    ) {
+      formDataObj.append(key, String(value));
+    }
   });
 
-  return submitData;
-}
+  if (formData.consent) formDataObj.append('consent', '1');
+  if (formData.privacyPolicy) formDataObj.append('privacyPolicy', '1');
 
-/** Проверка размера файла. Возвращает текст ошибки или null. */
-export function validateFileSize(file: File): string | null {
-  if (file.size > MAX_FILE_SIZE) {
-    return 'Размер файла не должен превышать 4 MB';
+  if (files.photoHero instanceof File) {
+    formDataObj.append('photoHero', files.photoHero);
   }
-  return null;
-}
+
+  if (Array.isArray(files.additionalImages)) {
+    files.additionalImages.forEach((file, index) => {
+      if (file instanceof File) {
+        formDataObj.append(`additionalCardImages[${index}][image]`, file);
+      }
+    });
+  }
+
+  if (deletedImageIds.length > 0) {
+    deletedImageIds.forEach((id) => {
+      formDataObj.append('deleted_images[]', String(id));
+      formDataObj.append('deleted_image_ids[]', String(id));
+    });
+  }
+
+  return formDataObj;
+};

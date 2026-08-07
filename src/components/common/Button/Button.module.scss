@@ -54,6 +54,16 @@
   // }
 }
 
+.bright {
+  background-color:  $beige-background;
+  color: $brown-color;
+
+  // &:hover:not(:disabled) {
+  //   /* Заменяем lighten на color.scale */
+  //   background-color: color.scale($green-color, $lightness: 10%);
+  // }
+}
+
 .outline {
   background-color: transparent;
   border: 2px solid $brown-color;

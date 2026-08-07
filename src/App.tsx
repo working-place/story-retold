@@ -17,6 +17,7 @@ import AdminEditForm from "./components/common/Form/AdminEditForm";
 import ReviewCards from "./components/admin/ReviewCards/ReviewCards";
 import NotFoundPage from "./pages/main/NotFoundPage/NotFoundPage";
 import PreviewHeroPage from "./pages/main/HeroDetailPage/PreviewHeroPage";
+import FeedBackPage from "./pages/main/FeedBackPage/FeedBackPage";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
           >
             <Route path="new-card" element={<AdminPanelForm />} />
             <Route path="on-review" element={<ReviewCards />} />
+            <Route path="feedback" element={<FeedBackPage/>} />
             <Route path="edit/:id" element={<AdminEditForm />} />
             <Route path="ussr-heroes" element={<HeroAllCards type="gpw" title="Герои СССР" />} />
             <Route path="svo-heroes" element={<HeroAllCards type="svo" title="Герои СВО" />} />

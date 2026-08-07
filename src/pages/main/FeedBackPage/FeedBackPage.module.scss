@@ -1,0 +1,174 @@
+    .feedbackCard {
+      display: flex;
+      flex-direction: column;
+      width: 96%;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      min-height: 1017px;
+      height: fit-content;
+      background-color: #FDF7E9;
+      border-radius: 20px;
+      gap: 25px;
+      padding: 96px 49px 90px 49px;
+
+      &_titleContainer {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &_container {
+        display: flex;
+        width: 100%;
+        gap: 31px;
+      }
+
+      &_title {
+        font-family: "Roboto", "Metamorphous", serif;
+        font-size: 28px;
+        font-weight: 600;
+        color: #1A1A1A;
+        text-align: left;
+      }
+
+      &_exitButton {
+        display: flex;
+        justify-content: center;
+        background-color: $green-color;
+        border-radius: 20px;
+        min-width: 148px;
+        padding: 10px 24px;
+        color: $beige-soft;
+        font-size: 24px;
+      }
+
+      &_wrapper {
+        display: flex;
+        gap: 23px;
+        width: 100%;
+      }
+
+      &_infoContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      &_infoRow {
+        text-align: left;
+      }
+
+      &_imageWrapper,
+      &_image {
+        border-radius: 20px;
+      }
+
+      &_dateWrapper {
+        display: flex;
+        gap: 18px;
+      }
+
+      &_image {
+        width: 100%;
+      }
+
+      &_card,
+      &_form {
+        display: flex;
+        flex-direction: column;
+        background-color: $brown-color;
+        width: 50%;
+        height: fit-content;
+        border-radius: 20px;
+        padding: 31px 23px;
+        gap: 23px;
+      }
+
+      &_card {
+        min-height: 856px;
+      }
+
+      &_form {
+        min-height: 698px;
+      }
+
+      &_infoRow {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      &_name {
+        font-size: 25px;
+      }
+
+      &_label {
+        font-size: 20px;
+      }
+
+      &_name,
+      &_label {
+        width: 100%;
+        text-align: left;
+        color: $beige-background;
+        font-weight: 400;
+      }
+
+      &_value {
+        font-size: 16px;
+      }
+
+      &_description {
+        font-size: 18px;
+      }
+
+      &_value,
+      &_description {
+        width: 100%;
+        text-align: left;
+        color: $beige-background;
+        font-weight: 400;
+      }
+
+      &_buttonWrapper {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .customLabel {
+        color: $beige-background !important;
+        font-weight: 400;
+
+        span {
+          color: #FDF7E9 !important;
+          margin-left: 4px;
+          font-size: 16px;
+        }
+      }
+
+      .customInput {
+        font-weight: 400;
+      }
+
+      &_textarea {
+        font-weight: 400;
+        background-color: #FDF7E9 !important;
+        padding: 12px 20px !important;
+
+        &::placeholder {
+          opacity: 0.6 !important;
+        }
+      }
+    }
+
+    .customLabel {
+      font-weight: 400;
+    }
+
+    .errorText {
+      color: $color-error;
+    }
+
+    .successText {
+      color: $color-success;
+    }

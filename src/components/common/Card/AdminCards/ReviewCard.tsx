@@ -67,7 +67,7 @@ export default function ReviewCard({
                                 Перейти к редактированию
                             </Link>
                             <Link
-                                to={``}
+                                to={`/admin-heroes/feedback?cardId=${card.id}`}
                                 className={styles.reviewCard__button}
                             >
                                 Направить комментарии

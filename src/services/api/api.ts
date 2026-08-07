@@ -1,4 +1,4 @@
-export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL ?? '';
+export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL ?? 'https://digital-memory.ru/api';
 
 export const BACKEND_ORIGIN: string =
   import.meta.env.VITE_BACKEND_URL || 'https://digital-memory.ru/api';

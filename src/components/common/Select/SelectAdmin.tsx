@@ -60,7 +60,7 @@ const getInitialCards = (initialCardType?: 'withPhoto' | 'withoutPhoto' | null):
 const CustomDropdownIndicatorFirst = (props: DropdownIndicatorProps<OptionType>) => {
     return (
         <components.DropdownIndicator {...props}>
-            <svg width="24" height="24" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.3611 6.2499V3.47212C17.3611 1.93799 16.1175 0.694336 14.5834 0.694336H3.47223C1.9381 0.694336 0.694443 1.93799 0.694443 3.47212V14.861C0.694443 16.3952 1.9381 17.6388 3.47223 17.6388H6.11112" stroke="#534035" strokeWidth="1.38889" />
                 <rect x="9.72232" y="9.86095" width="15.2778" height="15.5556" rx="2.08334" stroke="#534035" strokeWidth="1.38889" />
                 <path d="M21.7362 12.4995L21.8622 12.5132C22.147 12.5779 22.3612 12.8583 22.3612 13.1938C22.3612 13.5294 22.147 13.8098 21.8622 13.8745L21.7362 13.8882H12.8475V13.8696C12.5693 13.7994 12.3612 13.5243 12.3612 13.1938C12.3613 12.8634 12.5692 12.5872 12.8475 12.5171V12.4995H21.7362Z" fill="#534035" />
@@ -74,7 +74,7 @@ const CustomDropdownIndicatorFirst = (props: DropdownIndicatorProps<OptionType>)
 const CustomDropdownIndicatorSecond = (props: DropdownIndicatorProps<OptionType>) => {
     return (
         <components.DropdownIndicator {...props}>
-            <svg width="22" height="24" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="23" height="25" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="0.695" y="6.43182" width="11.1564" height="17.1287" rx="0.945051" stroke="#534035" strokeWidth="1.39" />
                 <path d="M8.28271 7.54883H8.61072C9.5165 7.54883 10.2508 8.2831 10.2508 9.18888V9.28249" stroke="#534035" strokeWidth="0.574018" />
                 <path d="M8.46752 5.93376L9.93498 1.80652C10.2335 0.967059 11.1518 0.503517 12.0038 0.762218L20.2173 3.25604C21.084 3.51919 21.5573 4.43006 21.2744 5.29052L16.5016 19.8072C16.2154 20.6776 15.2665 21.1611 14.3946 20.8807L11.8413 20.0599" stroke="#534035" strokeWidth="1.39" />
@@ -192,6 +192,22 @@ const CustomSelectAdmin: React.FC<CustomSelectAdminProps> = ({
 }) => {
     const [hero, setHero] = useState<OptionType | null>(() => getInitialHero(initialChapter));
     const [cards, setCards] = useState<OptionType | null>(() => getInitialCards(initialCardType));
+
+    // Храним предыдущие значения пропсов для отслеживания изменений во время рендера
+    const [prevInitialChapter, setPrevInitialChapter] = useState(initialChapter);
+    const [prevInitialCardType, setPrevInitialCardType] = useState(initialCardType);
+
+    // Синхронизация состояния во время рендера без использования useEffect
+    if (initialChapter !== prevInitialChapter) {
+        setPrevInitialChapter(initialChapter);
+        setHero(getInitialHero(initialChapter));
+    }
+
+    if (initialCardType !== prevInitialCardType) {
+        setPrevInitialCardType(initialCardType);
+        setCards(getInitialCards(initialCardType));
+    }
+
     const [touched, setTouched] = useState({ hero: false, cards: false });
 
     const handleHeroBlur = () => setTouched(prev => ({ ...prev, hero: true }));

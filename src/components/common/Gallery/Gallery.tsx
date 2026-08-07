@@ -17,8 +17,8 @@ export default function Gallery({
   authorInfo
 }: GalleryProps) {
 
-  console.log('📸 Gallery cardData:', cardData);
-  console.log('📸 Gallery images (preview):', images);
+  // console.log('📸 Gallery cardData:', cardData);
+  // console.log('📸 Gallery images (preview):', images);
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});

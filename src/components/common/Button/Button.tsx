@@ -7,7 +7,7 @@ interface ButtonProps {
     onClick?: () => void;
     type?: "button" | "submit" | "reset";
     disabled?: boolean;
-    variant?: "primary" | "secondary" | "outline" | "ghost";
+    variant?: "primary" | "secondary" | "outline" | "ghost" | "bright";
     size?: "small" | "medium" | "large";
     backgroundColor?: string;
     color?: string;

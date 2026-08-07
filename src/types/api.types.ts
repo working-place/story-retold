@@ -32,7 +32,7 @@ export interface ChangePasswordRequest {
 
 // ============ Card (Hero) DTOs ============
 
-export type Chapter = 'svo' | 'gpw';
+export type Chapter = 'svo' | 'gpw' ;
 export type CardType = 'withPhoto' | 'withoutPhoto';
 
 export interface AdditionalCardImage {
