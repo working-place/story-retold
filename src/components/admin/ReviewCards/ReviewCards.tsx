@@ -3,20 +3,29 @@ import ReviewCard from "../../common/Card/AdminCards/ReviewCard";
 import styles from "./ReviewCards.module.scss";
 import { heroesApi, ApiError } from "../../../services/api/heroes";
 import type { CardData } from "../../../types/card.types";
-import Button from "../../common/Button/Button";
+import ReviewCardsTitle from "./ReviewCardsTitle";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 
 export default function ReviewCards() {
     const [cards, setCards] = useState<CardData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleExit = () => {
+        logout();
+        navigate("/login");
+    };
+
     useEffect(() => {
         const fetchCards = async () => {
             setLoading(true);
             setError(null);
             try {
-                // Карточки на модерации: published = false. heroesApi.list
-                // фильтрует на сервере и возвращает Hero[] с заполненным cardData.
                 const heroes = await heroesApi.list({ published: false, perPage: 100 });
                 const cardsData: CardData[] = heroes
                     .map((hero) => hero.cardData)
@@ -67,10 +76,10 @@ export default function ReviewCards() {
 
     return (
         <div className={styles.reviewCards}>
-            <div className={styles.reviewCards__titleContainer}>
-                <h2 className={styles.reviewCards__title}>Просмотр</h2>
-                <Button className={styles.reviewCards__exitButton}>Выйти</Button>
-            </div>
+            <ReviewCardsTitle
+                title="Просмотр"
+                onExit={handleExit}
+            />
             <div className={styles.reviewCards__list}>
                 <ReviewCard cards={cards} />
             </div>

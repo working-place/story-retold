@@ -68,25 +68,25 @@
     align-items: center;
     justify-content: center;
     border-radius: 20px;
+    background-color: transparent;
 }
 
 .deleteButton {
     width: 68px;
     height: 55px;
     border: 1px solid $beige-card;
+    background-color: transparent;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
 }
 
 .button {
-background-color: $beige-card;
-padding: 12px 24px;
-height: 55px;
-width: 196px;
-}
-
-.deleteButton {
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
+    background-color: $beige-card;
+    padding: 12px 24px;
+    height: 55px;
+    width: 196px;
 }
 
 .cardLink {

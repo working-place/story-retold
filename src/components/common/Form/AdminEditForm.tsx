@@ -12,16 +12,25 @@ import { useCardForm } from "../../../hooks/useCardForm";
 import type { CardResponse } from '../../../types/api.types';
 import PublishConfirmPopup from '../../admin/Popups/PublishConfirmPopup';
 import SuccessPopup from '../../admin/Popups/SuccessPopup';
+import ReviewCardsTitle from '../../admin/ReviewCards/ReviewCardsTitle';
+import { useAuth } from "../../../contexts/AuthContext";
 
 export default function AdminEditForm() {
     const { id } = useParams<{ id: string }>() as { id: string | undefined };
-    const navigate = useNavigate();
 
     const [loading, setLoading] = useState<boolean>(false);
     const [fetchLoading, setFetchLoading] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     const [isPublishing, setIsPublishing] = useState<boolean>(false);
     const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState<boolean>(false);
+
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleExit = () => {
+        logout();
+        navigate("/login");
+    };
 
     const form = useCardForm({ mode: 'edit' });
 
@@ -182,7 +191,7 @@ export default function AdminEditForm() {
 
     if (fetchLoading) {
         return (
-            <div className={styles.form}>
+            <div className={styles.info}>
                 <div className={styles.loading}>Загрузка данных...</div>
             </div>
         );
@@ -194,326 +203,332 @@ export default function AdminEditForm() {
     return (
         <>
             <form noValidate onSubmit={handlePublishClick} className={`${styles.form} ${styles.form_admin}`}>
-                {form.error && <div className={styles.errorMessage}>{form.error}</div>}
+                <div className={styles.exitContainer}>
+                    <ReviewCardsTitle
+                        title="Редактирование карточки"
+                        onExit={handleExit}
+                    />
+                </div>
+                <div className={styles.contentWrapper}>
 
-                <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
-                    <h1 className={`${styles.form__titleCard} ${styles.form__title_admin}`}>
-                        Редактирование карточки
-                    </h1>
+                    {form.error && <div className={styles.errorMessage}>{form.error}</div>}
 
-                    {/* Блок главного фото — отображается, если выбран тип "с фото" или если фото уже загружено/существует */}
-                    {showPhotoBlock && (
-                        <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}>
-                            {!form.photoHero && !form.existingPhotoHero ? (
-                                <>
-                                    <img src="/image-download-brown.png" alt="Загрузить" />
-                                    <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
-                                        <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
-                                            Фотографии героя
-                                        </h3>
-                                        <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
-                                            Максимальный размер файла 4 MB
-                                        </h4>
-                                    </div>
-                                    <input
-                                        type="file"
-                                        id="photoHero"
-                                        accept="image/png,image/jpeg,image/jpg,image/webp"
-                                        onChange={form.handlePhotoHeroChange}
-                                        style={{ display: 'none' }}
-                                    />
-                                    <Button
-                                        type="button"
-                                        className={`${styles.button_small} ${styles.button_admin}`}
-                                        onClick={() => document.getElementById('photoHero')?.click()}
-                                        disabled={form.isCompressing}
-                                    >
-                                        Выбрать файл
-                                    </Button>
-                                </>
-                            ) : (
-                                <div className={styles.previewContainer}>
-                                    <div className={styles.previewImageWrapper}>
-                                        <img
-                                            src={getHeroImageUrl()}
-                                            alt="Превью фото героя"
-                                            className={styles.previewImage}
-                                            onError={(e) => {
-                                                console.error('❌ Ошибка загрузки фото:', e);
-                                                e.currentTarget.src = '/404_pic_mob.webp';
-                                            }}
+                    <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
+
+                        {/* Блок главного фото — отображается, если выбран тип "с фото" или если фото уже загружено/существует */}
+                        {showPhotoBlock && (
+                            <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}>
+                                {!form.photoHero && !form.existingPhotoHero ? (
+                                    <>
+                                        <img src="/image-download-brown.png" alt="Загрузить" />
+                                        <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
+                                            <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
+                                                Фотографии героя
+                                            </h3>
+                                            <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
+                                                Максимальный размер файла 4 MB
+                                            </h4>
+                                        </div>
+                                        <input
+                                            type="file"
+                                            id="photoHero"
+                                            accept="image/png,image/jpeg,image/jpg,image/webp"
+                                            onChange={form.handlePhotoHeroChange}
+                                            style={{ display: 'none' }}
                                         />
-                                        <button
-                                            type="button"
-                                            className={styles.removeImageButton}
-                                            onClick={() => {
-                                                form.setPhotoHero(null);
-                                                form.setExistingPhotoHero(null);
-                                                form.handleCardTypeChange('withoutPhoto');
-                                            }}
-                                            aria-label="Удалить фото"
-                                        >
-                                            ×
-                                        </button>
-                                    </div>
-                                    <div className={styles.previewInfo}>
-                                        <p className={styles.previewFileName}>
-                                            {form.photoHero ? form.photoHero.name : 'Текущее фото'}
-                                        </p>
                                         <Button
                                             type="button"
-                                            className={`${styles.button_small} ${styles.button_admin} ${styles.changePhotoButton}`}
+                                            className={`${styles.button_small} ${styles.button_admin}`}
                                             onClick={() => document.getElementById('photoHero')?.click()}
                                             disabled={form.isCompressing}
                                         >
-                                            Заменить фото
+                                            Выбрать файл
                                         </Button>
+                                    </>
+                                ) : (
+                                    <div className={styles.previewContainer}>
+                                        <div className={styles.previewImageWrapper}>
+                                            <img
+                                                src={getHeroImageUrl()}
+                                                alt="Превью фото героя"
+                                                className={styles.previewImage}
+                                                onError={(e) => {
+                                                    console.error('❌ Ошибка загрузки фото:', e);
+                                                    e.currentTarget.src = '/404_pic_mob.webp';
+                                                }}
+                                            />
+                                            <button
+                                                type="button"
+                                                className={styles.removeImageButton}
+                                                onClick={() => {
+                                                    form.setPhotoHero(null);
+                                                    form.setExistingPhotoHero(null);
+                                                    form.handleCardTypeChange('withoutPhoto');
+                                                }}
+                                                aria-label="Удалить фото"
+                                            >
+                                                ×
+                                            </button>
+                                        </div>
+                                        <div className={styles.previewInfo}>
+                                            <p className={styles.previewFileName}>
+                                                {form.photoHero ? form.photoHero.name : 'Текущее фото'}
+                                            </p>
+                                            <Button
+                                                type="button"
+                                                className={`${styles.button_small} ${styles.button_admin} ${styles.changePhotoButton}`}
+                                                onClick={() => document.getElementById('photoHero')?.click()}
+                                                disabled={form.isCompressing}
+                                            >
+                                                Заменить фото
+                                            </Button>
+                                        </div>
+                                        <input
+                                            type="file"
+                                            id="photoHero"
+                                            accept="image/png,image/jpeg,image/jpg,image/webp"
+                                            onChange={form.handlePhotoHeroChange}
+                                            style={{ display: 'none' }}
+                                        />
                                     </div>
-                                    <input
-                                        type="file"
-                                        id="photoHero"
-                                        accept="image/png,image/jpeg,image/jpg,image/webp"
-                                        onChange={form.handlePhotoHeroChange}
-                                        style={{ display: 'none' }}
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    )}
-
-                    <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightSecond}`}>
-                        {totalImagesCount < 1 && (
-                            <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
-                                <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
-                                    Фотографии наград и другие материалы
-                                </h3>
-                                <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
-                                    Максимальный размер файлов 4 MB. Максимум 9 изображений
-                                </h4>
+                                )}
                             </div>
                         )}
 
-                        {/* Существующие дополнительные изображения */}
-                        {activeExistingImages.length > 0 && (
-                            <div className={styles.additionalImagesGrid}>
-                                {activeExistingImages.map((img, index) => {
-                                    const realIndex = form.existingAdditionalImages.findIndex(
-                                        (item) => item.id === img.id
-                                    );
+                        <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightSecond}`}>
+                            {totalImagesCount < 1 && (
+                                <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
+                                    <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
+                                        Фотографии наград и другие материалы
+                                    </h3>
+                                    <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
+                                        Максимальный размер файлов 4 MB. Максимум 9 изображений
+                                    </h4>
+                                </div>
+                            )}
 
-                                    return (
-                                        <div key={`existing-${img.id}`} className={styles.additionalImageItem}>
+                            {/* Существующие дополнительные изображения */}
+                            {activeExistingImages.length > 0 && (
+                                <div className={styles.additionalImagesGrid}>
+                                    {activeExistingImages.map((img, index) => {
+                                        const realIndex = form.existingAdditionalImages.findIndex(
+                                            (item) => item.id === img.id
+                                        );
+
+                                        return (
+                                            <div key={`existing-${img.id}`} className={styles.additionalImageItem}>
+                                                <div className={styles.additionalImageWrapper}>
+                                                    <img
+                                                        src={getAdditionalImageUrl(img)}
+                                                        alt={`Дополнительное фото ${index + 1}`}
+                                                        className={styles.additionalImagePreview}
+                                                        onError={(e) => {
+                                                            console.error('❌ Ошибка загрузки дополнительного фото:', e);
+                                                            e.currentTarget.src = '/placeholder-image.png';
+                                                        }}
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        className={styles.removeAdditionalImageButton}
+                                                        onClick={() => handleRemoveAdditionalImage(realIndex, true)}
+                                                        aria-label="Удалить фото"
+                                                    >
+                                                        ×
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+
+                            {/* Новые дополнительные изображения */}
+                            {form.additionalImages.length > 0 && (
+                                <div className={styles.additionalImagesGrid}>
+                                    {form.additionalImages.map((_, index) => (
+                                        <div key={`new-${index}`} className={styles.additionalImageItem}>
                                             <div className={styles.additionalImageWrapper}>
                                                 <img
-                                                    src={getAdditionalImageUrl(img)}
-                                                    alt={`Дополнительное фото ${index + 1}`}
+                                                    src={additionalImageUrls[index]}
+                                                    alt={`Новое дополнительное фото ${index + 1}`}
                                                     className={styles.additionalImagePreview}
                                                     onError={(e) => {
-                                                        console.error('❌ Ошибка загрузки дополнительного фото:', e);
+                                                        console.error('❌ Ошибка загрузки нового дополнительного фото:', e);
                                                         e.currentTarget.src = '/placeholder-image.png';
                                                     }}
                                                 />
                                                 <button
                                                     type="button"
                                                     className={styles.removeAdditionalImageButton}
-                                                    onClick={() => handleRemoveAdditionalImage(realIndex, true)}
+                                                    onClick={() => handleRemoveAdditionalImage(index, false)}
                                                     aria-label="Удалить фото"
                                                 >
                                                     ×
                                                 </button>
                                             </div>
                                         </div>
-                                    );
-                                })}
-                            </div>
-                        )}
+                                    ))}
+                                </div>
+                            )}
 
-                        {/* Новые дополнительные изображения */}
-                        {form.additionalImages.length > 0 && (
-                            <div className={styles.additionalImagesGrid}>
-                                {form.additionalImages.map((_, index) => (
-                                    <div key={`new-${index}`} className={styles.additionalImageItem}>
-                                        <div className={styles.additionalImageWrapper}>
-                                            <img
-                                                src={additionalImageUrls[index]}
-                                                alt={`Новое дополнительное фото ${index + 1}`}
-                                                className={styles.additionalImagePreview}
-                                                onError={(e) => {
-                                                    console.error('❌ Ошибка загрузки нового дополнительного фото:', e);
-                                                    e.currentTarget.src = '/placeholder-image.png';
-                                                }}
-                                            />
-                                            <button
-                                                type="button"
-                                                className={styles.removeAdditionalImageButton}
-                                                onClick={() => handleRemoveAdditionalImage(index, false)}
-                                                aria-label="Удалить фото"
-                                            >
-                                                ×
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
+                            <input
+                                type="file"
+                                id="additionalImages"
+                                accept="image/png,image/jpeg,image/jpg,image/webp"
+                                multiple
+                                onChange={form.handleAdditionalImagesChange}
+                                style={{ display: 'none' }}
+                                disabled={totalImagesCount >= 9}
+                            />
 
-                        <input
-                            type="file"
-                            id="additionalImages"
-                            accept="image/png,image/jpeg,image/jpg,image/webp"
-                            multiple
-                            onChange={form.handleAdditionalImagesChange}
-                            style={{ display: 'none' }}
-                            disabled={totalImagesCount >= 9}
-                        />
-
-                        {totalImagesCount < 9 && (
-                            <Button
-                                type="button"
-                                className={`${styles.button_small} ${styles.button_admin}`}
-                                onClick={() => document.getElementById('additionalImages')?.click()}
-                                disabled={form.isCompressing}
-                            >
-                                Выбрать файлы ({totalImagesCount}/9)
-                            </Button>
-                        )}
+                            {totalImagesCount < 9 && (
+                                <Button
+                                    type="button"
+                                    className={`${styles.button_small} ${styles.button_admin}`}
+                                    onClick={() => document.getElementById('additionalImages')?.click()}
+                                    disabled={form.isCompressing}
+                                >
+                                    Выбрать файлы ({totalImagesCount}/9)
+                                </Button>
+                            )}
+                        </div>
                     </div>
-                </div>
 
-                <div className={`${styles.form__basicInformation} ${styles.form__basicInformation_admin}`}>
-                    <div className={`${styles.form__wrapper_secondLine} ${styles.form__wrapper_admin}`}>
-                        <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
-                            <CustomSelectAdmin
-                                className={styles.selectForm}
+                    <div className={`${styles.form__basicInformation} ${styles.form__basicInformation_admin}`}>
+                        <div className={`${styles.form__wrapper_secondLine} ${styles.form__wrapper_admin}`}>
+                            <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
+                                <CustomSelectAdmin
+                                    className={styles.selectForm}
+                                    required
+                                    onChapterChange={(value) => {
+                                        if (value !== null) {
+                                            form.handleChapterChange(value);
+                                        }
+                                    }}
+                                    onCardTypeChange={(value) => {
+                                        form.handleCardTypeChange(value ?? undefined);
+                                    }}
+                                    initialChapter={form.formData.chapter}
+                                    initialCardType={form.formData.cardType}
+                                />
+                            </div>
+                            <InputAdmin
+                                className={`${styles.form__input_hero} ${styles.form__input_admin}`}
+                                label="Введите ФИО героя"
+                                placeholder="Введите Ф.И.О."
+                                value={form.formData.name}
+                                onChange={(e) => form.handleInputChange('name', e.target.value)}
+                                onBlur={() => form.handleBlur('name')}
+                                error={!!form.getFieldError('name')}
+                                errorText={form.getFieldError('name')}
                                 required
-                                onChapterChange={(value) => {
-                                    if (value !== null) {
-                                        form.handleChapterChange(value);
-                                    }
-                                }}
-                                onCardTypeChange={(value) => {
-                                    form.handleCardTypeChange(value ?? undefined);
-                                }}
-                                initialChapter={form.formData.chapter}
-                                initialCardType={form.formData.cardType}
                             />
                         </div>
-                        <InputAdmin
-                            className={`${styles.form__input_hero} ${styles.form__input_admin}`}
-                            label="Введите ФИО героя"
-                            placeholder="Введите Ф.И.О."
-                            value={form.formData.name}
-                            onChange={(e) => form.handleInputChange('name', e.target.value)}
-                            onBlur={() => form.handleBlur('name')}
-                            error={!!form.getFieldError('name')}
-                            errorText={form.getFieldError('name')}
-                            required
-                        />
-                    </div>
 
-                    <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
-                        <InputAdmin
-                            className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
-                            label="Дата рождения"
-                            placeholder="ДД.ММ.ГГГГ"
-                            value={form.displayDateBirth}
-                            onChange={form.handleDateBirthChange}
-                            onBlur={() => form.handleBlur('dateBirth')}
-                            error={!!form.getFieldError('dateBirth')}
-                            errorText={form.getFieldError('dateBirth')}
-                            required
-                        />
-                        <InputAdmin
-                            className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
-                            label="Дата смерти"
-                            placeholder="ДД.ММ.ГГГГ"
-                            value={form.displayDateDeath}
-                            onChange={form.handleDateDeathChange}
-                        />
-                        <InputAdmin
-                            className={`${styles.form__input_birthplace} ${styles.form__input_admin}`}
-                            label="Место рождения"
-                            placeholder="Место рождения"
-                            value={form.formData.placeBirth}
-                            onChange={(e) => form.handleInputChange('placeBirth', e.target.value)}
-                            onBlur={() => form.handleBlur('placeBirth')}
-                            error={!!form.getFieldError('placeBirth')}
-                            errorText={form.getFieldError('placeBirth')}
-                            required
-                        />
-                    </div>
+                        <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
+                            <InputAdmin
+                                className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
+                                label="Дата рождения"
+                                placeholder="ДД.ММ.ГГГГ"
+                                value={form.displayDateBirth}
+                                onChange={form.handleDateBirthChange}
+                                onBlur={() => form.handleBlur('dateBirth')}
+                                error={!!form.getFieldError('dateBirth')}
+                                errorText={form.getFieldError('dateBirth')}
+                                required
+                            />
+                            <InputAdmin
+                                className={`${styles.form__input_date} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
+                                label="Дата смерти"
+                                placeholder="ДД.ММ.ГГГГ"
+                                value={form.displayDateDeath}
+                                onChange={form.handleDateDeathChange}
+                            />
+                            <InputAdmin
+                                className={`${styles.form__input_birthplace} ${styles.form__input_admin}`}
+                                label="Место рождения"
+                                placeholder="Место рождения"
+                                value={form.formData.placeBirth}
+                                onChange={(e) => form.handleInputChange('placeBirth', e.target.value)}
+                                onBlur={() => form.handleBlur('placeBirth')}
+                                error={!!form.getFieldError('placeBirth')}
+                                errorText={form.getFieldError('placeBirth')}
+                                required
+                            />
+                        </div>
 
-                    <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
-                        <InputAdmin
-                            className={`${styles.form__input_additional} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
-                            label="Воинское звание"
-                            placeholder="Воинское звание"
-                            value={form.formData.militaryRank}
-                            onChange={(e) => form.handleInputChange('militaryRank', e.target.value)}
-                        />
-                        <InputAdmin
-                            className={`${styles.form__input_additional} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
-                            label="Место службы"
-                            placeholder="Место службы"
-                            value={form.formData.placeService}
-                            onChange={(e) => form.handleInputChange('placeService', e.target.value)}
-                        />
-                        <InputAdmin
-                            className={`${styles.form__input_additional} ${styles.form__input_admin}`}
-                            label="Место призыва"
-                            placeholder="Место призыва"
-                            value={form.formData.placeConscription}
-                            onChange={(e) => form.handleInputChange('placeConscription', e.target.value)}
-                        />
-                    </div>
+                        <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
+                            <InputAdmin
+                                className={`${styles.form__input_additional} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
+                                label="Воинское звание"
+                                placeholder="Воинское звание"
+                                value={form.formData.militaryRank}
+                                onChange={(e) => form.handleInputChange('militaryRank', e.target.value)}
+                            />
+                            <InputAdmin
+                                className={`${styles.form__input_additional} ${styles.form__input_admin} ${styles.form__input_adminInputWidth}`}
+                                label="Место службы"
+                                placeholder="Место службы"
+                                value={form.formData.placeService}
+                                onChange={(e) => form.handleInputChange('placeService', e.target.value)}
+                            />
+                            <InputAdmin
+                                className={`${styles.form__input_additional} ${styles.form__input_admin}`}
+                                label="Место призыва"
+                                placeholder="Место призыва"
+                                value={form.formData.placeConscription}
+                                onChange={(e) => form.handleInputChange('placeConscription', e.target.value)}
+                            />
+                        </div>
 
-                    <div className={styles.form__wrapper_thirdLine}>
-                        <InputAdmin
-                            className={`${styles.form__input_user} ${styles.form__input_admin}`}
-                            label="ФИО и класс автора карточки"
-                            placeholder="Введите Ф.И.О. и класс"
-                            value={form.formData.nameAndClass}
-                            onChange={(e) => form.handleInputChange('nameAndClass', e.target.value)}
-                            onBlur={() => form.handleBlur('nameAndClass')}
-                            error={!!form.getFieldError('nameAndClass')}
-                            errorText={form.getFieldError('nameAndClass')}
-                            required
-                        />
-                    </div>
+                        <div className={styles.form__wrapper_thirdLine}>
+                            <InputAdmin
+                                className={`${styles.form__input_user} ${styles.form__input_admin}`}
+                                label="ФИО и класс автора карточки"
+                                placeholder="Введите Ф.И.О. и класс"
+                                value={form.formData.nameAndClass}
+                                onChange={(e) => form.handleInputChange('nameAndClass', e.target.value)}
+                                onBlur={() => form.handleBlur('nameAndClass')}
+                                error={!!form.getFieldError('nameAndClass')}
+                                errorText={form.getFieldError('nameAndClass')}
+                                required
+                            />
+                        </div>
 
-                    <div className={styles.form__wrapper_fourthLine}>
-                        <Textarea
-                            className={styles.textarea__admin}
-                            label="Описание материала"
-                            variant="_admin"
-                            size="large"
-                            placeholder="Введите описание"
-                            value={form.formData.description}
-                            onChange={(e) => form.handleInputChange('description', e.target.value)}
-                            onBlur={() => form.handleBlur('description')}
-                            resize="none"
-                            labelPosition="top"
-                            maxLength={255}
-                            showCounter={true}
-                            required
-                        />
-                    </div>
+                        <div className={styles.form__wrapper_fourthLine}>
+                            <Textarea
+                                className={styles.textarea__admin}
+                                label="Описание материала"
+                                variant="_admin"
+                                size="large"
+                                placeholder="Введите описание"
+                                value={form.formData.description}
+                                onChange={(e) => form.handleInputChange('description', e.target.value)}
+                                onBlur={() => form.handleBlur('description')}
+                                resize="none"
+                                labelPosition="top"
+                                maxLength={255}
+                                showCounter={true}
+                                required
+                            />
+                        </div>
 
-                    <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
-                        <Button
-                            type="submit"
-                            className={styles.publishButton}
-                            disabled={loading || form.isCompressing}
-                        >
-                            {loading ? 'Публикация...' : 'Опубликовать изменения'}
-                        </Button>
-                        <Button
-                            type="button"
-                            className={styles.reviewButton}
-                            onClick={handlePreview}
-                        >
-                            Предпросмотр
-                        </Button>
+                        <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
+                            <Button
+                                type="submit"
+                                className={styles.publishButton}
+                                disabled={loading || form.isCompressing}
+                            >
+                                {loading ? 'Публикация...' : 'Опубликовать изменения'}
+                            </Button>
+                            <Button
+                                type="button"
+                                className={styles.reviewButton}
+                                onClick={handlePreview}
+                            >
+                                Предпросмотр
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </form>

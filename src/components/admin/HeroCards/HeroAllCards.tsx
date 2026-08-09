@@ -4,6 +4,9 @@ import type { Hero } from "../../../types/card.types";
 import { useEffect, useMemo, useState } from "react";
 import { heroesApi, ApiError } from "../../../services/api/heroes";
 import TextCardAdmin from "../../common/Card/AdminCards/TextCardAdmin";
+import ReviewCardsTitle from "../ReviewCards/ReviewCardsTitle";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface HeroAllCardsProps {
     type?: 'svo' | 'gpw';
@@ -15,6 +18,14 @@ export default function HeroAllCards({ type = 'svo', title = 'Герои СВО'
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [allHeroes, setAllHeroes] = useState<Hero[]>([]);
+
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleExit = () => {
+        logout();
+        navigate("/login");
+    };
 
     const heroesWithImage: Hero[] = useMemo(() => {
         return filteredHeroes.filter((hero: Hero) => hero.img && hero.img.trim() !== '');
@@ -56,7 +67,7 @@ export default function HeroAllCards({ type = 'svo', title = 'Герои СВО'
 
     if (loading) {
         return (
-            <div className={styles.heroesPage}>
+            <div className={styles.info}>
                 <div className={styles.loading}>
                     <p>Загрузка...</p>
                 </div>
@@ -66,7 +77,7 @@ export default function HeroAllCards({ type = 'svo', title = 'Герои СВО'
 
     if (error) {
         return (
-            <div className={styles.heroesPage}>
+            <div className={styles.info}>
                 <div className={styles.error}>
                     <p>{error}</p>
                 </div>
@@ -76,18 +87,21 @@ export default function HeroAllCards({ type = 'svo', title = 'Герои СВО'
 
     return (
         <div className={styles.container}>
+            <ReviewCardsTitle
+                onExit={handleExit}
+                title={title} />
             {filteredHeroes.length !== allHeroes.length && (
                 <span className={styles.title__filterInfo}>
                     {" "}· Найдено: {filteredHeroes.length}
                 </span>
             )}
 
-                {heroesWithImage.length > 0 && (
-                    <ImagedCardAdmin heroes={heroesWithImage} onDelete={handleDelete} />
-                )}
-                {heroesWithoutImage.length > 0 && (
-                    <TextCardAdmin heroes={heroesWithoutImage} onDelete={handleDelete} />
-                )}
+            {heroesWithImage.length > 0 && (
+                <ImagedCardAdmin heroes={heroesWithImage} onDelete={handleDelete} />
+            )}
+            {heroesWithoutImage.length > 0 && (
+                <TextCardAdmin heroes={heroesWithoutImage} onDelete={handleDelete} />
+            )}
         </div>
     );
 }

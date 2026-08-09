@@ -1,21 +1,21 @@
 .container {
     display: flex;
     align-items: center;
-background-color: $brown-color;
-width: 571px;
-min-height: 315px;
-height: fit-content;
-padding: 27px 25px;
-border-radius: 20px;
-gap: 15px;
-align-items: stretch;
+    background-color: $brown-color;
+    width: 571px;
+    min-height: 315px;
+    height: fit-content;
+    padding: 27px 25px;
+    border-radius: 20px;
+    gap: 15px;
+    align-items: stretch;
 }
 
 .img {
     width: 210px;
     height: 261px;
     object-fit: cover;
-         object-position: center center;
+    object-position: center center;
 }
 
 .text {
@@ -35,7 +35,7 @@ align-items: stretch;
     min-height: 100%;
     width: 100%;
     align-items: flex-start;
-justify-content: space-between;
+    justify-content: space-between;
 }
 
 .infoContainer,
@@ -54,23 +54,27 @@ justify-content: space-between;
 
 .button,
 .deleteButton {
-display: flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 20px;
+    background-color: transparent;
 }
 
 .deleteButton {
-
-
     width: 68px;
     height: 55px;
     border: 1px solid $beige-card;
+    background-color: transparent;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
 }
 
 .button {
-background-color: $beige-card;
-padding: 12px 24px;
-height: 55px;
-width: 196px;
+    background-color: $beige-card;
+    padding: 12px 24px;
+    height: 55px;
+    width: 196px;
 }

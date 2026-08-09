@@ -8,10 +8,11 @@ import { heroesApi, ApiError } from '../../../services/api/heroes';
 import { buildImageUrl } from '../../../services/api/api';
 import { formatDateDisplay } from '../../../utils/date';
 import type { Hero } from '../../../types/card.types';
+import ReviewCardsTitle from '../../../components/admin/ReviewCards/ReviewCardsTitle';
+import { useAuth } from "../../../contexts/AuthContext";
 
 export default function FeedBackPage() {
     const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
     const cardId = searchParams.get('cardId');
 
     const [hero, setHero] = useState<Hero | null>(null);
@@ -25,6 +26,14 @@ export default function FeedBackPage() {
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleExit = () => {
+        logout();
+        navigate("/login");
+    };
 
     useEffect(() => {
         const fetchHero = async () => {
@@ -98,10 +107,6 @@ export default function FeedBackPage() {
         void fetchHero();
     }, [cardId]);
 
-    const handleExit = () => {
-        navigate(-1);
-    };
-
     const handleSubmitComment = async (e: React.FormEvent) => {
         e.preventDefault();
         setSubmitting(true);
@@ -124,7 +129,9 @@ export default function FeedBackPage() {
     };
 
     if (loading) {
-        return <div className={styles.feedbackCard}><p>Загрузка данных...</p></div>;
+        return <div className={styles.info}>
+            <p className={styles.loading}>Загрузка данных...</p>
+        </div>;
     }
 
     if (error || !hero) {
@@ -140,12 +147,11 @@ export default function FeedBackPage() {
 
     return (
         <div className={styles.feedbackCard}>
-            <div className={styles.feedbackCard_titleContainer}>
-                <h1 className={styles.feedbackCard_title}>Направить комментарии</h1>
-                <Button className={styles.feedbackCard_exitButton} onClick={handleExit}>
-                    Выйти
-                </Button>
-            </div>
+
+            <ReviewCardsTitle
+                title="Направить комментарии"
+                onExit={handleExit}
+            />
 
             <div className={styles.feedbackCard_container}>
                 <div className={styles.feedbackCard_card}>

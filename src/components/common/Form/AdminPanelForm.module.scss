@@ -1,12 +1,30 @@
+.exitContainer {
+    display: flex;
+    width: 100%;
+}
+
+.contentWrapper {
+    display: flex;
+    gap: 81px;
+}
+
+.info {
+    display: flex;
+
+    .loading {
+        color: $beige-background;
+    }
+}
+
 .form {
     display: flex;
+    flex-direction: column;
     width: 96%;
     min-height: 935px;
     height: fit-content;
     background-color: $brown-color;
     margin-top: 75px;
     border-radius: 20px;
-    gap: 47px;
     padding: 96px 49px 90px 49px;
 
     &_admin {
@@ -16,7 +34,7 @@
         padding-top: 25px;
         padding-bottom: 58px;
         padding-left: 65px;
-        gap: 85px;
+        gap: 21px;
     }
 
     &__titleWrapper {
@@ -119,7 +137,6 @@
                 linear-gradient(90deg, $beige-background 50%, transparent 50%),
                 linear-gradient(180deg, $beige-background 50%, transparent 50%),
                 linear-gradient(180deg, $beige-background 50%, transparent 50%);
-            // min-height: 35%;
             height: fit-content;
         }
 
@@ -150,7 +167,6 @@
             width: 100%;
             max-width: 904px;
             gap: 15px;
-            padding-top: 40px;
         }
     }
 
@@ -203,7 +219,6 @@
             gap: 20px;
 
             &_admin {
-                margin-top: 15px;
                 gap: 0;
                 justify-content: flex-end;
             }
@@ -213,7 +228,6 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            margin-top: 17px;
         }
 
         &_thirdLine {
@@ -281,6 +295,7 @@
         background-color: $brown-color;
         color: $beige-background;
         z-index: 1000;
+        margin-bottom: 15px;
     }
 }
 

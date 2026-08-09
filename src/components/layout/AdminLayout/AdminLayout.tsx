@@ -8,7 +8,6 @@ import { IconNewCard } from "../../../assets/images/icons/IconNewCard";
 export default function AdminLayout() {
 
   const menuItems = [
-
     { path: "/admin-heroes/on-review", label: "На проверке", icon: <IconOnReview /> },
     { path: "/admin-heroes/ussr-heroes", label: "Герои СССР", icon: <IconUSSR /> },
     { path: "/admin-heroes/svo-heroes", label: "Герои СВО", icon: <IconSVO /> },
@@ -17,13 +16,10 @@ export default function AdminLayout() {
 
   return (
     <div className={styles.adminLayout}>
-
       <aside className={`${styles.sidebar}`}>
-
         <div className={styles.sidebar__logo}>
           <img src="/logo-footer.png" alt="" />
         </div>
-
         <nav className={styles.sidebar__nav}>
           {menuItems.map((item) => (
             <NavLink
@@ -39,7 +35,6 @@ export default function AdminLayout() {
           ))}
         </nav>
       </aside>
-
       <main className={styles.content}>
         <Outlet />
       </main>
