@@ -79,6 +79,22 @@
     width: 100%;
   }
 
+    &_card {
+    min-height: 856px;
+
+        &_noPhoto {
+      background-color: $green-color !important;
+    }
+  }
+
+  &_form {
+    min-height: 698px;
+
+        &_noPhoto {
+      background-color: $green-color !important;
+    }
+  }
+
   &_card,
   &_form {
     display: flex;
@@ -89,15 +105,10 @@
     border-radius: 20px;
     padding: 31px 23px;
     gap: 23px;
+
   }
 
-  &_card {
-    min-height: 856px;
-  }
 
-  &_form {
-    min-height: 698px;
-  }
 
   &_infoRow {
     display: flex;
