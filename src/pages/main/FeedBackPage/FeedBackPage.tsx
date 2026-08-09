@@ -146,112 +146,112 @@ export default function FeedBackPage() {
     const hasPhoto = hero.img && hero.img.trim() !== '';
 
     if (!hasPhoto) {
-    return (
-        <div className={styles.feedbackCard}>
+        return (
+            <div className={styles.feedbackCard}>
 
-            <ReviewCardsTitle
-                title="Направить комментарии"
-                onExit={handleExit}
-            />
+                <ReviewCardsTitle
+                    title="Направить комментарии"
+                    onExit={handleExit}
+                />
 
-            <div className={styles.feedbackCard_container}>
-                <div className={`${styles.feedbackCard_card} ${styles.feedbackCard_card_noPhoto}`}>
-                    <div className={styles.feedbackCard_wrapper}>
-                        {hasPhoto && (
-                            <div className={styles.feedbackCard_imageWrapper}>
-                                <img src={hero.img} alt={hero.name} className={styles.feedbackCard_image} />
-                            </div>
-                        )}
+                <div className={styles.feedbackCard_container}>
+                    <div className={`${styles.feedbackCard_card} ${styles.feedbackCard_card_noPhoto}`}>
+                        <div className={styles.feedbackCard_wrapper}>
+                            {hasPhoto && (
+                                <div className={styles.feedbackCard_imageWrapper}>
+                                    <img src={hero.img} alt={hero.name} className={styles.feedbackCard_image} />
+                                </div>
+                            )}
 
-                        <div className={styles.feedbackCard_infoContainer}>
-                            <div className={styles.feedbackCard_infoRow}>
-                                <span className={styles.feedbackCard_name}>{hero.name}</span>
-                            </div>
-
-                            <div className={styles.feedbackCard_dateWrapper}>
+                            <div className={styles.feedbackCard_infoContainer}>
                                 <div className={styles.feedbackCard_infoRow}>
-                                    <span className={styles.feedbackCard_label}>Дата рождения:</span>
-                                    <span className={styles.feedbackCard_value}>{formatDateDisplay(hero.dateOfBirth)}</span>
+                                    <span className={styles.feedbackCard_name}>{hero.name}</span>
+                                </div>
+
+                                <div className={styles.feedbackCard_dateWrapper}>
+                                    <div className={styles.feedbackCard_infoRow}>
+                                        <span className={styles.feedbackCard_label}>Дата рождения:</span>
+                                        <span className={styles.feedbackCard_value}>{formatDateDisplay(hero.dateOfBirth)}</span>
+                                    </div>
+
+                                    <div className={styles.feedbackCard_infoRow}>
+                                        <span className={styles.feedbackCard_label}>Дата смерти:</span>
+                                        <span className={styles.feedbackCard_value}>{formatDateDisplay(hero.dateOfDeath)}</span>
+                                    </div>
                                 </div>
 
                                 <div className={styles.feedbackCard_infoRow}>
-                                    <span className={styles.feedbackCard_label}>Дата смерти:</span>
-                                    <span className={styles.feedbackCard_value}>{formatDateDisplay(hero.dateOfDeath)}</span>
+                                    <span className={styles.feedbackCard_label}>Место призыва:</span>
+                                    <span className={styles.feedbackCard_value}>{hero.placeConscription || 'Не указано'}</span>
+                                </div>
+
+                                <div className={styles.feedbackCard_infoRow}>
+                                    <span className={styles.feedbackCard_label}>Место службы:</span>
+                                    <span className={styles.feedbackCard_value}>{hero.placeService || 'Не указано'}</span>
+                                </div>
+
+                                <div className={styles.feedbackCard_infoRow}>
+                                    <span className={styles.feedbackCard_label}>Звание:</span>
+                                    <span className={styles.feedbackCard_value}>{hero.range || 'Не указано'}</span>
                                 </div>
                             </div>
+                        </div>
 
-                            <div className={styles.feedbackCard_infoRow}>
-                                <span className={styles.feedbackCard_label}>Место призыва:</span>
-                                <span className={styles.feedbackCard_value}>{hero.placeConscription || 'Не указано'}</span>
-                            </div>
-
-                            <div className={styles.feedbackCard_infoRow}>
-                                <span className={styles.feedbackCard_label}>Место службы:</span>
-                                <span className={styles.feedbackCard_value}>{hero.placeService || 'Не указано'}</span>
-                            </div>
-
-                            <div className={styles.feedbackCard_infoRow}>
-                                <span className={styles.feedbackCard_label}>Звание:</span>
-                                <span className={styles.feedbackCard_value}>{hero.range || 'Не указано'}</span>
-                            </div>
+                        <div className={styles.feedbackCard_infoRow}>
+                            <p className={styles.feedbackCard_description}>{hero.description || 'Нет описания'}</p>
                         </div>
                     </div>
 
-                    <div className={styles.feedbackCard_infoRow}>
-                        <p className={styles.feedbackCard_description}>{hero.description || 'Нет описания'}</p>
-                    </div>
+                    <form className={`${styles.feedbackCard_form} ${styles.feedbackCard_form_noPhoto}`} onSubmit={handleSubmitComment}>
+                        <InputAdmin
+                            type="email"
+                            label="Адрес почты"
+                            placeholder="Введите email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            labelClassName={styles.customLabel}
+                            className={styles.customInput}
+                            required
+                        />
+                        <InputAdmin
+                            label="Тема письма"
+                            placeholder="Введите тему"
+                            value={subject}
+                            onChange={(e) => setSubject(e.target.value)}
+                            labelClassName={styles.customLabel}
+                            className={styles.customInput}
+                            required
+                        />
+                        <Textarea
+                            label="Описание материала"
+                            placeholder="Введите комментарий..."
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            resize="none"
+                            size="large"
+                            labelClassName={styles.customLabel}
+                            className={styles.feedbackCard_textarea}
+                            required
+                        />
+
+                        {submitError && <p className={styles.errorText}>{submitError}</p>}
+                        {successMessage && <p className={styles.successText}>{successMessage}</p>}
+
+                        <div className={styles.feedbackCard_buttonWrapper}>
+                            <Button
+                                type="submit"
+                                variant='bright'
+                                disabled={submitting}
+                                className={styles.feedbackCard_submitButton}
+                            >
+                                {submitting ? 'Отправка...' : 'Отправить'}
+                            </Button>
+                        </div>
+                    </form>
                 </div>
-
-                <form className={`${styles.feedbackCard_form} ${styles.feedbackCard_form_noPhoto}`} onSubmit={handleSubmitComment}>
-                    <InputAdmin
-                        type="email"
-                        label="Адрес почты"
-                        placeholder="Введите email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        labelClassName={styles.customLabel}
-                        className={styles.customInput}
-                        required
-                    />
-                    <InputAdmin
-                        label="Тема письма"
-                        placeholder="Введите тему"
-                        value={subject}
-                        onChange={(e) => setSubject(e.target.value)}
-                        labelClassName={styles.customLabel}
-                        className={styles.customInput}
-                        required
-                    />
-                    <Textarea
-                        label="Описание материала"
-                        placeholder="Введите комментарий..."
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        resize="none"
-                        size="large"
-                        labelClassName={styles.customLabel}
-                        className={styles.feedbackCard_textarea}
-                        required
-                    />
-
-                    {submitError && <p className={styles.errorText}>{submitError}</p>}
-                    {successMessage && <p className={styles.successText}>{successMessage}</p>}
-
-                    <div className={styles.feedbackCard_buttonWrapper}>
-                        <Button
-                            type="submit"
-                            variant='bright'
-                            disabled={submitting}
-                            className={styles.feedbackCard_submitButton}
-                        >
-                            {submitting ? 'Отправка...' : 'Отправить'}
-                        </Button>
-                    </div>
-                </form>
             </div>
-        </div>
-    );
-}
+        );
+    }
 
     return (
         <div className={styles.feedbackCard}>

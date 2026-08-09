@@ -3,13 +3,16 @@
     flex-direction: column;
     align-items: center;
     background-color: $brown-color;
-    width: 675px;
+    flex-grow: 1;
+    max-width: 670px;
     min-height: 324px;
     box-sizing: border-box;
     border-radius: 16px;
     padding: 22px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     transition: box-shadow 0.2s;
+
+
 
     &:hover {
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
@@ -62,10 +65,9 @@
         display: flex;
         align-items: flex-start;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         flex: 1;
         gap: 4px;
-        min-width: 0;
     }
 
     &__name {
@@ -101,8 +103,8 @@
         padding: 10px 24px;
         background-color: $beige-soft;
         color: $brown-color;
-        min-width: 310px;
         height: 55px;
+        flex-grow: 1;
         border: none;
         border-radius: 12px;
         font-size: 20px;
@@ -116,43 +118,159 @@
     }
 }
 
-// Адаптивность
-@include respond-below($breakpoint-md) {
-    .reviewCard {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 20px;
-        gap: 16px;
+@media (max-width: 1893px) {
 
-        &__imageContainer {
-            width: 80px;
-            height: 80px;
+    .reviewCard {
+        &__name {
+            font-size: 28px;
         }
 
-        &__actions {
-            width: 100%;
-            flex-direction: row;
-            margin-left: 0;
-            gap: 12px;
-
-            &__editButton,
-            &__commentButton {
-                flex: 1;
-                padding: 8px 16px;
-                font-size: 14px;
-            }
+        &__author,
+        &__date {
+            font-size: 22px;
         }
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 1869px) {
+
     .reviewCard {
-        &__actions {
-            flex-direction: column;
+        max-width: 35vw;
+    }
+}
+
+@media (max-width: 1849px) {
+
+    .reviewCard {
+        &__button {
+            font-size: 19px;
+        }
+    }
+}
+
+@media (max-width: 1822px) {
+
+    .reviewCard {
+        max-width: 34vw;
+
+        &__button {
+            font-size: 18px;
+        }
+    }
+}
+
+@media (max-width: 1753px) {
+
+    .reviewCard {
+        &__name {
+            font-size: 26px;
+        }
+
+        &__button {
+            padding: 10px 15px;
+            font-size: 17px;
+        }
+    }
+}
+
+@media (max-width: 1693px) {
+
+    .reviewCard {
+        max-width: 565px;
+
+        &__infoContainer {
+            gap: 25px;
         }
 
         &__name {
-            font-size: 18px;
+            font-size: 24px;
+        }
+
+        &__author,
+        &__date {
+            font-size: 20px;
+        }
+    }
+}
+
+@media (max-width: 1672px) {
+
+    .reviewCard {
+        max-width: 555px;
+
+        &__infoContainer {
+            gap: 25px;
+        }
+
+        &__name {
+            font-size: 24px;
+        }
+
+        &__author,
+        &__date {
+            font-size: 20px;
+        }
+
+        &__button {
+            padding: 7px 15px;
+            font-size: 17px;
+        }
+    }
+}
+
+@media (max-width: 1650px) {
+
+    .reviewCard {
+        max-width: 545px;
+        padding: 18px 15px;
+    }
+}
+
+@media (max-width: 1629px) {
+
+    .reviewCard {
+        max-width: 530px;
+        padding: 18px 15px;
+    }
+}
+
+@media (max-width: 1599px) {
+
+    .reviewCard {
+        max-width: 315px;
+        min-height: 275px;
+        gap: 13px;
+        justify-content: space-between;
+
+        &_noImage {
+            min-height: 215px;
+        }
+
+        &__name,
+        &__author,
+        &__date {
+            font-size: 14px;
+        }
+
+        &__button {
+            max-height: 38px;
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        &__actions {
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        &__imageContainer {
+            width: 103px;
+            height: 128px;
+            border-radius: 0px;
+        }
+
+        &__infoContainer {
+            gap: 8px;
         }
     }
 }

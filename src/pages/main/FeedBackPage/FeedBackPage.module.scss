@@ -79,10 +79,10 @@
     width: 100%;
   }
 
-    &_card {
+  &_card {
     min-height: 856px;
 
-        &_noPhoto {
+    &_noPhoto {
       background-color: $green-color !important;
     }
   }
@@ -90,7 +90,7 @@
   &_form {
     min-height: 698px;
 
-        &_noPhoto {
+    &_noPhoto {
       background-color: $green-color !important;
     }
   }

@@ -2,7 +2,11 @@
     display: flex;
     align-items: center;
     background-color: $brown-color;
-    width: 571px;
+    // width: 571px;
+    // width: 29vw;
+    flex-grow: 1;
+    // width: fit-content;
+    // max-width: 672px;
     min-height: 315px;
     height: fit-content;
     padding: 27px 25px;
