@@ -31,17 +31,24 @@
     &__title {
         font-family: $font-rubik;
         font-size: 32px;
-        font-weight: 700;
+        font-weight: 600;
         line-height: 120%;
         letter-spacing: 0;
         color: $dark-text;
         text-align: center;
         min-width: 588px;
+        margin-bottom: 24px;
     }
 
-    &__title,
+    // &__title,
+    // &__subtitle {
+    //     margin-bottom: 24px;
+    // }
+
     &__subtitle {
-        margin-bottom: 24px;
+        font-size: 24px;
+        font-weight: 300;
+        margin-bottom: 44px;
     }
 
     &__closeButton {
@@ -142,7 +149,8 @@
 }
 
 .heroName {
-    font-size: 16px;
+    font-size: 26px;
+    font-weight: 400;
     color: $gray;
     margin: 0 0 24px 0;
     font-weight: 500;
