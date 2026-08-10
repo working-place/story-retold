@@ -39,6 +39,18 @@
         width: 69.3%;
         z-index: 1;
     }
+
+    // --- ПЛАНШЕТЫ / НОУТБУКИ (768–1919) ---
+    // padding-bottom 52.5% (1008/1920) масштабируется сам — газета остаётся пропорциональной.
+    // Отдельных правок не нужно: width:100% + max-width:1920 + margin auto уже центрируют блок.
+
+    // --- МОБАЙЛ (≤767) ---
+    // В макете мобильный hero-блок ~320px. Газета (paper-main_full.png) через
+    // object-fit: cover обрезается по высоте контейнера — задаём целевую высоту
+    // через padding-bottom, ориентируясь на мобильный якорь 375.
+    @include respond-below($breakpoint-md) {
+        padding-bottom: 86%;
+    }
 }
 
 .history {
@@ -126,6 +138,135 @@
         position: absolute;
         right: -15px;
         top: 90px;
+    }
+
+    // --- ПЛАНШЕТЫ / НОУТБУКИ (768–1919) ---
+    // Фикс-высота 1295px убивает узкие экраны — растём по контенту.
+    // Десктопная раскладка (карта absolute справа) держится только на ~1920,
+    // поэтому переходим в колонку уже здесь: заголовок/текст → карта → curl.
+    @include respond-below($breakpoint-xxxl) {
+        height: auto;
+        min-height: 1295px;
+        flex-direction: column;
+
+        &_subtitle {
+
+            &__firstLine,
+            &__secondLine {
+                font-size: clamp(28px, 4.8vw, 80px);
+            }
+
+            &__firstLine {
+                padding-left: clamp(16px, 3.4vw, 64.5px);
+            }
+
+            &__secondLine {
+                padding-left: clamp(40px, 15vw, 290px);
+                margin-top: clamp(8px, 0.8vw, 15px);
+            }
+        }
+
+        &_description {
+
+            &__firstLine,
+            &__secondLine {
+                font-size: clamp(16px, 2.1vw, 35px);
+                letter-spacing: clamp(0.3px, 0.08vw, 1.6px);
+                margin-top: clamp(20px, 2.1vw, 40px);
+            }
+
+            &__firstLine {
+                padding-left: clamp(16px, 3.5vw, 67.5px);
+            }
+
+            &__secondLine {
+                padding-left: clamp(40px, 8.2vw, 157px);
+            }
+        }
+
+        &_map {
+            position: relative;
+            max-width: clamp(280px, 54%, 700px);
+            width: 100%;
+            height: auto;
+            right: auto;
+            bottom: auto;
+            margin: clamp(24px, 3vw, 60px) auto 0;
+            display: block;
+        }
+
+        // Декоративные элементы, завязанные на px-координаты десктопа,
+        // на промежуточных ширинах начинают съезжать — прячем.
+        &_imageHistory,
+        &_arrow,
+        &_curlHistoryTop {
+            display: none;
+        }
+
+        &_curlHistory {
+            position: relative;
+            bottom: auto;
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin-top: 16px;
+        }
+    }
+
+    // --- МОБАЙЛ (≤767) ---
+    // По макету: заголовок + два абзаца вертикально, карта снизу под текстом.
+    @include respond-below($breakpoint-md) {
+        min-height: auto;
+        flex-direction: column;
+        padding: 60px 16px 40px;
+
+        &_subtitle {
+            gap: 8px;
+
+            &__firstLine,
+            &__secondLine {
+                font-size: 28px;
+            }
+
+            &__firstLine {
+                padding-left: 0;
+            }
+
+            &__secondLine {
+                padding-left: 0;
+                margin-top: 8px;
+            }
+        }
+
+        &_description {
+
+            &__firstLine,
+            &__secondLine {
+                font-size: 16px;
+                letter-spacing: 0.3px;
+                margin-top: 20px;
+
+                // <br/> в JSX заточен под десктопный перенос — на мобиле рвёт строки.
+                br {
+                    display: none;
+                }
+            }
+
+            &__firstLine {
+                padding-left: 0;
+            }
+
+            &__secondLine {
+                padding-left: 0;
+            }
+        }
+
+        &_map {
+            max-width: 100%;
+            width: 100%;
+            margin: 32px auto 0;
+        }
     }
 }
 
@@ -247,6 +388,166 @@
         position: absolute;
         bottom: 15px;
         right: -15px;
+    }
+
+    // --- ПЛАНШЕТЫ / НОУТБУКИ (768–1919) ---
+    // Абсолютная px-сетка фото + линии рассчитана строго на 1920px — на меньших
+    // ширинах элементы вылезают за viewport (горизонтальный скролл). Поэтому уже
+    // здесь переводим фото в поток, линии прячем, шрифты плавно сжимаем.
+    @include respond-below($breakpoint-xxxl) {
+        height: auto;
+        min-height: 1760px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &_subtitle {
+            padding-top: clamp(48px, 6.8vw, 130px);
+            align-self: flex-end;
+            margin-right: clamp(16px, 2.1vw, 40px);
+
+            &__firstLine,
+            &__secondLine {
+                font-size: clamp(28px, 4.8vw, 80px);
+            }
+        }
+
+        &_description {
+            position: relative;
+            top: auto;
+            left: auto;
+            align-self: flex-start;
+            margin: clamp(24px, 2.6vw, 48px) 0 0 clamp(16px, 3.8vw, 73px);
+            font-size: clamp(16px, 2.1vw, 35px);
+            letter-spacing: clamp(0.3px, 0.08vw, 1.6px);
+            max-width: 90%;
+        }
+
+        // Линии — чисто декорация десктопной сетки, на <1920 не вписываются.
+        &_line1,
+        &_line2,
+        &_line3,
+        &_line4,
+        &_line5 {
+            display: none;
+        }
+
+        // Фото: из абсолютной сетки → в поток с обтеканием/переносом.
+        &_photo1,
+        &_photo2,
+        &_photo3,
+        &_photo4,
+        &_photo5 {
+            position: relative !important;
+            left: auto !important;
+            top: auto !important;
+            z-index: 1 !important;
+            display: block;
+            max-width: clamp(220px, 30vw, 480px);
+            width: 100%;
+            height: auto;
+        }
+
+        &_curl {
+            position: relative;
+            bottom: auto;
+            right: auto;
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin-top: 16px;
+        }
+    }
+
+    // --- МОБАЙЛ (≤767) ---
+    // По макету: 5 фото выстраиваются вертикальной стопкой (329×329).
+    // Сетку декоративных линий с мобилы убираем — она не влезает.
+    @include respond-below($breakpoint-md) {
+        height: auto;
+        min-height: auto;
+        padding: 60px 16px 40px;
+        display: flex;
+        flex-direction: column;
+
+        &_subtitle {
+            padding-top: 0;
+            margin-right: 0;
+            align-items: flex-end;
+
+            &__firstLine,
+            &__secondLine {
+                font-size: 28px;
+                text-align: right;
+            }
+
+            &__secondLine {
+                margin-right: 0;
+            }
+        }
+
+        &_description {
+            position: relative;
+            top: auto;
+            left: auto;
+            margin-top: 24px;
+            font-size: 16px;
+            letter-spacing: 0.3px;
+
+            br {
+                display: none;
+            }
+        }
+
+        // Линии — чисто декорация десктопной сетки, на мобиле не нужны.
+        &_line1,
+        &_line2,
+        &_line3,
+        &_line4,
+        &_line5 {
+            display: none;
+        }
+
+        // Фото: из абсолютной сетки → в вертикальную стопку по центру.
+        &_photo1,
+        &_photo2,
+        &_photo3,
+        &_photo4,
+        &_photo5 {
+            position: relative !important;
+            left: auto !important;
+            top: auto !important;
+            z-index: 1 !important;
+            display: block;
+            width: 100%;
+            max-width: 329px;
+            height: auto;
+            margin: 0 auto;
+
+            // Чередуем лёгкое смещение, чтобы сохранить «живую» компоновку макета.
+            &:nth-child(odd) {
+                margin-left: auto;
+                margin-right: 8%;
+            }
+
+            &:nth-child(even) {
+                margin-left: 8%;
+                margin-right: auto;
+            }
+
+            &:not(:first-of-type) {
+                margin-top: 24px;
+            }
+        }
+
+        &_curl {
+            position: relative;
+            bottom: auto;
+            right: auto;
+            display: block;
+            width: 100%;
+            margin-top: 24px;
+        }
     }
 }
 
