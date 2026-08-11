@@ -60,15 +60,15 @@ export default function HomePage() {
 
                 <img
                     className={styles.history_map}
-                    src="/map.png" alt="Карта" />
+                    src="/homepage_block2_img_pc.png" alt="Карта" />
 
-                <img
+                {/* <img
                     className={styles.history_imageHistory}
                     src="/image-history.png" alt="Фотография памятника" />
 
                 <img
                     className={styles.history_arrow}
-                    src="/arrow-history.png" alt="Стрелка" />
+                    src="/arrow-history.png" alt="Стрелка" /> */}
 
                 <img
                     className={styles.history_curlHistory}
