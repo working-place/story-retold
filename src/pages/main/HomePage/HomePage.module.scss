@@ -134,13 +134,20 @@
         top: 90px;
     }
 
-    // --- ПЛАНШЕТЫ / НОУТБУКИ (768–1919) ---
-    // Фикс-высота 1295px убивает узкие экраны — растём по контенту.
-    // Десктопная раскладка (карта absolute справа) держится только на ~1920,
-    // поэтому переходим в колонку уже здесь: заголовок/текст → карта → curl.
-    @include respond-below($breakpoint-xxxl) {
+    // --- ПРОМЕЖУТОЧНЫЕ ШИРИНЫ (1024–1919) ---
+    // Сохраняем десктопную раскладку 1920 как есть: карта absolute, прижата к
+    // правому краю (right: -10px), памятник/стрелка на своих местах. Меняем
+    // только фиксированную высоту на авто — иначе контент не помещается.
+    @include respond-between($breakpoint-lg, $breakpoint-xxxl) {
         height: auto;
         min-height: 1295px;
+    }
+
+    // --- ПЛАНШЕТ НИЖЕ / МОБАЙЛ (≤1023) ---
+    // Здесь уже переходим в column-раскладку и переключаем карту на mobile.
+    @include respond-below($breakpoint-lg) {
+        height: auto;
+        min-height: auto;
         flex-direction: column;
 
         &_subtitle {
@@ -178,10 +185,13 @@
             }
         }
 
-        // ПК-карта остаётся активной вплоть до планшета (переключение на
-        // mobile-карту — в отдельном блоке respond-below($breakpoint-lg)).
-        // В column-раскладке ставим её в поток.
+        // ПК-карта скрывается, mobile-карта занимает её место в потоке (order 2,
+        // после памятника).
         &_map {
+            display: none;
+        }
+
+        &_mapMobile {
             position: relative;
             max-width: clamp(280px, 54%, 700px);
             width: 100%;
@@ -225,27 +235,6 @@
             height: auto;
             margin-top: 16px;
             order: 3;
-        }
-    }
-
-    // --- ПЛАНШЕТ НИЖЕ / МОБАЙЛ (≤1023) ---
-    // Переключение карты: ПК-карта (homepage_block2_img_pc) остаётся до 1024px
-    // включительно, ниже показываем mobile-версию (homepage_block2_img_mobile).
-    @include respond-below($breakpoint-lg) {
-        &_map {
-            display: none;
-        }
-
-        &_mapMobile {
-            position: relative;
-            max-width: clamp(280px, 54%, 700px);
-            width: 100%;
-            height: auto;
-            right: auto;
-            bottom: auto;
-            margin: clamp(24px, 3vw, 60px) auto 0;
-            display: block;
-            order: 2; // та же позиция в потоке, что у ПК-карты
         }
     }
 
