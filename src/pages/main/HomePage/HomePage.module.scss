@@ -103,6 +103,12 @@
         bottom: 110px;
     }
 
+    // Мобильная версия карты (homepage_block2_img_mobile.png).
+    // По умолчанию скрыта, показывается только ниже десктопа.
+    &_mapMobile {
+        display: none;
+    }
+
     &_imageHistory {
         position: absolute;
         z-index: 2;
@@ -172,6 +178,9 @@
             }
         }
 
+        // ПК-карта остаётся активной вплоть до планшета (переключение на
+        // mobile-карту — в отдельном блоке respond-below($breakpoint-lg)).
+        // В column-раскладке ставим её в поток.
         &_map {
             position: relative;
             max-width: clamp(280px, 54%, 700px);
@@ -181,6 +190,7 @@
             bottom: auto;
             margin: clamp(24px, 3vw, 60px) auto 0;
             display: block;
+            order: 2;
         }
 
         // Памятник (image-history.png): на десктопе absolute справа от карты.
@@ -199,10 +209,6 @@
             order: 1;
         }
 
-        &_map {
-            order: 2;
-        }
-
         // Декоративные элементы, завязанные на px-координаты десктопа,
         // на промежуточных ширинах начинают съезжать — прячем.
         &_arrow,
@@ -219,6 +225,27 @@
             height: auto;
             margin-top: 16px;
             order: 3;
+        }
+    }
+
+    // --- ПЛАНШЕТ НИЖЕ / МОБАЙЛ (≤1023) ---
+    // Переключение карты: ПК-карта (homepage_block2_img_pc) остаётся до 1024px
+    // включительно, ниже показываем mobile-версию (homepage_block2_img_mobile).
+    @include respond-below($breakpoint-lg) {
+        &_map {
+            display: none;
+        }
+
+        &_mapMobile {
+            position: relative;
+            max-width: clamp(280px, 54%, 700px);
+            width: 100%;
+            height: auto;
+            right: auto;
+            bottom: auto;
+            margin: clamp(24px, 3vw, 60px) auto 0;
+            display: block;
+            order: 2; // та же позиция в потоке, что у ПК-карты
         }
     }
 
@@ -276,6 +303,11 @@
         }
 
         &_map {
+            // Мобильная карта обрабатывается в &_mapMobile.
+            display: none;
+        }
+
+        &_mapMobile {
             max-width: 100%;
             width: 100%;
             margin: 32px auto 0;

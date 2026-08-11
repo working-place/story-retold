@@ -62,6 +62,10 @@ export default function HomePage() {
                     className={styles.history_map}
                     src="/homepage_block2_img_pc.png" alt="Карта" />
 
+                <img
+                    className={styles.history_mapMobile}
+                    src="/homepage_block2_img_mobile.png" alt="Карта" />
+
                 {/* <img
                     className={styles.history_imageHistory}
                     src="/image-history.png" alt="Фотография памятника" />
