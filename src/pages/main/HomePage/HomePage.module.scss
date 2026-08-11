@@ -227,7 +227,7 @@
     @include respond-below($breakpoint-md) {
         min-height: auto;
         flex-direction: column;
-        padding: 60px 16px 40px;
+        // padding: 60px 16px 40px;
 
         &_subtitle {
             gap: 8px;
