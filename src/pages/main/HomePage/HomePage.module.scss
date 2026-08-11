@@ -39,18 +39,6 @@
         width: 69.3%;
         z-index: 1;
     }
-
-    // --- ПЛАНШЕТЫ / НОУТБУКИ (768–1919) ---
-    // padding-bottom 52.5% (1008/1920) масштабируется сам — газета остаётся пропорциональной.
-    // Отдельных правок не нужно: width:100% + max-width:1920 + margin auto уже центрируют блок.
-
-    // --- МОБАЙЛ (≤767) ---
-    // В макете мобильный hero-блок ~320px. Газета (paper-main_full.png) через
-    // object-fit: cover обрезается по высоте контейнера — задаём целевую высоту
-    // через padding-bottom, ориентируясь на мобильный якорь 375.
-    @include respond-below($breakpoint-md) {
-        padding-bottom: 86%;
-    }
 }
 
 .history {
@@ -195,9 +183,28 @@
             display: block;
         }
 
+        // Памятник (image-history.png): на десктопе absolute справа от карты.
+        // В column-раскладке ставим его в поток ПЕРЕД картой (по макету мобайла
+        // памятник расположен выше карты, смещён влево, ~1/3 ширины).
+        // DOM-порядок: map → imageHistory; меняем через flex order.
+        &_imageHistory {
+            position: relative;
+            left: auto;
+            top: auto;
+            z-index: 2;
+            display: block;
+            width: clamp(110px, 33%, 320px);
+            height: auto;
+            margin: clamp(24px, 3vw, 48px) 0 0 clamp(8px, 6vw, 60px);
+            order: 1;
+        }
+
+        &_map {
+            order: 2;
+        }
+
         // Декоративные элементы, завязанные на px-координаты десктопа,
         // на промежуточных ширинах начинают съезжать — прячем.
-        &_imageHistory,
         &_arrow,
         &_curlHistoryTop {
             display: none;
@@ -211,6 +218,7 @@
             max-width: 100%;
             height: auto;
             margin-top: 16px;
+            order: 3;
         }
     }
 
@@ -260,6 +268,11 @@
             &__secondLine {
                 padding-left: 0;
             }
+        }
+
+        &_imageHistory {
+            width: 125px;
+            margin: 24px 0 0 8px;
         }
 
         &_map {
