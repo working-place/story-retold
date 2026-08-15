@@ -102,8 +102,10 @@
 
     &_map {
         position: absolute;
-        max-width: 54%;
-        height: 88%;
+        // Ширина задана, высота авто — пропорции картинки не искажаются
+        // (раньше height: 88% + max-width растягивали её до 33% сплющивания).
+        width: 54%;
+        height: auto;
         right: -10px;
         bottom: 110px;
     }
