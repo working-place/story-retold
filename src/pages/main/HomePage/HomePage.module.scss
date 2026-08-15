@@ -7,6 +7,10 @@
     background-color: $beige-background;
     max-width: 1920px;
     margin: 0 auto;
+    // Лендинг живёт с левым выравниванием по умолчанию — глобальный
+    // text-align: center на #root сюда не действует. Точечные
+    // right/center внутри секций переопределяют при необходимости.
+    text-align: left;
 
     &_title {
         position: absolute;
@@ -49,6 +53,7 @@
     color: $white-text;
     padding-top: 110px;
     overflow: hidden;
+    text-align: left;
 
     &_subtitle {
 
@@ -309,6 +314,7 @@
     height: 1760px;
     background-color: $green-color;
     overflow: hidden;
+    text-align: left;
 
     &_subtitle {
         display: flex;
@@ -653,6 +659,7 @@
     position: relative;
     background-color: $beige-background;
     height: 1258px;
+    text-align: left;
 
     &_title,
     &_titleForm {
