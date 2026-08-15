@@ -200,12 +200,14 @@
 
         &_mapMobile {
             position: relative;
-            max-width: clamp(280px, 54%, 700px);
+            // На всём мобильном диапазоне (≤1023) карта — во всю ширину,
+            // без clamp-ограничения (раньше на 800–1000px сжималась до ~54%).
+            max-width: 100%;
             width: 100%;
             height: auto;
             right: auto;
             bottom: auto;
-            margin: clamp(24px, 3vw, 60px) auto 0;
+            margin: clamp(24px, 3vw, 60px) 0 0;
             display: block;
             order: 2;
         }
