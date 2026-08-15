@@ -739,6 +739,9 @@
     @include respond-below($breakpoint-xxxl) {
         height: auto;
         min-height: 1258px;
+        // Нижний «воздух» секции: без него форма (height: fit-content)
+        // упирается в край секции на 768–1919 (на ≤767 padding уже есть).
+        padding-bottom: 40px;
     }
 
     @include respond-below($breakpoint-xxxl) {
