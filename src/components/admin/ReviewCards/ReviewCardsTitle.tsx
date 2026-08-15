@@ -1,3 +1,4 @@
+import { IconExitMobile } from '../../../assets/images/icons/IconExitMobile';
 import Button from '../../common/Button/Button';
 import styles from './ReviewCards.module.scss';
 
@@ -18,6 +19,12 @@ export default function ReviewCardsTitle({
                 onClick={onExit}
             >
                 Выйти
+            </Button>
+            <Button
+                className={styles.reviewCards__exitButtonMobile}
+                onClick={onExit}
+            >
+                <IconExitMobile/>
             </Button>
         </div>
     );

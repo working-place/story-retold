@@ -69,11 +69,37 @@
     }
 }
 
-
 @media (max-width: 1599px) {
     .reviewCards {
         &__list {
             gap: 20px;
+        }
+    }
+}
+
+@media (min-width: 376px) {
+    .reviewCards {
+
+        &__exitButtonMobile {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 375px) {
+    .reviewCards {
+        padding-top: 30px;
+        gap: 30px;
+
+        &__exitButton {
+            display: none;
+        }
+
+        &__exitButtonMobile {
+            background-color: transparent;
+            color: $brown-color;
+            width: fit-content;
+            padding: 0;
         }
     }
 }
