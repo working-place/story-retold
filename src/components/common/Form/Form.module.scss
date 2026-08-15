@@ -627,6 +627,13 @@ height: 100%;
             gap: 8px;
         }
 
+        // Secondary-зона: заголовок+подзаголовок по центру оси Y,
+        // кнопка «Выбрать файлы» остаётся прижатой к низу.
+        &__titleWrapper_secondary {
+            flex: 1;
+            justify-content: center;
+        }
+
         // ---- Блок загрузки фото ----
         &__upload {
             flex-direction: column;
