@@ -451,16 +451,25 @@
 
     // Общая картинка-стек фото героев. Версия подбирается через <picture>
     // в JSX: ≥1280px — десктопная, ниже — мобильная.
+    // position+z-index — чтобы герои лежали ПОВЕРХ фонового завитка (&_curl).
     &_photoStack {
         display: block;
+        position: relative;
+        z-index: 2;
         width: 100%;
         height: auto;
     }
 
+    // Завиток — фоновая декорация: строго прижата к правому нижнему углу
+    // секции на всех ширинах. Картинки героев (photoStack) лежат ПОВЕРХ неё.
     &_curl {
         position: absolute;
-        bottom: 15px;
-        right: -15px;
+        bottom: 0;
+        right: 0;
+        max-width: 100%;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
     }
 
     // --- ПЛАНШЕТЫ / НОУТБУКИ (768–1919) ---
@@ -525,16 +534,8 @@
         // }
         // ============================================================
 
-        &_curl {
-            position: relative;
-            bottom: auto;
-            right: auto;
-            display: block;
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            margin-top: 16px;
-        }
+        // Завиток остаётся absolute в правом нижнем углу (базовые стили) —
+        // здесь ничего не переопределяем.
     }
 
     // --- МОБАЙЛ (≤767) ---
@@ -641,14 +642,7 @@
             margin: 24px auto 0;
         }
 
-        &_curl {
-            position: relative;
-            bottom: auto;
-            right: auto;
-            display: block;
-            width: 100%;
-            margin-top: 24px;
-        }
+        // Завиток — фоновый, absolute в правом нижнем углу (базовые стили).
     }
 }
 
