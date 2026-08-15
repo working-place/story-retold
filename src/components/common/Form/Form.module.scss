@@ -615,10 +615,12 @@ height: 100%;
         &__titleUpload {
             font-size: 16px;
             font-weight: 800;
+            text-align: center;
         }
 
         &__subtitle {
             font-size: 13px;
+            text-align: center;
         }
 
         &__titleWrapper {
@@ -651,6 +653,8 @@ height: 100%;
                 justify-content: space-between;
             }
 
+            // В secondary: заголовок/подзаголовок сверху, кнопка
+            // «Выбрать файлы» прижата к НИЗУ зоны.
             &_secondary {
                 height: auto;
                 min-height: 270px;
@@ -736,7 +740,7 @@ height: 100%;
 
     // В primary-зоне по макету кнопка «Выбрать файл» компактная, по центру
     // (~163px при 375px), а не на всю ширину зоны.
-    .form__uploadArea_primary .button_small {
+    .button_small {
         width: fit-content;
         min-width: 163px;
         justify-content: center;
