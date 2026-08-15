@@ -276,6 +276,9 @@
 
 .button {
     background-color: $beige-background;
+    // Кнопка на бежевой заливке: текст коричневый (как остальной текст формы),
+    // глобальный Button для primary красит в белый — перекрываем.
+    color: $brown-color;
     border: none;
     outline: none;
     width: 100%;
@@ -287,6 +290,7 @@
     &_small {
         font-size: 20px;
         background-color: $beige-background;
+        color: $brown-color;
         border: none;
         outline: none;
         border-radius: 16px;
@@ -584,11 +588,13 @@ height: 100%;
     .form {
         display: flex;
         flex-direction: column;
-        width: 100%;
+        // По мобильному макету (375px): панель формы не впритык к краям —
+        // боковые поля ~33px с каждой стороны (форма от x=33 до x=342).
+        width: calc(100% - 66px);
         min-height: auto;
-        margin-top: 32px;
+        margin: 32px auto 0;
         gap: 36px;
-        padding: 28px 16px;
+        padding: 28px 24px;
         border-radius: 16px;
 
         // ---- Заголовки секций ----
@@ -628,14 +634,17 @@ height: 100%;
                 height: 56px;
             }
 
+            // По макету обе зоны загрузки заметно выше (~275px при 375px)
             &_primary {
                 height: auto;
-                min-height: 220px;
+                min-height: 275px;
+                justify-content: space-between;
             }
 
             &_secondary {
                 height: auto;
-                min-height: 180px;
+                min-height: 270px;
+                justify-content: space-between;
             }
         }
 
@@ -713,6 +722,14 @@ height: 100%;
         width: 100%;
         font-size: 16px;
         padding: 12px 24px;
+    }
+
+    // В primary-зоне по макету кнопка «Выбрать файл» компактная, по центру
+    // (~163px при 375px), а не на всю ширину зоны.
+    .form__uploadArea_primary .button_small {
+        width: fit-content;
+        min-width: 163px;
+        justify-content: center;
     }
 
     // ---- Превью / галерея доп. изображений ----
