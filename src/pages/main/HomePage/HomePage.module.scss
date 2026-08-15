@@ -139,6 +139,12 @@
         pointer-events: none;
     }
 
+    // Мобильный завиток (homepage_curls_mobile_2.png) — только ≤1023,
+    // по умолчанию скрыт.
+    &_curlMobile {
+        display: none;
+    }
+
     &_curlHistoryTop {
         position: absolute;
         right: -15px;
@@ -214,6 +220,7 @@
             margin: clamp(24px, 3vw, 60px) 0 0;
             display: block;
             order: 2;
+            z-index: 1; // над фоновым завитком (&_curlMobile)
         }
 
         // Памятник (image-history.png): на десктопе absolute справа от карты.
@@ -239,16 +246,33 @@
             display: none;
         }
 
+        // Десктопный завиток на ≤1023 скрыт — вместо него мобильный.
         &_curlHistory {
+            display: none;
+        }
+
+        // Текстовый блок — над фоновым завитком.
+        &_container {
             position: relative;
-            bottom: auto;
+            z-index: 1;
+        }
+
+        // Мобильный завиток «парит» между текстом и картой:
+        // поднят на 40vw вверх (верх виден над картой), а суммарный вклад
+        // в поток обнулён (margin-bottom компенсирует и подъём, и высоту) —
+        // карта остаётся сразу после текста, ничего не сдвигается.
+        // Высота завитка = 348/375 ≈ 92.8vw; итог: -40vw + 92.8vw + mb = 16px.
+        &_curlMobile {
             display: block;
+            position: relative;
             width: 100%;
             max-width: 100%;
             height: auto;
-            margin-top: 16px;
-            order: 3;
-            z-index: -1; // фоном — под памятником и картой
+            margin-top: -40vw;
+            margin-bottom: calc(16px - (348 / 375 - 0.4) * 100vw);
+            order: 1;
+            z-index: 0;
+            pointer-events: none;
         }
     }
 

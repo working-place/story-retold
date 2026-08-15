@@ -74,6 +74,8 @@ export default function HomePage() {
                     className={styles.history_arrow}
                     src="/arrow-history.png" alt="Стрелка" /> */}
 
+                {/* Десктопный завиток — НЕ УДАЛЯТЬ: работает на ≥1024.
+                    На ≤1023 скрыт и заменён мобильным (curlMobile ниже). */}
                 <img
                     className={styles.history_curlHistory}
                     src="/curl-history.png" alt="Линия" />
@@ -81,6 +83,11 @@ export default function HomePage() {
                 <img
                     className={styles.history_curlHistoryTop}
                     src="/curl-history-top.png" alt="Линия" />
+
+                {/* Мобильный завиток — ТОЛЬКО ≤1023, по всей ширине экрана. */}
+                <img
+                    className={styles.history_curlMobile}
+                    src="/homepage_curls_mobile_2.png" alt="Линия" />
             </div>
 
             <img
