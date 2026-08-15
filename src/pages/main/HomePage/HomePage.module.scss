@@ -346,76 +346,115 @@
         letter-spacing: 1.6px;
     }
 
+    // ================================================================
+    //  СТАРЫЕ СТИЛИ ДЕКОРАТИВНЫХ ЛИНИЙ (line-11..15) — НЕ УДАЛЯТЬ!
+    //  Линии были частью сетки отдельных фото photo-1..5. Фото заменены
+    //  общим стеком about_photoStack — линии скрыты на всех ширинах,
+    //  иначе висят поверх стековой картинки.
+    // ================================================================
+    // &_line1,
+    // &_line2,
+    // &_line3,
+    // &_line4,
+    // &_line5 {
+    //     position: absolute;
+    // }
+    //
+    // &_line1 {
+    //     top: 345px;
+    //     left: 315px;
+    // }
+    //
+    // &_line3 {
+    //     top: 350px;
+    //     left: 967px;
+    // }
+    //
+    // &_line2 {
+    //     top: 350px;
+    //     left: 640px;
+    // }
+    //
+    // &_line5 {
+    //     top: 350px;
+    //     left: 1017px;
+    // }
+    //
+    // &_line4 {
+    //     top: 350px;
+    //     left: 1639px;
+    // }
+    // ================================================================
+
+    // Линии скрыты вместе со старой фото-сеткой.
     &_line1,
     &_line2,
     &_line3,
     &_line4,
     &_line5 {
-        position: absolute;
+        display: none;
     }
 
-    &_line1 {
-        top: 345px;
-        left: 315px;
-    }
+    // ================================================================
+    //  СТАРЫЕ СТИЛИ ОТДЕЛЬНЫХ ФОТО (photo-1..5) — НЕ УДАЛЯТЬ!
+    //  На всех ширинах фото заменены общей картинкой-стеком about_photoStack
+    //  (homepage_herophotosStack_desc.webp ≥1280px / _mobile.webp <1280px).
+    //  Стили оставлены в комментарии — вдруг вернёмся к раздельным фото.
+    // ================================================================
+    // &_photo1,
+    // &_photo2,
+    // &_photo3,
+    // &_photo4,
+    // &_photo5 {
+    //     position: absolute;
+    // }
+    //
+    // &_photo1 {
+    //     left: 18px;
+    //     top: 540px;
+    //     z-index: 1;
+    // }
+    //
+    // &_photo2 {
+    //     left: 545px;
+    //     top: 557px;
+    //     z-index: 2;
+    // }
+    //
+    // &_photo3 {
+    //     left: 1315px;
+    //     top: 477px;
+    //     z-index: 2;
+    // }
+    //
+    // &_photo4 {
+    //     left: 245px;
+    //     top: 1077px;
+    //     z-index: 1;
+    // }
+    //
+    // &_photo5 {
+    //     left: 875px;
+    //     top: 960px;
+    //     z-index: 1;
+    // }
+    // ================================================================
 
-    &_line3 {
-        top: 350px;
-        left: 967px;
-    }
-
-    &_line2 {
-        top: 350px;
-        left: 640px;
-    }
-
-    &_line5 {
-        top: 350px;
-        left: 1017px;
-    }
-
-    &_line4 {
-        top: 350px;
-        left: 1639px;
-    }
-
+    // Отдельные фото скрыты на всех ширинах — вместо них общий стек.
     &_photo1,
     &_photo2,
     &_photo3,
     &_photo4,
     &_photo5 {
-        position: absolute;
-
+        display: none;
     }
 
-    &_photo1 {
-        left: 18px;
-        top: 540px;
-        z-index: 1;
-    }
-
-    &_photo2 {
-        left: 545px;
-        top: 557px;
-        z-index: 2;
-    }
-
-    &_photo3 {
-        left: 1315px;
-        top: 477px;
-        z-index: 2;
-    }
-
-    &_photo4 {
-        left: 245px;
-        top: 1077px;
-        z-index: 1;
-    }
-
-    &_photo5 {
-        left: 875px;
-        top: 960px;
-        z-index: 1;
+    // Общая картинка-стек фото героев. Версия подбирается через <picture>
+    // в JSX: ≥1280px — десктопная, ниже — мобильная.
+    &_photoStack {
+        display: block;
+        width: 100%;
+        height: auto;
     }
 
     &_curl {
@@ -466,21 +505,25 @@
             display: none;
         }
 
-        // Фото: из абсолютной сетки → в поток с обтеканием/переносом.
-        &_photo1,
-        &_photo2,
-        &_photo3,
-        &_photo4,
-        &_photo5 {
-            position: relative !important;
-            left: auto !important;
-            top: auto !important;
-            z-index: 1 !important;
-            display: block;
-            max-width: clamp(220px, 30vw, 480px);
-            width: 100%;
-            height: auto;
-        }
+        // ============================================================
+        //  СТАРЫЕ СТИЛИ ФОТО В ПОТОКЕ ДЛЯ ПЛАНШЕТОВ — НЕ УДАЛЯТЬ!
+        //  (фото заменены общим стеком about_photoStack на всех ширинах)
+        // ============================================================
+        // &_photo1,
+        // &_photo2,
+        // &_photo3,
+        // &_photo4,
+        // &_photo5 {
+        //     position: relative !important;
+        //     left: auto !important;
+        //     top: auto !important;
+        //     z-index: 1 !important;
+        //     display: block;
+        //     max-width: clamp(220px, 30vw, 480px);
+        //     width: 100%;
+        //     height: auto;
+        // }
+        // ============================================================
 
         &_curl {
             position: relative;
@@ -542,36 +585,60 @@
             display: none;
         }
 
-        // Фото: из абсолютной сетки → в вертикальную стопку по центру.
+        // ============================================================
+        //  СТАРЫЕ СТИЛИ ОТДЕЛЬНЫХ ФОТО НА МОБИЛЕ — НЕ УДАЛЯТЬ!
+        //  (п temporarily заменены общей картинкой-стеком
+        //  homepage_herophotosStack_mobile.png, см. &_photoStack ниже.
+        //  Оставлены как комментарии — могут понадобиться, если
+        //  вернёмся к раздельным фото на мобиле.)
+        // ============================================================
+        // &_photo1,
+        // &_photo2,
+        // &_photo3,
+        // &_photo4,
+        // &_photo5 {
+        //     position: relative !important;
+        //     left: auto !important;
+        //     top: auto !important;
+        //     z-index: 1 !important;
+        //     display: block;
+        //     width: 100%;
+        //     max-width: 329px;
+        //     height: auto;
+        //     margin: 0 auto;
+        //
+        //     // Чередуем лёгкое смещение, чтобы сохранить «живую» компоновку макета.
+        //     &:nth-child(odd) {
+        //         margin-left: auto;
+        //         margin-right: 8%;
+        //     }
+        //
+        //     &:nth-child(even) {
+        //         margin-left: 8%;
+        //         margin-right: auto;
+        //     }
+        //
+        //     &:not(:first-of-type) {
+        //         margin-top: 24px;
+        //     }
+        // }
+        // ============================================================
+
+        // На мобиле отдельные фото скрыты — вместо них общая картинка-стек.
         &_photo1,
         &_photo2,
         &_photo3,
         &_photo4,
         &_photo5 {
-            position: relative !important;
-            left: auto !important;
-            top: auto !important;
-            z-index: 1 !important;
+            display: none;
+        }
+
+        // Общая картинка-стек фотографий героев (мобильная версия макета).
+        &_photoStack {
             display: block;
             width: 100%;
-            max-width: 329px;
             height: auto;
-            margin: 0 auto;
-
-            // Чередуем лёгкое смещение, чтобы сохранить «живую» компоновку макета.
-            &:nth-child(odd) {
-                margin-left: auto;
-                margin-right: 8%;
-            }
-
-            &:nth-child(even) {
-                margin-left: 8%;
-                margin-right: auto;
-            }
-
-            &:not(:first-of-type) {
-                margin-top: 24px;
-            }
+            margin: 24px auto 0;
         }
 
         &_curl {

@@ -128,6 +128,10 @@ export default function HomePage() {
                 <img
                     className={styles.about_line4}
                     src="/line-14.png" alt="Линия" />
+                {/* Отдельные фото героев — НЕ УДАЛЯТЬ!
+                    На всех ширинах заменены общей картинкой-стеком
+                    (about_photoStack ниже), скрыты через CSS.
+                    Стили лежат в HomePage.module.scss в комментариях. */}
                 <img
                     className={styles.about_photo1}
                     src="/photo-1.png" alt="Фотография героя" />
@@ -143,6 +147,20 @@ export default function HomePage() {
                 <img
                     className={styles.about_photo5}
                     src="/photo-5.png" alt="Фотография героя" />
+
+                {/* Общая картинка-стек фото героев.
+                    ≥1280px — десктопная версия (_desc.webp),
+                    ниже 1280px — мобильная (_mobile.webp).
+                    Через <picture> браузер грузит только нужную. */}
+                <picture>
+                    <source
+                        media="(min-width: 1280px)"
+                        srcSet="/homepage_herophotosStack_desc.webp" />
+                    <img
+                        className={styles.about_photoStack}
+                        src="/homepage_herophotosStack_mobile.webp"
+                        alt="Фотографии героев" />
+                </picture>
 
                 <img
                     className={styles.about_curl}
