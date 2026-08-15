@@ -44,7 +44,10 @@ export const EMPTY_CARD_FORM: CardFormData = {
   placeService: '',
   placeConscription: '',
   chapter: 'svo',
-  cardType: 'withoutPhoto',
+  // Дефолт «с фото»: оба блока загрузки («Фотографии героя» и «Фотографии
+  // наград») видны сразу, как в макете. Реальный тип карточки при отправке
+  // вычисляется автоматически из наличия файла (buildCardFormData).
+  cardType: 'withPhoto',
 };
 
 export const REQUIRED_FIELDS: (keyof CardFormData)[] = [
