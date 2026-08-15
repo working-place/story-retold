@@ -57,8 +57,10 @@ export interface UseCardFormReturn {
   handleInputChange: (field: keyof CardFormData, value: string | boolean) => void;
   handleDateBirthChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleDateDeathChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleChapterChange: (value: CardFormData['chapter']) => void;
-  handleCardTypeChange: (value: CardFormData['cardType']) => void;
+  // null приходит из CustomSelect при «пустом» выборе (тип пропсов селекта) —
+  // в состоянии формы null не храним, откатываемся на дефолт.
+  handleChapterChange: (value: CardFormData['chapter'] | null) => void;
+  handleCardTypeChange: (value: CardFormData['cardType'] | null) => void;
   handlePhotoHeroChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleAdditionalImagesChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   removeAdditionalImage: (index: number, isExisting?: boolean) => void;
@@ -155,13 +157,13 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
     setError(null);
   }, []);
 
-  const handleChapterChange = useCallback((value: CardFormData['chapter']) => {
-    setFormData((prev) => ({ ...prev, chapter: value }));
+  const handleChapterChange = useCallback((value: CardFormData['chapter'] | null) => {
+    setFormData((prev) => ({ ...prev, chapter: value ?? EMPTY_CARD_FORM.chapter }));
     setError(null);
   }, []);
 
-  const handleCardTypeChange = useCallback((value: CardFormData['cardType']) => {
-    setFormData((prev) => ({ ...prev, cardType: value }));
+  const handleCardTypeChange = useCallback((value: CardFormData['cardType'] | null) => {
+    setFormData((prev) => ({ ...prev, cardType: value ?? EMPTY_CARD_FORM.cardType }));
     setError(null);
   }, []);
 
