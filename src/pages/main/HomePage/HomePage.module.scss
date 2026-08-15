@@ -166,22 +166,22 @@
         height: auto;
         min-height: auto;
         flex-direction: column;
+        // ЕДИНАЯ СЕТКА с блоком «О проекте…»: текст от одной линии, 30px бока.
+        padding-left: 30px;
+        padding-right: 30px;
         // Значительный нижний отступ — «воздух» под картой для фонового завитка
         padding-bottom: 15vw;
 
+        // Лесенка десктопных отступов сбрасывается — все абзацы от одной линии.
         &_subtitle {
 
             &__firstLine,
             &__secondLine {
                 font-size: clamp(28px, 4.8vw, 80px);
-            }
-
-            &__firstLine {
-                padding-left: clamp(16px, 3.4vw, 64.5px);
+                padding-left: 0;
             }
 
             &__secondLine {
-                padding-left: clamp(40px, 15vw, 290px);
                 margin-top: clamp(8px, 0.8vw, 15px);
             }
         }
@@ -193,14 +193,7 @@
                 font-size: clamp(16px, 2.1vw, 35px);
                 letter-spacing: clamp(0.3px, 0.08vw, 1.6px);
                 margin-top: clamp(20px, 2.1vw, 40px);
-            }
-
-            &__firstLine {
-                padding-left: clamp(16px, 3.5vw, 67.5px);
-            }
-
-            &__secondLine {
-                padding-left: clamp(40px, 8.2vw, 157px);
+                padding-left: 0;
             }
         }
 
@@ -212,14 +205,14 @@
 
         &_mapMobile {
             position: relative;
-            // На всём мобильном диапазоне (≤1023) карта — во всю ширину,
-            // без clamp-ограничения (раньше на 800–1000px сжималась до ~54%).
-            max-width: 100%;
-            width: 100%;
+            // Во всю ширину ЭКРАНА (компенсируем боковые паддинги секции 30px):
+            // negative margin + расширенная ширина.
+            max-width: none;
+            width: calc(100% + 60px);
+            margin: clamp(24px, 3vw, 60px) 0 0 -30px;
             height: auto;
             right: auto;
             bottom: auto;
-            margin: clamp(24px, 3vw, 60px) 0 0;
             display: block;
             order: 2;
             z-index: 1; // над фоновым завитком (&_curlMobile)
@@ -267,11 +260,13 @@
         &_curlMobile {
             display: block;
             position: relative;
-            width: 100%;
-            max-width: 100%;
+            // Во всю ширину ЭКРАНА (компенсация боковых паддингов секции).
+            width: calc(100% + 60px);
+            max-width: none;
             height: auto;
             margin-top: -40vw;
             margin-bottom: calc(16px - (348 / 375 - 0.4) * 100vw);
+            margin-left: -30px;
             order: 1;
             z-index: 0;
             pointer-events: none;
@@ -336,10 +331,11 @@
             display: none;
         }
 
+        // Full-bleed поверх боковых паддингов секции (30px) — как в ≤1023-блоке.
         &_mapMobile {
-            max-width: 100%;
-            width: 100%;
-            margin: 32px auto 0;
+            max-width: none;
+            width: calc(100% + 60px);
+            margin: 32px 0 0 -30px;
         }
     }
 }
@@ -579,13 +575,31 @@
         // здесь ничего не переопределяем.
     }
 
+    // --- МОБАЙЛ-ДИАПАЗОН (≤1023) ---
+    // ЕДИНАЯ СЕТКА с блоком «История проекта»: текст от одной линии,
+    // 30px бока у секции, внутренние отступы сброшены.
+    @include respond-below($breakpoint-lg) {
+        padding-left: 30px;
+        padding-right: 30px;
+
+        &_subtitle {
+            margin-right: 0;
+        }
+
+        &_description {
+            align-self: stretch;
+            margin-left: 0;
+            max-width: 100%;
+        }
+    }
+
     // --- МОБАЙЛ (≤767) ---
     // По макету: 5 фото выстраиваются вертикальной стопкой (329×329).
     // Сетку декоративных линий с мобилы убираем — она не влезает.
     @include respond-below($breakpoint-md) {
         height: auto;
         min-height: auto;
-        padding: 60px 16px 40px;
+        padding: 60px 30px 40px;
         display: flex;
         flex-direction: column;
 
