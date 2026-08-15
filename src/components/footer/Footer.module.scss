@@ -158,18 +158,29 @@
         grid-area: auto;
     }
 
-    /* Контакты (Телефон и Почта) */
+    /* Контакты (Телефон и Почта) — компактная группа:
+       сбиваем межстрочку (наследуется 34px) и прячем <br> из JSX */
     .item23 {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 2px;
+        line-height: 1.3;
+
+        br {
+            display: none;
+        }
     }
 
-    /* Ссылки (Пользовательское соглашение и Политика) */
+    /* Ссылки (соглашение / политика) — вторая компактная группа */
     .item24 {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
+        line-height: 1.3;
+
+        br {
+            display: none;
+        }
     }
 
     /* Сделано в и Копирайт */
