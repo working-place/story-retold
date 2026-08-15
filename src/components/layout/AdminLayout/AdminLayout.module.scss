@@ -1,7 +1,6 @@
 .adminLayout {
     display: flex;
     min-height: 100vh;
-    // max-width: 1920px;
     width: 100%;
     background-color: $green-color;
 }
@@ -72,4 +71,137 @@
     padding: 31px 31px 31px 0;
     overflow-y: auto;
     background-color: $green-color;
+}
+
+@media (min-width: 961px) {
+
+    .sidebarMobile,
+    .menuOverlay,
+    .menuPopup {
+        display: none;
+    }
+}
+
+@media (max-width: 960px) {
+
+    .adminLayout {
+        padding-top: 53px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .sidebarMobile {
+        display: flex;
+        position: fixed;
+        align-items: center;
+        justify-content: space-between;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        top: 43px;
+        height: fit-content;
+        min-height: 36px;
+        width: 90vw;
+        z-index: 10;
+
+        &__link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 15px;
+            border-radius: 20px;
+
+            &_active {
+                background: $brown-color;
+                color: $beige-background;
+            }
+        }
+
+        &__logo {
+            width: fit-content;
+
+            img {
+                width: 64px;
+                height: 36px;
+            }
+        }
+
+        &__linkIcon {
+            height: 25px;
+        }
+    }
+
+    .burgerButton {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 20px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .burgerButton_active .burgerLine:nth-child(1),
+    .burgerButton_active .burgerLine:nth-child(2),
+    .burgerButton_active .burgerLine:nth-child(3) {
+        display: none;
+    }
+
+    .burgerLine {
+        height: 4px;
+        background-color: $beige-background;
+        border-radius: 6px;
+        transition: all 0.3s ease-in-out;
+        transform-origin: center;
+    }
+
+    .menuOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .menuPopup {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 30px;
+        position: fixed;
+        top: 34px;
+        right: 0;
+        max-width: 80%;
+        width: 280px;
+        min-height: 342px;
+        height: fit-content;
+        padding: 60px 20px 20px;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        background-color: $beige-background;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        animation: slideIn 0.3s ease-in-out;
+        color: $brown-color;
+        overflow-y: auto;
+        z-index: 2;
+    }
+
+    .closeButton {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: transparent;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: $brown-color;
+        padding: 5px;
+        line-height: 1;
+    }
 }

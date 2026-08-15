@@ -6,7 +6,6 @@ import HomePage from './pages/main/HomePage/HomePage';
 import LoginPage from "./pages/auth/LoginPage/LoginPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
-import AdminHeroActions from "./pages/admin/AdminHeroActions/AdminHeroActions";
 import HeroesPage from "./pages/main/HeroesPage/HeroesPage";
 import HeroDetailPage from "./pages/main/HeroDetailPage/HeroDetailPage";
 import MainLayout from "./components/layout/MainLayout/MainLayout";
@@ -18,6 +17,7 @@ import ReviewCards from "./components/admin/ReviewCards/ReviewCards";
 import NotFoundPage from "./pages/main/NotFoundPage/NotFoundPage";
 import PreviewHeroPage from "./pages/main/HeroDetailPage/PreviewHeroPage";
 import FeedBackPage from "./pages/main/FeedBackPage/FeedBackPage";
+import AdminHeroActions from "./pages/admin/AdminHeroActions/AdminHeroActions";
 
 function App() {
   return (
