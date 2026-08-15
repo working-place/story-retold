@@ -166,6 +166,8 @@
         height: auto;
         min-height: auto;
         flex-direction: column;
+        // Значительный нижний отступ — «воздух» под картой для фонового завитка
+        padding-bottom: 15vw;
 
         &_subtitle {
 
