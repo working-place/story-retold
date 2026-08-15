@@ -267,12 +267,15 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
 
 const buildSubmitData = useCallback(() => {
     return buildCardFormData(
-      formData,
+      // consent/privacyPolicy живут в отдельных стейтах — пробрасываем их в
+      // payload, иначе бек получает запрос без согласий и отвечает
+      // validation.required (поймано e2e-тестом form.real.spec.ts).
+      { ...formData, consent: isAgreed, privacyPolicy: isPolicyAgreed },
       { photoHero, additionalImages },
       getDeletedImageIds(),
       existingPhotoHero
     );
-  }, [formData, photoHero, additionalImages, getDeletedImageIds, existingPhotoHero]);
+  }, [formData, isAgreed, isPolicyAgreed, photoHero, additionalImages, getDeletedImageIds, existingPhotoHero]);
 
   const resetForm = useCallback(() => {
     setFormData(EMPTY_CARD_FORM);
