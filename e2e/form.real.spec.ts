@@ -210,7 +210,8 @@ test.describe('Форма «Расскажите о герое» [REAL API]', ()
     // даты хранятся в Y-m-d
     expect(fetched.dateBirth).toBe('1920-01-01');
     expect(fetched.dateDeath).toBe('1985-05-09');
-    // свежая карточка ещё на модерации
-    expect(fetched.published).toBeNull();
+    // свежая карточка ещё на модерации. ⚠️ бек непоследователен: create-echo
+    // отдаёт published: null, а админский get/{id} — false. Ловим оба.
+    expect(fetched.published).toBeFalsy();
   });
 });

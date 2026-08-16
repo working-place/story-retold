@@ -1,18 +1,4 @@
 import { defineConfig, devices } from '@playwright/test';
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
-
-// Мини-загрузчик .env (без зависимости dotenv): прокидывает VITE_* и E2E_*
-// в process.env, чтобы спеки видели URL бека и тестовые админ-креды.
-// Ничего не перезаписывает уже установленные переменные.
-try {
-  for (const line of readFileSync(resolve(__dirname, '.env'), 'utf8').split(/\r?\n/)) {
-    const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$/);
-    if (m && !(m[1] in process.env)) process.env[m[1]] = m[2].replace(/^["']|["']$/g, '');
-  }
-} catch {
-  // .env отсутствует — тесты @real без кредов сами пометятся skip
-}
 
 // Два режима (теги в spec-файлах):
 //  @mock — POST /api/card/create перехватывается мок-роутом (быстрый, без бека)
