@@ -61,9 +61,12 @@
     }
 }
 
-.sidebar__linkText {
-    font-size: 14px;
-    font-weight: 500;
+.sidebar {
+
+    &__linkText {
+        font-size: 14px;
+        font-weight: 500;
+    }
 }
 
 .content {
@@ -71,6 +74,66 @@
     padding: 31px 31px 31px 0;
     overflow-y: auto;
     background-color: $green-color;
+}
+
+
+
+@media (max-width: 1560px) {
+
+    h3 {
+        font-size: 18px !important;
+    }
+
+    h4 {
+        font-size: 15px !important;
+    }
+
+    label {
+        font-size: 19px !important;
+    }
+
+    button {
+        font-size: 16px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .sidebar {
+        width: fit-content;
+
+        &__linkText {
+            font-size: 18px !important;
+        }
+    }
+}
+
+@media (max-width: 1241px) {
+    h3 {
+        font-size: 14px !important;
+    }
+
+    h4 {
+        font-size: 12px !important;
+    }
+
+    label {
+        font-size: 16px !important;
+        font-weight: 400 !important;
+    }
+
+    button {
+        font-size: 16px !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    .sidebar {
+        width: fit-content;
+
+        &__linkText {
+            font-size: 16px !important;
+        }
+    }
 }
 
 @media (min-width: 961px) {
@@ -102,7 +165,8 @@
         top: 43px;
         height: fit-content;
         min-height: 36px;
-        width: 90vw;
+        width: 100%;
+        max-width: 90vw;
         z-index: 10;
 
         &__link {
@@ -136,12 +200,12 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        width: 30px;
         height: 20px;
         background: transparent;
         border: none;
         cursor: pointer;
         padding: 0;
+        margin-right: -15px;
     }
 
     .burgerButton_active .burgerLine:nth-child(1),
@@ -152,6 +216,7 @@
 
     .burgerLine {
         height: 4px;
+        width: 30px;
         background-color: $beige-background;
         border-radius: 6px;
         transition: all 0.3s ease-in-out;
@@ -165,7 +230,7 @@
         width: 100vw;
         height: 100vh;
         background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1;
+        z-index: 1010;
         animation: fadeIn 0.3s ease-in-out;
     }
 

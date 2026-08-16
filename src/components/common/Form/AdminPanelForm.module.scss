@@ -19,7 +19,8 @@
 .form {
     display: flex;
     flex-direction: column;
-    width: 96%;
+    width: 79vw;
+    max-width: 1531px;
     min-height: 935px;
     height: fit-content;
     background-color: $brown-color;
@@ -29,7 +30,6 @@
 
     &_admin {
         background-color: $beige-soft;
-        min-width: 1531px;
         margin: 0;
         padding-top: 25px;
         padding-bottom: 58px;
@@ -320,9 +320,6 @@
     margin-left: 15px;
 }
 
-// ==================================================
-// Preview Container
-
 .previewContainer {
     display: flex;
     flex-direction: column;
@@ -380,9 +377,6 @@
     }
 }
 
-// ======================================
-// Gallery of additional images (grid 3x3)
-
 .additionalImagesGrid {
     display: grid;
     grid-template-columns: repeat(3, 106px);
@@ -415,9 +409,6 @@
     background-color: $beige-warm;
 }
 
-// ======================================
-// Error & Success messages
-
 .errorMessage {
     color: $color-error-strong;
     font-size: 16px;
@@ -438,9 +429,6 @@
     margin-bottom: 16px;
 }
 
-// ======================================
-// Utilities
-
 .dashed-border-all {
     border: none;
     background-image:
@@ -459,10 +447,6 @@
     }
 }
 
-// =====================================
-// PreviewPopup
-
-// Стили для попапа предпросмотра
 .previewOverlay {
     position: fixed;
     top: 0;
@@ -510,5 +494,252 @@
     to {
         opacity: 1;
         transform: scale(1);
+    }
+}
+
+@media (max-width: 1650px) {
+    .form {
+
+        &__basicInformation {
+            &_admin {
+                flex-grow: 2;
+            }
+        }
+
+        &__upload {
+            &_admin {
+                flex-grow: 1;
+            }
+        }
+
+        &_admin {
+            padding-top: 15px;
+            padding-bottom: 48px;
+            padding-left: 50px;
+        }
+
+        &__wrapper {
+            &_firstLine {
+                gap: 10px;
+            }
+        }
+
+        &__input {
+
+            &_date {
+                width: 13.6vw;
+            }
+
+            &_birthplace,
+            &_place,
+            &_hero,
+            &_user,
+            &_email,
+            &_additional,
+            &_adminInputWidth {
+                flex-grow: 1;
+            }
+
+            &_additional {
+                margin-top: 2px;
+            }
+        }
+    }
+
+    .removeAdditionalImageButton {
+        top: -3px;
+        right: 0px;
+    }
+
+    .additionalImagesGrid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        justify-content: center;
+        height: fit-content;
+    }
+
+    .additionalImageItem {
+        padding: 0;
+    }
+
+    .additionalImagePreview {
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid $beige-muted;
+        background-color: $beige-warm;
+    }
+
+    .contentWrapper {
+        gap: 51px;
+        width: fit-content;
+        align-items: flex-start;
+    }
+
+    .previewImage {
+        min-width: 100%;
+        min-height: 250px;
+        margin-bottom: 0;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-top: 0px;
+    }
+
+    .previewInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 1560px) {
+    .form {
+        margin-right: 20px;
+
+        &_admin {
+            padding-top: 15px;
+            padding-bottom: 48px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+    }
+
+    .contentWrapper {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 960px) {
+    .form {
+        width: 100%;
+
+        &__wrapper {
+            &_firstLine {
+
+                &_admin {
+                    flex-direction: row;
+
+                    button {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        &__upload {
+
+            &_admin {
+                flex-direction: row;
+                width: 100%;
+            }
+        }
+
+        &__uploadArea {
+            flex-grow: 1;
+
+            &_secondary {
+                min-height: 250px;
+            }
+        }
+    }
+
+    .contentWrapper {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .inputWrapper {
+        width: 100%;
+    }
+
+    .additionalImagesGrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
+    }
+
+    .removeAdditionalImageButton {
+        top: -5px;
+        right: -5px;
+        font-size: 20px !important;
+    }
+}
+
+@media (max-width: 770px) {
+
+    .removeImageButton {
+        top: 0px;
+        right: 0px;
+        font-size: 23px !important;
+        font-weight: 400 !important;
+    }
+
+    .previewImage {
+        width: fit-content;
+        object-fit: contain;
+    }
+
+    .form {
+
+        &__uploadArea {
+
+            &_primary,
+            &_secondary {
+                width: 100%;
+            }
+        }
+
+        &__upload {
+            &_admin {
+                flex-direction: column;
+                width: 100%;
+            }
+        }
+
+        &__wrapper {
+            &_firstLine {
+
+                &_admin {
+                    flex-direction: column;
+
+                    button {
+                        width: 100%;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 410px) {
+
+    .form {
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+    .additionalImagesGrid {
+        grid-template-columns: repeat(3, 33%);
+        grid-template-rows: auto;
+    }
+}
+
+@media (max-width: 350px) {
+    .additionalImagesGrid {
+        grid-template-columns: repeat(3, 30%);
+        grid-template-rows: auto;
+        gap: 10px;
+    }
+
+    .additionalImageWrapper {
+        width: 84px;
+        height: 105px;
+    }
+
+    .removeAdditionalImageButton {
+        top: 0px;
+        right: 0px;
+        font-size: 20px !important;
     }
 }

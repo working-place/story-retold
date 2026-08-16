@@ -307,7 +307,6 @@ export default function AdminEditForm() {
                                 </div>
                             )}
 
-                            {/* Существующие дополнительные изображения */}
                             {activeExistingImages.length > 0 && (
                                 <div className={styles.additionalImagesGrid}>
                                     {activeExistingImages.map((img, index) => {

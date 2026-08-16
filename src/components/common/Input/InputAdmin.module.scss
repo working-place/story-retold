@@ -159,3 +159,20 @@
         border-color: $color-error;
     }
 }
+
+@media (max-width: 960px) {
+    .medium {
+        min-width: 100%;
+        font-size: 16px;
+        font-weight: 400;
+
+
+    }
+
+    .input {
+        &::placeholder {
+            font-size: 16px;
+            font-weight: 400;
+        }
+    }
+}

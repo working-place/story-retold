@@ -14,7 +14,7 @@
 
     &__titleContainer {
         display: flex;
-        width: 100%;
+        flex-grow: 1;
     }
 
     &__title {
@@ -41,16 +41,6 @@
         flex-wrap: wrap;
         row-gap: 44px;
         column-gap: 35px;
-
-        @media (max-width: 1893px) {
-            .reviewCards {
-
-                &__list {
-                    background-color: red;
-                }
-
-            }
-        }
     }
 
     &__loading,
@@ -77,7 +67,7 @@
     }
 }
 
-@media (min-width: 376px) {
+@media (min-width: 961px) {
     .reviewCards {
 
         &__exitButtonMobile {
@@ -86,10 +76,15 @@
     }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 960px) {
     .reviewCards {
         padding-top: 30px;
         gap: 30px;
+
+        &__title {
+            font-size: 20px;
+            font-weight: 600;
+        }
 
         &__exitButton {
             display: none;

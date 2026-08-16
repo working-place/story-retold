@@ -193,11 +193,9 @@ const CustomSelectAdmin: React.FC<CustomSelectAdminProps> = ({
     const [hero, setHero] = useState<OptionType | null>(() => getInitialHero(initialChapter));
     const [cards, setCards] = useState<OptionType | null>(() => getInitialCards(initialCardType));
 
-    // Храним предыдущие значения пропсов для отслеживания изменений во время рендера
     const [prevInitialChapter, setPrevInitialChapter] = useState(initialChapter);
     const [prevInitialCardType, setPrevInitialCardType] = useState(initialCardType);
 
-    // Синхронизация состояния во время рендера без использования useEffect
     if (initialChapter !== prevInitialChapter) {
         setPrevInitialChapter(initialChapter);
         setHero(getInitialHero(initialChapter));
@@ -240,79 +238,104 @@ const CustomSelectAdmin: React.FC<CustomSelectAdminProps> = ({
     };
 
     return (
-        <div style={{ display: 'flex', gap: '24px', width: '100%', marginBottom: '15px' }}>
-            <div className={className} style={{ width: '100%' }}>
-                <label style={{
-                    display: 'block',
-                    marginBottom: '8px',
-                    fontWeight: 600,
-                    textAlign: 'left',
-                    fontSize: '20px',
-                    color: '#534035'
-                }}>
-                    Выберите из списка раздел
-                    {required && <span style={{ color: '#f44336', marginLeft: '4px' }}>*</span>}
-                </label>
-                <Select<OptionType>
-                    value={hero}
-                    onChange={handleChangeHero}
-                    options={heroOptions}
-                    placeholder="Выпадающий список"
-                    isClearable={false}
-                    isSearchable
-                    isLoading={false}
-                    isDisabled={false}
-                    onBlur={handleHeroBlur}
-                    styles={commonSelectStyles}
-                    components={{
-                        DropdownIndicator: CustomDropdownIndicatorFirst,
-                        ClearIndicator: CustomClearIndicator,
-                        IndicatorSeparator: () => null,
-                    }}
-                />
-                {getHeroError() && (
-                    <span style={{ fontSize: '12px', color: '#f44336', marginTop: '4px', display: 'block', textAlign: 'left' }}>
-                        {getHeroError()}
-                    </span>
-                )}
-            </div>
+        <>
+            <style>{`
+                @media (max-width: 960px) {
+                    .custom-select-label {
+                        font-size: 16px !important;
+                        font-weight: 400 !important;
+                    }
+                    .custom-select__control {
+                        font-size: 16px !important;
+                    }
+                    .custom-select__option {
+                        font-size: 16px !important;
+                        font-weight: 400 !important;
+                    }
+                }
+                @media (max-width: 770px) {
+                    .box {
+                        display: flex;
+                        flex-direction: column;
+                    }
+                }
+            `}</style>
+            <div className="box" style={{ display: 'flex', gap: '24px', width: '100%', marginBottom: '15px' }}>
+                <div className={className} style={{ width: '100%' }}>
+                    <label className="custom-select-label" style={{
+                        display: 'block',
+                        marginBottom: '8px',
+                        fontWeight: 600,
+                        textAlign: 'left',
+                        fontSize: '20px',
+                        color: '#534035'
+                    }}>
+                        Выберите из списка раздел
+                        {required && <span style={{ color: '#f44336', marginLeft: '4px' }}>*</span>}
+                    </label>
+                    <Select<OptionType>
+                        classNamePrefix="custom-select"
+                        value={hero}
+                        onChange={handleChangeHero}
+                        options={heroOptions}
+                        placeholder="Выпадающий список"
+                        isClearable={false}
+                        isSearchable
+                        isLoading={false}
+                        isDisabled={false}
+                        onBlur={handleHeroBlur}
+                        styles={commonSelectStyles}
+                        components={{
+                            DropdownIndicator: CustomDropdownIndicatorFirst,
+                            ClearIndicator: CustomClearIndicator,
+                            IndicatorSeparator: () => null,
+                        }}
+                    />
+                    {getHeroError() && (
+                        <span style={{ fontSize: '12px', color: '#f44336', marginTop: '4px', display: 'block', textAlign: 'left' }}>
+                            {getHeroError()}
+                        </span>
+                    )}
+                </div>
 
-            <div className={className} style={{ width: '100%' }}>
-                <label style={{
-                    display: 'block',
-                    marginBottom: '8px',
-                    fontWeight: 600,
-                    textAlign: 'left',
-                    fontSize: '20px',
-                    color: '#534035'
-                }}>
-                    Выберите из списка тип карточки
-                    {required && <span style={{ color: '#f44336', marginLeft: '4px' }}>*</span>}
-                </label>
-                <Select<OptionType>
-                    value={cards}
-                    onChange={handleChangeCards}
-                    options={cardsOptions}
-                    placeholder="Выпадающий список"
-                    isClearable={false}
-                    isSearchable
-                    isLoading={false}
-                    isDisabled={false}
-                    onBlur={handleCardsBlur}
-                    styles={commonSelectStyles}
-                    components={{
-                        DropdownIndicator: CustomDropdownIndicatorSecond,
-                        ClearIndicator: CustomClearIndicator,
-                        IndicatorSeparator: () => null,
-                    }}
-                />
-                {getCardsError() && (
-                    <span style={{ fontSize: '12px', color: '#f44336', marginTop: '4px', display: 'block', textAlign: 'left' }}>
-                        {getCardsError()}
-                    </span>
-                )}
+                <div className={className} style={{ width: '100%' }}>
+                    <label className="custom-select-label" style={{
+                        display: 'block',
+                        marginBottom: '8px',
+                        fontWeight: 600,
+                        textAlign: 'left',
+                        fontSize: '20px',
+                        color: '#534035'
+                    }}>
+                        Выберите из списка тип карточки
+                        {required && <span style={{ color: '#f44336', marginLeft: '4px' }}>*</span>}
+                    </label>
+                    <Select<OptionType>
+                        classNamePrefix="custom-select"
+                        value={cards}
+                        onChange={handleChangeCards}
+                        options={cardsOptions}
+                        placeholder="Выпадающий список"
+                        isClearable={false}
+                        isSearchable
+                        isLoading={false}
+                        isDisabled={false}
+                        onBlur={handleCardsBlur}
+                        styles={commonSelectStyles}
+                        components={{
+                            DropdownIndicator: CustomDropdownIndicatorSecond,
+                            ClearIndicator: CustomClearIndicator,
+                            IndicatorSeparator: () => null,
+                        }}
+                    />
+                    {getCardsError() && (
+                        <span style={{ fontSize: '12px', color: '#f44336', marginTop: '4px', display: 'block', textAlign: 'left' }}>
+                            {getCardsError()}
+                        </span>
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
