@@ -19,8 +19,11 @@ export interface CardFormData {
 }
 
 export interface CardFilesInput {
-  photoHero?: File | null;
-  additionalImages?: File[];
+  // browser-image-compression при useWebWorker возвращает Blob (не File),
+  // поэтому принимаем оба варианта — раньше строгая проверка instanceof File
+  // молча выбрасывала файлы из payload (поймано e2e-тестом form.real.spec.ts).
+  photoHero?: File | Blob | null;
+  additionalImages?: (File | Blob)[];
 }
 
 export interface ExistingAdditionalImage {
@@ -44,7 +47,10 @@ export const EMPTY_CARD_FORM: CardFormData = {
   placeService: '',
   placeConscription: '',
   chapter: 'svo',
-  cardType: 'withoutPhoto',
+  // Дефолт «с фото»: оба блока загрузки («Фотографии героя» и «Фотографии
+  // наград») видны сразу, как в макете. Реальный тип карточки при отправке
+  // вычисляется автоматически из наличия файла (buildCardFormData).
+  cardType: 'withPhoto',
 };
 
 export const REQUIRED_FIELDS: (keyof CardFormData)[] = [
@@ -139,14 +145,16 @@ export const buildCardFormData = (
   if (formData.consent) formDataObj.append('consent', '1');
   if (formData.privacyPolicy) formDataObj.append('privacyPolicy', '1');
 
-  if (files.photoHero instanceof File) {
-    formDataObj.append('photoHero', files.photoHero);
+  if (files.photoHero instanceof Blob) {
+    const name = files.photoHero instanceof File ? files.photoHero.name : 'photoHero.png';
+    formDataObj.append('photoHero', files.photoHero, name);
   }
 
   if (Array.isArray(files.additionalImages)) {
     files.additionalImages.forEach((file, index) => {
-      if (file instanceof File) {
-        formDataObj.append(`additionalCardImages[${index}][image]`, file);
+      if (file instanceof Blob) {
+        const name = file instanceof File ? file.name : `additional-${index}.png`;
+        formDataObj.append(`additionalCardImages[${index}][image]`, file, name);
       }
     });
   }

@@ -7,6 +7,10 @@
     background-color: $beige-background;
     max-width: 1920px;
     margin: 0 auto;
+    // Лендинг живёт с левым выравниванием по умолчанию — глобальный
+    // text-align: center на #root сюда не действует. Точечные
+    // right/center внутри секций переопределяют при необходимости.
+    text-align: left;
 
     &_title {
         position: absolute;
@@ -49,6 +53,7 @@
     color: $white-text;
     padding-top: 110px;
     overflow: hidden;
+    text-align: left;
 
     &_subtitle {
 
@@ -97,10 +102,13 @@
 
     &_map {
         position: absolute;
-        max-width: 54%;
-        height: 88%;
+        // Ширина задана, высота авто — пропорции картинки не искажаются
+        // (раньше height: 88% + max-width растягивали её до 33% сплющивания).
+        width: 54%;
+        height: auto;
         right: -10px;
         bottom: 110px;
+        z-index: 1; // над фоновым завитком (&_curlHistory)
     }
 
     // Мобильная версия карты (homepage_block2_img_mobile.png).
@@ -123,9 +131,18 @@
         z-index: 1;
     }
 
+    // Завиток — фоновая декорация: ПОД картой и памятником.
     &_curlHistory {
         position: absolute;
         bottom: 15px;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    // Мобильный завиток (homepage_curls_mobile_2.png) — только ≤1023,
+    // по умолчанию скрыт.
+    &_curlMobile {
+        display: none;
     }
 
     &_curlHistoryTop {
@@ -134,35 +151,42 @@
         top: 90px;
     }
 
-    // --- ПРОМЕЖУТОЧНЫЕ ШИРИНЫ (1024–1919) ---
-    // Сохраняем десктопную раскладку 1920 как есть: карта absolute, прижата к
-    // правому краю (right: -10px), памятник/стрелка на своих местах. Меняем
-    // только фиксированную высоту на авто — иначе контент не помещается.
-    @include respond-between($breakpoint-lg, $breakpoint-xxxl) {
+    // --- ПРОМЕЖУТОЧНЫЕ ШИРИНЫ ПК (1550–1919) ---
+    // Десктопная раскладка 1920: карта absolute, прижата к правому краю.
+    // Ширина карты ПЛАВНО понижается с 54% (при 1920) до 44% (при 1600):
+    // линейная формула calc(104vw - 960px) между этими точками
+    // (1920: 1037px=54%, 1600: 704px=44%, дальше продолжает убывать).
+    @include respond-between(1550px, $breakpoint-xxxl) {
         height: auto;
         min-height: 1295px;
+
+        &_map {
+            width: clamp(704px, calc(104vw - 960px), 1037px);
+        }
     }
 
-    // --- ПЛАНШЕТ НИЖЕ / МОБАЙЛ (≤1023) ---
-    // Здесь уже переходим в column-раскладку и переключаем карту на mobile.
-    @include respond-below($breakpoint-lg) {
+    // --- ПЛАНШЕТ НИЖЕ / МОБАЙЛ (≤1549) ---
+    // Уже 1550px включаем мобильную column-раскладку и mobile-карту.
+    @include respond-below(1550px) {
         height: auto;
         min-height: auto;
         flex-direction: column;
+        // ЕДИНАЯ СЕТКА с блоком «О проекте…»: текст от одной линии, 30px бока.
+        padding-left: 30px;
+        padding-right: 30px;
+        // Значительный нижний отступ — «воздух» под картой для фонового завитка
+        padding-bottom: 15vw;
 
+        // Лесенка десктопных отступов сбрасывается — все абзацы от одной линии.
         &_subtitle {
 
             &__firstLine,
             &__secondLine {
                 font-size: clamp(28px, 4.8vw, 80px);
-            }
-
-            &__firstLine {
-                padding-left: clamp(16px, 3.4vw, 64.5px);
+                padding-left: 0;
             }
 
             &__secondLine {
-                padding-left: clamp(40px, 15vw, 290px);
                 margin-top: clamp(8px, 0.8vw, 15px);
             }
         }
@@ -174,14 +198,7 @@
                 font-size: clamp(16px, 2.1vw, 35px);
                 letter-spacing: clamp(0.3px, 0.08vw, 1.6px);
                 margin-top: clamp(20px, 2.1vw, 40px);
-            }
-
-            &__firstLine {
-                padding-left: clamp(16px, 3.5vw, 67.5px);
-            }
-
-            &__secondLine {
-                padding-left: clamp(40px, 8.2vw, 157px);
+                padding-left: 0;
             }
         }
 
@@ -193,14 +210,17 @@
 
         &_mapMobile {
             position: relative;
-            max-width: clamp(280px, 54%, 700px);
-            width: 100%;
+            // Во всю ширину ЭКРАНА (компенсируем боковые паддинги секции 30px):
+            // negative margin + расширенная ширина.
+            max-width: none;
+            width: calc(100% + 60px);
+            margin: clamp(24px, 3vw, 60px) 0 0 -30px;
             height: auto;
             right: auto;
             bottom: auto;
-            margin: clamp(24px, 3vw, 60px) auto 0;
             display: block;
             order: 2;
+            z-index: 1; // над фоновым завитком (&_curlMobile)
         }
 
         // Памятник (image-history.png): на десктопе absolute справа от карты.
@@ -226,15 +246,35 @@
             display: none;
         }
 
+        // Десктопный завиток на ≤1023 скрыт — вместо него мобильный.
         &_curlHistory {
+            display: none;
+        }
+
+        // Текстовый блок — над фоновым завитком.
+        &_container {
             position: relative;
-            bottom: auto;
+            z-index: 1;
+        }
+
+        // Мобильный завиток «парит» между текстом и картой:
+        // поднят на 40vw вверх (верх виден над картой), а суммарный вклад
+        // в поток обнулён (margin-bottom компенсирует и подъём, и высоту) —
+        // карта остаётся сразу после текста, ничего не сдвигается.
+        // Высота завитка = 348/375 ≈ 92.8vw; итог: -40vw + 92.8vw + mb = 16px.
+        &_curlMobile {
             display: block;
-            width: 100%;
-            max-width: 100%;
+            position: relative;
+            // Во всю ширину ЭКРАНА (компенсация боковых паддингов секции).
+            width: calc(100% + 60px);
+            max-width: none;
             height: auto;
-            margin-top: 16px;
-            order: 3;
+            margin-top: -40vw;
+            margin-bottom: calc(16px - (348 / 375 - 0.4) * 100vw);
+            margin-left: -30px;
+            order: 1;
+            z-index: 0;
+            pointer-events: none;
         }
     }
 
@@ -296,10 +336,11 @@
             display: none;
         }
 
+        // Full-bleed поверх боковых паддингов секции (30px) — как в ≤1023-блоке.
         &_mapMobile {
-            max-width: 100%;
-            width: 100%;
-            margin: 32px auto 0;
+            max-width: none;
+            width: calc(100% + 60px);
+            margin: 32px 0 0 -30px;
         }
     }
 }
@@ -309,6 +350,7 @@
     height: 1760px;
     background-color: $green-color;
     overflow: hidden;
+    text-align: left;
 
     &_subtitle {
         display: flex;
@@ -346,82 +388,130 @@
         letter-spacing: 1.6px;
     }
 
+    // ================================================================
+    //  СТАРЫЕ СТИЛИ ДЕКОРАТИВНЫХ ЛИНИЙ (line-11..15) — НЕ УДАЛЯТЬ!
+    //  Линии были частью сетки отдельных фото photo-1..5. Фото заменены
+    //  общим стеком about_photoStack — линии скрыты на всех ширинах,
+    //  иначе висят поверх стековой картинки.
+    // ================================================================
+    // &_line1,
+    // &_line2,
+    // &_line3,
+    // &_line4,
+    // &_line5 {
+    //     position: absolute;
+    // }
+    //
+    // &_line1 {
+    //     top: 345px;
+    //     left: 315px;
+    // }
+    //
+    // &_line3 {
+    //     top: 350px;
+    //     left: 967px;
+    // }
+    //
+    // &_line2 {
+    //     top: 350px;
+    //     left: 640px;
+    // }
+    //
+    // &_line5 {
+    //     top: 350px;
+    //     left: 1017px;
+    // }
+    //
+    // &_line4 {
+    //     top: 350px;
+    //     left: 1639px;
+    // }
+    // ================================================================
+
+    // Линии скрыты вместе со старой фото-сеткой.
     &_line1,
     &_line2,
     &_line3,
     &_line4,
     &_line5 {
-        position: absolute;
+        display: none;
     }
 
-    &_line1 {
-        top: 345px;
-        left: 315px;
-    }
+    // ================================================================
+    //  СТАРЫЕ СТИЛИ ОТДЕЛЬНЫХ ФОТО (photo-1..5) — НЕ УДАЛЯТЬ!
+    //  На всех ширинах фото заменены общей картинкой-стеком about_photoStack
+    //  (homepage_herophotosStack_desc.webp ≥1280px / _mobile.webp <1280px).
+    //  Стили оставлены в комментарии — вдруг вернёмся к раздельным фото.
+    // ================================================================
+    // &_photo1,
+    // &_photo2,
+    // &_photo3,
+    // &_photo4,
+    // &_photo5 {
+    //     position: absolute;
+    // }
+    //
+    // &_photo1 {
+    //     left: 18px;
+    //     top: 540px;
+    //     z-index: 1;
+    // }
+    //
+    // &_photo2 {
+    //     left: 545px;
+    //     top: 557px;
+    //     z-index: 2;
+    // }
+    //
+    // &_photo3 {
+    //     left: 1315px;
+    //     top: 477px;
+    //     z-index: 2;
+    // }
+    //
+    // &_photo4 {
+    //     left: 245px;
+    //     top: 1077px;
+    //     z-index: 1;
+    // }
+    //
+    // &_photo5 {
+    //     left: 875px;
+    //     top: 960px;
+    //     z-index: 1;
+    // }
+    // ================================================================
 
-    &_line3 {
-        top: 350px;
-        left: 967px;
-    }
-
-    &_line2 {
-        top: 350px;
-        left: 640px;
-    }
-
-    &_line5 {
-        top: 350px;
-        left: 1017px;
-    }
-
-    &_line4 {
-        top: 350px;
-        left: 1639px;
-    }
-
+    // Отдельные фото скрыты на всех ширинах — вместо них общий стек.
     &_photo1,
     &_photo2,
     &_photo3,
     &_photo4,
     &_photo5 {
-        position: absolute;
-
+        display: none;
     }
 
-    &_photo1 {
-        left: 18px;
-        top: 540px;
-        z-index: 1;
-    }
-
-    &_photo2 {
-        left: 545px;
-        top: 557px;
+    // Общая картинка-стек фото героев. Версия подбирается через <picture>
+    // в JSX: ≥1280px — десктопная, ниже — мобильная.
+    // position+z-index — чтобы герои лежали ПОВЕРХ фонового завитка (&_curl).
+    &_photoStack {
+        display: block;
+        position: relative;
         z-index: 2;
+        width: 100%;
+        height: auto;
     }
 
-    &_photo3 {
-        left: 1315px;
-        top: 477px;
-        z-index: 2;
-    }
-
-    &_photo4 {
-        left: 245px;
-        top: 1077px;
-        z-index: 1;
-    }
-
-    &_photo5 {
-        left: 875px;
-        top: 960px;
-        z-index: 1;
-    }
-
+    // Завиток — фоновая декорация: строго прижата к правому нижнему углу
+    // секции на всех ширинах. Картинки героев (photoStack) лежат ПОВЕРХ неё.
     &_curl {
         position: absolute;
-        bottom: 15px;
-        right: -15px;
+        bottom: 0;
+        right: 0;
+        max-width: 100%;
+        height: auto;
+        z-index: 1;
+        pointer-events: none;
     }
 
     // --- ПЛАНШЕТЫ / НОУТБУКИ (768–1919) ---
@@ -466,31 +556,48 @@
             display: none;
         }
 
-        // Фото: из абсолютной сетки → в поток с обтеканием/переносом.
-        &_photo1,
-        &_photo2,
-        &_photo3,
-        &_photo4,
-        &_photo5 {
-            position: relative !important;
-            left: auto !important;
-            top: auto !important;
-            z-index: 1 !important;
-            display: block;
-            max-width: clamp(220px, 30vw, 480px);
-            width: 100%;
-            height: auto;
+        // ============================================================
+        //  СТАРЫЕ СТИЛИ ФОТО В ПОТОКЕ ДЛЯ ПЛАНШЕТОВ — НЕ УДАЛЯТЬ!
+        //  (фото заменены общим стеком about_photoStack на всех ширинах)
+        // ============================================================
+        // &_photo1,
+        // &_photo2,
+        // &_photo3,
+        // &_photo4,
+        // &_photo5 {
+        //     position: relative !important;
+        //     left: auto !important;
+        //     top: auto !important;
+        //     z-index: 1 !important;
+        //     display: block;
+        //     max-width: clamp(220px, 30vw, 480px);
+        //     width: 100%;
+        //     height: auto;
+        // }
+        // ============================================================
+
+        // Завиток остаётся absolute в правом нижнем углу (базовые стили) —
+        // здесь ничего не переопределяем.
+    }
+
+    // --- МОБАЙЛ-ДИАПАЗОН / ПЛАНШЕТЫ (≤1023) ---
+    // ЕДИНАЯ СЕТКА с блоком «История проекта»: текст от одной линии,
+    // 30px бока у секции, внутренние отступы сброшены.
+    // padding-bottom — «воздух» под стеком фото на планшетах
+    // (на ≤767 свой padding в md-блоке перекрывает).
+    @include respond-below($breakpoint-lg) {
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: 80px;
+
+        &_subtitle {
+            margin-right: 0;
         }
 
-        &_curl {
-            position: relative;
-            bottom: auto;
-            right: auto;
-            display: block;
-            width: 100%;
+        &_description {
+            align-self: stretch;
+            margin-left: 0;
             max-width: 100%;
-            height: auto;
-            margin-top: 16px;
         }
     }
 
@@ -500,7 +607,7 @@
     @include respond-below($breakpoint-md) {
         height: auto;
         min-height: auto;
-        padding: 60px 16px 40px;
+        padding: 60px 30px 40px;
         display: flex;
         flex-direction: column;
 
@@ -542,46 +649,63 @@
             display: none;
         }
 
-        // Фото: из абсолютной сетки → в вертикальную стопку по центру.
+        // ============================================================
+        //  СТАРЫЕ СТИЛИ ОТДЕЛЬНЫХ ФОТО НА МОБИЛЕ — НЕ УДАЛЯТЬ!
+        //  (п temporarily заменены общей картинкой-стеком
+        //  homepage_herophotosStack_mobile.png, см. &_photoStack ниже.
+        //  Оставлены как комментарии — могут понадобиться, если
+        //  вернёмся к раздельным фото на мобиле.)
+        // ============================================================
+        // &_photo1,
+        // &_photo2,
+        // &_photo3,
+        // &_photo4,
+        // &_photo5 {
+        //     position: relative !important;
+        //     left: auto !important;
+        //     top: auto !important;
+        //     z-index: 1 !important;
+        //     display: block;
+        //     width: 100%;
+        //     max-width: 329px;
+        //     height: auto;
+        //     margin: 0 auto;
+        //
+        //     // Чередуем лёгкое смещение, чтобы сохранить «живую» компоновку макета.
+        //     &:nth-child(odd) {
+        //         margin-left: auto;
+        //         margin-right: 8%;
+        //     }
+        //
+        //     &:nth-child(even) {
+        //         margin-left: 8%;
+        //         margin-right: auto;
+        //     }
+        //
+        //     &:not(:first-of-type) {
+        //         margin-top: 24px;
+        //     }
+        // }
+        // ============================================================
+
+        // На мобиле отдельные фото скрыты — вместо них общая картинка-стек.
         &_photo1,
         &_photo2,
         &_photo3,
         &_photo4,
         &_photo5 {
-            position: relative !important;
-            left: auto !important;
-            top: auto !important;
-            z-index: 1 !important;
+            display: none;
+        }
+
+        // Общая картинка-стек фотографий героев (мобильная версия макета).
+        &_photoStack {
             display: block;
             width: 100%;
-            max-width: 329px;
             height: auto;
-            margin: 0 auto;
-
-            // Чередуем лёгкое смещение, чтобы сохранить «живую» компоновку макета.
-            &:nth-child(odd) {
-                margin-left: auto;
-                margin-right: 8%;
-            }
-
-            &:nth-child(even) {
-                margin-left: 8%;
-                margin-right: auto;
-            }
-
-            &:not(:first-of-type) {
-                margin-top: 24px;
-            }
+            margin: 24px auto 0;
         }
 
-        &_curl {
-            position: relative;
-            bottom: auto;
-            right: auto;
-            display: block;
-            width: 100%;
-            margin-top: 24px;
-        }
+        // Завиток — фоновый, absolute в правом нижнем углу (базовые стили).
     }
 }
 
@@ -592,6 +716,7 @@
     position: relative;
     background-color: $beige-background;
     height: 1258px;
+    text-align: left;
 
     &_title,
     &_titleForm {
@@ -617,6 +742,9 @@
     @include respond-below($breakpoint-xxxl) {
         height: auto;
         min-height: 1258px;
+        // Нижний «воздух» секции: без него форма (height: fit-content)
+        // упирается в край секции на 768–1919 (на ≤767 padding уже есть).
+        padding-bottom: 40px;
     }
 
     @include respond-below($breakpoint-xxxl) {
@@ -659,4 +787,11 @@
     margin-bottom: calc(-279px / 1920px * 100vw / 2);
     position: relative;
     z-index: 5;
+
+    // На мобилках (<768px) — мобильная версия разделителя 750×176
+    // (та же логика половинного перекрытия, пересчёт под её пропорции)
+    @include respond-below($breakpoint-md) {
+        margin-top: calc(-176px / 750px * 100vw / 2);
+        margin-bottom: calc(-176px / 750px * 100vw / 2);
+    }
 }

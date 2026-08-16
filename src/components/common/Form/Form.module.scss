@@ -582,9 +582,11 @@ height: 100%;
 }
 
 // ----------------------------------------------------
-//  МОБАЙЛ (≤767)
+//  МОБАЙЛ-РАСКЛАДКА ФОРМЫ (≤1279)
+//  Вертикальный стек включается уже ниже 1280px (не 768):
+//  на ноутбуках-планшетах 3 колонки уже не помещаются.
 // ----------------------------------------------------
-@include respond-below($breakpoint-md) {
+@include respond-below($breakpoint-xl) {
     .form {
         display: flex;
         flex-direction: column;
@@ -597,6 +599,14 @@ height: 100%;
         padding: 28px 24px;
         border-radius: 16px;
 
+        // Гасим flex-пропорции колонок из планшетного блока (≤1919):
+        // в вертикальном стеке колонки просто тянутся на всю ширину.
+        &__upload,
+        &__basicInformation,
+        &__additionalInformation {
+            flex: 0 0 auto;
+        }
+
         // ---- Заголовки секций ----
         &__title {
             font-size: 22px;
@@ -605,14 +615,27 @@ height: 100%;
         &__titleUpload {
             font-size: 16px;
             font-weight: 800;
+            text-align: center;
         }
 
         &__subtitle {
             font-size: 13px;
+            text-align: center;
         }
 
         &__titleWrapper {
             gap: 8px;
+        }
+
+        // Secondary-зона: заголовок+подзаголовок ровно по центру оси Y зоны
+        // (абсолютное центрирование — не в свободном пространстве над кнопкой),
+        // кнопка «Выбрать файлы» прижата к низу.
+        &__titleWrapper_secondary {
+            position: absolute;
+            top: 50%;
+            left: 16px;
+            right: 16px;
+            transform: translateY(-50%);
         }
 
         // ---- Блок загрузки фото ----
@@ -641,10 +664,12 @@ height: 100%;
                 justify-content: space-between;
             }
 
+            // В secondary: текст — абсолютный центр оси Y (см. titleWrapper_secondary),
+            // в потоке остаётся только кнопка «Выбрать файлы» — прижата к низу.
             &_secondary {
                 height: auto;
                 min-height: 270px;
-                justify-content: space-between;
+                justify-content: flex-end;
             }
         }
 
@@ -726,7 +751,7 @@ height: 100%;
 
     // В primary-зоне по макету кнопка «Выбрать файл» компактная, по центру
     // (~163px при 375px), а не на всю ширину зоны.
-    .form__uploadArea_primary .button_small {
+    .button_small {
         width: fit-content;
         min-width: 163px;
         justify-content: center;

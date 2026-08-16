@@ -31,3 +31,13 @@ dist-ssr
 _gitignoreFiles
 
 _notes
+
+# Playwright e2e (артефакты прогонов)
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+.env
+
+# Кэш админ-токена для e2e (не в репо)
+.e2e-token-cache.json
