@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { fillAllFields, makeTestCard, makeTestPng, SELECTORS, submitButton } from './helpers/form';
+import { loginAdmin, getCardAsAdmin } from './helpers/api';
 
 /**
  * @real — ГЛАВНЫЙ режим разработки: форма против реального бека
@@ -148,5 +149,68 @@ test.describe('Форма «Расскажите о герое» [REAL API]', ()
     await expect(page.locator(SELECTORS.description)).toBeVisible();
     await expect(submitButton(page)).toBeVisible();
     await expect(page.locator('label:has(input[type="checkbox"])')).toHaveCount(2);
+  });
+
+  /**
+   * Админ-проверка: карточка ДЕЙСТВИТЕЛЬНО лежит на беке, и в ней ровно те
+   * поля, что отправляли из формы.
+   *
+   * Цепочка: форма → POST /api/card/create (берём id из echo) →
+   * POST /api/login (креды из .env: E2E_ADMIN_EMAIL / E2E_ADMIN_PASSWORD) →
+   * GET /api/card/get/{id} с Bearer → сверка полей.
+   *
+   * ⚠️ Тест «может быть неверным из-за работы бека» — и это фича: если бек
+   * изменит контракт (login без access_token, get/{id} с другой структурой,
+   * модерация не отдаёт новые карточки, поля режутся) — упадёт здесь и укажет
+   * конкретное расхождение.
+   */
+  test('@real админ: карточка на беке содержит отправленные поля (login → get/{id})', async ({ page, request }) => {
+    test.skip(
+      !process.env.E2E_ADMIN_EMAIL || !process.env.E2E_ADMIN_PASSWORD,
+      'задай E2E_ADMIN_EMAIL / E2E_ADMIN_PASSWORD в .env (см. .env.example)'
+    );
+
+    const card = makeTestCard();
+
+    // 1) создаём карточку через форму, id берём из echo-ответа
+    let createdId: number | null = null;
+    page.on('response', async (response) => {
+      if (response.url().includes('/api/card/create') && response.request().method() === 'POST') {
+        try {
+          const body = await response.json();
+          if (body && typeof body.id !== 'undefined') createdId = Number(body.id);
+        } catch { /* тело не JSON — тест упадёт ниже на createdId */ }
+      }
+    });
+
+    await page.goto('/');
+    await fillAllFields(page, card);
+    await submitButton(page).click();
+    await expect(page.locator(SELECTORS.successPopup)).toBeVisible({ timeout: 30_000 });
+    expect(createdId, 'create должен вернуть id').not.toBeNull();
+
+    // 2) логинимся тестовым админом
+    const auth = await loginAdmin(request);
+
+    // 3) читаем карточку админским эндпоинтом и сверяем поля
+    const fetched = await getCardAsAdmin(request, auth.token, createdId!);
+
+    expect(Number(fetched.id)).toBe(createdId!);
+    // обязательные
+    expect(fetched.name).toBe(card.heroName);
+    expect(fetched.placeBirth).toBe(card.placeBirth);
+    expect(fetched.nameAndClass).toBe(card.author);
+    expect(fetched.description).toBe(card.description);
+    // необязательные
+    expect(fetched.email).toBe(card.email);
+    expect(fetched.militaryRank).toBe(card.militaryRank);
+    expect(fetched.placeService).toBe(card.placeService);
+    expect(fetched.placeConscription).toBe(card.placeConscription);
+    expect(fetched.chapter).toBe('svo');
+    // даты хранятся в Y-m-d
+    expect(fetched.dateBirth).toBe('1920-01-01');
+    expect(fetched.dateDeath).toBe('1985-05-09');
+    // свежая карточка ещё на модерации
+    expect(fetched.published).toBeNull();
   });
 });
