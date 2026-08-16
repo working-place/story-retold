@@ -24,7 +24,7 @@ export default function ReviewCardsTitle({
                 className={styles.reviewCards__exitButtonMobile}
                 onClick={onExit}
             >
-                <IconExitMobile/>
+                <IconExitMobile />
             </Button>
         </div>
     );
