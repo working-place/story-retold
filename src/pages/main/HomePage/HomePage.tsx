@@ -21,9 +21,16 @@ export default function HomePage() {
                     src="/photo.png" alt="Фотография" /> */}
             </div>
 
-            <img
-                className={styles.divide}
-                src="/paper-deviding-main.png" alt="Разделительная линия" />
+            {/* Бумажный разделитель: десктопная версия ≥768px,
+                на мобилках — общая homePage_PaperDivider_mobile.png */}
+            <picture>
+                <source
+                    media="(min-width: 768px)"
+                    srcSet="/paper-deviding-main.png" />
+                <img
+                    className={styles.divide}
+                    src="/homePage_PaperDivider_mobile.png" alt="Разделительная линия" />
+            </picture>
 
             <div className={styles.history}>
                 <div className={styles.history_container}>
@@ -90,9 +97,14 @@ export default function HomePage() {
                     src="/homepage_curls_mobile_2.png" alt="Линия" />
             </div>
 
-            <img
-                className={styles.divide}
-                src="/paper-deviding-history.png" alt="Разделительная линия" />
+            <picture>
+                <source
+                    media="(min-width: 768px)"
+                    srcSet="/paper-deviding-history.png" />
+                <img
+                    className={styles.divide}
+                    src="/homePage_PaperDivider_mobile.png" alt="Разделительная линия" />
+            </picture>
 
             <div className={styles.about}>
 
@@ -174,9 +186,14 @@ export default function HomePage() {
                     src="/curl-about.png" alt="Линия" />
             </div>
 
-            <img
-                className={styles.divide}
-                src="/paper-deviding-about.png" alt="Разделительная линия" />
+            <picture>
+                <source
+                    media="(min-width: 768px)"
+                    srcSet="/paper-deviding-about.png" />
+                <img
+                    className={styles.divide}
+                    src="/homePage_PaperDivider_mobile.png" alt="Разделительная линия" />
+            </picture>
 
             <div className={styles.hero}>
                 <h2

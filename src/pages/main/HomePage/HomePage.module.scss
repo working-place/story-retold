@@ -787,4 +787,11 @@
     margin-bottom: calc(-279px / 1920px * 100vw / 2);
     position: relative;
     z-index: 5;
+
+    // На мобилках (<768px) — мобильная версия разделителя 750×176
+    // (та же логика половинного перекрытия, пересчёт под её пропорции)
+    @include respond-below($breakpoint-md) {
+        margin-top: calc(-176px / 750px * 100vw / 2);
+        margin-bottom: calc(-176px / 750px * 100vw / 2);
+    }
 }
