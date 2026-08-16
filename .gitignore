@@ -38,3 +38,6 @@ playwright-report/
 blob-report/
 playwright/.cache/
 .env
+
+# Кэш админ-токена для e2e (не в репо)
+.e2e-token-cache.json

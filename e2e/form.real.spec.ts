@@ -152,6 +152,23 @@ test.describe('Форма «Расскажите о герое» [REAL API]', ()
   });
 
   /**
+   * Логин сам по себе: POST /api/login с тестовыми кредами из .env
+   * должен вернуть 200 + access_token (контракт фронта, src/services/api/auth.ts).
+   * force: true — мимо кэша токена, проверяем именно живой запрос.
+   * ⚠️ Бек лимитирует логины (429) — при частых прогонах подождать пару минут.
+   */
+  test('@real админ: логин работает (access_token)', async ({ request }) => {
+    test.skip(
+      !process.env.E2E_ADMIN_EMAIL || !process.env.E2E_ADMIN_PASSWORD,
+      'задай E2E_ADMIN_EMAIL / E2E_ADMIN_PASSWORD в .env (см. .env.example)'
+    );
+
+    const auth = await loginAdmin(request, /* force */ true);
+    expect(auth.token, 'access_token должен быть непустой строкой').toBeTruthy();
+    expect(auth.token.length).toBeGreaterThan(20);
+  });
+
+  /**
    * Админ-проверка: карточка ДЕЙСТВИТЕЛЬНО лежит на беке, и в ней ровно те
    * поля, что отправляли из формы.
    *

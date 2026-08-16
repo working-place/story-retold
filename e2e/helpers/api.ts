@@ -1,5 +1,5 @@
 import type { APIRequestContext } from '@playwright/test';
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 /**
@@ -26,16 +26,59 @@ export interface AdminAuth {
   token: string;
 }
 
-/** POST /api/login {email,password} → access_token (контракт фронта, auth.ts). */
-export async function loginAdmin(request: APIRequestContext): Promise<AdminAuth> {
+// Бек лимитирует логины (HTTP 429) — кэшируем access_token на диск между
+// прогонами (Sanctum-токены долгоживущие). Файл в .gitignore.
+const TOKEN_CACHE_FILE = resolve(process.cwd(), '.e2e-token-cache.json');
+const TOKEN_TTL_MS = 55 * 60 * 1000; // 55 минут
+
+interface TokenCache {
+  token: string;
+  ts: number;
+}
+
+function readCachedToken(): string | null {
+  try {
+    const cache = JSON.parse(readFileSync(TOKEN_CACHE_FILE, 'utf8')) as TokenCache;
+    if (cache?.token && Date.now() - cache.ts < TOKEN_TTL_MS) return cache.token;
+  } catch { /* нет кэша/протух — логинимся заново */ }
+  return null;
+}
+
+function writeCachedToken(token: string): void {
+  try {
+    writeFileSync(TOKEN_CACHE_FILE, JSON.stringify({ token, ts: Date.now() }));
+  } catch { /* кэш не критичен */ }
+}
+
+/**
+ * POST /api/login {email,password} → access_token (контракт фронта, auth.ts).
+ * force: true — игнорировать кэш и логиниться заново (для теста самого логина).
+ */
+export async function loginAdmin(request: APIRequestContext, force = false): Promise<AdminAuth> {
+  if (!force) {
+    const cached = readCachedToken();
+    if (cached) return { token: cached };
+  }
+
   const email = process.env.E2E_ADMIN_EMAIL;
   const password = process.env.E2E_ADMIN_PASSWORD;
 
-  const response = await request.post(`${API_BASE}/api/login`, {
+  // Параллельные воркеры могут логиниться одновременно и ловить 429 —
+  // одна повторная попытка с паузой.
+  let response = await request.post(`${API_BASE}/api/login`, {
     data: { email, password },
   });
+  if (response.status() === 429) {
+    await new Promise((r) => setTimeout(r, 5000));
+    response = await request.post(`${API_BASE}/api/login`, {
+      data: { email, password },
+    });
+  }
 
   if (!response.ok()) {
+    if (response.status() === 429) {
+      throw new Error('login: HTTP 429 — бек лимитирует логины, подожди пару минут и перезапусти (кэш токена смягчает, но не отменяет лимит)');
+    }
     throw new Error(`login упал: HTTP ${response.status()} — проверь E2E_ADMIN_EMAIL/E2E_ADMIN_PASSWORD в .env`);
   }
 
@@ -43,6 +86,7 @@ export async function loginAdmin(request: APIRequestContext): Promise<AdminAuth>
   if (!body.access_token) {
     throw new Error('login не вернул access_token — контракт бека изменился?');
   }
+  writeCachedToken(body.access_token);
   return { token: body.access_token };
 }
 
