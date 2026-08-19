@@ -35,7 +35,6 @@ export default function ReviewCard({
                         className={`${styles.reviewCard} ${!hasImage ? styles.reviewCard_noImage : ''}`}
                     >
                         <div className={styles.reviewCard__infoContainer}>
-                            {/* Блок с изображением - показываем только если есть фото */}
                             {hasImage && (
                                 <div className={styles.reviewCard__imageContainer}>
                                     <img

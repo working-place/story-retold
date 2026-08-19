@@ -14,7 +14,6 @@
 
     &__titleContainer {
         display: flex;
-        flex-grow: 1;
     }
 
     &__title {
@@ -22,6 +21,7 @@
         font-size: 28px;
         font-weight: 600;
         color: $dark-text;
+        height: 50px;
     }
 
     &__exitButton {
@@ -96,5 +96,11 @@
             width: fit-content;
             padding: 0;
         }
+    }
+}
+
+@media (max-width: 360px) {
+    .reviewCards {
+        gap: 12px;
     }
 }

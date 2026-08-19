@@ -2,15 +2,13 @@
     display: flex;
     align-items: center;
     background-color: $green-color;
-    flex-grow: 1;
-    min-height: 315px;
     height: fit-content;
+    width: 100%;
+    max-width: 571px;
     padding: 27px 25px;
     border-radius: 20px;
     gap: 15px;
     align-items: stretch;
-
-
 }
 
 .imgPlaceholder {
@@ -93,4 +91,76 @@
 
 .cardLink {
     text-decoration: none;
+}
+
+@media (max-width: 1676px) {
+    .container {
+        max-width: 500px;
+    }
+
+    .imgPlaceholder {
+        max-width: 190px;
+    }
+
+    .text {
+        font-size: 20px;
+    }
+
+    .button,
+    .deleteButton {
+        width: fit-content !important;
+    }
+}
+
+@media (max-width: 1599px) {
+
+    .container {
+        max-width: 317px;
+        max-height: 170px;
+        padding: 21px 10px;
+        gap: 7px;
+    }
+
+    .infoWrapper {
+        gap: 10px;
+
+    }
+
+    .infoContainer,
+    .cardLink {
+        gap: 10px;
+    }
+
+    .imgPlaceholder {
+        width: 103px;
+        height: 128px;
+    }
+
+    .text {
+        font-size: 14px;
+    }
+
+    .button {
+        padding: 10px 14px;
+        width: 133px;
+        height: 38px;
+        font-size: 14px;
+        border-radius: 12px;
+    }
+
+    .deleteButton {
+        height: 38px;
+        padding: 8px 0px !important;
+        width: 38px !important;
+        border-radius: 12px;
+
+        svg {
+            width: 15px;
+            height: 20px;
+        }
+    }
+}
+
+@media (max-width: 960px) {
+    .container {}
 }

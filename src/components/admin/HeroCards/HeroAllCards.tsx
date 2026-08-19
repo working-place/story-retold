@@ -90,18 +90,21 @@ export default function HeroAllCards({ type = 'svo', title = 'Герои СВО'
             <ReviewCardsTitle
                 onExit={handleExit}
                 title={title} />
+
             {filteredHeroes.length !== allHeroes.length && (
                 <span className={styles.title__filterInfo}>
                     {" "}· Найдено: {filteredHeroes.length}
                 </span>
             )}
 
-            {heroesWithImage.length > 0 && (
-                <ImagedCardAdmin heroes={heroesWithImage} onDelete={handleDelete} />
-            )}
-            {heroesWithoutImage.length > 0 && (
-                <TextCardAdmin heroes={heroesWithoutImage} onDelete={handleDelete} />
-            )}
+            <div className={styles.wrapper}>
+                {heroesWithImage.length > 0 && (
+                    <ImagedCardAdmin heroes={heroesWithImage} onDelete={handleDelete} />
+                )}
+                {heroesWithoutImage.length > 0 && (
+                    <TextCardAdmin heroes={heroesWithoutImage} onDelete={handleDelete} />
+                )}
+            </div>
         </div>
     );
 }
