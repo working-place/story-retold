@@ -9,15 +9,18 @@
 .feedbackCard {
   display: flex;
   flex-direction: column;
-  width: 96%;
   flex-wrap: wrap;
   align-content: flex-start;
+  width: 96%;
+  max-width: 1920px;
+  margin: 0 auto;
   min-height: 1017px;
   height: fit-content;
   background-color: #FDF7E9;
   border-radius: 20px;
-  gap: 25px;
-  padding: 25px 49px 90px 58px;
+  box-sizing: border-box;
+  gap: clamp(16px, 2.5vw, 29px);
+  padding: clamp(16px, 3vw, 25px) clamp(16px, 3.5vw, 49px) clamp(30px, 4vw, 58px) clamp(16px, 3.5vw, 49px);
 
   &_titleContainer {
     display: flex;
@@ -80,7 +83,9 @@
   }
 
   &_card {
-    min-height: 856px;
+    width: 55%;
+
+    min-height: auto;
 
     &_noPhoto {
       background-color: $green-color !important;
@@ -88,7 +93,7 @@
   }
 
   &_form {
-    min-height: 698px;
+    width: 45%;
 
     &_noPhoto {
       background-color: $green-color !important;
@@ -100,12 +105,10 @@
     display: flex;
     flex-direction: column;
     background-color: $brown-color;
-    width: 50%;
     height: fit-content;
     border-radius: 20px;
     padding: 31px 23px;
     gap: 23px;
-
   }
 
   &_infoRow {
@@ -188,4 +191,53 @@
 
 .successText {
   color: $color-success;
+}
+
+
+@media (max-width: 1888px) {
+  .feedbackCard {
+    &_name {
+      font-size: 24px;
+    }
+
+    &_card {
+      min-width: 735px !important;
+      min-height: fit-content !important;
+    }
+
+    &_form {
+      flex-grow: 1;
+    }
+  }
+}
+
+@media (max-width: 1599px) {
+  .feedbackCard {
+
+    &_container {
+      flex-direction: column;
+    }
+
+    &_card {
+      min-width: 100% !important;
+    }
+
+    &_form {
+      min-width: 100% !important;
+    }
+  }
+}
+
+@media (max-width: 1130px) {
+  .feedbackCard {
+    min-width: 300px;
+
+    &_wrapper {
+      flex-direction: column;
+    }
+
+    &_dateWrapper {
+      flex-direction: column;
+    }
+  }
 }
