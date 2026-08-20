@@ -26,7 +26,7 @@
     background-color: $brown-color;
     margin-top: 75px;
     border-radius: 20px;
-    padding: 96px 49px 90px 49px;
+    padding: clamp(16px, 3vw, 25px) clamp(16px, 3.5vw, 49px) clamp(30px, 4vw, 58px) clamp(16px, 3.5vw, 49px);
 
     &_admin {
         background-color: $beige-soft;
@@ -612,6 +612,11 @@
 @media (max-width: 960px) {
     .form {
         width: 100%;
+
+        &_admin {
+            margin-left: 15px;
+            margin-right: 15px;
+        }
 
         &__wrapper {
             &_firstLine {

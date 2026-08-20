@@ -3,14 +3,15 @@
     flex-direction: column;
     width: 96%;
     max-width: 1920px;
-    margin: 0 auto;
+    flex-wrap: wrap;
+    align-content: flex-start;
     min-height: 1017px;
     height: fit-content;
     background-color: $beige-soft;
     border-radius: 20px;
-    box-sizing: border-box;
     gap: clamp(16px, 2.5vw, 29px);
     padding: clamp(16px, 3vw, 25px) clamp(16px, 3.5vw, 49px) clamp(30px, 4vw, 58px) clamp(16px, 3.5vw, 49px);
+    box-sizing: border-box;
 
     &__titleContainer {
         display: flex;
