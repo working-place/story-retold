@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Button from "../../common/Button/Button";
 import styles from "./AdminPanelForm.module.scss";
@@ -7,7 +7,7 @@ import { InputAdmin } from "../Input/InputAdmin";
 import CustomSelectAdmin from "../Select/SelectAdmin";
 import { heroesApi, ApiError } from '../../../services/api/heroes';
 import { buildImageUrl } from '../../../services/api/api';
-import { useObjectUrl, useObjectUrls } from "../../../hooks/useObjectUrl";
+import { useObjectUrl } from "../../../hooks/useObjectUrl";
 import { useCardForm } from "../../../hooks/useCardForm";
 import type { CardResponse } from '../../../types/api.types';
 import PublishConfirmPopup from '../../admin/Popups/PublishConfirmPopup';
@@ -16,7 +16,9 @@ import ReviewCardsTitle from '../../admin/ReviewCards/ReviewCardsTitle';
 import { useAuth } from "../../../contexts/AuthContext";
 
 export default function AdminEditForm() {
-    const { id } = useParams<{ id: string }>() as { id: string | undefined };
+    const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
+    const { logout } = useAuth();
 
     const [loading, setLoading] = useState<boolean>(false);
     const [fetchLoading, setFetchLoading] = useState<boolean>(true);
@@ -24,18 +26,19 @@ export default function AdminEditForm() {
     const [isPublishing, setIsPublishing] = useState<boolean>(false);
     const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState<boolean>(false);
 
-    const { logout } = useAuth();
-    const navigate = useNavigate();
-
-    const handleExit = () => {
-        logout();
-        navigate("/login");
-    };
-
     const form = useCardForm({ mode: 'edit' });
 
     const photoHeroUrl = useObjectUrl(form.photoHero);
-    const additionalImageUrls = useObjectUrls(form.additionalImages);
+
+    const additionalImageUrls = useMemo(() => {
+        return form.additionalImages.map((file) => URL.createObjectURL(file));
+    }, [form.additionalImages]);
+
+    useEffect(() => {
+        return () => {
+            additionalImageUrls.forEach((url) => URL.revokeObjectURL(url));
+        };
+    }, [additionalImageUrls]);
 
     const showPhotoBlock =
         form.formData.cardType === 'withPhoto' ||
@@ -44,10 +47,13 @@ export default function AdminEditForm() {
 
     useEffect(() => {
         const fetchHero = async () => {
+            if (!id) {
+                setFetchLoading(false);
+                return;
+            }
+
             setFetchLoading(true);
             try {
-                if (!id) return;
-
                 const heroData: CardResponse = await heroesApi.get(Number(id));
                 form.hydrateFromCard({
                     ...heroData,
@@ -55,6 +61,7 @@ export default function AdminEditForm() {
                         ? { path: heroData.photoHero, url: heroData.photoHero, id: 0 }
                         : heroData.photoHero
                 });
+                form.setError(null);
             } catch (err) {
                 form.setError(err instanceof ApiError
                     ? `Ошибка сервера: ${err.message}`
@@ -64,14 +71,19 @@ export default function AdminEditForm() {
             }
         };
 
-        void fetchHero();
-    }, [id]);
+        fetchHero();
+    }, [id, form.hydrateFromCard]);
 
-    const handleRemoveAdditionalImage = (index: number, isExisting: boolean): void => {
+    const handleRemoveAdditionalImage = useCallback((index: number, isExisting: boolean) => {
         form.removeAdditionalImage(index, isExisting);
-    };
+    }, [form]);
 
-    const submitForm = async (): Promise<void> => {
+    const handleExit = useCallback(() => {
+        logout();
+        navigate("/login");
+    }, [logout, navigate]);
+
+    const submitForm = useCallback(async () => {
         if (loading || isPublishing) return;
 
         if (!id) {
@@ -109,32 +121,32 @@ export default function AdminEditForm() {
             setIsPopupOpen(false);
             setLoading(false);
         }
-    };
+    }, [id, form, loading, isPublishing, navigate]);
 
-    const handlePublishClick = (e: React.FormEvent): void => {
+    const handlePublishClick = useCallback((e: React.FormEvent) => {
         e.preventDefault();
         form.setError(null);
         if (!form.validate()) {
             return;
         }
         setIsPopupOpen(true);
-    };
+    }, [form]);
 
-    const handleConfirmPublish = (): void => {
+    const handleConfirmPublish = useCallback(() => {
         setLoading(true);
-        void submitForm();
-    };
+        submitForm();
+    }, [submitForm]);
 
-    const handleCancelPublish = (): void => {
+    const handleCancelPublish = useCallback(() => {
         setIsPopupOpen(false);
-    };
+    }, []);
 
-    const handleSuccessPopupClose = (): void => {
+    const handleSuccessPopupClose = useCallback(() => {
         setIsSuccessPopupOpen(false);
         navigate('/admin-heroes/svo-heroes');
-    };
+    }, [navigate]);
 
-    const handlePreview = (): void => {
+    const handlePreview = useCallback(() => {
         if (!form.validate()) {
             return;
         }
@@ -173,9 +185,9 @@ export default function AdminEditForm() {
 
         localStorage.setItem('previewHeroData', JSON.stringify(previewData));
         window.open('/preview-hero', '_blank');
-    };
+    }, [form, photoHeroUrl, additionalImageUrls]);
 
-    const getHeroImageUrl = (): string => {
+    const getHeroImageUrl = useCallback((): string => {
         if (form.photoHero) {
             return photoHeroUrl || '';
         }
@@ -183,11 +195,11 @@ export default function AdminEditForm() {
             return buildImageUrl(form.existingPhotoHero);
         }
         return '';
-    };
+    }, [form.photoHero, form.existingPhotoHero, photoHeroUrl]);
 
-    const getAdditionalImageUrl = (img: { id: number; url: string; deleted?: boolean }): string => {
+    const getAdditionalImageUrl = useCallback((img: { id: number; url: string; deleted?: boolean }): string => {
         return buildImageUrl(img.url);
-    };
+    }, []);
 
     if (fetchLoading) {
         return (
@@ -210,12 +222,9 @@ export default function AdminEditForm() {
                     />
                 </div>
                 <div className={styles.contentWrapper}>
-
                     {form.error && <div className={styles.errorMessage}>{form.error}</div>}
 
                     <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
-
-                        {/* Блок главного фото — отображается, если выбран тип "с фото" или если фото уже загружено/существует */}
                         {showPhotoBlock && (
                             <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}>
                                 {!form.photoHero && !form.existingPhotoHero ? (
@@ -309,17 +318,16 @@ export default function AdminEditForm() {
 
                             {activeExistingImages.length > 0 && (
                                 <div className={styles.additionalImagesGrid}>
-                                    {activeExistingImages.map((img, index) => {
+                                    {activeExistingImages.map((img) => {
                                         const realIndex = form.existingAdditionalImages.findIndex(
                                             (item) => item.id === img.id
                                         );
-
                                         return (
                                             <div key={`existing-${img.id}`} className={styles.additionalImageItem}>
                                                 <div className={styles.additionalImageWrapper}>
                                                     <img
                                                         src={getAdditionalImageUrl(img)}
-                                                        alt={`Дополнительное фото ${index + 1}`}
+                                                        alt="Дополнительное фото"
                                                         className={styles.additionalImagePreview}
                                                         onError={(e) => {
                                                             console.error('❌ Ошибка загрузки дополнительного фото:', e);
@@ -341,7 +349,6 @@ export default function AdminEditForm() {
                                 </div>
                             )}
 
-                            {/* Новые дополнительные изображения */}
                             {form.additionalImages.length > 0 && (
                                 <div className={styles.additionalImagesGrid}>
                                     {form.additionalImages.map((_, index) => (
@@ -349,7 +356,7 @@ export default function AdminEditForm() {
                                             <div className={styles.additionalImageWrapper}>
                                                 <img
                                                     src={additionalImageUrls[index]}
-                                                    alt={`Новое дополнительное фото ${index + 1}`}
+                                                    alt="Новое дополнительное фото"
                                                     className={styles.additionalImagePreview}
                                                     onError={(e) => {
                                                         console.error('❌ Ошибка загрузки нового дополнительного фото:', e);

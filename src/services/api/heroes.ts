@@ -143,17 +143,17 @@ export const heroesApi = {
       skipAuth: false,
     }),
 
-    sendFeedback: async (email: string, subject: string, comment: string) => {
-        const params = new URLSearchParams({
-            email,
-            subject,
-            comment,
-        });
+  sendFeedback: async (email: string, subject: string, comment: string) => {
+    const params = new URLSearchParams({
+      email,
+      subject,
+      comment,
+    });
 
-        return httpClient<{ message?: string }>(`/api/send?${params.toString()}`, {
-            method: 'POST',
-        });
-    },
+    return httpClient<{ message?: string }>(`/api/send?${params.toString()}`, {
+      method: 'POST',
+    });
+  },
 };
 
 export { ApiError };

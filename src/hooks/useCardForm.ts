@@ -5,7 +5,6 @@ import {
   REQUIRED_FIELDS,
   getFieldError as getFieldErrorUtil,
   validateCardForm,
-  buildCardFormData,
   validateFileSize,
   MAX_ADDITIONAL_IMAGES,
 } from '../utils/cardForm';
@@ -57,8 +56,6 @@ export interface UseCardFormReturn {
   handleInputChange: (field: keyof CardFormData, value: string | boolean) => void;
   handleDateBirthChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleDateDeathChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  // null приходит из CustomSelect при «пустом» выборе (тип пропсов селекта) —
-  // в состоянии формы null не храним, откатываемся на дефолт.
   handleChapterChange: (value: CardFormData['chapter'] | null) => void;
   handleCardTypeChange: (value: CardFormData['cardType'] | null) => void;
   handlePhotoHeroChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -243,7 +240,7 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
 
   const getDeletedImageIds = useCallback((): number[] => {
     return existingAdditionalImages
-      .filter((img) => img.deleted)
+      .filter((img) => img.deleted === true)
       .map((img) => img.id);
   }, [existingAdditionalImages]);
 
@@ -265,17 +262,56 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
     return true;
   }, [formData, isPublic, isAgreed, isPolicyAgreed, photoHero, existingPhotoHero]);
 
-const buildSubmitData = useCallback(() => {
-    return buildCardFormData(
-      // consent/privacyPolicy живут в отдельных стейтах — пробрасываем их в
-      // payload, иначе бек получает запрос без согласий и отвечает
-      // validation.required (поймано e2e-тестом form.real.spec.ts).
-      { ...formData, consent: isAgreed, privacyPolicy: isPolicyAgreed },
-      { photoHero, additionalImages },
-      getDeletedImageIds(),
-      existingPhotoHero
-    );
-  }, [formData, isAgreed, isPolicyAgreed, photoHero, additionalImages, getDeletedImageIds, existingPhotoHero]);
+  const buildSubmitData = useCallback(() => {
+    const formDataObj = new FormData();
+
+    const fields = {
+      dateBirth: formData.dateBirth,
+      dateDeath: formData.dateDeath || '',
+      placeBirth: formData.placeBirth,
+      name: formData.name,
+      nameAndClass: formData.nameAndClass,
+      email: formData.email || '',
+      description: formData.description,
+      militaryRank: formData.militaryRank || '',
+      placeService: formData.placeService || '',
+      placeConscription: formData.placeConscription || '',
+      chapter: formData.chapter,
+      cardType: formData.cardType || 'withoutPhoto',
+      consent: '1',
+      privacyPolicy: '1',
+    };
+
+    Object.keys(fields).forEach((key) => {
+      const value = fields[key as keyof typeof fields];
+      if (value !== undefined && value !== null && value !== '') {
+        formDataObj.append(key, String(value));
+      }
+    });
+
+    if (photoHero) {
+      formDataObj.append('photoHero', photoHero);
+    }
+
+    additionalImages.forEach((file, index) => {
+      formDataObj.append(`additionalCardImages[${index}][image]`, file);
+    });
+
+    const deletedIds = getDeletedImageIds();
+    if (deletedIds.length > 0) {
+      deletedIds.forEach((id, index) => {
+        formDataObj.append(`additionalCardImages[${index}][delete]`, String(id));
+      });
+    }
+
+    if (existingPhotoHero === null && !photoHero) {
+      formDataObj.append('deleteImage', '1');
+    }
+
+    formDataObj.append('_method', 'PATCH');
+
+    return formDataObj;
+  }, [formData, photoHero, additionalImages, getDeletedImageIds, existingPhotoHero]);
 
   const resetForm = useCallback(() => {
     setFormData(EMPTY_CARD_FORM);
