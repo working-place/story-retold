@@ -22,10 +22,6 @@ export default function HeroDetailPage() {
             try {
                 const heroData = await heroesApi.getPublishedHero(Number(id));
 
-                // console.log('📸 ПОЛНЫЙ ОТВЕТ ОТ СЕРВЕРА:', heroData);
-                // console.log('📸 cardData:', heroData?.cardData);
-                // console.log('📸 additionalCardImages:', heroData?.cardData?.additionalCardImages);
-
                 if (heroData) {
                     setHero(heroData);
                 } else {
@@ -89,29 +85,29 @@ export default function HeroDetailPage() {
                             <div className={styles.heroDetailPage__columnWrapper_noPhoto}>
                                 <div className={styles.heroDetailPage__column_noPhoto}>
                                     <div className={styles.heroDetailPage__infoRow}>
-                                        <p className={styles.heroDetailPage__infoLabel}>Звание:</p>
+                                        <p className={styles.heroDetailPage__infoLabel}>Звание</p>
                                         <p className={styles.heroDetailPage__infoValue}>{hero.range}</p>
                                     </div>
 
                                     <div className={styles.heroDetailPage__infoRow}>
-                                        <p className={styles.heroDetailPage__infoLabel}>Дата рождения:</p>
+                                        <p className={styles.heroDetailPage__infoLabel}>Дата рождения</p>
                                         <p className={styles.heroDetailPage__infoValue}>{formatDateDisplay(hero.dateOfBirth)}</p>
                                     </div>
 
                                     <div className={styles.heroDetailPage__infoRow}>
-                                        <p className={styles.heroDetailPage__infoLabel}>Дата смерти:</p>
+                                        <p className={styles.heroDetailPage__infoLabel}>Дата смерти</p>
                                         <p className={styles.heroDetailPage__infoValue}>{formatDateDisplay(hero.dateOfDeath)}</p>
                                     </div>
                                 </div>
 
                                 <div className={styles.heroDetailPage__column_noPhoto}>
                                     <div className={styles.heroDetailPage__infoRow}>
-                                        <span className={styles.heroDetailPage__infoLabel}>Место службы:</span>
+                                        <span className={styles.heroDetailPage__infoLabel}>Место службы</span>
                                         <span className={styles.heroDetailPage__infoValue}>{hero.placeService || "Внести Место службы"}</span>
                                     </div>
 
                                     <div className={styles.heroDetailPage__infoRow}>
-                                        <span className={styles.heroDetailPage__infoLabel}>Место призыва:</span>
+                                        <span className={styles.heroDetailPage__infoLabel}>Место призыва</span>
                                         <span className={styles.heroDetailPage__infoValue}>{hero.placeConscription || "Внести Место призыва"}</span>
                                     </div>
                                 </div>
@@ -153,27 +149,27 @@ export default function HeroDetailPage() {
                         <h3 className={styles.heroDetailPage__heroName}>{hero.name}</h3>
 
                         <div className={styles.heroDetailPage__infoRow}>
-                            <p className={styles.heroDetailPage__infoLabel}>Звание:</p>
+                            <p className={styles.heroDetailPage__infoLabel}>Звание</p>
                             <p className={styles.heroDetailPage__infoValue}>{hero.range}</p>
                         </div>
 
                         <div className={styles.heroDetailPage__infoRow}>
-                            <p className={styles.heroDetailPage__infoLabel}>Дата рождения:</p>
+                            <p className={styles.heroDetailPage__infoLabel}>Дата рождения</p>
                             <p className={styles.heroDetailPage__infoValue}>{formatDateDisplay(hero.dateOfBirth)}</p>
                         </div>
 
                         <div className={styles.heroDetailPage__infoRow}>
-                            <p className={styles.heroDetailPage__infoLabel}>Дата смерти:</p>
+                            <p className={styles.heroDetailPage__infoLabel}>Дата смерти</p>
                             <p className={styles.heroDetailPage__infoValue}>{formatDateDisplay(hero.dateOfDeath)}</p>
                         </div>
 
                         <div className={styles.heroDetailPage__infoRow}>
-                            <span className={styles.heroDetailPage__infoLabel}>Место службы:</span>
+                            <span className={styles.heroDetailPage__infoLabel}>Место службы</span>
                             <span className={styles.heroDetailPage__infoValue}>{hero.placeService || "Внести Место службы"}</span>
                         </div>
 
                         <div className={styles.heroDetailPage__infoRow}>
-                            <span className={styles.heroDetailPage__infoLabel}>Место призыва:</span>
+                            <span className={styles.heroDetailPage__infoLabel}>Место призыва</span>
                             <span className={styles.heroDetailPage__infoValue}>{hero.placeConscription || "Внести Место призыва"}</span>
                         </div>
                     </div>

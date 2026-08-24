@@ -1,6 +1,3 @@
-// Подключаем только реально используемые семейства.
-// Раньше здесь грузились 9 семейств и весь блок дублировался —
-// теперь один @import, оставлены Roboto (body), Metamorphous (декор), Rubik.
 @import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=Roboto:wght@100;300;400;500;700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
 * {
@@ -76,7 +73,6 @@ body {
     margin: 0;
     font-family: "Roboto", "Metamorphous", serif;
     font-size: 16px;
-    font-weight: 600;
     font-style: normal;
 }
 

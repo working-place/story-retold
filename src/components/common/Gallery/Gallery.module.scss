@@ -18,8 +18,8 @@ h2 {
   justify-content: space-between;
   width: 100%;
   max-width: 1760px;
-  min-height: 863px;
-  height: fit-content;
+  height: 91vw;
+  max-height: 880px;
 
   &__title {
     font-family: $font-display;
@@ -134,25 +134,11 @@ h2 {
   }
 }
 
-@media (max-width: 480px) {
-  .gallery {
-    &__sideImage {
-      display: none;
-    }
-
-    &__centerImage {
-      width: 280px;
-      height: 210px;
-    }
-  }
-}
-
-
-@media (max-width: 1762px) {
+@media (max-width: 1764px) {
   .gallery {
 
     &__authorInfoBox {
-font-weight: 400;
+      font-weight: 400;
     }
 
     &__imagesContainer {
@@ -161,25 +147,62 @@ font-weight: 400;
 
     &__sideImage {
       min-width: none !important;
-    width: 25% !important;
-    height: auto;
-    border-radius: 13px;
-    // height: 516px;
-    // border-radius: 40px;
-  }
+      width: 25% !important;
+      height: auto;
+      border-radius: 13px;
+    }
 
-  &__centerImage {
-    min-width: none !important;
-    width: 35% !important;
-    height: auto;
-    border-radius: 13px;
-    // height: 622px;
-    // box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    // border-radius: 40px;
+    &__centerImage {
+      min-width: none !important;
+      width: 35% !important;
+      height: auto;
+      border-radius: 13px;
+    }
   }
+}
 
-    // &__imagesContainer {
-    //   width: 25%;
-    // }
+@media (max-width: 500px) {
+  .gallery {
+    h2 {
+      font-size: 33px !important;
+      font-weight: 100 !important;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery {
+    margin-top: -30px;
+
+
+    &__sideImage {
+      display: none;
+    }
+
+    &__centerImage {
+      width: 100% !important;
+
+      &img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &__authorInfo {
+      font-size: 20px;
+      font-weight: 300;
+    }
+
+    &__navButton {
+      svg {
+        width: 11px;
+      }
+    }
+
+    &__carousel {
+      gap: 7px;
+      margin-top: 20px;
+      margin-bottom: 15px;
+    }
   }
 }
