@@ -22,22 +22,32 @@
     background: $beige;
     border-radius: 16px;
     max-width: 766px;
-    width: fit-content;
+    margin-right: 30px;
+    margin-left: 30px;
+    flex-grow: 1;
     height: fit-content;
     padding: 68px 137px 77px 137px;
     box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.2);
     animation: fadeIn 0.2s ease-out;
 
+    @media (max-width: 590px) {
+            padding: 68px 30px;
+        }
+
     &__title {
         font-family: $font-rubik;
-        font-size: 32px;
+        font-size: 32px !important;
         font-weight: 700;
         line-height: 120%;
         letter-spacing: 0;
         color: $dark-text;
         text-align: center;
-        min-width: 588px;
         margin-bottom: 74px;
+
+        @media (max-width: 590px) {
+            font-size: 30px !important;
+            text-align: left;
+        }
     }
 
     &__closeButton {
@@ -50,7 +60,9 @@
         transition: all 0.2s;
         z-index: 5;
 
-        &:hover {}
+        @media (max-width: 590px) {
+            margin-right: -30px;
+        }
     }
 
     &__buttons {
@@ -58,6 +70,11 @@
         gap: 16px;
         justify-content: center;
         margin-top: 8px;
+
+        @media (max-width: 590px) {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 
     &__editButton,
@@ -85,12 +102,11 @@
         background-color: transparent;
         border: 2px solid $brown-color;
         color: $gray-dark;
+        padding: 10px;
 
         span {
             color: $brown-color;
         }
-
-        &:hover:not(:disabled) {}
     }
 
     &__publishButton {
@@ -102,7 +118,6 @@
             color: $beige-background;
         }
 
-        &:hover:not(:disabled) {}
     }
 
     &__vector110,
@@ -118,6 +133,10 @@
     &__vector111 {
         bottom: 0;
         right: 0;
+
+        @media (max-width: 590px) {
+            bottom: 20%;
+        }
     }
 }
 

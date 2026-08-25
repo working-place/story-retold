@@ -7,7 +7,6 @@ import ReviewCardsTitle from "./ReviewCardsTitle";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-
 export default function ReviewCards() {
     const [cards, setCards] = useState<CardData[]>([]);
     const [loading, setLoading] = useState(true);

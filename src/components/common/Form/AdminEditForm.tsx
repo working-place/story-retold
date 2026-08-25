@@ -106,9 +106,7 @@ export default function AdminEditForm() {
                 }
 
                 setIsSuccessPopupOpen(true);
-                setTimeout(() => {
-                    navigate('/admin-heroes/svo-heroes');
-                }, 1500);
+
             } else {
                 form.setError('Не удалось получить обновленную карточку');
             }
@@ -143,7 +141,7 @@ export default function AdminEditForm() {
 
     const handleSuccessPopupClose = useCallback(() => {
         setIsSuccessPopupOpen(false);
-        navigate('/admin-heroes/svo-heroes');
+        navigate('/admin-heroes/on-review');
     }, [navigate]);
 
     const handlePreview = useCallback(() => {

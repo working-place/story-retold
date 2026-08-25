@@ -10,9 +10,8 @@
     background-color: $beige-background;
     z-index: 1000;
 
-    // Адаптивные отступы для планшетов и мобильных
     @include respond-below($breakpoint-xl) {
-         padding-top: 12px;
+        padding-top: 12px;
         padding-left: 30px;
         padding-right: 20px;
     }
@@ -22,10 +21,6 @@
         padding-right: 20px;
     }
 }
-
-/* ============================================================ */
-/*  ДЕСКТОПНАЯ НАВИГАЦИЯ                                         */
-/* ============================================================ */
 
 .header_linkContainer {
     display: flex;
@@ -56,10 +51,6 @@
     }
 }
 
-/* ============================================================ */
-/*  МОБИЛЬНАЯ КНОПКА БУРГЕРА                                     */
-/* ============================================================ */
-
 .burgerButton {
     display: none;
     background: none;
@@ -80,17 +71,13 @@
     }
 }
 
-/* ============================================================ */
-/*  МОБИЛЬНОЕ МЕНЮ (ОВЕРЛЕЙ)                                     */
-/* ============================================================ */
-
 .mobileOverlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: $beige-soft; // Бежевый фон как на макете
+    background-color: $beige-soft;
     z-index: 2000;
     display: flex;
     flex-direction: column;
@@ -102,8 +89,13 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .mobileMenu {
@@ -111,7 +103,7 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding: 48px 32px 32px 32px; // Отступы по макету (можно увеличить слева)
+    padding: 48px 32px 32px 32px;
 
     &__closeButton {
         position: absolute;
@@ -133,8 +125,8 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 32px;
-        margin-top: 70px; // Отступ от верха для ссылок
-        margin-left: 10px; // Небольшой отступ слева для выравнивания
+        margin-top: 70px;
+        margin-left: 10px;
     }
 
     &__link {
@@ -157,7 +149,7 @@
     }
 
     &__buttonWrapper {
-        margin-top: auto; // Прижимаем к низу
+        margin-top: auto;
         padding-bottom: 20px;
         width: 100%;
     }
@@ -166,9 +158,18 @@
         width: 100%;
         padding: 18px 24px;
         font-size: 22px;
-        border-radius: 50px; // Круглая кнопка как на макете
+        border-radius: 50px;
         background-color: $brown-color;
         color: $white-text;
         justify-content: center;
+    }
+}
+
+@media (max-width: 500px) {
+    .header {
+        &_logo {
+            width: 64px;
+            height: 36px;
+        }
     }
 }

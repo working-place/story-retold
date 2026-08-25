@@ -14,7 +14,7 @@
     padding-right: 22px;
     padding-bottom: 30px;
     min-height: 338px;
-    position: relative; /* Нужно для абсолютного позиционирования соцсети на мобильных */
+    position: relative;
 }
 
 .item11 {
@@ -99,7 +99,7 @@
     font-size: 25px;
 }
 
-.madeIn{
+.madeIn {
     white-space: nowrap;
 }
 
@@ -108,17 +108,6 @@
     font-family: $font-decorative;
 }
 
-/* ============================================================ */
-/*  АДАПТИВ ДЛЯ ПЛАНШЕТОВ И МОБИЛЬНЫХ (по мобильному макету)     */
-/*  Порядок блоков по макету (DOM-порядок другой, меняем grid):  */
-/*    1) лого проекта          (в макете VK нет — он остаётся    */
-/*       absolute справа сверху, как в текущей вёрстке)          */
-/*    2) телефон + email                                         */
-/*    3) ссылки: соглашение / политика                           */
-/*    4) лого СОТ (слева) + текст об авторе (справа) — В РЯД     */
-/*    5) «Сделано в: СОЮЗ Экипаж» + копирайт                     */
-/*  Десктоп ≥1360px (фактический min grid-раскладки ~1337px).     */
-/* ============================================================ */
 @include respond-below(1360px) {
     .footer {
         display: grid;
@@ -130,13 +119,23 @@
         align-items: start;
     }
 
-    /* Полноширинные блоки — row по порядку макета */
-    .item11 { }
-    .item23 { grid-column: 1 / -1; grid-row: 2; }
-    .item24 { grid-column: 1 / -1; grid-row: 3; }
-    .item25 { grid-column: 1 / -1; grid-row: 5; }
+    .item11 {}
 
-    /* Лого СОТ + текст автора — в один ряд (row 4) */
+    .item23 {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+
+    .item24 {
+        grid-column: 1 / -1;
+        grid-row: 3;
+    }
+
+    .item25 {
+        grid-column: 1 / -1;
+        grid-row: 5;
+    }
+
     .item21 {
         grid-column: 1;
         grid-row: 4;
@@ -151,7 +150,6 @@
         font-size: 16px;
     }
 
-    /* Иконка VK (в макете нет) — absolute справа сверху, как было */
     .item15 {
         position: absolute;
         top: 24px;
@@ -161,8 +159,6 @@
         grid-area: auto;
     }
 
-    /* Контакты (Телефон и Почта) — компактная группа:
-       сбиваем межстрочку (наследуется 34px) и прячем <br> из JSX */
     .item23 {
         display: flex;
         flex-direction: column;
@@ -174,7 +170,6 @@
         }
     }
 
-    /* Ссылки (соглашение / политика) — вторая компактная группа */
     .item24 {
         display: flex;
         flex-direction: column;
@@ -186,14 +181,13 @@
         }
     }
 
-    /* Сделано в и Копирайт */
     .item25 {
         display: flex;
         flex-direction: column;
         gap: 4px;
     }
 
-    /* Корректировка размеров шрифтов на мобильных */
+
     .tel {
         font-size: 20px;
     }
@@ -216,5 +210,44 @@
 
     .mSize {
         font-size: 14px;
+    }
+}
+
+@media (max-width: 460px) {
+
+    .footer {
+        row-gap: 30px;
+    }
+
+    .item11 {
+        display: flex;
+    }
+
+    .logo {
+        width: 54px;
+        height: 32px;
+    }
+
+    .logoSocial {
+        display: none;
+    }
+
+    .logoSot {
+        width: 72px;
+        height: 40px;
+    }
+
+    .logoSoyuz {
+        width: 65px;
+        height: 10px;
+    }
+
+    .tel,
+    .email {
+        font-size: 18px;
+    }
+
+    .email {
+        margin-top: 10px;
     }
 }

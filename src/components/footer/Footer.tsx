@@ -33,13 +33,22 @@ export default function Footer() {
                 <span className={styles.email}>DigitalMemory60@yandex.ru</span>
             </div>
 
-
             <div className={styles.item24}>
-                <a className={styles.agreement} href="/documents/Политика-в-отношении-обработки-персональных-данных.docx">
+                <a
+                    className={styles.agreement}
+                    href="/documents/Согласие-на-обработку-ПД.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     Пользовательское соглашение
                 </a> <br />
-                 <br />
-                <a className={styles.confidence} href="/documents/Согласие-на-обработку-ПД.docx">
+                <br />
+                <a
+                    className={styles.confidence}
+                    href="/documents/Политика-в-отношении-обработки-персональных-данных.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     Политика конфиденциальности
                 </a>
             </div>
