@@ -1,37 +1,65 @@
-import styles from "./HeroDetailPage.module.scss";
-import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import styles from "./HeroDetailPageAdmin.module.scss";
 import Gallery from "../../../components/common/Gallery/Gallery";
+import { heroesApi, ApiError } from "../../../services/api/heroes";
 import { formatDateDisplay } from "../../../utils/date";
 import type { Hero } from "../../../types/card.types";
 
-export default function PreviewHeroPage() {
-    const [hero] = useState<Hero | null>(() => {
-        const previewData = localStorage.getItem('previewHeroData');
-        if (previewData) {
+export default function HeroDetailPageAdmin() {
+    const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
+
+    const [hero, setHero] = useState<Hero | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchHero = async () => {
+            if (!id) return;
+            setLoading(true);
+            setError(null);
             try {
-                const parsed = JSON.parse(previewData);
-                localStorage.removeItem('previewHeroData');
-                return parsed;
-            } catch (error) {
-                console.error('Ошибка парсинга данных предпросмотра:', error);
-                localStorage.removeItem('previewHeroData');
-                return null;
+                const heroData = await heroesApi.getPublishedHero(Number(id));
+
+                if (heroData) {
+                    setHero(heroData);
+                } else {
+                    setError('Герой не найден');
+                }
+            } catch (err) {
+                setError(
+                    err instanceof ApiError
+                        ? `Ошибка сервера: ${err.message}`
+                        : 'Герой не найден'
+                );
+            } finally {
+                setLoading(false);
             }
-        }
-        return null;
-    });
+        };
+
+        fetchHero();
+    }, [id]);
 
     const hasPhoto = hero?.img && hero.img.trim() !== '';
 
     const handleGoBack = () => {
-        window.close();
+        navigate(-1);
     };
 
-    if (!hero) {
+    if (loading) {
+        return (
+            <div className={styles.heroDetailPage}>
+                <div className={styles.loading}>Загрузка...</div>
+            </div>
+        );
+    }
+
+    if (error || !hero) {
         return (
             <div className={styles.heroDetailPage}>
                 <div className={styles.notFound}>
-                    <h2>Нет данных для предпросмотра</h2>
+                    <h2>{error || 'Герой не найден'}</h2>
                     <button onClick={handleGoBack} className={styles.backButton}>
                         Вернуться назад
                     </button>
@@ -40,19 +68,15 @@ export default function PreviewHeroPage() {
         );
     }
 
-    const galleryImages = hero.additionalImages?.length > 0
-        ? hero.additionalImages
-        : (hero.cardData?.additionalCardImages ?? []).map(img => img.image).filter(Boolean);
-
     if (!hasPhoto) {
         return (
             <div className={`${styles.heroDetailPage} ${styles.heroDetailPage_noPhoto}`}>
-
                 <section className={styles.heroDetailPage__pathContainer}>
-                    <h3>Предпросмотр карточки героя "{hero.name}"</h3>
+                    <h3>Карточка героя "{hero.name}"</h3>
                 </section>
 
                 <div className={styles.heroDetailPage__wrapper}>
+
                     <section className={styles.heroDetailPage__heroContent_noPhoto}>
                         <div className={styles.heroDetailPage__infoWrapper_noPhoto}>
                             <h1>Карточка героя</h1>
@@ -61,32 +85,33 @@ export default function PreviewHeroPage() {
                             <div className={styles.heroDetailPage__columnWrapper_noPhoto}>
                                 <div className={styles.heroDetailPage__column_noPhoto}>
                                     <div className={styles.heroDetailPage__infoRow}>
-                                        <p className={styles.heroDetailPage__infoLabel}>Звание:</p>
+                                        <p className={styles.heroDetailPage__infoLabel}>Звание</p>
                                         <p className={styles.heroDetailPage__infoValue}>{hero.range}</p>
                                     </div>
 
                                     <div className={styles.heroDetailPage__infoRow}>
-                                        <p className={styles.heroDetailPage__infoLabel}>Дата рождения:</p>
+                                        <p className={styles.heroDetailPage__infoLabel}>Дата рождения</p>
                                         <p className={styles.heroDetailPage__infoValue}>{formatDateDisplay(hero.dateOfBirth)}</p>
                                     </div>
 
                                     <div className={styles.heroDetailPage__infoRow}>
-                                        <p className={styles.heroDetailPage__infoLabel}>Дата смерти:</p>
+                                        <p className={styles.heroDetailPage__infoLabel}>Дата смерти</p>
                                         <p className={styles.heroDetailPage__infoValue}>{formatDateDisplay(hero.dateOfDeath)}</p>
                                     </div>
                                 </div>
 
                                 <div className={styles.heroDetailPage__column_noPhoto}>
                                     <div className={styles.heroDetailPage__infoRow}>
-                                        <span className={styles.heroDetailPage__infoLabel}>Место службы:</span>
+                                        <span className={styles.heroDetailPage__infoLabel}>Место службы</span>
                                         <span className={styles.heroDetailPage__infoValue}>{hero.placeService || "Внести Место службы"}</span>
                                     </div>
 
                                     <div className={styles.heroDetailPage__infoRow}>
-                                        <span className={styles.heroDetailPage__infoLabel}>Место призыва:</span>
+                                        <span className={styles.heroDetailPage__infoLabel}>Место призыва</span>
                                         <span className={styles.heroDetailPage__infoValue}>{hero.placeConscription || "Внести Место призыва"}</span>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </section>
@@ -103,11 +128,7 @@ export default function PreviewHeroPage() {
                     </section>
 
                     <section className={styles.gallery}>
-                        <Gallery
-                            images={galleryImages}
-                            title="Награды и архивные материалы"
-                            authorInfo={hero.nameAndClass}
-                        />
+                        <Gallery cardData={hero.cardData} />
                     </section>
                 </div>
             </div>
@@ -117,37 +138,38 @@ export default function PreviewHeroPage() {
     return (
         <div className={styles.heroDetailPage}>
             <section className={styles.heroDetailPage__pathContainer}>
-                <h3>Предпросмотр карточки</h3>
+                <h3>Карточка героя "{hero.name}"</h3>
             </section>
 
             <div className={styles.heroDetailPage__wrapper}>
+
                 <section className={styles.heroDetailPage__heroContent}>
                     <div className={styles.heroDetailPage__infoWrapper}>
                         <h1>Карточка героя</h1>
                         <h3 className={styles.heroDetailPage__heroName}>{hero.name}</h3>
 
                         <div className={styles.heroDetailPage__infoRow}>
-                            <p className={styles.heroDetailPage__infoLabel}>Звание:</p>
+                            <p className={styles.heroDetailPage__infoLabel}>Звание</p>
                             <p className={styles.heroDetailPage__infoValue}>{hero.range}</p>
                         </div>
 
                         <div className={styles.heroDetailPage__infoRow}>
-                            <p className={styles.heroDetailPage__infoLabel}>Дата рождения:</p>
+                            <p className={styles.heroDetailPage__infoLabel}>Дата рождения</p>
                             <p className={styles.heroDetailPage__infoValue}>{formatDateDisplay(hero.dateOfBirth)}</p>
                         </div>
 
                         <div className={styles.heroDetailPage__infoRow}>
-                            <p className={styles.heroDetailPage__infoLabel}>Дата смерти:</p>
+                            <p className={styles.heroDetailPage__infoLabel}>Дата смерти</p>
                             <p className={styles.heroDetailPage__infoValue}>{formatDateDisplay(hero.dateOfDeath)}</p>
                         </div>
 
                         <div className={styles.heroDetailPage__infoRow}>
-                            <span className={styles.heroDetailPage__infoLabel}>Место службы:</span>
+                            <span className={styles.heroDetailPage__infoLabel}>Место службы</span>
                             <span className={styles.heroDetailPage__infoValue}>{hero.placeService || "Внести Место службы"}</span>
                         </div>
 
                         <div className={styles.heroDetailPage__infoRow}>
-                            <span className={styles.heroDetailPage__infoLabel}>Место призыва:</span>
+                            <span className={styles.heroDetailPage__infoLabel}>Место призыва</span>
                             <span className={styles.heroDetailPage__infoValue}>{hero.placeConscription || "Внести Место призыва"}</span>
                         </div>
                     </div>
@@ -162,7 +184,6 @@ export default function PreviewHeroPage() {
                         src="/bg-paper.png"
                         alt="фон бумага"
                     />
-
                     <div className={styles.heroDetailPage__heroImage}>
                         <img src={hero.img} alt={hero.name} />
                     </div>
@@ -180,11 +201,7 @@ export default function PreviewHeroPage() {
                 </section>
 
                 <section className={styles.gallery}>
-                    <Gallery
-                        images={galleryImages}
-                        title="Награды и архивные материалы"
-                        authorInfo={hero.nameAndClass}
-                    />
+                    <Gallery cardData={hero.cardData} />
                 </section>
             </div>
         </div>

@@ -17,38 +17,28 @@ export default function Gallery({
   authorInfo
 }: GalleryProps) {
 
-  // console.log('📸 Gallery cardData:', cardData);
-  // console.log('📸 Gallery images (preview):', images);
-
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
 
-  const actualImages: string[] = images ?? (
+  const rawImages: string[] = images ?? (
     (cardData?.additionalCardImages || []).map(img => buildImageUrl(img.image))
   );
 
-  if (actualImages.length === 0) {
-    return null;
-  }
-
-  if (!cardData) {
-    return null;
-  }
+  const actualImages = rawImages.length > 0 ? rawImages : ['/fallback-img.png'];
+  const hasRealImages = rawImages.length > 0;
 
   const actualTitle: string = title || "Награды и архивные материалы";
-  const actualAuthorInfo: string = authorInfo || cardData.nameAndClass || "ФИО, Класс";
-
-  const displayImages = actualImages;
+  const actualAuthorInfo: string = authorInfo || cardData?.nameAndClass || "ФИО, Класс";
 
   const handleImageError = (index: number) => {
     setImgErrors(prev => ({ ...prev, [index]: true }));
   };
 
   const getImageUrl = (index: number): string => {
-    if (imgErrors[index]) {
+    if (imgErrors[index] || !hasRealImages) {
       return '/fallback-img.png';
     }
-    return displayImages[index];
+    return actualImages[index];
   };
 
   const getVisibleImages = (): {
@@ -56,38 +46,28 @@ export default function Gallery({
     current: string;
     next: string;
   } => {
-    const total = displayImages.length;
-
-    if (actualImages.length > 0) {
-      const prevIndex = (currentIndex - 1 + total) % total;
-      const nextIndex = (currentIndex + 1) % total;
-      return {
-        prev: getImageUrl(prevIndex),
-        current: getImageUrl(currentIndex),
-        next: getImageUrl(nextIndex),
-      };
-    }
+    const total = actualImages.length;
+    const prevIndex = (currentIndex - 1 + total) % total;
+    const nextIndex = (currentIndex + 1) % total;
 
     return {
-      prev: '/fallback-img.png',
-      current: '/fallback-img.png',
-      next: '/fallback-img.png',
+      prev: getImageUrl(prevIndex),
+      current: getImageUrl(currentIndex),
+      next: getImageUrl(nextIndex),
     };
   };
 
   const { prev, current, next } = getVisibleImages();
 
   const handlePrev = (): void => {
-    if (displayImages.length === 0) return;
-    setCurrentIndex((prev) => (prev - 1 + displayImages.length) % displayImages.length);
+    if (!hasRealImages) return;
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + actualImages.length) % actualImages.length);
   };
 
   const handleNext = (): void => {
-    if (displayImages.length === 0) return;
-    setCurrentIndex((prev) => (prev + 1) % displayImages.length);
+    if (!hasRealImages) return;
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % actualImages.length);
   };
-
-  const hasRealImages = actualImages.length > 0;
 
   return (
     <section className={styles.gallery}>
@@ -112,7 +92,7 @@ export default function Gallery({
             <img
               src={prev}
               alt="Предыдущее фото"
-              onError={() => handleImageError((currentIndex - 1 + displayImages.length) % displayImages.length)}
+              onError={() => handleImageError((currentIndex - 1 + actualImages.length) % actualImages.length)}
             />
           </div>
 
@@ -128,7 +108,7 @@ export default function Gallery({
             <img
               src={next}
               alt="Следующее фото"
-              onError={() => handleImageError((currentIndex + 1) % displayImages.length)}
+              onError={() => handleImageError((currentIndex + 1) % actualImages.length)}
             />
           </div>
         </div>

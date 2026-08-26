@@ -38,6 +38,10 @@ export default function AdminPanelForm() {
         try {
             const submitData = form.buildSubmitData();
 
+            if (submitData instanceof FormData) {
+                submitData.delete('_method');
+            }
+
             const response = await heroesApi.create(submitData);
 
             if (response?.id) {
@@ -112,20 +116,20 @@ export default function AdminPanelForm() {
         window.open('/preview-hero', '_blank');
     };
 
+    const activeExistingCount = form.existingAdditionalImages?.filter(img => !img.deleted).length || 0;
+    const totalImagesCount = activeExistingCount + form.additionalImages.length;
+
     return (
         <>
             <form noValidate onSubmit={handlePublishClick} className={`${styles.form} ${styles.form_admin}`}>
                 <div className={styles.exitContainer}>
                     <ReviewCardsTitle
-                        title="Редактирование карточки"
+                        title="Новая карточка"
                         onExit={handleExit}
                     />
                 </div>
                 <div className={styles.contentWrapper}>
                     <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
-                        {/* <h1 className={`${styles.form__titleCard} ${styles.form__title_admin}`}>
-                        Новая карточка
-                    </h1> */}
 
                         {!showPhotoBlock && (
                             <div
@@ -203,7 +207,7 @@ export default function AdminPanelForm() {
                         <div
                             className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightSecond}`}
                         >
-                            {additionalImageUrls.length < 1 && (
+                            {totalImagesCount <= 3 && (
                                 <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
                                     <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
                                         Фотографии наград и другие материалы
@@ -214,21 +218,21 @@ export default function AdminPanelForm() {
                                 </div>
                             )}
 
-                            {additionalImageUrls.length > 0 && (
+                            {additionalImageUrls.length <= 1 && (
                                 <div className={styles.additionalImagesGrid}>
-                                    {additionalImageUrls.map((url, index) => (
+                                    {form.additionalImages?.map((file, index) => (
                                         <div key={index} className={styles.additionalImageItem}>
                                             <div className={styles.additionalImageWrapper}>
                                                 <img
-                                                    src={url}
-                                                    alt={`Дополнительное фото ${index + 1}`}
+                                                    alt="Новое фото"
                                                     className={styles.additionalImagePreview}
+                                                    src={URL.createObjectURL(file)}
                                                 />
                                                 <button
                                                     type="button"
                                                     className={styles.removeAdditionalImageButton}
-                                                    onClick={() => form.removeAdditionalImage(index, false)}
                                                     aria-label="Удалить фото"
+                                                    onClick={() => form.removeAdditionalImage(index, false)}
                                                 >
                                                     ×
                                                 </button>
@@ -237,7 +241,6 @@ export default function AdminPanelForm() {
                                     ))}
                                 </div>
                             )}
-
                             <input
                                 type="file"
                                 id="additionalImages"

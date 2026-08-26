@@ -69,7 +69,7 @@ export default function ImagedCardAdmin({ heroes = [], onDelete }: CardProps) {
 
                         <div className={styles.infoWrapper}>
                             <div className={styles.infoContainer}>
-                                <Link to={`/hero/${hero.id}`} className={styles.cardLink}>
+                                <Link to={`/admin-heroes/hero-card/${hero.id}`} className={styles.cardLink}>
                                     <p className={styles.text}>
                                         {hero.name}
                                     </p>

@@ -2,14 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 125px;
-    padding-bottom: 74px;
+    padding: 30px 30px 74px 30px;
     width: 100%;
     color: $beige-light;
     position: relative;
     background-color: #f1e6d0;
-
-
 
     h1 {
         font-family: $font-display;
@@ -17,6 +14,7 @@
         text-transform: uppercase;
         color: $white-text;
         width: 100%;
+
         text-align: left;
 
         @media (max-width: 1718px) {
@@ -33,11 +31,6 @@
         text-align: left;
     }
 
-    &__previewTitle {
-        color: #1A1A1A !important;
-        margin-bottom: 20px;
-    }
-
     &_noPhoto {
         .heroDetailPage__wrapper {
             background-color: $green-color;
@@ -45,16 +38,19 @@
     }
 
     &__pathContainer {
+        display: flex;
+        justify-content: center;
         width: 100%;
         max-width: 1760px;
 
         h3 {
-            margin-top: 22px;
-            margin-bottom: 49px;
+            margin: 22px 0 49px;
             font-size: 24px;
             font-weight: 400;
             text-align: left;
             color: #534035;
+            width: 100%;
+            max-width: 1500px;
         }
     }
 
@@ -62,7 +58,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        max-width: 1760px;
+        max-width: 1500px;
         background-color: $brown-color;
         border-radius: 40px;
         padding: 97px 58px 63px 58px;
@@ -116,6 +112,10 @@
 
         @media (max-width: 1610px) {
             width: 40%;
+        }
+
+        @media (max-width: 1440px) {
+            width: 45%;
         }
 
         &_noPhoto {
@@ -197,36 +197,28 @@
     }
 
     &__bgImage {
-        top: 35px;
-        left: -35px;
-
-        @media (max-width: 1440px) {
-            width: 710px;
-        }
+        top: 25px;
+        left: -30px;
+        max-width: 680px;
+        width: 35vw;
     }
 
     &__bgPaper {
         z-index: 2;
-        top: -70px;
-        left: 60px;
-
-        @media (max-width: 1440px) {
-            width: 566px;
-        }
+        top: -60px;
+        left: 55px;
+        max-width: 556px;
+        width: 29vw;
     }
 
     &__heroImage {
-        top: 130px;
-        left: 110px;
-        width: 566px;
-        height: 677px;
+        top: 120px;
+        left: 105px;
+        max-width: 456px;
+        width: 23.5vw;
+        max-height: 550px;
         overflow: hidden;
         z-index: 3;
-
-        @media (max-width: 1440px) {
-            width: 466px;
-            height: auto;
-        }
 
         img {
             width: 100%;
@@ -315,6 +307,7 @@
 
 .gallery {
     margin-top: 80px;
+    max-width: 1400px;
 }
 
 @media (max-width: 1764px) {
@@ -330,87 +323,38 @@
     }
 }
 
-@media (max-width: 1260px) {
-
-    .description {
-        &__box {
-            font-size: 28px;
-            font-weight: 400;
-        }
-    }
-
-    .heroDetailPage {
-        &__heroContent {
-            flex-direction: column;
-            justify-content: flex-end;
-            height: fit-content;
-            padding-top: 72vw;
-        }
-
-        &__infoWrapper {
-            width: 100%;
-            gap: 30px;
-        }
-
-        &__bgImage,
-        &__bgPaper,
-        &__heroImage {
-            left: 50%;
-            transform: translate(-50%);
-        }
-
-        &__bgImage {
-            width: 60%;
-            top: 0.93vw;
-        }
-
-        &__bgPaper {
-            width: 50%;
-            top: -5.86vw;
-        }
-
-        &__heroImage {
-            width: 40%;
-            aspect-ratio: 1/1.2;
-            top: 10.23vw;
-        }
-    }
-}
-
-@media (max-width: 500px) {
+@media (max-width: 1440px) {
 
     .description {
         height: fit-content;
 
-        margin-top: 20px;
+        margin-top: 40px;
         gap: 30px;
 
         h2 {
-            font-size: 33px !important;
+            font-size: 62px !important;
             font-weight: 100 !important;
-
         }
 
         &__box {
             font-size: 20px;
             font-weight: 300;
-            padding: 29px 12px;
+            padding: 40px 15px;
             border-radius: 6px;
             height: fit-content;
         }
     }
 
     h1 {
-        font-size: 33px !important;
+        font-size: 52px !important;
     }
 
     .heroDetailPage {
-        padding-top: 0;
         padding-right: 30px;
         padding-left: 30px;
 
         &__wrapper {
-            padding: 15px 18px 25px;
+            padding: 100px 18px 25px;
             border-radius: 16px;
         }
 
@@ -434,20 +378,90 @@
         }
 
         &__bgImage {
-            width: 85%;
-            top: 5.93vw;
+            left: 20px;
+        }
+
+        &__heroContent {
+            min-height: 0;
+        }
+    }
+}
+
+@media (max-width: 1180px) {
+
+    .heroDetailPage {
+
+        &__bgImage,
+        &__bgPaper,
+        &__heroImage {
+            left: 50%;
+            transform: translate(-50%);
+        }
+
+        &__bgImage {
+            max-width: 680px;
+            width: 100%;
         }
 
         &__bgPaper {
-            width: 70%;
-            top: -1.86vw;
+            max-width: 556px;
+            width: 100%;
         }
 
         &__heroImage {
-            width: 55%;
-            aspect-ratio: 1/1.2;
-            top: 17vw;
+            max-width: 456px;
+            width: 100%;
         }
+
+        &__infoWrapper {
+            margin-top: 900px;
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .heroDetailPage {
+
+        &__bgImage {
+            top: 0px !important;
+            width: 85vw;
+        }
+
+        &__bgPaper {
+            width: 70vw;
+        }
+
+        &__heroImage {
+            width: 60vw;
+        }
+
+        &__infoWrapper {
+            margin-top: 113vw;
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 520px) {
+    .heroDetailPage {
+
+        &__heroImage {
+            top: 70px;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .description {
+
+        h2 {
+            font-size: 33px !important;
+        }
+    }
+
+    h1 {
+        font-size: 33px !important;
     }
 }
 
@@ -458,26 +472,21 @@
         &__heroContent {
             padding-top: 108vw;
         }
+
+        &__infoWrapper {
+            margin-top: 0;
+        }
     }
 }
 
 @media (max-width: 375px) {
     .heroDetailPage {
         &__heroContent {
-            padding-top: 90vw;
             gap: 10px;
         }
 
-        &__bgImage {
-            top: 3.5%;
-        }
-
         &__bgPaper {
-            top: 2vw;
-        }
-
-        &__heroImage {
-            top: 20vw;
+            top: -35px;
         }
     }
 }

@@ -144,7 +144,16 @@ export default function AdminEditForm() {
         navigate('/admin-heroes/on-review');
     }, [navigate]);
 
-    const handlePreview = useCallback(() => {
+    const convertFileToBase64 = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    };
+
+    const handlePreview = useCallback(async () => {
         if (!form.validate()) {
             return;
         }
@@ -157,9 +166,15 @@ export default function AdminEditForm() {
         }
 
         const activeExistingImages = form.existingAdditionalImages.filter(img => !img.deleted);
+        const existingImageUrls = activeExistingImages.map(img => buildImageUrl(img.url));
+
+        const newBase64Images = await Promise.all(
+            form.additionalImages.map(file => convertFileToBase64(file))
+        );
+
         const previewAdditionalImages = [
-            ...activeExistingImages.map(img => buildImageUrl(img.url)),
-            ...additionalImageUrls
+            ...existingImageUrls,
+            ...newBase64Images
         ];
 
         const previewData = {
@@ -175,8 +190,8 @@ export default function AdminEditForm() {
             nameAndClass: form.formData.nameAndClass || '',
             additionalImages: previewAdditionalImages,
             cardData: {
-                additionalCardImages: form.additionalImages.map((file) => ({
-                    image: URL.createObjectURL(file),
+                additionalCardImages: previewAdditionalImages.map(url => ({
+                    image: url,
                 })),
             },
         };
@@ -223,6 +238,7 @@ export default function AdminEditForm() {
                     {form.error && <div className={styles.errorMessage}>{form.error}</div>}
 
                     <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
+
                         {showPhotoBlock && (
                             <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}>
                                 {!form.photoHero && !form.existingPhotoHero ? (

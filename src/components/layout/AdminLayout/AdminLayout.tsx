@@ -113,7 +113,6 @@ export default function AdminLayout() {
         <main className={styles.content}>
           <Outlet />
         </main>
-
       </div>
       <Footer />
     </>
