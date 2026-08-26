@@ -1,11 +1,19 @@
-
 .textCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: $green-color;
-    width: 415px;
+    width: 100%;
+    max-width: 415px;
+    min-width: 315px;
     min-height: 100%;
     max-height: fit-content;
     border-radius: 20px;
-    padding: 28px 43px 26px 22px;
+    padding: 28px 25px 26px 22px;
+
+    @media (max-width: 375px) {
+        border-radius: 15px;
+    }
 
     &__imgContainer {
         display: flex;
@@ -17,7 +25,7 @@
         width: 100px;
         height: 100px;
         object-fit: cover;
-         object-position: center center;
+        object-position: center center;
     }
 
     &__infoContainer {
@@ -38,6 +46,14 @@
         width: 100%;
         font-size: 26px;
         color: $beige-background;
+
+        @media (max-width: 1676px) {
+            font-size: 20px;
+        }
+
+        @media (max-width: 375px) {
+            font-size: 18px;
+        }
     }
 
     &__buttonContainer {
@@ -59,6 +75,12 @@
         opacity: 1;
         font-size: 24px;
         background-color: $beige-background;
+
+        @media (max-width: 375px) {
+            border-radius: 15px;
+            padding: 9px 18px;
+            height: fit-content;
+        }
     }
 }
 
