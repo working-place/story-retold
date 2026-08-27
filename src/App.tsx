@@ -18,11 +18,13 @@ import NotFoundPage from "./pages/main/NotFoundPage/NotFoundPage";
 import PreviewHeroPage from "./pages/main/HeroDetailPage/PreviewHeroPage";
 import FeedBackPage from "./pages/main/FeedBackPage/FeedBackPage";
 import HeroDetailPageAdmin from "./pages/main/HeroDetailPage/HeroDetailPageAdmin";
+import MetrikaRouteTracker from "./components/common/MetrikaRouteTracker/MetrikaRouteTracker";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <MetrikaRouteTracker />
         <Routes>
           <Route element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />
