@@ -2,6 +2,19 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+## Переменные окружения
+
+Скопируйте `.env.example` в `.env` и заполните значения:
+
+| Переменная | Назначение |
+| --- | --- |
+| `VITE_BACKEND_URL` | URL backend-сервера: проксирование `/api` в dev-сервере Vite (`vite.config.ts`), построение абсолютных URL изображений (`src/services/api/api.ts`) |
+| `VITE_METRIKA_ID` | Номер счётчика Яндекс Метрики (Метрика → Настройки → Номер счётчика). Пустое значение — счётчик не подключается |
+| `E2E_ADMIN_EMAIL` / `E2E_ADMIN_PASSWORD` | Тестовый админ для e2e-тестов Playwright (`login` → `GET /api/card/get/{id}`) |
+
+`VITE_*`-переменные читаются **в момент сборки**: после изменения значения нужен рестарт dev-сервера, а на проде переменную надо задать в окружении, где выполняется `npm run build`.
+
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
