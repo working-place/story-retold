@@ -5,7 +5,6 @@
     padding-bottom: 52.5%;
     /* 1008 / 1920 ≈ 0.525 */
     background-color: $beige-background;
-    max-width: 1920px;
     margin: 0 auto;
     // Лендинг живёт с левым выравниванием по умолчанию — глобальный
     // text-align: center на #root сюда не действует. Точечные
