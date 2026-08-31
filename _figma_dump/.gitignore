@@ -1,0 +1,4 @@
+# figma-dump gitignore mode: all — the whole dump stays out of git.
+# Switch: figma-dump gitignore <all|binaries|none>
+*
+!.gitignore
