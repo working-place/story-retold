@@ -35,7 +35,7 @@ export default function Footer() {
 
             <div className={styles.item24}>
                 <a
-                    className={styles.agreement}
+                    className={styles.confidence}
                     href="/documents/Согласие-на-обработку-ПД.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
