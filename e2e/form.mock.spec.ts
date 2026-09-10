@@ -45,6 +45,9 @@ test.describe('Форма «Расскажите о герое» [MOCK]', () => 
     // согласия обязаны уходить в payload (без них бек отвечает validation.required)
     expect(sentBody.consent).toBe('1');
     expect(sentBody.privacyPolicy).toBe('1');
+    // _method=PATCH в create-запросе заставляет Laravel подменить POST на PATCH
+    // и роут api/card/create отвечает 405 (баг с лендинга)
+    expect(sentBody._method).toBeUndefined();
   });
 
   test('@mock негатив: пустая форма → запрос НЕ уходит, попапа успеха нет', async ({ page }) => {

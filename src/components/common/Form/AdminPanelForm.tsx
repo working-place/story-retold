@@ -38,10 +38,6 @@ export default function AdminPanelForm() {
         try {
             const submitData = form.buildSubmitData();
 
-            if (submitData instanceof FormData) {
-                submitData.delete('_method');
-            }
-
             const response = await heroesApi.create(submitData);
 
             if (response?.id) {

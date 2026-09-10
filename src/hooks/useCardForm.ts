@@ -308,10 +308,12 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
       formDataObj.append('deleteImage', '1');
     }
 
-    formDataObj.append('_method', 'PATCH');
+    if (mode === 'edit') {
+      formDataObj.append('_method', 'PATCH');
+    }
 
     return formDataObj;
-  }, [formData, photoHero, additionalImages, getDeletedImageIds, existingPhotoHero]);
+  }, [formData, photoHero, additionalImages, getDeletedImageIds, existingPhotoHero, mode]);
 
   const resetForm = useCallback(() => {
     setFormData(EMPTY_CARD_FORM);
