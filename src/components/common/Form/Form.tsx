@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Button from "../../common/Button/Button";
 import styles from "./Form.module.scss";
@@ -8,7 +7,7 @@ import { Textarea } from "../Textarea/Textarea";
 import { Input } from "../Input/Input";
 import { heroesApi } from '../../../services/api/heroes';
 import SuccessPopup from "../../admin/Popups/SuccessPopup";
-import { useObjectUrl, useObjectUrls } from "../../../hooks/useObjectUrl";
+import { useObjectUrl } from "../../../hooks/useObjectUrl";
 import { useCardForm } from "../../../hooks/useCardForm";
 
 export default function NewCardForm() {
@@ -21,7 +20,6 @@ export default function NewCardForm() {
     const form = useCardForm({ mode: 'create-public' });
 
     const photoHeroUrl = useObjectUrl(form.photoHero);
-    const additionalImageUrls = useObjectUrls(form.additionalImages);
 
     const showPhotoBlock = form.formData.cardType === 'withoutPhoto';
 
@@ -73,7 +71,10 @@ export default function NewCardForm() {
 
                             {!form.photoHero ? (
                                 <>
-                                    <img src="/image-download.png" alt="Загрузить" />
+                                    <div className={`${styles.form__titleWrapper}`}>
+                                        <img src="/image-download.png" alt="Загрузить" />
+                                    </div>
+
                                     <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
                                         <h3 className={styles.form__titleUpload}>
                                             Фотографии героя
@@ -116,10 +117,6 @@ export default function NewCardForm() {
                                         </button>
                                     </div>
                                     <div className={styles.previewInfo}>
-                                        <p className={styles.previewFileName}>{form.photoHero.name}</p>
-                                        <p className={styles.previewFileSize}>
-                                            {(form.photoHero.size / 1024).toFixed(2)} KB
-                                        </p>
                                         <Button
                                             type="button"
                                             className={`${styles.button_small} ${styles.changePhotoButton}`}
@@ -142,12 +139,30 @@ export default function NewCardForm() {
 
                     <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary}`}>
                         <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
-                            <h3 className={styles.form__titleUpload}>
-                                Фотографии наград и другие материалы
-                            </h3>
-                            <h4 className={styles.form__subtitle}>
-                                Максимальный размер файлов 4 MB. Максимум 9 изображений
-                            </h4>
+
+
+                            {form.additionalImages.length == 0 && (
+                                <>
+                                    <h3 className={styles.form__titleUpload}>
+                                        Фотографии наград и другие материалы
+                                    </h3>
+                                    <div className={styles.form__subtitle}>
+                                        <span className={styles.form__subtitleLine}>Максимальный размер файлов 4 MB.</span>
+                                        <span className={styles.form__subtitleLine_small}>Максимум 9 изображений</span>
+                                    </div>
+
+
+
+                                    <Button
+                                        type="button"
+                                        className={`${styles.button_small}`}
+                                        onClick={() => document.getElementById('additionalImages')?.click()}
+                                        disabled={form.additionalImages.length >= 9 || form.isCompressing}
+                                    >
+                                        Выбрать файлы ({form.additionalImages.length}/9)
+                                    </Button>
+                                </>
+                            )}
                         </div>
 
                         <input
@@ -159,28 +174,23 @@ export default function NewCardForm() {
                             style={{ display: 'none' }}
                             disabled={form.additionalImages.length >= 9}
                         />
-                        <Button
-                            type="button"
-                            className={styles.button_small}
-                            onClick={() => document.getElementById('additionalImages')?.click()}
-                            disabled={form.additionalImages.length >= 9 || form.isCompressing}
-                        >
-                            Выбрать файлы ({form.additionalImages.length}/9)
-                        </Button>
 
                         {form.additionalImages.length > 0 && (
                             <div className={styles.additionalImagesGrid}>
-                                {form.additionalImages.map((_, index) => (
-                                    <div key={index} className={styles.additionalImageItem}>
+                                {form.additionalImages.map((file, index) => (
+                                    <div
+                                        key={`${file.name}-${file.size}-${index}`}
+                                        className={styles.additionalImageItem}
+                                    >
                                         <div className={styles.additionalImageWrapper}>
                                             <img
-                                                src={additionalImageUrls[index]}
+                                                src={URL.createObjectURL(file)}
                                                 alt={`Дополнительное фото ${index + 1}`}
                                                 className={styles.additionalImagePreview}
                                             />
                                             <button
                                                 type="button"
-                                                className={styles.removeAdditionalImageButton}
+                                                className={`${styles.removeAdditionalImageButton} ${styles.removeAdditionalImageButton_light}`}
                                                 onClick={() => form.removeAdditionalImage(index)}
                                                 aria-label="Удалить фото"
                                             >
@@ -189,7 +199,23 @@ export default function NewCardForm() {
                                         </div>
                                     </div>
                                 ))}
+
+                                {form.additionalImages.length < 9 && (
+                                    <div className={styles.additionalImagesButtonRow}>
+                                        <Button
+                                            type="button"
+                                            className={`${styles.button_small} ${styles.button_small_position}`}
+                                            onClick={() => document.getElementById('additionalImages')?.click()}
+                                            disabled={form.additionalImages.length >= 9 || form.isCompressing}
+                                        >
+                                            Выбрать файлы ({form.additionalImages.length}/9)
+                                        </Button>
+                                    </div>
+                                )}
+
+
                             </div>
+
                         )}
                     </div>
 
@@ -278,6 +304,8 @@ export default function NewCardForm() {
                             onBlur={() => form.handleBlur('description')}
                             error={!!form.getFieldError('description')}
                             errorText={form.getFieldError('description')}
+                            maxLength={1500}
+                            showCounter={true}
                             required
                         />
                     </div>
@@ -329,7 +357,7 @@ export default function NewCardForm() {
                                 onChange={form.setIsAgreed}
                                 required
                             />
-                            <a href="/privacy-policy" target="_blank">Согласен(а) на обработку персональных данных</a>
+                            <a className={styles.agreementText} href="/privacy-policy" target="_blank">Согласен(а) на обработку персональных данных</a>
                         </div>
                         <div className={styles.checkboxWrapper}>
                             <Checkbox
@@ -338,7 +366,7 @@ export default function NewCardForm() {
                                 onChange={form.setIsPolicyAgreed}
                                 required
                             />
-                            <a href="/privacy-policy" target="_blank">Я ознакомлен(а) с Политикой обработки персональных данных</a>
+                            <a className={styles.agreementText} href="/privacy-policy" target="_blank">Я ознакомлен(а) с Политикой обработки персональных данных</a>
                         </div>
 
                         <Button

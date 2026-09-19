@@ -414,6 +414,8 @@ export default function AdminEditForm() {
                         </div>
                     </div>
 
+                    {/* ============ */}
+
                     <div className={`${styles.form__basicInformation} ${styles.form__basicInformation_admin}`}>
                         <div className={`${styles.form__wrapper_secondLine} ${styles.form__wrapper_admin}`}>
                             <div className={`${styles.form__wrapper_firstLine} ${styles.form__wrapper_firstLine_admin}`}>
@@ -527,7 +529,7 @@ export default function AdminEditForm() {
                                 onBlur={() => form.handleBlur('description')}
                                 resize="none"
                                 labelPosition="top"
-                                maxLength={255}
+                                maxLength={1500}
                                 showCounter={true}
                                 required
                             />

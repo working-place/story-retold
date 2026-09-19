@@ -17,7 +17,6 @@
     }
 }
 
-// Скрываем нативный чекбокс
 .checkbox {
     position: absolute;
     opacity: 0;
@@ -27,7 +26,6 @@
     padding: 0;
 }
 
-// готово
 .checkboxCustom {
     display: flex;
     align-items: center;
@@ -44,17 +42,16 @@
     &.checked {
         border-color: $beige-background;
 
-        // готово
         &::after {
             content: '';
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 70%;
+            height: 70%;
             background-color: $beige-background;
             border-radius: 50%;
             top: 50%;
             left: 50%;
-            transform: translate(-55%, -55%);
+            transform: translate(-55%, -45%);
         }
     }
 }
@@ -74,7 +71,6 @@
     }
 }
 
-// Состояние ошибки
 .error {
     .checkboxCustom {
         border-color: $color-error;
@@ -89,7 +85,6 @@
     }
 }
 
-// Отключенное состояние
 .disabled {
     .checkboxCustom {
         opacity: 0.6;
@@ -97,7 +92,6 @@
     }
 }
 
-// готово
 .labelPosition-right {
     .checkboxLabel {
         flex-direction: row;
@@ -110,7 +104,6 @@
     }
 }
 
-// готово
 .label {
     font-size: 15px;
     color: $beige-background;
@@ -118,14 +111,12 @@
     user-select: none;
 }
 
-// готово
 .requiredMark {
     color: $beige-background;
     margin-left: 4px;
     font-size: 15px;
 }
 
-// Сообщение об ошибке
 .errorText {
     font-size: 12px;
     color: $color-error;

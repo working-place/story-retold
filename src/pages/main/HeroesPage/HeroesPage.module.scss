@@ -30,7 +30,7 @@
 .title {
     display: flex;
     flex-direction: column;
-    padding: 147px 0px 63px 0px;
+    padding: 65px 0px 63px 0px;
     font-size: 24px;
 
     &__path {
@@ -52,7 +52,6 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     column-gap: 32px;
     row-gap: 47px;
-
 }
 
 .imagedCards {
@@ -77,42 +76,42 @@
     gap: 16px;
 }
 
-.resetButton {}
+@media (max-width: 1450px) {
 
+    .imagedCards,
+    .textCards {
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 32px;
+        row-gap: 47px;
 
-    @media (max-width: 1450px) {
-.imagedCards,
-.textCards {
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 32px;
-    row-gap: 47px;
-
-}
     }
-
-    @media (max-width: 1100px) {
-.imagedCards,
-.textCards {
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 32px;
-    row-gap: 47px;
-
 }
+
+@media (max-width: 1100px) {
+
+    .imagedCards,
+    .textCards {
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 32px;
+        row-gap: 47px;
+
     }
-
-        @media (max-width: 900px) {
-.imagedCards,
-.textCards {
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: 1fr;
-    justify-items: center;
-    column-gap: 32px;
-    row-gap: 47px;
-
 }
+
+@media (max-width: 900px) {
+
+    .imagedCards,
+    .textCards {
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        column-gap: 32px;
+        row-gap: 47px;
+
     }
+}

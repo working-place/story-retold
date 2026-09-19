@@ -1,10 +1,12 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss"
 import Button from "../common/Button/Button";
 import { useState, useEffect } from "react";
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+     const navigate = useNavigate();
+     const location = useLocation();
 
     useEffect(() => {
         if (isMenuOpen) {
@@ -17,12 +19,34 @@ export default function Header() {
         };
     }, [isMenuOpen]);
 
+     const scrollToForm = () => {
+        closeMenu();
+        const el = document.getElementById('hero-form');
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            navigate('/#hero-form');
+        }
+    };
+
+        useEffect(() => {
+        if (location.hash === '#hero-form') {
+            const el = document.getElementById('hero-form');
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }, [location]);
+
     const toggleMenu = () => setIsMenuOpen(prev => !prev);
     const closeMenu = () => setIsMenuOpen(false);
 
     return (
         <div className={styles.header}>
-            <img className={styles.header_logo} src="/logo.png" alt="Лого" />
+            <NavLink to="/">
+                <img className={styles.header_logo} src="/logo.png" alt="Лого" />
+            </NavLink>
+
 
             <div className={styles.header_linkContainer}>
                 <NavLink
@@ -52,6 +76,7 @@ export default function Header() {
                     borderRadius='20px'
                     fontSize='26px'
                     color='#F4F4F4'
+                    onClick={scrollToForm}
                 >
                     Рассказать о герое
                 </Button>

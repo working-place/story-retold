@@ -1,32 +1,28 @@
-// готово
 .wrapper {
     display: flex;
     flex-direction: column;
     gap: 6px;
     align-items: flex-start;
+    width: 100%;
 
-    // Чтобы поле могло растягиваться на всю ширину родителя в мобильной форме
     @include respond-below($breakpoint-md) {
         align-items: stretch;
         width: 100%;
 
-        // собственный input тоже тянем во всю доступную ширину,
-        // переопределяя фикс. vw-размеры из Form.module.scss
         .input {
             width: 100%;
         }
     }
 }
 
-// готово
 .inputWrapper {
     position: relative;
     display: flex;
     align-items: center;
     flex-grow: 1;
+    width: 100%;
 }
 
-// готово
 .input {
     background-color: $beige-background;
     border-radius: 12px;
@@ -34,38 +30,20 @@
     outline: none;
     border: 2px solid $brown-color;
 
-    // готово
     &::placeholder {
         color: $brown-color;
         opacity: 1;
     }
 
-    &:hover:not(:disabled):not(.readOnly) {}
-
-    &:focus {}
-
-    // Состояния
     &.error {
         border-color: $color-error;
-
-        &:focus {}
     }
-
-    &.success {}
 
     &.disabled {
         cursor: not-allowed;
     }
-
-    &.readOnly {}
-
-    // Иконки
-    &.hasIconLeft {}
-
-    &.hasIconRight {}
 }
 
-// готово
 .extraSmall {
     width: 261px;
     padding: 12px 24px 12px 24px;
@@ -73,10 +51,8 @@
 }
 
 .small {
-    width: 389px;
     padding: 12px 24px 12px 24px;
     font-size: 20px;
-
 }
 
 .medium {
@@ -102,43 +78,10 @@
     font-size: 20px;
 }
 
-// Варианты
-._primary {
-    &:focus {}
-}
-
-._secondary {
-    &:focus {}
-}
-
-._ghost {
-
-    &:hover:not(:disabled) {}
-
-    &:focus {}
-}
-
 ._admin {
     border: 2px solid $brown-color;
 }
 
-// Иконки
-.iconLeft,
-.iconRight {}
-
-.iconLeft {}
-
-.iconRight {
-
-    &:hover {}
-}
-
-.passwordToggle {
-
-    &:hover {}
-}
-
-// Спиннер загрузки
 .spinner {
     width: 16px;
     height: 16px;
@@ -154,16 +97,22 @@
     }
 }
 
-// Сообщение об ошибке
-.errorText {}
-
-// Готово
 .label {
     display: block;
     font-size: 20px;
     color: $beige-background;
     font-family: $font-base;
-    font-weight: 600;
+    font-weight: 300;
+    margin-top: 20px;
+
+    @media (max-width: 1000px) {
+        font-size: 16px !important;
+        font-weight: 400;
+    }
+
+    @media (max-width: 600px) {
+        margin-top: 0;
+    }
 
     &_checkbox {
         font-size: 15px;
@@ -173,18 +122,15 @@
         font-size: 15px;
     }
 
-    &.labelDisabled {}
-
     &_brown {
-    color: $brown-color !important;
-
-    .requiredMark {
         color: $brown-color !important;
+
+        .requiredMark {
+            color: $brown-color !important;
+        }
     }
 }
-}
 
-// Готово
 .requiredMark {
     color: $beige-background;
     margin-left: 4px;
@@ -195,20 +141,10 @@
     }
 }
 
-// Готово
 .labelPosition-top {
     display: flex;
     flex-direction: column;
 }
-
-.labelPosition-left {
-
-    .label {}
-
-    .inputWrapper {}
-}
-
-.labelPosition-inside {}
 
 .insideLabel {
     position: absolute;

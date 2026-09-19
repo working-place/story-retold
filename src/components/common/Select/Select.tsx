@@ -198,7 +198,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     return (
         <>
             <div className={className} style={{ width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontWeight: 300 }}>
                     Выберете из списка раздел
                     {required && <span style={{ color: '#F1E6D0', marginLeft: '4px' }}>*</span>}
                 </label>
@@ -222,7 +222,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
             </div>
 
             <div className={className} style={{ width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: '8px', fontWeight: 600 }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontWeight: 300 }}>
                     Выберете из списка тип карточки
                     {required && <span style={{ color: '#F1E6D0', marginLeft: '4px' }}>*</span>}
                 </label>

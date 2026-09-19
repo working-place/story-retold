@@ -24,7 +24,7 @@
     border: 1px solid transparent;
     resize: vertical;
     font-family: $font-base;
-    font-weight: 600;
+    font-weight: 400;
 
     &::placeholder {
         font-size: 20px;
@@ -111,8 +111,6 @@
     }
 }
 
-// ========================
-
 .textarea.small {
     min-height: 120px;
     padding: 8px 16px;
@@ -142,8 +140,6 @@
     }
 }
 
-// ========================
-
 .textarea.resize-none {
     resize: none;
 }
@@ -160,8 +156,6 @@
     resize: vertical;
 }
 
-// ========================
-
 .label {
     display: block;
     font-size: 20px;
@@ -169,7 +163,7 @@
     margin-top: 15px;
     margin-bottom: 8px;
     font-family: $font-base;
-    font-weight: 600;
+    font-weight: 300;
 }
 
 .wrapper:has(.textarea._primary) .label {
@@ -188,8 +182,6 @@
     color: $beige-background !important;
 }
 
-// ========================
-
 .requiredMark {
     margin-left: 4px;
     font-size: 20px;
@@ -203,8 +195,6 @@
     color: $color-error;
 }
 
-// ========================
-
 .errorText {
     font-size: 14px;
     color: $color-error;
@@ -212,16 +202,12 @@
     display: block;
 }
 
-// ========================
-
 .bottomPanel {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 4px;
 }
-
-// ========================
 
 .counter {
     position: absolute;
@@ -238,8 +224,6 @@
         color: $color-error;
     }
 }
-
-// ========================
 
 .spinnerOverlay {
     position: absolute;
@@ -269,8 +253,6 @@
         transform: rotate(360deg);
     }
 }
-
-// ========================
 
 .labelPosition-top {
     display: flex;
@@ -330,7 +312,6 @@
         color: $brown-color;
     }
 }
-
 
 @media (max-width: 960px) {
     .textarea {

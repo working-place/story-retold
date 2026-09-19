@@ -109,7 +109,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({
                 <span className={`${styles.checkboxCustom} ${checked ? styles.checked : ''}`}>
                     {checked && (
                         <svg className={styles.checkmark} viewBox="0 0 24 24" fill="none">
-                            <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                     )}
                 </span>

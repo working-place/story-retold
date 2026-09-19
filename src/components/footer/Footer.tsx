@@ -29,7 +29,9 @@ export default function Footer() {
             </div>
 
             <div className={styles.item23}>
-                <span className={styles.tel}>+7 (342) 242-08-60</span> <br />
+                <span className={styles.tel}>+7 (342) 242-08-60</span>
+                <br />
+                <br />
                 <span className={styles.email}>DigitalMemory60@yandex.ru</span>
             </div>
 
@@ -41,7 +43,8 @@ export default function Footer() {
                     rel="noopener noreferrer"
                 >
                     Пользовательское соглашение
-                </a> <br />
+                </a>
+                <br />
                 <br />
                 <a
                     className={styles.confidence}

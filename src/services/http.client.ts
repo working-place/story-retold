@@ -83,7 +83,7 @@ export async function httpClient<T>(
       errorData.message ||
       (response.status === 401
         ? 'Ошибка авторизации'
-        : `Request failed with status ${response.status}`),
+        : `Ошибка авторизации ${response.status}`),
       response.status,
       errorData.errors
     );

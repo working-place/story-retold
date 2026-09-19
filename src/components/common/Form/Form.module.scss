@@ -1,3 +1,7 @@
+.agreementText {
+    font-size: 15px !important;
+}
+
 .form {
     display: flex;
     width: 96%;
@@ -8,6 +12,13 @@
     border-radius: 20px;
     gap: 47px;
     padding: 96px 49px 90px 49px;
+    max-width: 1920px;
+    min-width: 313px;
+
+    @media (max-width: 1680px) {
+        gap: 30px;
+        padding: 50px 30px 50px 30px;
+    }
 
     &_admin {
         background-color: $beige-soft;
@@ -24,23 +35,36 @@
         flex-direction: column;
         gap: 12px;
         width: 100%;
-        height: fit-content;
+        align-items: center;
+        margin-top: 10%;
     }
 
     &__title {
         font-size: 24px;
+
+        @media (max-width: 1000px) {
+            font-size: 20px !important;
+            font-weight: 400;
+        }
     }
 
     &__title,
     &__subtitle,
     &__titleUpload {
         display: flex;
-        width: 100%;
+        width: 90%;
         color: $beige-background;
 
         &_admin {
             color: $brown-color;
         }
+    }
+
+    &__subtitle {
+        display: flex;
+        gap: 5px;
+        text-align: center;
+        font-weight: 300 !important;
     }
 
     &__titleUpload {
@@ -55,6 +79,7 @@
         display: flex;
         flex-direction: column;
         font-size: 20px;
+        margin-bottom: 30px;
     }
 
     &__titleCard {
@@ -68,6 +93,8 @@
         flex-direction: column;
         gap: 45px;
         width: fit-content;
+        justify-content: space-between;
+        max-width: 346px;
 
         &_admin {
             padding-bottom: 62px;
@@ -76,15 +103,13 @@
     }
 
     &__uploadArea {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         width: 18vw;
-        gap: 40px;
-        padding: 36px 20px;
+        gap: 30px;
+        padding: 20px 15px;
+        max-width: 346px;
+        justify-content: center !important;
 
         img {
-            margin-top: 30px;
             width: 93px;
             height: 93px;
         }
@@ -142,10 +167,43 @@
 
         &_primary {
             height: 57%;
+
+            @media (max-width: 1280px) {
+                min-height: 1000px !important;
+            }
+
+            @media (max-width: 1000px) {
+                min-height: 800px !important;
+            }
+
+            @media (max-width: 700px) {
+                min-height: 600px !important;
+            }
+
+            @media (max-width: 500px) {
+                min-height: 400px !important;
+            }
+
+            @media (max-width: 500px) {
+                width: 263px !important;
+                height: 326px !important;
+                min-width: 0 !important;
+                min-height: 0 !important;
+                left: 50%;
+                transform: translate(-50%);
+            }
         }
 
         &_secondary {
             height: 35%;
+
+            @media (max-width: 500px) {
+                width: 263px !important;
+                min-width: 0 !important;
+                min-height: 0 !important;
+                left: 50%;
+                transform: translate(-50%);
+            }
         }
     }
 
@@ -154,7 +212,8 @@
         flex-direction: column;
         justify-content: space-between;
         width: fit-content;
-        gap: 35px;
+        gap: 30px;
+        max-width: 904px;
 
         &_admin {
             justify-content: flex-end;
@@ -162,6 +221,12 @@
             max-width: 904px;
             gap: 15px;
             padding-top: 40px;
+        }
+
+        @media (max-width: 1280px) {
+
+            min-width: 100% !important;
+            margin-top: 60px;
         }
     }
 
@@ -172,34 +237,48 @@
         padding-top: 3px;
         width: fit-content;
         gap: 30px;
+        max-width: 389px;
+
+        @media (max-width: 1300px) {
+            max-width: none;
+        }
     }
 
     &__input {
 
         &_date {
             width: 13.6vw;
+            max-width: 262px;
         }
-
 
         &_birthplace {
             width: 17.7vw;
+            max-width: 340px;
         }
 
         &_hero {
-            width: 47vw;
+            width: 36vw;
+            max-width: 904px;
         }
 
         &_user {
-            width: 22.8vw;
+            width: 17vw;
+            max-width: 439px;
         }
 
         &_email {
-            width: 22.8vw;
+            width: 17vw;
+            max-width: 439px;
         }
 
         &_additional {
             width: 20vw;
             margin-top: 2px;
+            max-width: 389px;
+
+            @media (max-width: 1280px) {
+                min-width: 100% !important;
+            }
         }
 
         &_margin {}
@@ -218,7 +297,6 @@
             display: flex;
             gap: 20px;
 
-            // здесь
             &_admin {
                 margin-top: 15px;
                 gap: 0;
@@ -276,8 +354,6 @@
 
 .button {
     background-color: $beige-background;
-    // Кнопка на бежевой заливке: текст коричневый (как остальной текст формы),
-    // глобальный Button для primary красит в белый — перекрываем.
     color: $brown-color;
     border: none;
     outline: none;
@@ -288,6 +364,7 @@
     margin-top: 11px;
 
     &_small {
+        z-index: 1000;
         font-size: 20px;
         background-color: $beige-background;
         color: $brown-color;
@@ -296,6 +373,26 @@
         border-radius: 16px;
         padding: 12px 24px;
         width: fit-content;
+        margin-top: 20px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        bottom: 1%;
+
+        position: absolute;
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 24px;
+        width: fit-content;
+        min-width: 163px;
+        justify-content: center;
+
+        &_position {
+            @media (max-width: 1280px) {
+                bottom: -100px;
+                width: 100% !important;
+                margin-top: 0;
+            }
+        }
     }
 
     &_admin {
@@ -342,38 +439,88 @@
     margin-left: 15px;
 }
 
-// ==================================================
-
 .previewContainer {
     display: flex;
+    position: relative;
+    align-items: flex-end;
     flex-direction: column;
-    align-items: center;
     gap: 16px;
     width: 100%;
     height: 100%;
+
+    @media (max-width: 1280px) {
+        min-height: 1000px !important;
+    }
+
+    @media (max-width: 1000px) {
+        min-height: 800px !important;
+    }
+
+    @media (max-width: 700px) {
+        min-height: 600px !important;
+    }
+
+    @media (max-width: 500px) {
+        min-height: 400px !important;
+    }
+
+    @media (max-width: 500px) {
+        width: 263px !important;
+        height: 326px !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+    }
 }
 
 .previewImageWrapper {
     position: relative;
     display: inline-block;
     width: 100%;
-    height: 100%;
-    margin-top: -66px;
-    margin-bottom: -36px;
+    height: 105%;
+    margin-bottom: -40px;
 }
 
 .previewImage {
+    display: flex;
+    width: 100%;
     min-width: calc(100% + 40px);
-    min-height: calc(100% + 72px);
+    min-height: 105%;
     margin-left: -20px;
     object-fit: cover;
     border-radius: 12px;
+
+    @media (max-width: 1920px) {
+        min-width: 100%;
+        margin-left: 0;
+    }
+
+    @media (max-width: 1280px) {
+        min-height: 1000px !important;
+    }
+
+    @media (max-width: 1000px) {
+        min-height: 800px !important;
+    }
+
+    @media (max-width: 700px) {
+        min-height: 600px !important;
+    }
+
+    @media (max-width: 500px) {
+        min-height: 400px !important;
+    }
+
+    @media (max-width: 500px) {
+        width: 263px !important;
+        height: 326px !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+    }
 }
 
 .removeAdditionalImageButton,
 .removeImageButton {
     position: absolute;
-
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -393,117 +540,117 @@
 }
 
 .removeImageButton {
-    top: 35px;
+    top: 15px;
     right: -10px;
+    color: $brown-color;
+    font-size: 35px;
+
+    @media (max-width: 1920px) {
+        top: 15px;
+        right: 15px;
+    }
+
+    @media (max-width: 1280px) {
+        font-size: 35px !important;
+    }
 }
 
 .removeAdditionalImageButton {
-background-color: $brown-color;
-// padding-bottom: 9px;
-    top: 23px;
-    right: -5px;
+    background-color: $brown-color;
+    top: 20px;
+    right: -10px;
+
+    @media (min-width: 1920px) {
+        top: -10px;
+        right: -10px;
+    }
+
+    @media (max-width: 1920px) {
+        top: -8px;
+        right: -11px;
+    }
+
+    @media (max-width: 1280px) {
+        top: -5px;
+        right: -5px;
+        font-size: 35px !important;
+    }
+
+    &_light {
+        background-color: #F1E6D0;
+        color: $brown-color;
+    }
 }
 
-
-// ======================================
-
-// Галерея дополнительных изображений (сетка 3x3)
 .additionalImagesGrid {
     position: absolute;
-    top: -30px;
-  display: grid;
-  grid-template-columns: repeat(3, 106px);
-  gap: 16px;
-  justify-content: center;
-padding-bottom: 30px;
+    top: -5px;
+    display: grid;
+    grid-template-columns: repeat(4, 75px);
+    gap: 16px;
+    justify-content: center;
+    padding-bottom: 30px;
+    height: 105%;
+    background-color: $brown-color;
+    box-sizing: content-box;
 
-height: 100%;
+    @media (max-width: 1850px) {
+        grid-template-columns: repeat(3, 75px);
+        width: 101%;
+    }
+
+    @media (max-width: 600px) {
+        gap: 6px;
+        background-color: transparent;
+        margin-top: -20px;
+    }
+}
+
+.additionalImagesButtonRow {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    margin-top: 4px;
+    height: fit-content;
 }
 
 .additionalImageItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    max-height: fit-content;
 }
 
 .additionalImageWrapper {
-  position: relative;
-  width: 106px;
-  height: 133px;
+    position: relative;
+    width: 75px;
+    height: 97px;
+
+    @media (max-width: 1300px) {
+        width: 84px;
+        height: 105px;
+        min-width: 80px;
+        min-height: 100px;
+    }
 }
 
 .additionalImagePreview {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid $beige-muted;
-  background-color: $beige-warm;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid $beige-muted;
+    background-color: $beige-warm;
 
+    @media (max-width: 1300px) {
+        width: 100% !important;
+        height: 100% !important;
+    }
 }
 
-// .removeAdditionalImageButton {
-//   position: absolute;
-//   top: -8px;
-//   right: -8px;
-//   width: 22px;
-//   height: 22px;
-//   border-radius: 50%;
-//   background-color: #ff4444;
-//   color: white;
-//   border: none;
-//   font-size: 16px;
-//   font-weight: bold;
-//   cursor: pointer;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   transition: background-color 0.2s;
-
-//   &:hover {
-//     background-color: #cc0000;
-//   }
-// }
-
-// .additionalImageName {
-//   font-size: 11px;
-//   color: #534035;
-//   text-align: center;
-//   max-width: 106px;
-//   overflow: hidden;
-//   text-overflow: ellipsis;
-//   white-space: nowrap;
-// }
-
-// ==================================================
-//  АДАПТИВ
-//  1920px — desktop-вёрстка остаётся «as is» (правила выше).
-//  Планшеты / ноутбуки (768–1919) — плавное масштабирование:
-//    разрешаем перенос колонок формы, ужимаем padding/gap, чтобы
-//    vw-ширины полей не ломали вёрстку. Идея позиционирования та же.
-//  Мобайл (≤767) — вертикальный макет: всё в столбик, поля на всю
-//    ширину, upload-зоны стопкой.
-// ==================================================
-
-// ----------------------------------------------------
-//  ПЛАНШЕТЫ / НОУТБУКИ (768–1919)
-//  Макет максимально близок к ПК: 3 колонки остаются в ряд
-//  (переноса самих колонок нет). Все фиксированные px-отступы
-//  переведены в пропорциональные vw-эквиваленты через clamp() —
-//  на 1920px computed-значения те же, а ниже весь макет
-//  масштабируется синхронно с vw-полями.
-//
-//  Release-клапаны (только ниже 1920, на десктопе as-is):
-//   • min-width: 0 у колонок — flex может сжимать их синхронно;
-//   • перенос текста кнопки submit (иначе её nowrap фиксирует
-//     min-ширину 3-й колонки на ~318px);
-//   • flex-wrap у строки из 3 дат/место-рождения — на узких
-//     экранах поля переходят на 2-ю строку, не разрывая макет.
-// ----------------------------------------------------
 @include respond-below($breakpoint-xxxl) {
     .form {
-        // 3 колонки остаются в ряд
         gap: clamp(20px, 2.45vw, 47px);
         padding: clamp(40px, 5vw, 96px) clamp(20px, 2.55vw, 49px) clamp(40px, 4.69vw, 90px);
         margin-top: clamp(32px, 3.91vw, 75px);
@@ -515,11 +662,9 @@ height: 100%;
             min-width: 0;
         }
 
-        // Пропорции колонок как на ПК (1920px → 21% / 55% / 24%):
-        // фиксируем через flex-basis, чтобы при сужении экрана колонки
-        // сжимались синхронно и макет оставался похожим на десктоп.
         &__upload {
             flex: 0 1 21%;
+            gap: clamp(20px, 2.34vw, 45px);
         }
 
         &__basicInformation {
@@ -530,21 +675,21 @@ height: 100%;
             flex: 0 1 24%;
         }
 
-        // Внутренние отступы/gap секций — vw-эквиваленты
-        &__upload {
-            gap: clamp(20px, 2.34vw, 45px);
-        }
-
         &__uploadArea {
-            // ниже 1920 зона подстраивается под ширину своей колонки,
-            // а не держит фикс. 18vw (иначе вылезает за узкий flex-блок)
             width: 100%;
             max-width: 100%;
             gap: clamp(16px, 2.08vw, 40px);
-            padding: clamp(18px, 1.88vw, 36px) clamp(12px, 1.04vw, 20px);
+
+            @media (max-width: 1920px) {
+                padding: 0;
+            }
 
             img {
                 margin-top: clamp(12px, 1.56vw, 30px);
+
+                @media (max-width: 1920px) {
+                    margin-top: 0;
+                }
             }
         }
 
@@ -556,7 +701,6 @@ height: 100%;
             gap: clamp(14px, 1.56vw, 30px);
         }
 
-        // Строка «даты + место рождения» — на узких переносится на 2 строки
         &__wrapper_firstLine {
             flex-wrap: wrap;
             gap: clamp(10px, 1.04vw, 20px);
@@ -573,25 +717,16 @@ height: 100%;
         }
     }
 
-    // Кнопка submit: разрешаем перенос текста, чтобы не фиксировать
-    // min-ширину колонки «Дополнительные сведения».
     .button {
         white-space: normal;
         text-align: center;
     }
 }
 
-// ----------------------------------------------------
-//  МОБАЙЛ-РАСКЛАДКА ФОРМЫ (≤1279)
-//  Вертикальный стек включается уже ниже 1280px (не 768):
-//  на ноутбуках-планшетах 3 колонки уже не помещаются.
-// ----------------------------------------------------
 @include respond-below($breakpoint-xl) {
     .form {
         display: flex;
         flex-direction: column;
-        // По мобильному макету (375px): панель формы не впритык к краям —
-        // боковые поля ~33px с каждой стороны (форма от x=33 до x=342).
         width: calc(100% - 66px);
         min-height: auto;
         margin: 32px auto 0;
@@ -599,15 +734,12 @@ height: 100%;
         padding: 28px 24px;
         border-radius: 16px;
 
-        // Гасим flex-пропорции колонок из планшетного блока (≤1919):
-        // в вертикальном стеке колонки просто тянутся на всю ширину.
         &__upload,
         &__basicInformation,
         &__additionalInformation {
             flex: 0 0 auto;
         }
 
-        // ---- Заголовки секций ----
         &__title {
             font-size: 22px;
         }
@@ -618,38 +750,32 @@ height: 100%;
             text-align: center;
         }
 
-        &__subtitle {
+        &__subtitleLine {
             font-size: 13px;
             text-align: center;
+            font-weight: 400 !important;
+
+            &_small {
+                font-size: 11px;
+            }
         }
 
-        &__titleWrapper {
-            gap: 8px;
-        }
-
-        // Secondary-зона: заголовок+подзаголовок ровно по центру оси Y зоны
-        // (абсолютное центрирование — не в свободном пространстве над кнопкой),
-        // кнопка «Выбрать файлы» прижата к низу.
-        &__titleWrapper_secondary {
-            position: absolute;
-            top: 50%;
-            left: 16px;
-            right: 16px;
-            transform: translateY(-50%);
-        }
-
-        // ---- Блок загрузки фото ----
         &__upload {
             flex-direction: column;
             width: 100%;
             gap: 24px;
             align-items: stretch;
+            max-width: none;
         }
 
         &__uploadArea {
             width: 100%;
             gap: 20px;
-            padding: 24px 16px;
+            justify-content: space-around;
+
+            @media (max-width: 600px) {
+                padding: 0 10px 20px !important;
+            }
 
             img {
                 margin-top: 8px;
@@ -657,39 +783,36 @@ height: 100%;
                 height: 56px;
             }
 
-            // По макету обе зоны загрузки заметно выше (~275px при 375px)
             &_primary {
                 height: auto;
                 min-height: 275px;
                 justify-content: space-between;
             }
 
-            // В secondary: текст — абсолютный центр оси Y (см. titleWrapper_secondary),
-            // в потоке остаётся только кнопка «Выбрать файлы» — прижата к низу.
             &_secondary {
                 height: auto;
                 min-height: 270px;
-                justify-content: flex-end;
             }
         }
 
-        // ---- Основные сведения ----
         &__basicInformation {
             width: 100%;
             gap: 20px;
         }
 
-        &__wrapper_firstLine,
-        &__wrapper_secondLine,
-        &__wrapper_thirdLine,
-        &__wrapper_fourthLine {
-            flex-direction: column;
-            width: 100%;
-            margin-top: 0;
-            gap: 16px;
+        &__wrapper {
+
+            &_firstLine,
+            &_secondLine,
+            &_thirdLine,
+            &_fourthLine {
+                flex-direction: column;
+                width: 100%;
+                margin-top: 0;
+                gap: 16px;
+            }
         }
 
-        // ---- Дополнительные сведения ----
         &__additionalInformation {
             width: 100%;
             gap: 20px;
@@ -702,26 +825,59 @@ height: 100%;
             gap: 16px;
         }
 
-        // Сброс фикс. vw-размеров полей — на мобиле всё во всю ширину
-        &__input_date,
-        &__input_birthplace,
-        &__input_hero,
-        &__input_user,
-        &__input_email,
-        &__input_additional {
-            width: 100%;
-            margin-top: 0;
+        &__input {
+
+            &_date,
+            &_birthplace,
+            &_hero,
+            &_user,
+            &_email,
+            &_additional {
+                width: 100%;
+                margin-top: 0;
+                max-width: none;
+            }
+
+            @media (max-width: 1300px) {
+                &_date {
+                    width: 100%;
+                    max-width: 1165px;
+                }
+
+                &_birthplace {
+                    min-width: 100%;
+                    max-width: 1165px;
+                }
+
+                &_hero {
+                    width: 100vw;
+                    max-width: 1165px;
+                }
+
+                &_user {
+                    width: 100vw;
+                    max-width: 1165px;
+                }
+
+                &_email {
+                    width: 100vw;
+                    max-width: 1165px;
+                }
+
+                &_additional {
+                    width: 100vw;
+                    max-width: 1165px;
+                }
+            }
         }
     }
 
-    // ---- Select ----
     .select {
         width: 100%;
         margin-top: 0;
         font-size: 16px;
     }
 
-    // ---- Согласие / кнопка ----
     .agreementContainer {
         width: 100%;
         gap: 16px;
@@ -743,21 +899,6 @@ height: 100%;
         border-radius: 14px;
     }
 
-    .button_small {
-        width: 100%;
-        font-size: 16px;
-        padding: 12px 24px;
-    }
-
-    // В primary-зоне по макету кнопка «Выбрать файл» компактная, по центру
-    // (~163px при 375px), а не на всю ширину зоны.
-    .button_small {
-        width: fit-content;
-        min-width: 163px;
-        justify-content: center;
-    }
-
-    // ---- Превью / галерея доп. изображений ----
     .previewImageWrapper {
         margin-top: 0;
         margin-bottom: 0;
@@ -770,11 +911,17 @@ height: 100%;
     }
 
     .additionalImagesGrid {
+        display: grid;
         position: static;
         grid-template-columns: repeat(3, 1fr);
         gap: 12px;
         padding-bottom: 0;
         height: auto;
+
+        @media (max-width: 1300px) {
+            gap: 6px;
+            min-height: 100%;
+        }
     }
 
     .additionalImageWrapper {

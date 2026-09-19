@@ -9,6 +9,7 @@
     text-align: center;
     background-color: $beige-background;
     z-index: 1000;
+    max-width: 1920px;
 
     @include respond-below($breakpoint-xl) {
         padding-top: 12px;

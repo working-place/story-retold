@@ -265,7 +265,7 @@ const CustomSelectAdmin: React.FC<CustomSelectAdminProps> = ({
                     <label className="custom-select-label" style={{
                         display: 'block',
                         marginBottom: '8px',
-                        fontWeight: 600,
+                        fontWeight: 300,
                         textAlign: 'left',
                         fontSize: '20px',
                         color: '#534035'
@@ -302,7 +302,7 @@ const CustomSelectAdmin: React.FC<CustomSelectAdminProps> = ({
                     <label className="custom-select-label" style={{
                         display: 'block',
                         marginBottom: '8px',
-                        fontWeight: 600,
+                        fontWeight: 300,
                         textAlign: 'left',
                         fontSize: '20px',
                         color: '#534035'

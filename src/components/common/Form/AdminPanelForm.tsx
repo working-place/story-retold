@@ -374,7 +374,7 @@ export default function AdminPanelForm() {
                                 onBlur={() => form.handleBlur('description')}
                                 resize="none"
                                 labelPosition="top"
-                                maxLength={255}
+                                maxLength={1500}
                                 showCounter={true}
                                 required
                             />
