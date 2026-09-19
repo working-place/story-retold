@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export NVM_DIR=~/.nvm
+source ~/.nvm/nvm.sh
+
 echo "Production Deployment started "
 
 git reset --hard
