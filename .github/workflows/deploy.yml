@@ -4,6 +4,7 @@ jobs:
   build:
     name: Deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Execute remote SSH commands using password
         uses: appleboy/ssh-action@v1
