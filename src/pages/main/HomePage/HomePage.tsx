@@ -167,25 +167,28 @@ export default function HomePage() {
                     src="/curl-about.png" alt="Линия" />
             </div>
 
-
-
             <div className={styles.hero} id="hero-form">
                 <img
                     className={styles.divide_3}
                     src="/paper-deviding-main.png" alt="Разделительная линия" />
-                <h2
-                    className={styles.hero_titleForm}
-                    style={{ fontFamily: 'Glanz', fontWeight: 400 }}
-                >
-                    Расскажите о герое
-                </h2>
+
+                <div className={styles.hero_titleForm_container}>
+                    <h2
+                        className={styles.hero_titleForm}
+                        style={{ fontFamily: 'Glanz', fontWeight: 400 }}
+                    >
+                        Расскажите о герое
+                    </h2>
+                </div>
+
 
                 <div className={` ${styles.hero_titleForm_mobile_container}`}>
                     <h2
                         className={` ${styles.hero_titleForm_mobile}`}
                         style={{ fontFamily: 'Glanz', fontWeight: 400 }}
                     >
-                        Расскажите о герое
+                        <span>Расскажите</span><br />
+                        <span>о герое</span>
                     </h2>
                 </div>
 
