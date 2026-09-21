@@ -1,5 +1,5 @@
 import { useState, type KeyboardEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import PasswordChangeModal from '../../../components/auth/PasswordChangeModal';
 import styles from './LoginPage.module.scss';
@@ -56,7 +56,9 @@ export default function LoginPage() {
 
   return (
     <div className={styles.loginPage}>
+      <NavLink to="/">
       <img src="/logo.png" alt="Логотип" className={styles.logo} />
+      </NavLink>
 
       <div className={styles.panelLeft}>
         <div className={styles.loginCard}>

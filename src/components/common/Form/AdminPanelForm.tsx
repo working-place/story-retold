@@ -176,10 +176,6 @@ export default function AdminPanelForm() {
                                             </button>
                                         </div>
                                         <div className={styles.previewInfo}>
-                                            <p className={styles.previewFileName}>{form.photoHero.name}</p>
-                                            <p className={styles.previewFileSize}>
-                                                {(form.photoHero.size / 1024).toFixed(2)} KB
-                                            </p>
                                             <Button
                                                 type="button"
                                                 className={`${styles.button_small} ${styles.button_admin} ${styles.changePhotoButton}`}

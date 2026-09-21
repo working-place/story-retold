@@ -6,6 +6,7 @@
     min-height: calc(100vh - 338px);
     height: fit-content;
     background-color: $beige-background;
+    // padding-left: 30px;
     padding: clamp(16px, 3vw, 25px) clamp(16px, 3.5vw, 49px) clamp(30px, 4vw, 58px) clamp(16px, 3.5vw, 49px);
 }
 
@@ -25,13 +26,14 @@
 .textCards {
     width: 100%;
     max-width: 1756px;
+
 }
 
 .title {
     display: flex;
     flex-direction: column;
-    padding: 65px 0px 63px 0px;
     font-size: 24px;
+    padding: 65px 30px;
 
     &__path {
         display: flex;

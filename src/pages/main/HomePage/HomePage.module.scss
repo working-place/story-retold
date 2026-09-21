@@ -119,7 +119,6 @@
             text-align: left;
             color: $beige-background;
             text-transform: uppercase;
-            background-color: red;
 
             @media (max-width: 1600px) {
                 @include title-font-xl;
@@ -505,7 +504,6 @@
             text-align: right;
             color: $beige-background;
             text-transform: uppercase;
-            background-color: blue;
 
             @media (max-width: 1600px) {
                 @include title-font-xl;

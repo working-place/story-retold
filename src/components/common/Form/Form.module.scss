@@ -247,37 +247,61 @@
     &__input {
 
         &_date {
-            width: 13.6vw;
-            max-width: 262px;
+            width: 15.6vw;
+            max-width: 262px !important;
+
+            @media (max-width: 500px) {
+                min-width: 323px !important;
+            }
         }
 
         &_birthplace {
             width: 17.7vw;
-            max-width: 340px;
+            max-width: 340px !important;
+
+            @media (max-width: 500px) {
+                min-width: 323px !important;
+            }
         }
 
         &_hero {
             width: 36vw;
-            max-width: 904px;
+            max-width: 904px !important;
+
+            @media (max-width: 500px) {
+                min-width: 323px !important;
+            }
         }
 
         &_user {
             width: 17vw;
-            max-width: 439px;
+            max-width: 439px !important;
+
+            @media (max-width: 500px) {
+                min-width: 323px !important;
+            }
         }
 
         &_email {
             width: 17vw;
-            max-width: 439px;
+            max-width: 439px !important;
+
+            @media (max-width: 500px) {
+                min-width: 323px !important;
+            }
         }
 
         &_additional {
             width: 20vw;
             margin-top: 2px;
-            max-width: 389px;
+            max-width: 389px !important;
 
             @media (max-width: 1280px) {
                 min-width: 100% !important;
+            }
+
+            @media (max-width: 500px) {
+                min-width: 323px !important;
             }
         }
 

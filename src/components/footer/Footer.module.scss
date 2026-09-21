@@ -1,6 +1,7 @@
 .footer {
     display: grid;
-    grid-template-columns: auto auto auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    // grid-template-columns: auto auto auto auto auto;
     grid-template-rows: auto auto auto;
     background-color: $green-color;
     padding: 20px;
@@ -13,10 +14,13 @@
     padding-left: 23px;
     padding-right: 22px;
     padding-bottom: 30px;
-    min-height: 338px;
+    // min-height: 338px;
     position: relative;
 
     max-width: 1920px;
+    box-sizing: border-box;
+
+    height: auto;
 }
 
 .item11 {
@@ -106,7 +110,7 @@
     font-family: $font-decorative;
 }
 
-@include respond-below(1360px) {
+@include respond-below(1500px) {
     .footer {
         display: grid;
         grid-template-columns: auto 1fr;
@@ -115,6 +119,7 @@
         padding: 24px 16px;
         min-height: auto;
         align-items: start;
+        width: 100%;
     }
 
     .item11 {}
