@@ -93,6 +93,11 @@ export default function FeedBackPage() {
                         }))
                     }
                 });
+
+                if (rawHero.email) {
+                    setEmail(rawHero.email);
+                }
+
             } catch (err) {
                 setError(
                     err instanceof ApiError
