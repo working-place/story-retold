@@ -959,3 +959,15 @@
         left: 0;
     }
 }
+
+
+.errorMessage {
+    color: $color-error-strong;
+    font-size: 14px;
+}
+
+.textarea {
+    &__admin {
+        border: 2px solid $color-error;
+    }
+}

@@ -19,9 +19,6 @@ export interface CardFormData {
 }
 
 export interface CardFilesInput {
-  // browser-image-compression при useWebWorker возвращает Blob (не File),
-  // поэтому принимаем оба варианта — раньше строгая проверка instanceof File
-  // молча выбрасывала файлы из payload (поймано e2e-тестом form.real.spec.ts).
   photoHero?: File | Blob | null;
   additionalImages?: (File | Blob)[];
 }
@@ -32,8 +29,10 @@ export interface ExistingAdditionalImage {
   deleted?: boolean;
 }
 
-export const MAX_ADDITIONAL_IMAGES = 9; // Синхронизировано с UI (9 фото)
+export const MAX_ADDITIONAL_IMAGES = 9;
 export const MAX_FILE_SIZE_MB = 4;
+
+export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const EMPTY_CARD_FORM: CardFormData = {
   dateBirth: '',
@@ -47,9 +46,6 @@ export const EMPTY_CARD_FORM: CardFormData = {
   placeService: '',
   placeConscription: '',
   chapter: 'svo',
-  // Дефолт «с фото»: оба блока загрузки («Фотографии героя» и «Фотографии
-  // наград») видны сразу, как в макете. Реальный тип карточки при отправке
-  // вычисляется автоматически из наличия файла (buildCardFormData).
   cardType: 'withPhoto',
 };
 
@@ -84,6 +80,13 @@ export const getFieldError = (
     return 'Это поле обязательно для заполнения';
   }
 
+  if (key === 'email') {
+    const email = String(value ?? '').trim();
+    if (email && !EMAIL_REGEX.test(email)) {
+      return 'Введите корректный email';
+    }
+  }
+
   return undefined;
 };
 
@@ -104,6 +107,10 @@ export const validateCardForm = (
     if (!val || String(val).trim() === '') {
       return { valid: false, error: 'Пожалуйста, заполните все обязательные поля' };
     }
+  }
+
+  if (formData.email && !EMAIL_REGEX.test(formData.email)) {
+    return { valid: false, error: 'Введите корректный email' };
   }
 
   if (options.requireConsent) {

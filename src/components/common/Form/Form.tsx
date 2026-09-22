@@ -14,8 +14,6 @@ export default function NewCardForm() {
     const [loading, setLoading] = useState(false);
     const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
-    const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
 
     const form = useCardForm({ mode: 'create-public' });
 
@@ -39,13 +37,10 @@ export default function NewCardForm() {
                 setIsSuccessPopupOpen(true);
                 form.resetForm();
             } else {
-                setErrorMessage('Не удалось создать карточку. Попробуйте позже.');
-                setIsErrorPopupOpen(true);
+                form.setError('Не удалось создать карточку. Попробуйте позже.');
             }
         } catch (err) {
             const msg = err instanceof Error ? err.message : 'Произошла ошибка при создании карточки';
-            setErrorMessage(msg);
-            setIsErrorPopupOpen(true);
             form.setError(msg);
         } finally {
             setLoading(false);
@@ -56,14 +51,10 @@ export default function NewCardForm() {
         setIsSuccessPopupOpen(false);
     };
 
-    const handleErrorPopupClose = () => {
-        setIsErrorPopupOpen(false);
-        form.setError(null);
-    };
-
     return (
         <>
-            <form onSubmit={handleSubmit} className={styles.form}>
+            <form onSubmit={handleSubmit} className={styles.form} noValidate>
+
                 <div className={styles.form__upload}>
 
                     {!showPhotoBlock && (
@@ -283,12 +274,16 @@ export default function NewCardForm() {
                             errorText={form.getFieldError('nameAndClass')}
                             required
                         />
+
                         <Input
                             className={styles.form__input_email}
                             label="Почта"
                             placeholder="Почта"
                             value={form.formData.email}
                             onChange={(e) => form.handleInputChange('email', e.target.value)}
+                            onBlur={() => form.handleBlur('email')}
+                            error={!!form.getFieldError('email')}
+                            errorText={form.getFieldError('email')}
                         />
                     </div>
 
@@ -376,6 +371,9 @@ export default function NewCardForm() {
                         >
                             {loading ? 'Отправка...' : 'Отправить сведения о герое'}
                         </Button>
+                        {form.error && (
+                            <span className={styles.errorMessage}>{form.error}</span>
+                        )}
                     </div>
                 </div>
             </form>
@@ -384,12 +382,6 @@ export default function NewCardForm() {
                 isOpen={isSuccessPopupOpen}
                 onClose={handleSuccessPopupClose}
                 success={successMessage}
-            />
-
-            <SuccessPopup
-                isOpen={isErrorPopupOpen}
-                onClose={handleErrorPopupClose}
-                error={errorMessage}
             />
         </>
     );

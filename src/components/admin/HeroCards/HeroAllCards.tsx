@@ -67,8 +67,8 @@ export default function HeroAllCards({ type = 'svo', title = 'Герои СВО'
 
     if (loading) {
         return (
-            <div className={styles.info}>
-                <div className={styles.loading}>
+            <div className={styles.container}>
+                <div className={styles.wrapper}>
                     <p>Загрузка...</p>
                 </div>
             </div>
@@ -77,8 +77,8 @@ export default function HeroAllCards({ type = 'svo', title = 'Герои СВО'
 
     if (error) {
         return (
-            <div className={styles.info}>
-                <div className={styles.error}>
+            <div className={styles.container}>
+                <div className={styles.wrapper}>
                     <p>{error}</p>
                 </div>
             </div>

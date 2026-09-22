@@ -196,6 +196,18 @@
     padding-right: 36px;
 }
 
+.hasError {
+
+    .label,
+    .insideLabel {
+        color: $color-error-strong;
+    }
+
+    .requiredMark {
+    color: $color-error-strong;
+}
+}
+
 .checkbox {
     width: 20px;
     height: 20px;
