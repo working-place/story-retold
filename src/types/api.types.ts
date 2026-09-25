@@ -106,7 +106,7 @@ export interface CardResponse {
   consent: boolean;
   privacyPolicy: boolean;
   published: boolean;
-  created_at: string;
+  createdAt: string;
   updated_at: string;
   photoHero: CardImage | null;
   additionalCardImages: CardImage[];

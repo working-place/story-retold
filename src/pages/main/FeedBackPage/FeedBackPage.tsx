@@ -82,13 +82,13 @@ export default function FeedBackPage() {
                         chapter: rawHero.chapter,
                         photoHero: photoHeroUrl,
                         published: rawHero.published,
-                        createdAt: rawHero.created_at,
+                        createdAt: rawHero.createdAt,
                         updatedAt: rawHero.updated_at,
                         additionalCardImages: (rawHero.additionalCardImages || []).map((img) => ({
                             id: img.id,
                             card_id: rawHero.id,
                             image: img.image || '',
-                            created_at: rawHero.created_at,
+                            createdAt: rawHero.createdAt,
                             updated_at: rawHero.updated_at,
                         }))
                     }

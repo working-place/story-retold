@@ -53,7 +53,7 @@ export default function ReviewCard({
                                     Автор: {card.nameAndClass || 'не указан'}
                                 </span>
                                 <span className={styles.reviewCard__date}>
-                                    Дата: {formatDate(card.createdAt)}
+                                    Дата: {formatDate(card.createdAt) || 'дата не указана'}
                                 </span>
                             </div>
                         </div>

@@ -34,13 +34,13 @@ function transformCardToHero(card: CardResponse): Hero {
     chapter: card.chapter,
     photoHero: photoHeroUrl,
     published: card.published,
-    createdAt: card.created_at,
+    createdAt: card.createdAt,
     updatedAt: card.updated_at,
     additionalCardImages: (card.additionalCardImages || []).map((img) => ({
       id: img.id,
       card_id: card.id,
       image: img.image ?? '/fallback-img.png',
-      created_at: card.created_at,
+      createdAt: card.createdAt,
       updated_at: card.updated_at,
     })),
   };

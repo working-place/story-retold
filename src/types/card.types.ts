@@ -2,7 +2,7 @@ export interface AdditionalCardImages {
     id: number;
     card_id: number;
     image: string;
-    created_at: string;
+    createdAt: string;
     updated_at: string;
 }
 
@@ -42,6 +42,7 @@ export interface Hero {
     nameAndClass: string;
     additionalImages: string[];
     cardData?: CardData;
+    createdAt?: string;
 }
 
 export interface HeroesPageProps {
