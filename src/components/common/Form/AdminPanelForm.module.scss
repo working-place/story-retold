@@ -19,8 +19,6 @@
 .form {
     display: flex;
     flex-direction: column;
-    width: 79vw;
-    max-width: 1531px;
     min-height: 935px;
     height: fit-content;
     background-color: $brown-color;
@@ -105,7 +103,14 @@
         gap: 20px;
         height: fit-content;
 
-        img {
+        &_filled,
+        &_filled.form__uploadArea_primary,
+        &_filled.form__uploadArea_secondary,
+        &_filled.form__uploadArea_admin {
+            background: none !important;
+        }
+
+        img:not(.previewImage):not(.additionalImagePreview) {
             width: 93px;
             height: 93px;
         }
@@ -126,7 +131,8 @@
                 linear-gradient(90deg, $beige-background 50%, transparent 50%),
                 linear-gradient(180deg, $beige-background 50%, transparent 50%),
                 linear-gradient(180deg, $beige-background 50%, transparent 50%);
-            height: 57%;
+            height: auto;
+            min-height: 0;
         }
 
         &_secondary {
@@ -137,7 +143,8 @@
                 linear-gradient(90deg, $beige-background 50%, transparent 50%),
                 linear-gradient(180deg, $beige-background 50%, transparent 50%),
                 linear-gradient(180deg, $beige-background 50%, transparent 50%);
-            height: fit-content;
+            height: auto;
+            min-height: 0;
         }
 
         &_admin {
@@ -147,19 +154,12 @@
                 linear-gradient(180deg, $brown-color 50%, transparent 50%),
                 linear-gradient(180deg, $brown-color 50%, transparent 50%);
         }
-
-        &_adminHeightFirst {
-            max-height: 429px;
-        }
-
-        &_adminHeightSecond {}
     }
 
     &__basicInformation {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        width: fit-content;
         gap: 35px;
 
         &_admin {
@@ -299,6 +299,21 @@
     }
 }
 
+.additionalImagesButtonRow {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 12px;
+
+    .button_static {
+        position: static;
+        transform: none;
+        margin-top: 0;
+        margin-bottom: 0;
+        width: fit-content;
+    }
+}
+
 .publishButton,
 .reviewButton {
     font-size: 20px;
@@ -326,34 +341,46 @@
     align-items: center;
     gap: 16px;
     width: 100%;
-    height: 100%;
+    height: fit-content;
+    min-height: 0;
 }
 
 .previewImageWrapper {
     position: relative;
-    display: inline-block;
     width: 100%;
-    height: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 12px;
+    overflow: hidden;
+    flex: 0 0 auto;
+
+    .changePhotoButton {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        z-index: 2;
+        min-width: 163px;
+        width: auto;
+    }
 }
 
 .previewImage {
-    min-width: 100%;
-    min-height: calc(100% + 102px);
-    margin-bottom: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 12px;
-    margin-top: 0px;
-    height: 100%;
 }
 
 .removeImageButton {
-    top: -5px;
-    right: -5px;
+    top: 10px;
+    right: 10px;
 }
 
 .removeAdditionalImageButton {
-    top: -5px;
-    right: -5px;
+    top: 5px;
+    right: 5px;
 }
 
 .removeImageButton,
@@ -380,10 +407,11 @@
 
 .additionalImagesGrid {
     display: grid;
-    grid-template-columns: repeat(3, 106px);
-    grid-template-rows: auto;
-    gap: 5px;
-    justify-content: center;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
     height: fit-content;
 }
 
@@ -397,13 +425,15 @@
 
 .additionalImageWrapper {
     position: relative;
-    width: 106px;
-    height: 133px;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .additionalImagePreview {
-    width: 100% !important;
-    height: 100% !important;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 8px;
     border: 1px solid $beige-muted;
@@ -560,11 +590,9 @@
         height: fit-content;
     }
 
-    .additionalImageItem {
-        padding: 0;
-    }
-
     .additionalImagePreview {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         border-radius: 8px;
         border: 1px solid $beige-muted;
@@ -575,21 +603,6 @@
         gap: 51px;
         width: fit-content;
         align-items: flex-start;
-    }
-
-    .previewImage {
-        min-width: 100%;
-        min-height: 250px;
-        margin-bottom: 0;
-        object-fit: cover;
-        border-radius: 12px;
-        margin-top: 0px;
-    }
-
-    .previewInfo {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
     }
 }
 
@@ -642,10 +655,6 @@
 
         &__uploadArea {
             flex-grow: 1;
-
-            &_secondary {
-                min-height: 250px;
-            }
         }
     }
 
@@ -678,11 +687,6 @@
         right: 0px;
         font-size: 23px !important;
         font-weight: 400 !important;
-    }
-
-    .previewImage {
-        width: fit-content;
-        object-fit: contain;
     }
 
     .form {
@@ -736,11 +740,6 @@
         grid-template-columns: repeat(3, 30%);
         grid-template-rows: auto;
         gap: 10px;
-    }
-
-    .additionalImageWrapper {
-        width: 84px;
-        height: 105px;
     }
 
     .removeAdditionalImageButton {

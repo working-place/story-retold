@@ -11,7 +11,6 @@ import { IconSVOMobile } from "../../../assets/images/icons/IconSVOMobile";
 import { IconNewCardMobile } from "../../../assets/images/icons/IconNewCardMobile";
 
 import { useState } from "react";
-import Footer from "../../footer/Footer";
 
 export default function AdminLayout() {
 
@@ -114,7 +113,6 @@ export default function AdminLayout() {
           <Outlet />
         </main>
       </div>
-      <Footer />
     </>
   );
 }

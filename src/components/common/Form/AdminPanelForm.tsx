@@ -128,8 +128,9 @@ export default function AdminPanelForm() {
                     <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
 
                         {!showPhotoBlock && (
+
                             <div
-                                className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}
+                                className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst} ${form.photoHero ? styles.form__uploadArea_filled : ''}`}
                             >
                                 {!form.photoHero ? (
                                     <>
@@ -174,8 +175,6 @@ export default function AdminPanelForm() {
                                             >
                                                 ×
                                             </button>
-                                        </div>
-                                        <div className={styles.previewInfo}>
                                             <Button
                                                 type="button"
                                                 className={`${styles.button_small} ${styles.button_admin} ${styles.changePhotoButton}`}
@@ -183,23 +182,23 @@ export default function AdminPanelForm() {
                                             >
                                                 Заменить фото
                                             </Button>
+                                            <input
+                                                type="file"
+                                                id="photoHero"
+                                                accept="image/png,image/jpeg,image/jpg,image/webp"
+                                                onChange={form.handlePhotoHeroChange}
+                                                style={{ display: 'none' }}
+                                            />
                                         </div>
-                                        <input
-                                            type="file"
-                                            id="photoHero"
-                                            accept="image/png,image/jpeg,image/jpg,image/webp"
-                                            onChange={form.handlePhotoHeroChange}
-                                            style={{ display: 'none' }}
-                                        />
                                     </div>
                                 )}
                             </div>
                         )}
 
                         <div
-                            className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightSecond}`}
+                            className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightSecond} ${form.additionalImages.length > 0 ? styles.form__uploadArea_filled : ''}`}
                         >
-                            {totalImagesCount <= 3 && (
+                            {totalImagesCount <= 0 && (
                                 <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
                                     <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
                                         Фотографии наград и другие материалы
@@ -246,14 +245,16 @@ export default function AdminPanelForm() {
                             />
 
                             {form.additionalImages.length < 9 && (
-                                <Button
-                                    type="button"
-                                    className={`${styles.button_small} ${styles.button_admin}`}
-                                    onClick={() => document.getElementById('additionalImages')?.click()}
-                                    disabled={form.isCompressing}
-                                >
-                                    Выбрать файлы ({form.additionalImages.length}/9)
-                                </Button>
+                                <div className={styles.additionalImagesButtonRow}>
+                                    <Button
+                                        type="button"
+                                        className={`${styles.button_small} ${styles.button_admin} ${styles.button_static}`}
+                                        onClick={() => document.getElementById('additionalImages')?.click()}
+                                        disabled={form.isCompressing}
+                                    >
+                                        Выбрать файлы ({form.additionalImages.length}/9)
+                                    </Button>
+                                </div>
                             )}
                         </div>
                     </div>

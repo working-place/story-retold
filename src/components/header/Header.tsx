@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-     const navigate = useNavigate();
-     const location = useLocation();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         if (isMenuOpen) {
@@ -19,7 +19,7 @@ export default function Header() {
         };
     }, [isMenuOpen]);
 
-     const scrollToForm = () => {
+    const scrollToForm = () => {
         closeMenu();
         const el = document.getElementById('hero-form');
         if (el) {
@@ -29,7 +29,7 @@ export default function Header() {
         }
     };
 
-        useEffect(() => {
+    useEffect(() => {
         if (location.hash === '#hero-form') {
             const el = document.getElementById('hero-form');
             if (el) {

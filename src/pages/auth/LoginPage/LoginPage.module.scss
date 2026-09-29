@@ -2,23 +2,22 @@
   display: flex;
   min-height: 100vh;
   background-color: $beige-warm;
-  position: relative; /* Чтобы логотип позиционировался относительно всей страницы */
+  position: relative;
+  min-width: 100vw;
 }
 
-/* Логотип в левом верхнем углу */
 .logo {
   position: absolute;
   top: 30px;
   left: 30px;
-  width: 80px; /* Подберите размер под ваш макет */
+  width: 80px;
   z-index: 10;
 
-    @include respond-below($breakpoint-md) {
+  @include respond-below($breakpoint-md) {
     display: none;
-    }
+  }
 }
 
-/* Левая панель (Форма) */
 .panelLeft {
   flex: 1;
   display: flex;
@@ -52,13 +51,13 @@
   font-weight: 400;
   text-align: center;
 
-    @include respond-below($breakpoint-md) {
+  @include respond-below($breakpoint-md) {
     font-size: 28px;
-    }
+  }
 
-    @include respond-below($breakpoint-sm) {
+  @include respond-below($breakpoint-sm) {
     font-size: 18px;
-    }
+  }
 }
 
 .welcomeText {
@@ -69,16 +68,16 @@
   margin-bottom: 32px;
   color: $dark-text;
 
-    @include respond-below($breakpoint-md) {
+  @include respond-below($breakpoint-md) {
     font-size: 20px;
-    }
+  }
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  align-items: center; /* <--- ДОБАВЛЕНО: центрирует ссылку, не влияя на ширину инпутов */
+  align-items: center;
 }
 
 .input {
@@ -143,10 +142,8 @@
   }
 }
 
-/* Правая панель (Фон-декорация) */
 .panelRight {
   flex: 1;
-  /* Подключаем десктопный фон */
   background-image: url('/auth_background.webp');
   background-color: $beige-soft;
   background-size: contain;
@@ -154,10 +151,9 @@
   background-repeat: no-repeat;
 }
 
-/* Адаптив для планшетов и мобильных */
 @include respond-below($breakpoint-lg) {
   .panelRight {
-    display: none; /* Прячем правую панель на малых экранах */
+    display: none;
   }
 
   .panelLeft {
@@ -167,7 +163,6 @@
 
 @include respond-below($breakpoint-md) {
   .loginPage {
-    /* На мобильном мобильная картинка становится фоном всей страницы */
     background-image: url('/auth_background_mobile.webp');
     background-size: cover;
     background-position: center;
@@ -175,19 +170,19 @@
   }
 
   .logo {
-    width: 60px; /* Чуть уменьшаем лого на мобильных */
+    width: 60px;
     top: 20px;
     left: 20px;
   }
 
   .panelLeft {
-    background-color: transparent; /* Убираем бежевый фон, делаем его полупрозрачным для эффекта блюра */
+    background-color: transparent;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     padding: 20px;
   }
 
   .input {
-    background: rgba(255, 255, 255, 0.9); /* Слегка прозрачные инпуты */
+    background: rgba(255, 255, 255, 0.9);
   }
 }

@@ -239,7 +239,7 @@ export default function AdminEditForm() {
 
                     <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
 
-                        {showPhotoBlock && (
+                        {/* {showPhotoBlock && (
                             <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}>
                                 {!form.photoHero && !form.existingPhotoHero ? (
                                     <>
@@ -316,9 +316,83 @@ export default function AdminEditForm() {
                                     </div>
                                 )}
                             </div>
+                        )} */}
+
+                        {showPhotoBlock && (
+                            <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst} ${(form.photoHero || form.existingPhotoHero) ? styles.form__uploadArea_filled : ''}`}>
+                                {!form.photoHero && !form.existingPhotoHero ? (
+                                    <>
+                                        <img src="/image-download-brown.png" alt="Загрузить" />
+                                        <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
+                                            <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
+                                                Фотографии героя
+                                            </h3>
+                                            <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
+                                                Максимальный размер файла 4 MB
+                                            </h4>
+                                        </div>
+                                        <input
+                                            type="file"
+                                            id="photoHero"
+                                            accept="image/png,image/jpeg,image/jpg,image/webp"
+                                            onChange={form.handlePhotoHeroChange}
+                                            style={{ display: 'none' }}
+                                        />
+                                        <Button
+                                            type="button"
+                                            className={`${styles.button_small} ${styles.button_admin}`}
+                                            onClick={() => document.getElementById('photoHero')?.click()}
+                                            disabled={form.isCompressing}
+                                        >
+                                            Выбрать файл
+                                        </Button>
+                                    </>
+                                ) : (
+                                    <div className={styles.previewContainer}>
+                                        <div className={styles.previewImageWrapper}>
+                                            <img
+                                                src={getHeroImageUrl()}
+                                                alt="Превью фото героя"
+                                                className={styles.previewImage}
+                                                onError={(e) => {
+                                                    console.error('❌ Ошибка загрузки фото:', e);
+                                                    e.currentTarget.src = '/404_pic_mob.webp';
+                                                }}
+                                            />
+                                            <button
+                                                type="button"
+                                                className={styles.removeImageButton}
+                                                onClick={() => {
+                                                    form.setPhotoHero(null);
+                                                    form.setExistingPhotoHero(null);
+                                                    form.handleCardTypeChange('withoutPhoto');
+                                                }}
+                                                aria-label="Удалить фото"
+                                            >
+                                                ×
+                                            </button>
+                                            <Button
+                                                type="button"
+                                                className={`${styles.button_small} ${styles.button_admin} ${styles.changePhotoButton}`}
+                                                onClick={() => document.getElementById('photoHero')?.click()}
+                                                disabled={form.isCompressing}
+                                            >
+                                                Заменить фото
+                                            </Button>
+                                            <input
+                                                type="file"
+                                                id="photoHero"
+                                                accept="image/png,image/jpeg,image/jpg,image/webp"
+                                                onChange={form.handlePhotoHeroChange}
+                                                style={{ display: 'none' }}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         )}
 
-                        <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightSecond}`}>
+                        <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightSecond} ${totalImagesCount > 0 ? styles.form__uploadArea_filled : ''}`}>
                             {totalImagesCount < 1 && (
                                 <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
                                     <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
@@ -402,19 +476,19 @@ export default function AdminEditForm() {
                             />
 
                             {totalImagesCount < 9 && (
-                                <Button
-                                    type="button"
-                                    className={`${styles.button_small} ${styles.button_admin}`}
-                                    onClick={() => document.getElementById('additionalImages')?.click()}
-                                    disabled={form.isCompressing}
-                                >
-                                    Выбрать файлы ({totalImagesCount}/9)
-                                </Button>
+                                <div className={styles.additionalImagesButtonRow}>
+                                    <Button
+                                        type="button"
+                                        className={`${styles.button_small} ${styles.button_admin} ${styles.button_static}`}
+                                        onClick={() => document.getElementById('additionalImages')?.click()}
+                                        disabled={form.isCompressing}
+                                    >
+                                        Выбрать файлы ({totalImagesCount}/9)
+                                    </Button>
+                                </div>
                             )}
                         </div>
                     </div>
-
-                    {/* ============ */}
 
                     <div className={`${styles.form__basicInformation} ${styles.form__basicInformation_admin}`}>
                         <div className={`${styles.form__wrapper_secondLine} ${styles.form__wrapper_admin}`}>

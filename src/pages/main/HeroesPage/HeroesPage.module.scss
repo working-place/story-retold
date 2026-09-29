@@ -2,11 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 100vw;
     min-height: calc(100vh - 338px);
     height: fit-content;
     background-color: $beige-background;
-    // padding-left: 30px;
     padding: clamp(16px, 3vw, 25px) clamp(16px, 3.5vw, 49px) clamp(30px, 4vw, 58px) clamp(16px, 3.5vw, 49px);
 }
 
@@ -62,7 +61,7 @@
 }
 
 .textCards {
-    margin-top: 103px;
+    margin-top: 6px;
     padding-top: 47px;
     padding-bottom: 47px;
 }

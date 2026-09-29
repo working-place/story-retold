@@ -58,7 +58,7 @@ export default function NewCardForm() {
                 <div className={styles.form__upload}>
 
                     {!showPhotoBlock && (
-                        <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary}`}>
+                        <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${form.photoHero ? styles.form__uploadArea_filled : ''}`}>
 
                             {!form.photoHero ? (
                                 <>
@@ -93,11 +93,7 @@ export default function NewCardForm() {
                             ) : (
                                 <div className={styles.previewContainer}>
                                     <div className={styles.previewImageWrapper}>
-                                        <img
-                                            src={photoHeroUrl}
-                                            alt="Превью фото героя"
-                                            className={styles.previewImage}
-                                        />
+                                        <img src={photoHeroUrl} alt="Превью фото героя" className={styles.previewImage} />
                                         <button
                                             type="button"
                                             className={styles.removeImageButton}
@@ -106,8 +102,6 @@ export default function NewCardForm() {
                                         >
                                             ×
                                         </button>
-                                    </div>
-                                    <div className={styles.previewInfo}>
                                         <Button
                                             type="button"
                                             className={`${styles.button_small} ${styles.changePhotoButton}`}
@@ -115,20 +109,20 @@ export default function NewCardForm() {
                                         >
                                             Заменить фото
                                         </Button>
+                                        <input
+                                            type="file"
+                                            id="photoHero"
+                                            accept="image/png,image/jpeg,image/jpg,image/webp"
+                                            onChange={form.handlePhotoHeroChange}
+                                            style={{ display: 'none' }}
+                                        />
                                     </div>
-                                    <input
-                                        type="file"
-                                        id="photoHero"
-                                        accept="image/png,image/jpeg,image/jpg,image/webp"
-                                        onChange={form.handlePhotoHeroChange}
-                                        style={{ display: 'none' }}
-                                    />
                                 </div>
                             )}
                         </div>
                     )}
 
-                    <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary}`}>
+                    <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${form.additionalImages.length > 0 ? styles.form__uploadArea_filled : ''}`}>
                         <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
 
 
@@ -167,35 +161,37 @@ export default function NewCardForm() {
                         />
 
                         {form.additionalImages.length > 0 && (
-                            <div className={styles.additionalImagesGrid}>
-                                {form.additionalImages.map((file, index) => (
-                                    <div
-                                        key={`${file.name}-${file.size}-${index}`}
-                                        className={styles.additionalImageItem}
-                                    >
-                                        <div className={styles.additionalImageWrapper}>
-                                            <img
-                                                src={URL.createObjectURL(file)}
-                                                alt={`Дополнительное фото ${index + 1}`}
-                                                className={styles.additionalImagePreview}
-                                            />
-                                            <button
-                                                type="button"
-                                                className={`${styles.removeAdditionalImageButton} ${styles.removeAdditionalImageButton_light}`}
-                                                onClick={() => form.removeAdditionalImage(index)}
-                                                aria-label="Удалить фото"
-                                            >
-                                                ×
-                                            </button>
+                            <>
+                                <div className={styles.additionalImagesGrid}>
+                                    {form.additionalImages.map((file, index) => (
+                                        <div
+                                            key={`${file.name}-${file.size}-${index}`}
+                                            className={styles.additionalImageItem}
+                                        >
+                                            <div className={styles.additionalImageWrapper}>
+                                                <img
+                                                    src={URL.createObjectURL(file)}
+                                                    alt={`Дополнительное фото ${index + 1}`}
+                                                    className={styles.additionalImagePreview}
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className={`${styles.removeAdditionalImageButton} ${styles.removeAdditionalImageButton_light}`}
+                                                    onClick={() => form.removeAdditionalImage(index)}
+                                                    aria-label="Удалить фото"
+                                                >
+                                                    ×
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
 
                                 {form.additionalImages.length < 9 && (
                                     <div className={styles.additionalImagesButtonRow}>
                                         <Button
                                             type="button"
-                                            className={`${styles.button_small} ${styles.button_small_position}`}
+                                            className={`${styles.button_small} ${styles.button_static}`}
                                             onClick={() => document.getElementById('additionalImages')?.click()}
                                             disabled={form.additionalImages.length >= 9 || form.isCompressing}
                                         >
@@ -203,10 +199,7 @@ export default function NewCardForm() {
                                         </Button>
                                     </div>
                                 )}
-
-
-                            </div>
-
+                            </>
                         )}
                     </div>
 

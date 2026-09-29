@@ -39,7 +39,6 @@
     width: 100%;
     background-color: $beige-background;
     text-align: left;
-    max-width: 1920px;
 
     &_title {
         position: absolute;
@@ -56,7 +55,6 @@
         object-fit: cover;
         display: block;
         width: 100%;
-        max-width: 1920px;
 
         @media (min-width: 1853px) {
             margin-top: -80px;
@@ -98,7 +96,11 @@
     max-height: 1300px;
     color: $white-text;
     text-align: left;
-    max-width: 1920px;
+
+    @media (min-width: 1921px) {
+        max-height: none;
+        padding-top: 60px;
+    }
 
     @media (max-width: 1000px) {
         height: fit-content;
@@ -458,9 +460,12 @@
     position: relative;
     background-color: $green-color;
     text-align: left;
-    max-width: 1920px;
     height: 90vw;
     max-height: 1700px;
+
+    @media (min-width: 1921px) {
+        max-height: 1850px;
+    }
 
     @media (max-width: 1020px) {
         min-height: 920px;
@@ -629,7 +634,7 @@
         display: block;
         position: absolute;
         z-index: 2;
-        width: 90%;
+        max-width: 85%;
         height: auto;
         left: 50%;
         transform: translate(-50%);
@@ -675,6 +680,10 @@
         @media (max-width: 500px) {
             width: 329px;
             top: 340px;
+        }
+
+        @media (max-width: 400px) {
+            margin-left: 25px;
         }
 
         @media (max-width: 390px) {
@@ -797,9 +806,14 @@
     align-items: center;
     position: relative;
     background-color: $beige-background;
-    height: 1258px;
+    height: fit-content;
+
+    padding-bottom: 60px;
     text-align: left;
-    max-width: 1920px;
+
+    @media (min-width: 1921px) {
+        padding-top: 60px;
+    }
 
     &_title,
     &_titleForm {
@@ -880,8 +894,10 @@
             }
 
             @media (max-width: 500px) {
-                margin-left: 0;
+                margin-left: 20px;
             }
+
+
         }
     }
 
@@ -924,7 +940,6 @@
     left: 0;
     right: 0;
     z-index: 5;
-    max-width: 1920px;
 
     &_1 {
         position: absolute;
@@ -933,7 +948,6 @@
         width: 100%;
         left: 0;
         right: 0;
-        max-width: 1920px;
 
         @media (max-width: 1420px) {
             top: -70px;
@@ -1056,7 +1070,15 @@
     }
 
     @include respond-below($breakpoint-md) {
-        margin-top: calc(-176px / 750px * 100vw / 2);
-        margin-bottom: calc(-176px / 750px * 100vw / 2);
+        margin-top: calc(-176px / 750px * 100% / 2);
+        margin-bottom: calc(-176px / 750px * 100% / 2);
     }
+}
+
+.main,
+.history,
+.about,
+.hero,
+.divide {
+    min-width: 100vw;
 }
