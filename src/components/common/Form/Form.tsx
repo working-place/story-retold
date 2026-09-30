@@ -125,7 +125,6 @@ export default function NewCardForm() {
                     <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_secondary} ${form.additionalImages.length > 0 ? styles.form__uploadArea_filled : ''}`}>
                         <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_secondary}`}>
 
-
                             {form.additionalImages.length == 0 && (
                                 <>
                                     <h3 className={styles.form__titleUpload}>
@@ -135,8 +134,6 @@ export default function NewCardForm() {
                                         <span className={styles.form__subtitleLine}>Максимальный размер файлов 4 MB.</span>
                                         <span className={styles.form__subtitleLine_small}>Максимум 9 изображений</span>
                                     </div>
-
-
 
                                     <Button
                                         type="button"

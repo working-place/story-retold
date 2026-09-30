@@ -204,7 +204,10 @@ export default function AdminPanelForm() {
                                         Фотографии наград и другие материалы
                                     </h3>
                                     <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
-                                        Максимальный размер файлов 4 MB. Максимум 9 изображений
+                                        Максимальный размер файлов 4 MB.
+                                    </h4>
+                                    <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
+                                        Максимум 9 изображений
                                     </h4>
                                 </div>
                             )}

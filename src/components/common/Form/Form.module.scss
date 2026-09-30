@@ -4,6 +4,7 @@
 
 .form {
     display: flex;
+    justify-content: center;
     width: 96%;
     max-width: 100%;
     min-height: 935px;
@@ -153,6 +154,8 @@
                 linear-gradient(90deg, $beige-background 50%, transparent 50%), // нижняя
                 linear-gradient(180deg, $beige-background 50%, transparent 50%), // левая
                 linear-gradient(180deg, $beige-background 50%, transparent 50%); // правая
+
+            justify-content: center;
         }
 
         &_admin {
@@ -173,12 +176,12 @@
 
         &_primary {
             height: auto;
-            min-height: 0;
+            min-height: 429px;
         }
 
         &_secondary {
             height: auto;
-            min-height: 0;
+            min-height: 333px;
         }
     }
 
@@ -186,9 +189,8 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        width: fit-content;
         gap: 30px;
-        max-width: 904px;
+        width: 52%;
 
         &_admin {
             justify-content: flex-end;
@@ -210,7 +212,7 @@
         flex-direction: column;
         justify-content: space-between;
         padding-top: 3px;
-        width: fit-content;
+        width: 23%;
         gap: 30px;
 
         @media (max-width: 1300px) {

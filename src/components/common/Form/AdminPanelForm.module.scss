@@ -37,11 +37,20 @@
 
     &__titleWrapper {
         display: flex;
-        align-items: center;
         flex-direction: column;
         gap: 12px;
         width: 100%;
         height: fit-content;
+
+        h3,
+        h4 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            align-self: center;
+        }
     }
 
     &__title {
@@ -132,7 +141,7 @@
                 linear-gradient(180deg, $beige-background 50%, transparent 50%),
                 linear-gradient(180deg, $beige-background 50%, transparent 50%);
             height: auto;
-            min-height: 0;
+            min-height: 429px;
         }
 
         &_secondary {
@@ -144,7 +153,7 @@
                 linear-gradient(180deg, $beige-background 50%, transparent 50%),
                 linear-gradient(180deg, $beige-background 50%, transparent 50%);
             height: auto;
-            min-height: 0;
+            min-height: 333px;
         }
 
         &_admin {
@@ -165,7 +174,6 @@
         &_admin {
             justify-content: flex-end;
             width: 100%;
-            max-width: 904px;
             gap: 15px;
         }
     }
@@ -179,47 +187,12 @@
         gap: 30px;
     }
 
-    &__input {
-
-        &_date {
-            width: 13.6vw;
-        }
-
-        &_birthplace,
-        &_place {
-            width: 17.7vw;
-            max-width: 339px;
-        }
-
-        &_hero {
-            width: 47vw;
-        }
-
-        &_user {
-            width: 22.8vw;
-        }
-
-        &_email {
-            width: 22.8vw;
-        }
-
-        &_additional {
-            width: 20vw;
-            margin-top: 2px;
-        }
-
-        &_adminInputWidth {
-            max-width: 262px;
-        }
-    }
-
     &__wrapper {
         &_firstLine {
             display: flex;
             gap: 20px;
 
             &_admin {
-                gap: 0;
                 justify-content: flex-end;
             }
         }
@@ -556,10 +529,6 @@
         }
 
         &__input {
-
-            &_date {
-                width: 13.6vw;
-            }
 
             &_birthplace,
             &_place,

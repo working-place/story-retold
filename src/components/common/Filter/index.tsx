@@ -8,9 +8,17 @@ interface FilterProps {
     title?: string;
     heroes?: Hero[];
     onSearchResults?: (results: Hero[]) => void;
+    onModeChange?: (mode: "all" | "advanced") => void;
+    onSearchPerformed?: () => void;
 }
 
-export default function Filter({ title, heroes = [], onSearchResults }: FilterProps) {
+export default function Filter({
+    title,
+    heroes = [],
+    onSearchResults,
+    onModeChange,
+    onSearchPerformed
+}: FilterProps) {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedLetter, setSelectedLetter] = useState<string | null>(null);
     const [searchMode, setSearchMode] = useState<"all" | "advanced">("all");
@@ -108,29 +116,29 @@ export default function Filter({ title, heroes = [], onSearchResults }: FilterPr
     const handleModeChange = (mode: "all" | "advanced") => {
         if (mode === searchMode) return;
         setSearchMode(mode);
+        onModeChange?.(mode);
 
         if (mode === "advanced") {
             setSearchQuery("");
             setSelectedLetter(null);
-            onSearchResults?.(searchHeroes("", null, "advanced", advancedFilters));
+            onSearchResults?.([]);
         } else {
             setAdvancedFilters({ name: "", dateOfBirth: "", dateOfDeath: "", placeOfBirth: "", rank: "", placeOfService: "" });
-            onSearchResults?.(searchHeroes("", null, "all"));
+            onSearchResults?.(heroes);
+            onSearchPerformed?.();
         }
     };
 
     const handleAdvancedFilterChange = (field: keyof typeof advancedFilters, value: string) => {
         const updatedFilters = { ...advancedFilters, [field]: value };
         setAdvancedFilters(updatedFilters);
-
-        if (searchMode === "advanced") {
-            onSearchResults?.(searchHeroes("", selectedLetter, "advanced", updatedFilters));
-        }
     };
 
     const handleAdvancedSearch = () => {
         if (searchMode === "advanced") {
-            onSearchResults?.(searchHeroes("", selectedLetter, "advanced", advancedFilters));
+            const results = searchHeroes("", selectedLetter, "advanced", advancedFilters);
+            onSearchResults?.(results);
+            onSearchPerformed?.();
         }
     };
 

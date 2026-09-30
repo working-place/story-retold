@@ -239,85 +239,6 @@ export default function AdminEditForm() {
 
                     <div className={`${styles.form__upload} ${styles.form__upload_admin}`}>
 
-                        {/* {showPhotoBlock && (
-                            <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst}`}>
-                                {!form.photoHero && !form.existingPhotoHero ? (
-                                    <>
-                                        <img src="/image-download-brown.png" alt="Загрузить" />
-                                        <div className={`${styles.form__titleWrapper} ${styles.form__titleWrapper_primary}`}>
-                                            <h3 className={`${styles.form__titleUpload} ${styles.form__titleUpload_admin}`}>
-                                                Фотографии героя
-                                            </h3>
-                                            <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
-                                                Максимальный размер файла 4 MB
-                                            </h4>
-                                        </div>
-                                        <input
-                                            type="file"
-                                            id="photoHero"
-                                            accept="image/png,image/jpeg,image/jpg,image/webp"
-                                            onChange={form.handlePhotoHeroChange}
-                                            style={{ display: 'none' }}
-                                        />
-                                        <Button
-                                            type="button"
-                                            className={`${styles.button_small} ${styles.button_admin}`}
-                                            onClick={() => document.getElementById('photoHero')?.click()}
-                                            disabled={form.isCompressing}
-                                        >
-                                            Выбрать файл
-                                        </Button>
-                                    </>
-                                ) : (
-                                    <div className={styles.previewContainer}>
-                                        <div className={styles.previewImageWrapper}>
-                                            <img
-                                                src={getHeroImageUrl()}
-                                                alt="Превью фото героя"
-                                                className={styles.previewImage}
-                                                onError={(e) => {
-                                                    console.error('❌ Ошибка загрузки фото:', e);
-                                                    e.currentTarget.src = '/404_pic_mob.webp';
-                                                }}
-                                            />
-                                            <button
-                                                type="button"
-                                                className={styles.removeImageButton}
-                                                onClick={() => {
-                                                    form.setPhotoHero(null);
-                                                    form.setExistingPhotoHero(null);
-                                                    form.handleCardTypeChange('withoutPhoto');
-                                                }}
-                                                aria-label="Удалить фото"
-                                            >
-                                                ×
-                                            </button>
-                                        </div>
-                                        <div className={styles.previewInfo}>
-                                            <p className={styles.previewFileName}>
-                                                {form.photoHero ? form.photoHero.name : 'Текущее фото'}
-                                            </p>
-                                            <Button
-                                                type="button"
-                                                className={`${styles.button_small} ${styles.button_admin} ${styles.changePhotoButton}`}
-                                                onClick={() => document.getElementById('photoHero')?.click()}
-                                                disabled={form.isCompressing}
-                                            >
-                                                Заменить фото
-                                            </Button>
-                                        </div>
-                                        <input
-                                            type="file"
-                                            id="photoHero"
-                                            accept="image/png,image/jpeg,image/jpg,image/webp"
-                                            onChange={form.handlePhotoHeroChange}
-                                            style={{ display: 'none' }}
-                                        />
-                                    </div>
-                                )}
-                            </div>
-                        )} */}
-
                         {showPhotoBlock && (
                             <div className={`${styles.form__uploadArea} ${styles.form__uploadArea_primary} ${styles.form__uploadArea_admin} ${styles.form__uploadArea_adminHeightFirst} ${(form.photoHero || form.existingPhotoHero) ? styles.form__uploadArea_filled : ''}`}>
                                 {!form.photoHero && !form.existingPhotoHero ? (
@@ -399,7 +320,10 @@ export default function AdminEditForm() {
                                         Фотографии наград и другие материалы
                                     </h3>
                                     <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
-                                        Максимальный размер файлов 4 MB. Максимум 9 изображений
+                                        Максимальный размер файлов 4 MB.
+                                    </h4>
+                                    <h4 className={`${styles.form__subtitle} ${styles.form__subtitle_admin}`}>
+                                        Максимум 9 изображений
                                     </h4>
                                 </div>
                             )}

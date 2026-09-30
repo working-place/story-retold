@@ -13,11 +13,13 @@ export default function Footer() {
             </div>
 
             <div className={styles.item15}>
-                <img className={styles.logoSocial} src="/logo-social.png" alt="ВК" />
+                <a href="" target="_blank">
+                    <img className={styles.logoSocial} src="/logo-social.png" alt="ВК" />
+                </a>
             </div>
 
             <div className={styles.item21}>
-                <a href="https://grant.obr.so/">
+                <a href="https://grant.obr.so/" target="_blank">
                     <img className={styles.logoSot} src="/logo-sot.png" alt="Логотип СОТ" />
                 </a>
             </div>
@@ -59,7 +61,7 @@ export default function Footer() {
             <div className={styles.item25}>
                 <div className={styles.item25_wrapper}>
                     <span className={`${styles.xlSize} ${styles.madeIn}`}>Сделано в:</span>
-                    <a href="https://союз.рф/">
+                    <a href="https://союз.рф/" target="_blank">
                         <img className={styles.logoSoyuz} src="/logo-soyuz.png" alt="Логотип Союз.рф" />
                     </a>
                     <span className={styles.xlSize}>Экипаж</span> <br />

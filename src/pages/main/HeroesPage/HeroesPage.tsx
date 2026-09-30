@@ -11,17 +11,15 @@ import { heroesApi, ApiError } from "../../../services/api/heroes";
 interface HeroesPageProps {
     chapter: Chapter;
     title: string;
-    path?: string;
-    text?: string;
 }
 
-export default function HeroesPage({ chapter, title, path, text }: HeroesPageProps) {
+export default function HeroesPage({ chapter, title }: HeroesPageProps) {
     const [allHeroes, setAllHeroes] = useState<Hero[]>([]);
     const [filteredHeroes, setFilteredHeroes] = useState<Hero[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-
-    const currentPath: string = path || `${title}/Все Герои`;
+    const [isAdvancedMode, setIsAdvancedMode] = useState(false);
+    const [searchPerformed, setSearchPerformed] = useState(false);
 
     useEffect(() => {
         const fetchHeroes = async (): Promise<void> => {
@@ -47,7 +45,7 @@ export default function HeroesPage({ chapter, title, path, text }: HeroesPagePro
 
     const handleSearchResults = useCallback((results: Hero[]): void => {
         setFilteredHeroes(results);
-    }, [],);
+    }, []);
 
     const handleResetFilter = () => {
         setFilteredHeroes(allHeroes);
@@ -83,22 +81,18 @@ export default function HeroesPage({ chapter, title, path, text }: HeroesPagePro
 
     return (
         <div className={styles.heroesPage}>
-            <section className={styles.title}>
-                <p className={styles.title__path}>
-                    {currentPath} {text && `| ${text}`}
-                    {filteredHeroes.length !== allHeroes.length && (
-                        <span className={styles.title__filterInfo}>
-                            {" "}· Найдено: {filteredHeroes.length}
-                        </span>
-                    )}
-                </p>
-            </section>
-
             <section className={styles.filter}>
                 <Filter
                     title={title}
                     heroes={allHeroes}
                     onSearchResults={handleSearchResults}
+                    onModeChange={(mode) => {
+                        setIsAdvancedMode(mode === "advanced");
+                        if (mode === "advanced") {
+                            setSearchPerformed(false);
+                        }
+                    }}
+                    onSearchPerformed={() => setSearchPerformed(true)}
                 />
             </section>
 
@@ -114,7 +108,7 @@ export default function HeroesPage({ chapter, title, path, text }: HeroesPagePro
                 </section>
             )}
 
-            {filteredHeroes.length === 0 && (
+            {filteredHeroes.length === 0 && !(isAdvancedMode && !searchPerformed) && (
                 <div className={styles.noResults}>
                     <p>{allHeroes.length === 0 ? 'Нет данных о героях' : 'По вашему запросу ничего не найдено'}</p>
                     {allHeroes.length > 0 && (
