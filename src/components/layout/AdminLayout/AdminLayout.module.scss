@@ -162,9 +162,10 @@
 
     .sidebarMobile {
         display: flex;
-        position: fixed;
+        position: absolute;
         align-items: center;
         justify-content: space-between;
+        top: 0;
         left: 50%;
         transform: translate(-50%, -50%);
         top: 43px;

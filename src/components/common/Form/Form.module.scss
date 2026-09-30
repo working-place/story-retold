@@ -5,14 +5,16 @@
 .form {
     display: flex;
     width: 96%;
+    max-width: 100%;
     min-height: 935px;
     height: auto;
     background-color: $brown-color;
-    margin-top: 75px;
+    margin: 75px auto 0;
     border-radius: 20px;
     gap: 47px;
     padding: 96px 49px 90px 49px;
-    min-width: 313px;
+    box-sizing: border-box;
+    min-width: 0;
 
     @media (max-width: 1680px) {
         gap: 30px;
@@ -505,9 +507,6 @@
 
 @include respond-below($breakpoint-xxxl) {
     .form {
-        gap: clamp(20px, 2.45vw, 47px);
-        padding: clamp(40px, 5vw, 96px) clamp(20px, 2.55vw, 49px) clamp(40px, 4.69vw, 90px);
-        margin-top: clamp(32px, 3.91vw, 75px);
         min-height: auto;
 
         &__upload,
@@ -580,10 +579,8 @@
     .form {
         display: flex;
         flex-direction: column;
-        width: calc(100% - 66px);
         min-height: auto;
-        gap: 36px;
-        padding: 28px 24px;
+        gap: 24px;
         border-radius: 16px;
 
         &__upload,
@@ -723,8 +720,7 @@
 
 @media (max-width: 400px) {
     .form {
-        padding-left: 20px;
-        margin-left: 35px;
-        width: calc(90% - 30px);
+        padding: 20px;
+        max-width: 315px;
     }
 }

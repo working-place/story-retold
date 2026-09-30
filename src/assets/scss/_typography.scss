@@ -1,23 +1,13 @@
-// =====================================================
-//  ТИПОГРАФИКА
-//  Токены и миксины для шрифтов. Применять во всех
-//  компонентах вместо хардкода font-family/size/weight —
-//  так верстка не будет расходиться с макетом.
-// =====================================================
-
-// Семейства
-$font-base: 'Roboto', 'Metamorphous', serif;
-$font-decorative: 'Metamorphous', serif;
+$font-base: 'Roboto', serif;
+$font-decorative: 'Roboto', serif;
 $font-display: 'Glanz', sans-serif;
 $font-tech: 'Tektur', sans-serif;
-$font-rubik: 'Rubik', 'Metamorphous', serif;
+$font-rubik: 'Rubik', serif;
 
-// Начертания
 $weight-regular: 400;
 $weight-medium: 600;
 $weight-bold: 700;
 
-// Базовый body-текст
 @mixin body-text {
   font-family: $font-base;
   font-size: 16px;
@@ -25,7 +15,6 @@ $weight-bold: 700;
   line-height: 1.5;
 }
 
-// Заголовки
 @mixin h1 {
   font-family: $font-display;
   font-size: 48px;
@@ -61,7 +50,6 @@ $weight-bold: 700;
   line-height: 1.3;
 }
 
-// Подпись / метка
 @mixin caption {
   font-family: $font-base;
   font-size: 14px;
@@ -69,7 +57,6 @@ $weight-bold: 700;
   line-height: 1.4;
 }
 
-// Декоративный текст (заголовки в стиле макета)
 @mixin decorative($size: 35px) {
   font-family: $font-decorative;
   font-weight: $weight-regular;

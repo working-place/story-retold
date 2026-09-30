@@ -7,14 +7,6 @@
 }
 
 @font-face {
-  font-family: 'Metamorphous';
-  src: url('/fonts/Metamorphous.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
   font-family: 'Tektur';
   src: url('/fonts/Tektur-Regular.ttf') format('truetype');
   font-weight: 400;
@@ -25,7 +17,6 @@
 #root {
   width: 100%;
   margin: 0 auto;
-  text-align: center; // это плохо, но оставлю (вдруг надо где-то)
   min-height: 100svh;
   display: flex;
   flex-direction: column;
