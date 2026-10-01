@@ -82,6 +82,12 @@
         font-size: 24px;
         background-color: $beige-background;
 
+        @media (max-width: 500px) {
+            font-size: 18px;
+            width: fit-content;
+            min-width: 0;
+        }
+
         @media (max-width: 375px) {
             border-radius: 15px;
             padding: 9px 18px;

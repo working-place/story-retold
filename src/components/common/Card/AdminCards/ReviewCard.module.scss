@@ -112,6 +112,12 @@
         white-space: nowrap;
 
         &:hover {}
+
+        @media (max-width: 500px) {
+            font-size: 18px;
+            width: fit-content;
+            min-width: 0;
+        }
     }
 }
 
