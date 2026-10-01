@@ -104,7 +104,7 @@
         flex-direction: column;
         gap: 38px;
         width: 51%;
-        font-weight: 400;
+        font-weight: 200;
 
         @media (max-width: 1718px) {
             width: 48%;
@@ -135,7 +135,7 @@
 
     &__heroName {
         font-size: 64px;
-        font-weight: 300;
+        font-weight: 200;
         text-align: left;
         width: 100%;
 
@@ -175,7 +175,7 @@
 
     &__infoLabel {
         font-size: 35px;
-        font-weight: 300;
+        font-weight: 200;
         width: 100%;
         text-align: left;
         line-height: 100%;
@@ -185,7 +185,7 @@
         width: 100%;
         text-align: left;
         font-size: 24px;
-        font-weight: 300;
+        font-weight: 200;
         line-height: 120%;
     }
 
@@ -242,7 +242,7 @@
         min-height: 400px;
         max-height: fit-content;
         font-family: $font-base;
-        font-weight: 400;
+        font-weight: 200;
         font-size: 35px;
         line-height: 100%;
         letter-spacing: 0%;
@@ -327,7 +327,6 @@
 
     .description {
         height: fit-content;
-
         margin-top: 40px;
         gap: 30px;
 
@@ -338,7 +337,7 @@
 
         &__box {
             font-size: 20px;
-            font-weight: 300;
+            font-weight: 200;
             padding: 40px 15px;
             border-radius: 6px;
             height: fit-content;
@@ -360,17 +359,17 @@
 
         &__heroName {
             font-size: 28px !important;
-            font-weight: 300;
+            font-weight: 200;
         }
 
         &__infoLabel {
             font-size: 23px !important;
-            font-weight: 300;
+            font-weight: 200;
         }
 
         &__infoValue {
             font-size: 20px;
-            font-weight: 300;
+            font-weight: 200;
         }
 
         &__infoRow {

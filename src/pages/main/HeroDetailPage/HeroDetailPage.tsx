@@ -71,9 +71,6 @@ export default function HeroDetailPage() {
     if (!hasPhoto) {
         return (
             <div className={`${styles.heroDetailPage} ${styles.heroDetailPage_noPhoto}`}>
-                <section className={styles.heroDetailPage__pathContainer}>
-                    <h3>Герои СССР/Все Герои/ Карточка героя</h3>
-                </section>
 
                 <div className={styles.heroDetailPage__wrapper}>
 
@@ -137,9 +134,6 @@ export default function HeroDetailPage() {
 
     return (
         <div className={styles.heroDetailPage}>
-            <section className={styles.heroDetailPage__pathContainer}>
-                <h3>Герои СССР/Все Герои/ Карточка героя</h3>
-            </section>
 
             <div className={styles.heroDetailPage__wrapper}>
 

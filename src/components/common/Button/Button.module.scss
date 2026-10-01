@@ -3,23 +3,22 @@
 .button {
   display: inline-flex;
   align-items: center;
-  justify-content: center; /* Текст и иконки по центру */
-  gap: 8px; /* Отступ между иконкой и текстом */
+  justify-content: center;
+  gap: 8px;
   text-decoration: none;
   border: none;
   outline: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   font-family: inherit;
-  font-weight: 700;
+  font-weight: 400;
   white-space: nowrap;
-  border-radius: 20px; /* Базовое скругление */
-  padding: 12px 24px; /* Базовые отступы */
+  border-radius: 20px;
+  padding: 12px 24px;
   font-size: 16px;
   width: fit-content;
   position: relative;
 
-  /* Состояние загрузки/блокировки */
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -32,36 +31,19 @@
   }
 }
 
-/* --- ВАРИАНТЫ (Colors) --- */
-
 .primary {
   background-color: $brown-color;
   color: $white-text;
-
-  // &:hover:not(:disabled) {
-  //   /* Заменяем darken на color.scale */
-  //   background-color: color.scale($brown-color, $lightness: -10%);
-  // }
 }
 
 .secondary {
   background-color: $green-color;
   color: $beige-background;
-
-  // &:hover:not(:disabled) {
-  //   /* Заменяем lighten на color.scale */
-  //   background-color: color.scale($green-color, $lightness: 10%);
-  // }
 }
 
 .bright {
   background-color:  $beige-background;
   color: $brown-color;
-
-  // &:hover:not(:disabled) {
-  //   /* Заменяем lighten на color.scale */
-  //   background-color: color.scale($green-color, $lightness: 10%);
-  // }
 }
 
 .outline {
@@ -84,8 +66,6 @@
   }
 }
 
-/* --- РАЗМЕРЫ (Sizes) --- */
-
 .small {
   padding: 8px 16px;
   font-size: 14px;
@@ -104,14 +84,10 @@
   border-radius: 24px;
 }
 
-/* --- ШИРИНА --- */
-
 .fullWidth {
   width: 100%;
   justify-content: center;
 }
-
-/* --- ИКОНКИ И СПИННЕР --- */
 
 .icon,
 .iconRight {
@@ -136,7 +112,6 @@
   }
 }
 
-/* Переопределение цвета спиннера для Outline и Ghost вариантов */
 .outline .spinner,
 .ghost .spinner {
   border-top-color: $brown-color;

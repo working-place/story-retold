@@ -13,7 +13,7 @@ export default function Footer() {
             </div>
 
             <div className={styles.item15}>
-                <a href="https://vk.ru/shkola60_perm" target="_blank">
+                <a href="" target="_blank">
                     <img className={styles.logoSocial} src="/logo-social.png" alt="ВК" />
                 </a>
             </div>
