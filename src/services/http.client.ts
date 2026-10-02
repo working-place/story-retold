@@ -78,6 +78,13 @@ export async function httpClient<T>(
       );
     }
 
+        if (response.status === 400) {
+      throw new ApiError(
+        'Допустимые форматы для загрузки: jpeg, jpg, png, webp. Измените формат изображений и попробуйте снова.',
+        400
+      );
+    }
+
     const errorData = await response.json().catch(() => ({}));
     throw new ApiError(
       errorData.message ||
