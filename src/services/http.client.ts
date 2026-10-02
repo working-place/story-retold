@@ -57,11 +57,30 @@ export async function httpClient<T>(
     }
   }
 
-  const response = await fetch(url, {
-    ...options,
-    headers,
-    body,
-  });
+  // const response = await fetch(url, {
+  //   ...options,
+  //   headers,
+  //   body,
+  // });
+
+    let response: Response;
+
+  try {
+    response = await fetch(url, {
+      ...options,
+      headers,
+      body,
+    });
+  } catch (error) {
+    if ((error as Error)?.name === 'AbortError') {
+      throw new ApiError('Запрос был отменён.', 0);
+    }
+
+    throw new ApiError(
+      'Не удалось соединиться с сервером. Проверьте интернет и попробуйте позже.',
+      0
+    );
+  }
 
   if (!response.ok) {
     if (response.status === 401) {
@@ -75,6 +94,13 @@ export async function httpClient<T>(
       throw new ApiError(
         'Размер загруженных данных слишком велик. Уменьшите размер изображений и попробуйте снова.',
         413
+      );
+    }
+
+        if (response.status === 502) {
+      throw new ApiError(
+        'Сервер временно недоступен. Попробуйте войти позже.',
+        502
       );
     }
 
