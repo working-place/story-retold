@@ -14,6 +14,10 @@
     &__titleContainer {
         display: flex;
         width: 100%;
+
+        &_position {
+            justify-content: space-between;
+        }
     }
 
     &__title {

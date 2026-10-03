@@ -12,7 +12,7 @@ export default function ReviewCardsTitle({
     onExit
 }: ReviewCardsTitleProps) {
     return (
-        <div className={styles.reviewCards__titleContainer}>
+        <div className={`${styles.reviewCards__titleContainer} ${styles.reviewCards__titleContainer_position}`}>
             <h2 className={styles.reviewCards__title}>{title}</h2>
             <Button
                 className={styles.reviewCards__exitButton}
