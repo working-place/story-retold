@@ -224,6 +224,8 @@ h3 {
         padding-right: clamp(6px, 1vw, 12.5px);
         color: $brown-color;
         background-color: transparent;
+        border: none;
+        outline: none;
         cursor: pointer;
 
         &_active {
