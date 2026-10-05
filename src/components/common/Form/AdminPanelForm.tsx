@@ -146,7 +146,7 @@ export default function AdminPanelForm() {
                                         <input
                                             type="file"
                                             id="photoHero"
-                                            accept="image/png,image/jpeg,image/jpg,image/webp"
+                                            accept="image/png,image/jpeg,image/heic,image/heif,image/heic-sequence,image/heif-sequence,image/jpg,image/webp"
                                             onChange={form.handlePhotoHeroChange}
                                             style={{ display: 'none' }}
                                         />
@@ -185,7 +185,7 @@ export default function AdminPanelForm() {
                                             <input
                                                 type="file"
                                                 id="photoHero"
-                                                accept="image/png,image/jpeg,image/jpg,image/webp"
+                                                accept="image/png,image/jpeg,image/heic,image/heif,image/heic-sequence,image/heif-sequence,image/jpg,image/webp"
                                                 onChange={form.handlePhotoHeroChange}
                                                 style={{ display: 'none' }}
                                             />
@@ -238,7 +238,7 @@ export default function AdminPanelForm() {
                             <input
                                 type="file"
                                 id="additionalImages"
-                                accept="image/png,image/jpeg,image/jpg,image/webp"
+                                accept="image/png,image/jpeg,image/heic,image/heif,image/heic-sequence,image/heif-sequence,image/jpg,image/webp"
                                 multiple
                                 onChange={(e) => {
                                     form.handleAdditionalImagesChange(e);

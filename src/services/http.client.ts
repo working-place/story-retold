@@ -57,12 +57,6 @@ export async function httpClient<T>(
     }
   }
 
-  // const response = await fetch(url, {
-  //   ...options,
-  //   headers,
-  //   body,
-  // });
-
     let response: Response;
 
   try {

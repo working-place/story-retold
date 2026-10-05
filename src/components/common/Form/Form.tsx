@@ -10,6 +10,17 @@ import SuccessPopup from "../../admin/Popups/SuccessPopup";
 import { useObjectUrl } from "../../../hooks/useObjectUrl";
 import { useCardForm } from "../../../hooks/useCardForm";
 
+const ERROR_TRANSLATIONS: Record<string, string> = {
+  'validation.date': 'Некорректная дата',
+  'The date field must be a valid date': 'Некорректная дата',
+  'The date birth field must be a valid date': 'Введите корректную дату рождения',
+  'The date death field must be a valid date': 'Введите корректную дату смерти',
+  'Extensions': 'Недопустимый формат изображения, вы можете загрузить: image, png, jpeg, jpg, webp, heic, heif',
+};
+
+const translateError = (message: string): string =>
+  ERROR_TRANSLATIONS[message] ?? message;
+
 export default function NewCardForm() {
     const [loading, setLoading] = useState(false);
     const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
@@ -41,7 +52,7 @@ export default function NewCardForm() {
             }
         } catch (err) {
             const msg = err instanceof Error ? err.message : 'Произошла ошибка при создании карточки';
-            form.setError(msg);
+            form.setError(translateError(msg));
         } finally {
             setLoading(false);
         }
@@ -77,7 +88,7 @@ export default function NewCardForm() {
                                     <input
                                         type="file"
                                         id="photoHero"
-                                        accept="image/png,image/jpeg,image/jpg,image/webp"
+                                        accept="image/png,image/jpeg,image/heic,image/heif,image/heic-sequence,image/heif-sequence,image/jpg,image/webp"
                                         onChange={form.handlePhotoHeroChange}
                                         style={{ display: 'none' }}
                                     />
@@ -112,7 +123,7 @@ export default function NewCardForm() {
                                         <input
                                             type="file"
                                             id="photoHero"
-                                            accept="image/png,image/jpeg,image/jpg,image/webp"
+                                            accept="image/png,image/jpeg,image/heic,image/heif,image/heic-sequence,image/heif-sequence,image/jpg,image/webp"
                                             onChange={form.handlePhotoHeroChange}
                                             style={{ display: 'none' }}
                                         />
@@ -150,7 +161,7 @@ export default function NewCardForm() {
                         <input
                             type="file"
                             id="additionalImages"
-                            accept="image/png,image/jpeg,image/jpg,image/webp"
+                            accept="image/png,image/jpeg,image/heic,image/heif,image/heic-sequence,image/heif-sequence,image/jpg,image/webp"
                             multiple
                             onChange={form.handleAdditionalImagesChange}
                             style={{ display: 'none' }}
