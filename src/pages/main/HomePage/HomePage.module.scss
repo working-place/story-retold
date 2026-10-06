@@ -44,11 +44,16 @@
         position: absolute;
         width: fit-content;
         top: 29.3%;
-        left: 160px;
         color: $brown-color;
         left: 13.5%;
         transform: rotate(-4.75deg);
         z-index: 1;
+
+        @media (max-width: 768px) {
+            top: 20vw;
+            left: 5vw;
+            font-size: clamp(24px, 8vw, 36px);
+        }
     }
 
     &_paperImg {
@@ -154,7 +159,7 @@
 
             @media (max-width: 1000px) {
                 margin-left: -50px;
-                margin-top: 91px;
+                margin-top: 51px;
             }
         }
 
@@ -371,12 +376,12 @@
 
         &_curlMobile {
             display: block;
-            position: relative;
+            position: absolute;
+            top: 50%;
             width: calc(100% + 60px);
             max-width: none;
             height: auto;
             margin-top: -40vw;
-            margin-bottom: calc(16px - (348 / 375 - 0.4) * 100vw);
             margin-left: -30px;
             order: 1;
             z-index: 0;
@@ -482,11 +487,8 @@
     }
 
     @media (max-width: 500px) {
-        min-height: 1900px;
-    }
-
-    @media (max-width: 400px) {
-        min-height: 1950px;
+        min-height: fit-content;
+        height: auto;
     }
 
     &_subtitle {
@@ -603,7 +605,9 @@
 
         @media (max-width: 500px) {
             left: 0;
-            width: 357px;
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
         }
     }
 
@@ -626,7 +630,7 @@
     &_photoStack {
         display: block;
         position: absolute;
-        z-index: 2;
+        z-index: 5;
         max-width: 85%;
         height: auto;
         left: 50%;
@@ -671,8 +675,11 @@
         }
 
         @media (max-width: 500px) {
+            position: static;
             width: 329px;
-            top: 340px;
+            z-index: 10;
+            left: 50%;
+            transform: translate(10%);
         }
 
         @media (max-width: 390px) {
@@ -690,7 +697,7 @@
         right: 0;
         max-width: 100%;
         height: auto;
-        z-index: 1;
+        z-index: 0;
         pointer-events: none;
     }
 

@@ -73,7 +73,6 @@
         display: flex;
         width: 100%;
         justify-content: flex-end;
-        min-height: 1040px;
 
         &_noPhoto {
             display: flex;
@@ -410,7 +409,8 @@
         padding-left: 30px;
 
         &__wrapper {
-            padding: 15px 18px 25px;
+            margin-top: 25px;
+            padding: 15px 18px 50px 25px;
             border-radius: 16px;
         }
 

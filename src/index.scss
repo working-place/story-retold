@@ -14,24 +14,19 @@
   font-display: swap;
 }
 
-#root {
-  width: 100%;
-  margin: 0 auto;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1, h2, h3, h4, h5 {
-    display: block;
-    font-size: 1em;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin-inline-start: 0;
-    margin-inline-end: 0;
-    font-weight: normal;
-    unicode-bidi: isolate;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  display: block;
+  font-size: 1em;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  font-weight: normal;
+  unicode-bidi: isolate;
 }
 
 p {

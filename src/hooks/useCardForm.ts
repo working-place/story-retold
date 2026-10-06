@@ -68,6 +68,25 @@ export interface UseCardFormReturn {
   getDeletedImageIds: () => number[];
 }
 
+const extFromMime = (mime: string): string => {
+  switch (mime) {
+    case 'image/png':
+      return 'png';
+    case 'image/webp':
+      return 'webp';
+    case 'image/heic':
+    case 'image/heic-sequence':
+      return 'heic';
+    case 'image/heif':
+    case 'image/heif-sequence':
+      return 'heif';
+    case 'image/jpeg':
+    case 'image/jpg':
+    default:
+      return 'jpg';
+  }
+};
+
 export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
   const [formData, setFormData] = useState<CardFormData>(() => EMPTY_CARD_FORM);
   const [displayDateBirth, setDisplayDateBirth] = useState<string>('');
@@ -290,11 +309,17 @@ export function useCardForm({ mode }: UseCardFormOptions): UseCardFormReturn {
     });
 
     if (photoHero) {
-      formDataObj.append('photoHero', photoHero);
+      const ext = extFromMime(photoHero.type);
+      formDataObj.append('photoHero', photoHero, `photoHero.${ext}`);
     }
 
     additionalImages.forEach((file, index) => {
-      formDataObj.append(`additionalCardImages[${index}][image]`, file);
+      const ext = extFromMime(file.type);
+      formDataObj.append(
+        `additionalCardImages[${index}][image]`,
+        file,
+        `additional-${index}.${ext}`
+      );
     });
 
     const deletedIds = getDeletedImageIds();

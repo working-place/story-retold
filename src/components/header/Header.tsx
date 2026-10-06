@@ -91,53 +91,57 @@ export default function Header() {
             </button>
 
             {isMenuOpen && (
+
                 <div className={styles.mobileOverlay}>
-                    <div className={styles.mobileMenu}>
-                        <button
-                            className={styles.mobileMenu__closeButton}
-                            onClick={closeMenu}
-                            aria-label="Закрыть меню"
-                        >
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M18 6L6 18M6 6L18 18" stroke="#1A1A1A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        </button>
+                    <div className={styles.mobileOverlayScroll}>
 
-                        <nav className={styles.mobileMenu__links}>
-                            <NavLink
-                                to="/"
-                                className={({ isActive }) => isActive ? `${styles.mobileMenu__link} ${styles.mobileMenu__link_active}` : styles.mobileMenu__link}
+                        <div className={styles.mobileMenu}>
+                            <button
+                                className={styles.mobileMenu__closeButton}
                                 onClick={closeMenu}
+                                aria-label="Закрыть меню"
                             >
-                                Главная
-                            </NavLink>
-                            <NavLink
-                                to="/ussr-heroes"
-                                className={({ isActive }) => isActive ? `${styles.mobileMenu__link} ${styles.mobileMenu__link_active}` : styles.mobileMenu__link}
-                                onClick={closeMenu}
-                            >
-                                Герои СССР
-                            </NavLink>
-                            <NavLink
-                                to="/svo-heroes"
-                                className={({ isActive }) => isActive ? `${styles.mobileMenu__link} ${styles.mobileMenu__link_active}` : styles.mobileMenu__link}
-                                onClick={closeMenu}
-                            >
-                                Герои СВО
-                            </NavLink>
-                        </nav>
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 6L6 18M6 6L18 18" stroke="#1A1A1A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </button>
 
-                        <div className={styles.mobileMenu__buttonWrapper}>
-                            <Button
-                                variant="primary"
-                                fullWidth
-                                borderRadius="50px"
-                                fontSize="22px"
-                                padding="18px 24px"
-                                onClick={closeMenu}
-                            >
-                                Рассказать о герое
-                            </Button>
+                            <nav className={styles.mobileMenu__links}>
+                                <NavLink
+                                    to="/"
+                                    className={({ isActive }) => isActive ? `${styles.mobileMenu__link} ${styles.mobileMenu__link_active}` : styles.mobileMenu__link}
+                                    onClick={closeMenu}
+                                >
+                                    Главная
+                                </NavLink>
+                                <NavLink
+                                    to="/ussr-heroes"
+                                    className={({ isActive }) => isActive ? `${styles.mobileMenu__link} ${styles.mobileMenu__link_active}` : styles.mobileMenu__link}
+                                    onClick={closeMenu}
+                                >
+                                    Герои СССР
+                                </NavLink>
+                                <NavLink
+                                    to="/svo-heroes"
+                                    className={({ isActive }) => isActive ? `${styles.mobileMenu__link} ${styles.mobileMenu__link_active}` : styles.mobileMenu__link}
+                                    onClick={closeMenu}
+                                >
+                                    Герои СВО
+                                </NavLink>
+                            </nav>
+
+                            <div className={styles.mobileMenu__buttonWrapper}>
+                                <Button
+                                    variant="primary"
+                                    fullWidth
+                                    borderRadius="50px"
+                                    fontSize="22px"
+                                    padding="18px 24px"
+                                    onClick={closeMenu}
+                                >
+                                    Рассказать о герое
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>
