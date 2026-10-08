@@ -134,6 +134,30 @@
     font-weight: 600;
 }
 
+@include respond-below(1760px) {
+
+    .mSize,
+    .tel,
+    .email,
+    .item22,
+    .item24,
+    .item25 {
+        font-size: 18px;
+    }
+}
+
+@include respond-below(1400px) {
+
+    .mSize,
+    .tel,
+    .email,
+    .item22,
+    .item24,
+    .item25 {
+        font-size: 16px;
+    }
+}
+
 @include respond-below(1360px) {
 
     .logo {
@@ -159,17 +183,6 @@
         grid-template-columns: auto 1fr 1fr 1fr 1fr;
         gap: 13px;
     }
-
-    .mSize,
-    .tel,
-    .email,
-    .item22,
-    .item24,
-    .item25 {
-
-        font-size: 20px;
-        font-weight: 100;
-    }
 }
 
 @include respond-below(1000px) {
@@ -184,8 +197,6 @@
         width: 100%;
         line-height: 1.4;
     }
-
-    .item11 {}
 
     .item23 {
         grid-column: 1 / -1;
@@ -251,7 +262,6 @@
         flex-direction: column;
         gap: 4px;
     }
-
 
     .tel {
         font-size: 20px;
